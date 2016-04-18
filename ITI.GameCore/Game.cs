@@ -59,7 +59,7 @@ namespace ITI.GameCore
             throw new NotImplementedException();
         }
 
-        public bool IsPiece()
+        public bool IsKing()
         {
             throw new NotImplementedException();
         }

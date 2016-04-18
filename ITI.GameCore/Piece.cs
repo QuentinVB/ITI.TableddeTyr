@@ -20,18 +20,10 @@ namespace ITI.GameCore
             {
                 throw new NotImplementedException();
             }
-            internal set
-            {
-                throw new NotImplementedException();
-            }
         }
         public int Type
         {
             get
-            {
-                throw new NotImplementedException();
-            }
-            internal set
             {
                 throw new NotImplementedException();
             }
