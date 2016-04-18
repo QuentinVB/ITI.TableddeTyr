@@ -9,12 +9,16 @@ namespace ITI.GameCore
     public class Game
     {
         //attributes
-        
+        /*
+            dictionnary of attacker
+            dictionnary of defender
+            dictionnary of the map
+        */
         //constructor        
         /// <summary>
         /// Initializes a new instance of the <see cref="Game"/> class.
         /// </summary>
-        public Game()
+        public Game(/*width, heigth, must be int*/)
         {
 
         }
