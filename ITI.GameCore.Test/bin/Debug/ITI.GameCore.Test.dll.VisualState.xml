@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1008]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll</TopNode>
+  <SelectedNode>[0-1008]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1008]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1009]ITI" Expanded="true" />
+    <Node UniqueName="[0-1010]ITI.GameCore" Expanded="true" />
+    <Node UniqueName="[0-1011]ITI.GameCore.Test" Expanded="true" />
+    <Node UniqueName="[0-1000]ITI.GameCore.Test.Tests" Expanded="true" />
+    <Node UniqueName="[0-1001]ITI.GameCore.Test.Tests.T01_ctor_initializes_the_game_correctly" Expanded="true" />
+    <Node UniqueName="[0-1003]ITI.GameCore.Test.Tests.T02_ctor_with_invalid_args_should_throw_ArgumentException" Expanded="true" />
+    <Node UniqueName="[0-1006]ITI.GameCore.Test.Tests.T03_ctor_create_valid_tafl" Expanded="true" />
+  </Nodes>
+</VisualState>
