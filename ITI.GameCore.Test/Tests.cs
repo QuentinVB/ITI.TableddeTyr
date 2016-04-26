@@ -54,6 +54,6 @@ namespace ITI.GameCore.Test
         //test : take a piece
         //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
         //test : the king is on one of the forteress
-        //
+        //test : 
     }
 }
