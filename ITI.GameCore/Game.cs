@@ -13,49 +13,52 @@ namespace ITI.GameCore
         1 : 01 : atk : attacker
         2 : 10 : def : defensor
         3 : 11 : king
-        */        
+        */
         //attributes
 
-        //byte _tafl ; //NEED TEST AND DOC !
-
+        long _tafl; //contains  the board
         byte _width; //the size of the tafl
         byte _height; //the size of the tafl
-        bool _atkTurn; //true if is the turn of attacker, else the turn of defendor
-        byte _defensorAlive; //amount of defensor alive
+        bool _atkTurn; //true if is the turn of attacker, else the turn of defender
+        byte _defenderAlive; //amount of defensor alive
         byte _attackerAlive;//amount of attacker alive
+        byte _taflLenght; //Bit length of the tafl
+        
+        //constructor override       
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> class.
+        /// </summary>
+        public Game()
+             : this(11, 11)
+        {
+        }
 
-        //collection
-        byte[,] tafl;
-         
         //constructor        
         /// <summary>
         /// Initializes a new instance of the <see cref="Game"/> class.
         /// </summary>
         public Game(byte width, byte height)
         {
+            if (width % 2 == 0) throw new ArgumentException("The width of the tafl must be odd.", nameof(width));
+            if (height % 2 == 0) throw new ArgumentException("The height of the tafl must be odd.", nameof(height));
+
             _width = width;
             _height = height;
-            byte[,] tafl = new byte[width,height];
+            _taflLenght = (byte)(width * 2 + height * 2);
             //create default tafl
         }
         //properties
         public byte GetWidth //get width of the tafl
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _width; }
         }
 
         public byte GetHeight//get height of the tafl
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _height; }
         }
 
-        public byte[,] GetMap //return the int map for the UI, the capture conditions...
+        public long GetMap //return the int map for the UI, the capture conditions...
         {
             get //later here stand the mighty "byte avec tableau"
             {
@@ -64,13 +67,10 @@ namespace ITI.GameCore
         }
         public bool IsAtkPlaying //get the current team who play turn
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _atkTurn; }
         }
         //Methods - internal
-        internal bool SetCase(byte x, byte y,int newValue)//set the state of the case
+        internal void SetCase(byte x, byte y,int newValue)//set the state of the case
         {
             throw new NotImplementedException();
         }
