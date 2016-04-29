@@ -11,6 +11,16 @@ namespace ITI.GameCore.Test
     [TestFixture]
     public class Tests
     {
+        public void playing_with_tafl()
+        {
+            Assert.Throws<ArgumentException>(() => new Tafl(12, 35));
+            Tafl t = new Tafl(13, 13);
+
+            t[2, 2] = Pawn.Defender;
+            Assert.That(t[2, 2], Is.EqualTo(Pawn.Attacker));
+
+        }
+
         [TestCase(13, 13)]
         public void T01_ctor_initializes_the_game_correctly(byte width, byte height)
         {
@@ -54,6 +64,6 @@ namespace ITI.GameCore.Test
         //test : take a piece
         //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
         //test : the king is on one of the forteress
-        //
+        //test : 
     }
 }
