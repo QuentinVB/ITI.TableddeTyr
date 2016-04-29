@@ -19,9 +19,15 @@ namespace ITI.GameCore
 
     public class TaflBasic : ITafl
     {
+        int _width;
+        int _height;
+        int[,] _tafl;
         //Constructor
         public TaflBasic(int width, int height)
         {
+            _width = width;
+            _height = height;
+            _tafl = new int[width, height];
 
         }
 
@@ -33,12 +39,12 @@ namespace ITI.GameCore
 
         public int Width
         {
-            get { throw new NotImplementedException(); }
+            get { return _width; }
         }
 
         public int Height
         {
-            get { throw new NotImplementedException(); }
+            get { return _height; }
         }
 
         public int AttackerCount
