@@ -140,9 +140,10 @@ namespace ITI.GameCore.Test
             sut[11, 9] = Pawn.Attacker;
             sut[10, 6] = Pawn.Attacker;
 
-
+            //check the king
             Assert.That(sut[6, 6], Is.EqualTo(Pawn.King));
 
+            //check the attacker
             //north line
             for (int i = 3; i <= 9; i++)
             {
@@ -171,6 +172,36 @@ namespace ITI.GameCore.Test
             }
             Assert.That(sut[10,6], Is.EqualTo(Pawn.Attacker));
 
+            //check defender squares
+            Assert.That(sut[6, 4], Is.EqualTo(Pawn.Defender));
+            
+            for (int i = 5; i <= 7; i++)
+            {
+                Assert.That(sut[i, 5], Is.EqualTo(Pawn.Defender));
+            }
+
+            for (int i = 4; i <= 8; i++)
+            {
+                Assert.That(sut[i, 6], Is.EqualTo(Pawn.Defender));
+            }
+
+            for (int i = 5; i <= 7; i++)
+            {
+                Assert.That(sut[i, 7], Is.EqualTo(Pawn.Defender));
+            }
+            Assert.That(sut[6, 8], Is.EqualTo(Pawn.Defender));
+
+        }
+
+        [TestCase(11, 11)]
+        public void Game(int width, int height)
+        {
+            Game sut = new Game(width, height);
+
+            sut._tafl[3,2] = Pawn.Defender;
+            sut.AllowMove(3, 2, 3, 8);
+
+            Assert.That(sut._tafl[3, 8], Is.EqualTo(Pawn.Defender));
 
         }
         //test : move piece on another case
