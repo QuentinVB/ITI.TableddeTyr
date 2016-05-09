@@ -192,26 +192,105 @@ namespace ITI.GameCore.Test
             Assert.That(sut[6, 8], Is.EqualTo(Pawn.Defender));
 
         }
-
+        //test : move pawn on another case
         [TestCase(11, 11)]
-        public void Game(int width, int height)
+        public void Game_calling_allowMove_move_a_pawn(int width, int height)
         {
             Game sut = new Game(width, height);
 
-            sut._tafl[3,2] = Pawn.Defender;
+            sut.tafl[3, 2] = Pawn.Attacker;
+
             sut.AllowMove(3, 2, 3, 8);
 
-            Assert.That(sut._tafl[3, 8], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut.tafl[3, 8], Is.EqualTo(Pawn.Attacker));
+        }
+
+        //test : try moving pawn out of the tafl (4 cases : north, south, east, west)
+        [TestCase(3,-4)]
+        [TestCase(3,14)]
+        [TestCase(13,2)]
+        [TestCase(-7, 2)]
+        public void Game_calling_allowMove_move_a_pawn_out_of_the_tafl(int left,int up)
+        {
+            Game sut = new Game(11, 11);
+
+            sut.tafl[3, 2] = Pawn.Attacker;
+            
+            Assert.Throws<ArgumentException>(() => sut.AllowMove(3, 2, left, up));
 
         }
-        //test : move piece on another case
-        //test : try moving piece out of the tafl (4 cases : north, south, east, west)
-        //test : try moving beyond another piece (4 cases : north by south, south by north, east by west, west by east)
+        //test : try moving beyond another pawn (4 cases : north by south, south by north, east by west, west by east)
+        [TestCase(6, 3,6,8)]
+        [TestCase(6, 8,6,3)]
+        [TestCase(3, 6,8,6)]
+        [TestCase(8, 6,3,6)]
+        public void Game_calling_allowMove_move_a_pawn_over_another_pawn( int left, int up, int mLeft, int mUp)
+        {
+            Game sut = new Game(11, 11);
+
+            sut.tafl[6, 6] = Pawn.Attacker;
+
+            sut.tafl[up, left] = Pawn.Attacker;
+
+            Assert.Throws<ArgumentException>(() => sut.AllowMove(3, 2, mLeft,mUp));
+        }
         //test : cannot entering into a forteress (try each forteress from each angle, aka 8 try)
-        //test : cannot moving while not his turn !
-        //test : take a piece
-        //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
+        [TestCase(1, 6, 1, 1)]
+        [TestCase(1, 6, 1, 11)]
+        [TestCase(11, 6, 11, 0)]
+        [TestCase(11, 6, 11, 11)]
+        public void Game_calling_allowMove_move_a_pawn_into_a_fortress(int left, int up, int mLeft, int mUp)
+        {
+            Game sut = new Game(11, 11);
+
+            sut.tafl[up, left] = Pawn.Attacker;
+            Assert.Throws<Exception>(() => sut.AllowMove(3, 2, mLeft, mUp));
+        }
+        //test : take a pawn
+        [TestCase()]
+        public void Game_calling_allowMove_move_a_pawn_and_take_opposite_pawn()
+        {
+            Game sut = new Game(11, 11);
+
+            sut.tafl[3,1] = Pawn.Attacker;
+            sut.tafl[8,1] = Pawn.Attacker;
+            sut.tafl[4, 1] = Pawn.Defender;
+
+            sut.AllowMove(8, 1, 5, 1);
+
+            Assert.That(sut.tafl[4, 1], Is.EqualTo(Pawn.None));
+        }
         //test : the king is on one of the forteress
-        //test : 
+        [TestCase()]
+        public void Game_calling_allowMove_move_a_king_and_win_the_game_as_defender()
+        {
+            Game sut = new Game(11, 11);
+
+            sut.tafl[10, 1] = Pawn.King;
+
+            sut.AllowMove(10, 1, 11, 1);
+
+            Assert.That(sut.UpdateTurn, Is.EqualTo(true));
+            Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
+        }
+        //generating the first turn
+        public void Game_turn_sequence_correct_tafl()
+        {
+            Game sut = new Game(11, 11);
+
+            Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
+
+        }
+        public void Game_turn_sequence_who_play()
+        {
+            Game sut = new Game(11, 11);
+            Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
+            
+        }
+        //test : cannot moving while not his turn !
+        //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
+
+        //test : moving non-king pawn across the throne
+        //test : moving non-king pawn inside the throne
     }
 }
