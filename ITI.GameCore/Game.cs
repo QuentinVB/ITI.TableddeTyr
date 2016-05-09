@@ -20,15 +20,67 @@ namespace ITI.GameCore
         /// </summary>
         public Game()
         {
-
+            _tafl = new TaflBasic (11, 11);
+            //Set an empty tafl
+            for(int x = 0; x < 11; x++ )
+            {
+                for(int y = 0; y < 11; y++)
+                {
+                    _tafl[x, y] = Pawn.None;
+                }
+            }
+            //Set board for a standard 11*11 game [Hardcoded for IT1]
+            //Set the king and defenders
+            _tafl[5, 5] = Pawn.King;
+            _tafl[3, 5] = Pawn.Defender;
+            _tafl[4, 4] = Pawn.Defender;
+            _tafl[4, 5] = Pawn.Defender;
+            _tafl[4, 6] = Pawn.Defender;
+            _tafl[5, 3] = Pawn.Defender;
+            _tafl[5, 4] = Pawn.Defender;
+            _tafl[5, 6] = Pawn.Defender;
+            _tafl[5, 7] = Pawn.Defender;
+            _tafl[6, 4] = Pawn.Defender;
+            _tafl[6, 5] = Pawn.Defender;
+            _tafl[6, 6] = Pawn.Defender;
+            _tafl[7, 5] = Pawn.Defender;
+            //Set the attackers
+            _tafl[0, 3] = Pawn.Attacker;
+            _tafl[0, 4] = Pawn.Attacker;
+            _tafl[0, 5] = Pawn.Attacker;
+            _tafl[0, 6] = Pawn.Attacker;
+            _tafl[0, 7] = Pawn.Attacker;
+            _tafl[1, 5] = Pawn.Attacker;
+            _tafl[3, 0] = Pawn.Attacker;
+            _tafl[3, 10] = Pawn.Attacker;
+            _tafl[4, 0] = Pawn.Attacker;
+            _tafl[4, 10] = Pawn.Attacker;
+            _tafl[5, 0] = Pawn.Attacker;
+            _tafl[5, 1] = Pawn.Attacker;
+            _tafl[5, 9] = Pawn.Attacker;
+            _tafl[5, 10] = Pawn.Attacker;
+            _tafl[6, 0] = Pawn.Attacker;
+            _tafl[6, 10] = Pawn.Attacker;
+            _tafl[7, 0] = Pawn.Attacker;
+            _tafl[7, 10] = Pawn.Attacker;
+            _tafl[9, 5] = Pawn.Attacker;
+            _tafl[10, 3] = Pawn.Attacker;
+            _tafl[10, 4] = Pawn.Attacker;
+            _tafl[10, 5] = Pawn.Attacker;
+            _tafl[10, 6] = Pawn.Attacker;
+            _tafl[10, 7] = Pawn.Attacker;
+            
+            //set the attacker as the first turn, allowing the game to start
+            _atkTurn = true;
         }
-        //properties
         
+        //properties
+
         public bool IsAtkPlaying //get the current team who play turn, true if it is the the attacker
         {
             get
             {
-                throw new NotImplementedException();
+                return _atkTurn;
             }
         }
 
@@ -54,7 +106,12 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         internal bool CheckVictoryCondition()
         {
-            throw new NotImplementedException();
+            if (_tafl[0, 0] == Pawn.King) return true;
+            if (_tafl[0, 10] == Pawn.King) return true;
+            if (_tafl[10, 0] == Pawn.King) return true;
+            if (_tafl[10, 10] == Pawn.King) return true;
+            if (!_tafl.HasKing) return true;
+            return false;
         }
         //methodes - public        
         /// <summary>

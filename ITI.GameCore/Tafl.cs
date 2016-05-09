@@ -21,20 +21,21 @@ namespace ITI.GameCore
     {
         int _width;
         int _height;
-        int[,] _tafl;
+        Pawn[,] _tafl;
         //Constructor
         public TaflBasic(int width, int height)
         {
             _width = width;
             _height = height;
-            _tafl = new int[width, height];
-
+            _tafl = new Pawn[width, height];
         }
 
         public TaflBasic(ITafl source)
             : this( source.Width, source.Height )
         {
-
+            _width = Width;
+            _height = Height;
+            _tafl = new Pawn[Width, Height];
         }
 
         public int Width
@@ -49,23 +50,45 @@ namespace ITI.GameCore
 
         public int AttackerCount
         {
-            get { throw new NotImplementedException(); }
+            get {
+                int count=0;
+                foreach (Pawn Attacker in _tafl)
+                {
+                    count++;
+                }
+                return count;
+            }
         }
 
         public int DefenderCount
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                int count = 0;
+                foreach (Pawn Defender in _tafl)
+                {
+                    count++;
+                }
+                return count;
+            }
         }
 
         public bool HasKing
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                foreach (Pawn King in _tafl)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
         public Pawn this[int x, int y]
         {
-            get { return Pawn.King; }
-            set { }
+            get { return _tafl[x,y]; }
+            set { _tafl[x, y] = value; }
         }
 
     }
@@ -176,3 +199,16 @@ namespace ITI.GameCore
     */
 
 }
+/* Hard codded 11*11 /cryalot
+0 0 0 1 1 1 1 1 0 0 0
+0 0 0 0 0 1 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+1 0 0 0 0 2 0 0 0 0 1
+1 0 0 0 2 2 2 0 0 0 1
+1 1 0 2 2 3 2 2 0 1 1
+1 0 0 0 2 2 2 0 0 0 1
+1 0 0 0 0 2 0 0 0 0 1
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 1 0 0 0 0 0
+0 0 0 1 1 1 1 1 0 0 0
+*/
