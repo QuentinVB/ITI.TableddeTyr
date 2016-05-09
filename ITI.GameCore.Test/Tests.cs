@@ -192,6 +192,22 @@ namespace ITI.GameCore.Test
             Assert.That(sut[6, 8], Is.EqualTo(Pawn.Defender));
 
         }
+
+        //test : try moving pawn out of the tafl (4 cases : north, south, east, west)
+        [TestCase(3, -4)]
+        [TestCase(3, 14)]
+        [TestCase(13, 2)]
+        [TestCase(-7, 2)]
+        public void Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(int left, int up)
+        {
+            TaflBasic sut = new TaflBasic(11, 11);
+
+            sut[3, 2] = Pawn.Attacker;
+
+            Assert.Throws<ArgumentException>(() => sut[left, up] = Pawn.Attacker);
+
+        }
+
         //test : move pawn on another case
         [TestCase(11, 11)]
         public void Game_calling_allowMove_move_a_pawn(int width, int height)
@@ -219,6 +235,7 @@ namespace ITI.GameCore.Test
             Assert.Throws<ArgumentException>(() => sut.AllowMove(3, 2, left, up));
 
         }
+
         //test : try moving beyond another pawn (4 cases : north by south, south by north, east by west, west by east)
         [TestCase(6, 3,6,8)]
         [TestCase(6, 8,6,3)]
@@ -234,6 +251,7 @@ namespace ITI.GameCore.Test
 
             Assert.Throws<ArgumentException>(() => sut.AllowMove(3, 2, mLeft,mUp));
         }
+
         //test : cannot entering into a forteress (try each forteress from each angle, aka 8 try)
         [TestCase(1, 6, 1, 1)]
         [TestCase(1, 6, 1, 11)]
@@ -246,8 +264,8 @@ namespace ITI.GameCore.Test
             sut.tafl[up, left] = Pawn.Attacker;
             Assert.Throws<Exception>(() => sut.AllowMove(3, 2, mLeft, mUp));
         }
+        
         //test : take a pawn
-        [TestCase()]
         public void Game_calling_allowMove_move_a_pawn_and_take_opposite_pawn()
         {
             Game sut = new Game(11, 11);
@@ -260,8 +278,8 @@ namespace ITI.GameCore.Test
 
             Assert.That(sut.tafl[4, 1], Is.EqualTo(Pawn.None));
         }
+
         //test : the king is on one of the forteress
-        [TestCase()]
         public void Game_calling_allowMove_move_a_king_and_win_the_game_as_defender()
         {
             Game sut = new Game(11, 11);
@@ -273,20 +291,33 @@ namespace ITI.GameCore.Test
             Assert.That(sut.UpdateTurn, Is.EqualTo(true));
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
-        //generating the first turn
-        public void Game_turn_sequence_correct_tafl()
+
+        //generating the first turn NEED WORKS
+        public void Game_turn_sequence_get_correct_tafl()
         {
             Game sut = new Game(11, 11);
+            Pawn[,] ControledTafl = new Pawn[10,10];
+            ControledTafl = GetTafl;
 
-            Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
-
-        }
-        public void Game_turn_sequence_who_play()
-        {
-            Game sut = new Game(11, 11);
-            Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
+            Assert.That(ControledTafl[5,5], Is.EqualTo(Pawn.King));
             
+
         }
+
+        public void Game_turn_sequence_who_play_at_first_turn()
+        {
+            Game sut = new Game(11, 11);
+            Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));  
+              
+        }
+
+        public void Game_turn_sequence_move_pawn()
+        {
+            Game sut = new Game(11, 11);
+            Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
+
+        }
+
         //test : cannot moving while not his turn !
         //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
 
