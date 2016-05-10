@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[0-1016]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll</TopNode>
-  <SelectedNode>[0-1016]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll</SelectedNode>
+  <TopNode>[0-1021]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll</TopNode>
+  <SelectedNode>[0-1021]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
-    <Node UniqueName="[0-1016]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" Expanded="true" />
-    <Node UniqueName="[0-1017]ITI" Expanded="true" />
-    <Node UniqueName="[0-1018]ITI.GameCore" Expanded="true" />
-    <Node UniqueName="[0-1019]ITI.GameCore.Test" Expanded="true" />
+    <Node UniqueName="[0-1021]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1022]ITI" Expanded="true" />
+    <Node UniqueName="[0-1023]ITI.GameCore" Expanded="true" />
+    <Node UniqueName="[0-1024]ITI.GameCore.Test" Expanded="true" />
     <Node UniqueName="[0-1000]ITI.GameCore.Test.Tests" Expanded="true" />
     <Node UniqueName="[0-1008]ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square" Expanded="true" />
     <Node UniqueName="[0-1014]ITI.GameCore.Test.Tests.Tafl_create_a_board_and_pawns" Expanded="true" />
+    <Node UniqueName="[0-1016]ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc" Expanded="true" />
     <Node UniqueName="[0-1006]ITI.GameCore.Test.Tests.Tafl_ctor_initializes_the_tafl_correctly" Expanded="true" />
     <Node UniqueName="[0-1001]ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException" Expanded="true" />
   </Nodes>

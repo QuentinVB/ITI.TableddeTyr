@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" total="11" errors="7" failures="4" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-04-29" time="12:44:20">
+<test-results name="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" total="15" errors="11" failures="4" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-05-10" time="12:36:47">
   <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.8689" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug" machine-name="HARFANG" user="kenti" user-domain="HARFANG" />
   <culture-info current-culture="fr-FR" current-uiculture="fr-FR" />
-  <test-suite type="Assembly" name="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" executed="True" result="Failure" success="False" time="0.626" asserts="0">
+  <test-suite type="Assembly" name="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll" executed="True" result="Failure" success="False" time="0.419" asserts="0">
     <results>
-      <test-suite type="Namespace" name="ITI" executed="True" result="Failure" success="False" time="0.615" asserts="0">
+      <test-suite type="Namespace" name="ITI" executed="True" result="Failure" success="False" time="0.408" asserts="0">
         <results>
-          <test-suite type="Namespace" name="GameCore" executed="True" result="Failure" success="False" time="0.615" asserts="0">
+          <test-suite type="Namespace" name="GameCore" executed="True" result="Failure" success="False" time="0.408" asserts="0">
             <results>
-              <test-suite type="Namespace" name="Test" executed="True" result="Failure" success="False" time="0.614" asserts="0">
+              <test-suite type="Namespace" name="Test" executed="True" result="Failure" success="False" time="0.408" asserts="0">
                 <results>
-                  <test-suite type="TestFixture" name="Tests" executed="True" result="Failure" success="False" time="0.614" asserts="0">
+                  <test-suite type="TestFixture" name="Tests" executed="True" result="Failure" success="False" time="0.407" asserts="0">
                     <results>
-                      <test-suite type="ParameterizedTest" name="Tafl_check_non_presence_of_pawn_at_fortress_square" executed="True" result="Failure" success="False" time="0.417" asserts="0">
+                      <test-suite type="ParameterizedTest" name="Tafl_check_non_presence_of_pawn_at_fortress_square" executed="True" result="Failure" success="False" time="0.203" asserts="0">
                         <results>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(9,6)" executed="True" result="Error" success="False" time="0.172" asserts="0">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(9,6)" executed="True" result="Error" success="False" time="0.033" asserts="0">
                             <failure>
                               <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
                               <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(Int32 width, Int32 height)
@@ -29,21 +29,21 @@
 ]]></stack-trace>
                             </failure>
                           </test-case>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(11,11)" executed="True" result="Error" success="False" time="0.007" asserts="0">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(11,11)" executed="True" result="Error" success="False" time="0.008" asserts="0">
                             <failure>
                               <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
                               <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(Int32 width, Int32 height)
 ]]></stack-trace>
                             </failure>
                           </test-case>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(13,13)" executed="True" result="Error" success="False" time="0.009" asserts="0">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(13,13)" executed="True" result="Error" success="False" time="0.006" asserts="0">
                             <failure>
                               <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
                               <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(Int32 width, Int32 height)
 ]]></stack-trace>
                             </failure>
                           </test-case>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(15,15)" executed="True" result="Error" success="False" time="0.005" asserts="0">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(15,15)" executed="True" result="Error" success="False" time="0.006" asserts="0">
                             <failure>
                               <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
                               <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square(Int32 width, Int32 height)
@@ -54,7 +54,7 @@
                       </test-suite>
                       <test-suite type="ParameterizedTest" name="Tafl_create_a_board_and_pawns" executed="True" result="Failure" success="False" time="0.007" asserts="0">
                         <results>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_create_a_board_and_pawns(11,11)" executed="True" result="Error" success="False" time="0.006" asserts="0">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_create_a_board_and_pawns(11,11)" executed="True" result="Error" success="False" time="0.007" asserts="0">
                             <failure>
                               <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
                               <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_create_a_board_and_pawns(Int32 width, Int32 height)
@@ -63,9 +63,41 @@
                           </test-case>
                         </results>
                       </test-suite>
-                      <test-suite type="ParameterizedTest" name="Tafl_ctor_initializes_the_tafl_correctly" executed="True" result="Failure" success="False" time="0.010" asserts="0">
+                      <test-suite type="ParameterizedTest" name="Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc" executed="True" result="Failure" success="False" time="0.055" asserts="0">
                         <results>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_initializes_the_tafl_correctly(13,13)" executed="True" result="Error" success="False" time="0.009" asserts="0">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(3,-4)" executed="True" result="Error" success="False" time="0.010" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
+                              <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(Int32 left, Int32 up)
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(3,14)" executed="True" result="Error" success="False" time="0.007" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
+                              <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(Int32 left, Int32 up)
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(13,2)" executed="True" result="Error" success="False" time="0.007" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
+                              <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(Int32 left, Int32 up)
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(-7,2)" executed="True" result="Error" success="False" time="0.005" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
+                              <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(Int32 left, Int32 up)
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                        </results>
+                      </test-suite>
+                      <test-suite type="ParameterizedTest" name="Tafl_ctor_initializes_the_tafl_correctly" executed="True" result="Failure" success="False" time="0.008" asserts="0">
+                        <results>
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_initializes_the_tafl_correctly(13,13)" executed="True" result="Error" success="False" time="0.007" asserts="0">
                             <failure>
                               <message><![CDATA[System.IO.FileNotFoundException : Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.]]></message>
                               <stack-trace><![CDATA[à ITI.GameCore.Test.Tests.Tafl_ctor_initializes_the_tafl_correctly(Int32 width, Int32 height)
@@ -74,9 +106,9 @@
                           </test-case>
                         </results>
                       </test-suite>
-                      <test-suite type="ParameterizedTest" name="Tafl_ctor_with_invalid_args_should_throw_ArgumentException" executed="True" result="Failure" success="False" time="0.123" asserts="0">
+                      <test-suite type="ParameterizedTest" name="Tafl_ctor_with_invalid_args_should_throw_ArgumentException" executed="True" result="Failure" success="False" time="0.084" asserts="0">
                         <results>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(0,3)" executed="True" result="Failure" success="False" time="0.030" asserts="1">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(0,3)" executed="True" result="Failure" success="False" time="0.014" asserts="1">
                             <failure>
                               <message><![CDATA[  Expected: <System.ArgumentException>
   But was:  <System.IO.FileNotFoundException> (Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.)
@@ -98,7 +130,7 @@
 ]]></stack-trace>
                             </failure>
                           </test-case>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(2,3)" executed="True" result="Failure" success="False" time="0.007" asserts="1">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(2,3)" executed="True" result="Failure" success="False" time="0.023" asserts="1">
                             <failure>
                               <message><![CDATA[  Expected: <System.ArgumentException>
   But was:  <System.IO.FileNotFoundException> (Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.)
@@ -109,7 +141,7 @@
 ]]></stack-trace>
                             </failure>
                           </test-case>
-                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(9,6)" executed="True" result="Failure" success="False" time="0.008" asserts="1">
+                          <test-case name="ITI.GameCore.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(9,6)" executed="True" result="Failure" success="False" time="0.006" asserts="1">
                             <failure>
                               <message><![CDATA[  Expected: <System.ArgumentException>
   But was:  <System.IO.FileNotFoundException> (Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.)

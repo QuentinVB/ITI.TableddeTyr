@@ -207,7 +207,7 @@ namespace ITI.GameCore.Test
             Assert.Throws<ArgumentException>(() => sut[left, up] = Pawn.Attacker);
 
         }
-
+        /*
         //test : move pawn on another case
         [TestCase(11, 11)]
         public void Game_calling_allowMove_move_a_pawn(int width, int height)
@@ -323,5 +323,6 @@ namespace ITI.GameCore.Test
 
         //test : moving non-king pawn across the throne
         //test : moving non-king pawn inside the throne
+        */
     }
 }
