@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1024]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.TabledeTyr.Test.dll</TopNode>
+  <SelectedNode>[0-1005]ITI.TabledeTyr.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(0,3)</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1024]D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.TabledeTyr.Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1025]ITI" Expanded="true" />
+    <Node UniqueName="[0-1026]ITI.TabledeTyr" Expanded="true" />
+    <Node UniqueName="[0-1027]ITI.TabledeTyr.Test" Expanded="true" />
+    <Node UniqueName="[0-1000]ITI.TabledeTyr.Test.Tests" Expanded="true" />
+    <Node UniqueName="[0-1011]ITI.TabledeTyr.Test.Tests.Tafl_check_non_presence_of_pawn_at_fortress_square" Expanded="true" />
+    <Node UniqueName="[0-1017]ITI.TabledeTyr.Test.Tests.Tafl_create_a_board_and_pawns" Expanded="true" />
+    <Node UniqueName="[0-1019]ITI.TabledeTyr.Test.Tests.Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc" Expanded="true" />
+    <Node UniqueName="[0-1009]ITI.TabledeTyr.Test.Tests.Tafl_ctor_initializes_the_tafl_correctly" Expanded="true" />
+    <Node UniqueName="[0-1004]ITI.TabledeTyr.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException" Expanded="true" />
+    <Node UniqueName="[0-1001]ITI.TabledeTyr.Test.Tests.Tafl_test" Expanded="true" />
+  </Nodes>
+</VisualState>

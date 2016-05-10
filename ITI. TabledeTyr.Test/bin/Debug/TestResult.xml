@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.TabledeTyr.Test.dll" total="1" errors="0" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-05-10" time="16:33:01">
+  <environment nunit-version="2.6.4.14350" clr-version="2.0.50727.8689" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug" machine-name="HARFANG" user="kenti" user-domain="HARFANG" />
+  <culture-info current-culture="fr-FR" current-uiculture="fr-FR" />
+  <test-suite type="Assembly" name="D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.TabledeTyr.Test.dll" executed="True" result="Failure" success="False" time="0.013" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="ITI" executed="True" result="Failure" success="False" time="0.013" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="TabledeTyr" executed="True" result="Failure" success="False" time="0.012" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Test" executed="True" result="Failure" success="False" time="0.012" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="Tests" executed="True" result="Failure" success="False" time="0.012" asserts="0">
+                    <results>
+                      <test-suite type="ParameterizedTest" name="Tafl_ctor_with_invalid_args_should_throw_ArgumentException" executed="True" result="Failure" success="False" time="0.011" asserts="0">
+                        <results>
+                          <test-case name="ITI.TabledeTyr.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(0,3)" executed="True" result="Failure" success="False" time="0.009" asserts="1">
+                            <failure>
+                              <message><![CDATA[  Expected: <System.ArgumentException>
+  But was:  <System.IO.FileNotFoundException> (Impossible de charger le fichier ou l'assembly 'ITI.GameCore, Version=1.0.0.0, Culture=fr, PublicKeyToken=null' ou une de ses dépendances. Le fichier spécifié est introuvable.)
+   à ITI.TabledeTyr.Test.Tests.<>c__DisplayClass1_0.<Tafl_ctor_with_invalid_args_should_throw_ArgumentException>b__0()
+   à NUnit.Framework.Assert.Throws(IResolveConstraint expression, TestDelegate code, String message, Object[] args)
+]]></message>
+                              <stack-trace><![CDATA[à ITI.TabledeTyr.Test.Tests.Tafl_ctor_with_invalid_args_should_throw_ArgumentException(Int32 width, Int32 height) dans D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\Tests.cs:ligne 41
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
