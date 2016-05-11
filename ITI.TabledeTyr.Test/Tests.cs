@@ -44,6 +44,15 @@ namespace ITI.TabledeTyr.Test
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new TaflBasic(width, height));
         }
+        [TestCase(7, 3)]
+        [TestCase(7, 4)]
+        [TestCase(7, 15)]
+        [TestCase(7, 17)]
+        [TestCase(7, 21)]
+        public void Tafl_ctor_height_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new TaflBasic(width, height));
+        }
 
         [TestCase(13, 13)]
         public void Tafl_ctor_initializes_the_tafl_correctly(int width, int height)
@@ -80,129 +89,128 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut[i, j], Is.EqualTo(Pawn.None));
         }
 
-        [TestCase(10, 10)]
+        [TestCase(11, 11)]
         public void Tafl_create_a_board_and_pawns(int width, int height)
         {
             TaflBasic sut = new TaflBasic(width, height);
             /*
-             X 00 01 02 03 04 05 06 07 08 09 10 x
-            00 -- -- 01 01 01 01 01 01 01 -- --
-            01 -- -- -- -- -- 01 -- -- -- -- --
-            02 01 -- -- -- -- -- -- -- -- -- 01
-            03 01 -- -- -- -- 10 -- -- -- -- 01
-            04 01 -- -- -- 10 10 10 -- -- -- 01
-            05 01 01 -- 10 10 11 10 10 -- 01 01
-            06 01 -- -- -- 10 10 10 -- -- -- 01
-            07 01 -- -- -- -- 10 -- -- -- -- 01
-            08 01 -- -- -- -- -- -- -- -- -- 01
-            09 -- -- -- -- -- 01 -- -- -- -- --
-            10 -- -- 01 01 01 01 01 01 01 -- --
+             X 01 02 03 04 05 06 07 08 09 10 11 x
+            01 -- -- 01 01 01 01 01 01 01 -- --
+            02 -- -- -- -- -- 01 -- -- -- -- --
+            03 01 -- -- -- -- -- -- -- -- -- 01
+            04 01 -- -- -- -- 10 -- -- -- -- 01
+            05 01 -- -- -- 10 10 10 -- -- -- 01
+            06 01 01 -- 10 10 11 10 10 -- 01 01
+            07 01 -- -- -- 10 10 10 -- -- -- 01
+            08 01 -- -- -- -- 10 -- -- -- -- 01
+            09 01 -- -- -- -- -- -- -- -- -- 01
+            10 -- -- -- -- -- 01 -- -- -- -- --
+            11 -- -- 01 01 01 01 01 01 01 -- --
             y
 
             */
-            #region putting pieces
-            sut[5, 5] = Pawn.King;
-            //defensor
-            sut[5, 3] = Pawn.Defender;
-            sut[4, 4] = Pawn.Defender;
-            sut[5, 4] = Pawn.Defender;
+            #region setting pawns
+            sut[6, 6] = Pawn.King;
+
             sut[6, 4] = Pawn.Defender;
-            sut[3, 5] = Pawn.Defender;
-            sut[4, 5] = Pawn.Defender;
+            sut[5, 5] = Pawn.Defender;
             sut[6, 5] = Pawn.Defender;
             sut[7, 5] = Pawn.Defender;
             sut[4, 6] = Pawn.Defender;
             sut[5, 6] = Pawn.Defender;
-            sut[6, 6] = Pawn.Defender;
+            sut[7, 6] = Pawn.Defender;
+            sut[8, 6] = Pawn.Defender;
             sut[5, 7] = Pawn.Defender;
+            sut[6, 7] = Pawn.Defender;
+            sut[7, 7] = Pawn.Defender;
+            sut[6, 8] = Pawn.Defender;
             //north line
-            sut[2, 0] = Pawn.Attacker;
-            sut[3, 0] = Pawn.Attacker;
-            sut[4, 0] = Pawn.Attacker;
-            sut[5, 0] = Pawn.Attacker;
-            sut[6, 0] = Pawn.Attacker;
-            sut[7, 0] = Pawn.Attacker;
-            sut[8, 0] = Pawn.Attacker;
+            sut[3, 1] = Pawn.Attacker;
+            sut[4, 1] = Pawn.Attacker;
             sut[5, 1] = Pawn.Attacker;
+            sut[6, 1] = Pawn.Attacker;
+            sut[7, 1] = Pawn.Attacker;
+            sut[8, 1] = Pawn.Attacker;
+            sut[9, 1] = Pawn.Attacker;
+            sut[6, 2] = Pawn.Attacker;
             //south line
-            sut[2, 10] = Pawn.Attacker;
-            sut[3, 10] = Pawn.Attacker;
-            sut[4, 10] = Pawn.Attacker;
-            sut[5, 10] = Pawn.Attacker;
+            sut[3, 11] = Pawn.Attacker;
+            sut[4, 11] = Pawn.Attacker;
+            sut[5, 11] = Pawn.Attacker;
+            sut[6, 11] = Pawn.Attacker;
+            sut[7, 11] = Pawn.Attacker;
+            sut[8, 11] = Pawn.Attacker;
+            sut[9, 11] = Pawn.Attacker;
             sut[6, 10] = Pawn.Attacker;
-            sut[5, 10] = Pawn.Attacker;
-            sut[4, 10] = Pawn.Attacker;
-            sut[3, 9] = Pawn.Attacker;
             //west line
-            sut[0, 2] = Pawn.Attacker;
-            sut[0, 3] = Pawn.Attacker;
-            sut[0, 4] = Pawn.Attacker;
-            sut[0, 5] = Pawn.Attacker;
-            sut[0, 6] = Pawn.Attacker;
-            sut[0, 7] = Pawn.Attacker;
-            sut[0, 8] = Pawn.Attacker;
+            sut[1, 3] = Pawn.Attacker;
+            sut[1, 4] = Pawn.Attacker;
             sut[1, 5] = Pawn.Attacker;
+            sut[1, 6] = Pawn.Attacker;
+            sut[1, 7] = Pawn.Attacker;
+            sut[1, 8] = Pawn.Attacker;
+            sut[1, 9] = Pawn.Attacker;
+            sut[2, 6] = Pawn.Attacker;
             //east line
-            sut[10, 2] = Pawn.Attacker;
-            sut[10, 3] = Pawn.Attacker;
-            sut[10, 4] = Pawn.Attacker;
-            sut[10, 5] = Pawn.Attacker;
+            sut[11, 3] = Pawn.Attacker;
+            sut[11, 4] = Pawn.Attacker;
+            sut[11, 5] = Pawn.Attacker;
+            sut[11, 6] = Pawn.Attacker;
+            sut[11, 7] = Pawn.Attacker;
+            sut[11, 8] = Pawn.Attacker;
+            sut[11, 9] = Pawn.Attacker;
             sut[10, 6] = Pawn.Attacker;
-            sut[10, 7] = Pawn.Attacker;
-            sut[10, 8] = Pawn.Attacker;
-            sut[9, 5] = Pawn.Attacker;
             #endregion
-
             //check the king
-            Assert.That(sut[5, 5], Is.EqualTo(Pawn.King));
+            Assert.That(sut[6, 6], Is.EqualTo(Pawn.King));
 
             //check the attacker
             //north line
-            for (int i = 2; i <= 8; i++)
+            for (int i = 3; i <= 9; i++)
             {
-                Assert.That(sut[i, 0], Is.EqualTo(Pawn.Attacker));
+                Assert.That(sut[i, 1], Is.EqualTo(Pawn.Attacker));
             }
-            Assert.That(sut[5, 1], Is.EqualTo(Pawn.Attacker));
+            Assert.That(sut[6, 2], Is.EqualTo(Pawn.Attacker));
 
             //south line
-            for (int i = 2; i <= 8; i++)
+            for (int i = 3; i <= 9; i++)
             {
-                Assert.That(sut[i, 10], Is.EqualTo(Pawn.Attacker));
+                Assert.That(sut[i, 11], Is.EqualTo(Pawn.Attacker));
             }
-            Assert.That(sut[5, 9], Is.EqualTo(Pawn.Attacker));
+            Assert.That(sut[6, 10], Is.EqualTo(Pawn.Attacker));
 
             //west line
-            for (int i = 2; i <= 8; i++)
+            for (int i = 3; i <= 9; i++)
             {
-                Assert.That(sut[0, i], Is.EqualTo(Pawn.Attacker));
+                Assert.That(sut[1, i], Is.EqualTo(Pawn.Attacker));
             }
-            Assert.That(sut[1, 5], Is.EqualTo(Pawn.Attacker));
+            Assert.That(sut[2, 6], Is.EqualTo(Pawn.Attacker));
 
             //east line
-            for (int i = 2; i <= 8; i++)
+            for (int i = 3; i <= 9; i++)
             {
-                Assert.That(sut[10, i], Is.EqualTo(Pawn.Attacker));
+                Assert.That(sut[11, i], Is.EqualTo(Pawn.Attacker));
             }
-            Assert.That(sut[9, 5], Is.EqualTo(Pawn.Attacker));
+            Assert.That(sut[10, 6], Is.EqualTo(Pawn.Attacker));
 
             //check defender squares
-            Assert.That(sut[5, 3], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut[6, 4], Is.EqualTo(Pawn.Defender));
 
-            for (int i = 4; i <= 6; i++)
-            {
-                Assert.That(sut[i, 4], Is.EqualTo(Pawn.Defender));
-            }
-
-            for (int i = 3; i <= 7; i++)
+            for (int i = 5; i <= 7; i++)
             {
                 Assert.That(sut[i, 5], Is.EqualTo(Pawn.Defender));
             }
 
-            for (int i = 4; i <= 6; i++)
+            for (int i = 4; i <= 8; i++)
             {
                 Assert.That(sut[i, 6], Is.EqualTo(Pawn.Defender));
             }
-            Assert.That(sut[5, 7], Is.EqualTo(Pawn.Defender));
+
+            for (int i = 5; i <= 7; i++)
+            {
+                Assert.That(sut[i, 7], Is.EqualTo(Pawn.Defender));
+            }
+            Assert.That(sut[6, 8], Is.EqualTo(Pawn.Defender));
 
         }
 
@@ -287,11 +295,8 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
         //test : move pawn on another case
-
-
         //test : try moving pawn out of the tafl (4 cases : north, south, east, west)
         //test : try moving beyond another pawn (4 cases : north by south, south by north, east by west, west by east)
-
         //test : cannot entering into a forteress (try each forteress from each angle, aka 8 try)
         //test : take a pawn
         //test : the king is on one of the forteress    
@@ -301,3 +306,4 @@ namespace ITI.TabledeTyr.Test
         //test : moving non-king pawn inside the throne
     }
 }
+
