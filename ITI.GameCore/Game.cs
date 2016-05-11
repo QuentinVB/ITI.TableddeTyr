@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ITI.GameCore
 {
     public class Game
-    {                
+    {
         //attributes        
         bool _atkTurn; //true if it is the turn of attacker, else false if the turn of defensor
 
@@ -20,11 +20,11 @@ namespace ITI.GameCore
         /// </summary>
         public Game()
         {
-            _tafl = new TaflBasic (11, 11);
+            _tafl = new TaflBasic(11, 11);
             //Set an empty tafl
-            for(int x = 0; x < 11; x++ )
+            for (int x = 0; x < 11; x++)
             {
-                for(int y = 0; y < 11; y++)
+                for (int y = 0; y < 11; y++)
                 {
                     _tafl[x, y] = Pawn.None;
                 }
@@ -69,11 +69,11 @@ namespace ITI.GameCore
             _tafl[10, 5] = Pawn.Attacker;
             _tafl[10, 6] = Pawn.Attacker;
             _tafl[10, 7] = Pawn.Attacker;
-            
+
             //set the attacker as the first turn, allowing the game to start
             _atkTurn = true;
         }
-        
+
         //properties
 
         public bool IsAtkPlaying //get the current team who play turn, true if it is the the attacker
@@ -83,6 +83,8 @@ namespace ITI.GameCore
                 return _atkTurn;
             }
         }
+
+        public Pawn[,] GetTafl { get; }
 
         //Methods - internal                
         /// <summary>
@@ -96,7 +98,7 @@ namespace ITI.GameCore
         {
             //heavy code here ! Checking capture AND checking capture of the king (aka circling the king and his defensor)
             throw new NotImplementedException();
-            
+
         }
         /// <summary>
         ///check if victory condition for the defensor are met (aka the king reach the forteress)

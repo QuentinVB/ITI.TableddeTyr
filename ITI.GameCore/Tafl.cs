@@ -9,7 +9,7 @@ namespace ITI.GameCore
     /// <summary>
     /// Nature of the pawn: a <see cref="Tafl"/> is a board of pawns.
     /// </summary>
-    public enum Pawn 
+    public enum Pawn
     {
         None,
         Attacker,
@@ -31,7 +31,7 @@ namespace ITI.GameCore
         }
 
         public TaflBasic(ITafl source)
-            : this( source.Width, source.Height )
+            : this(source.Width, source.Height)
         {
             _width = Width;
             _height = Height;
@@ -50,8 +50,9 @@ namespace ITI.GameCore
 
         public int AttackerCount
         {
-            get {
-                int count=0;
+            get
+            {
+                int count = 0;
                 foreach (Pawn Attacker in _tafl)
                 {
                     count++;
@@ -87,7 +88,7 @@ namespace ITI.GameCore
 
         public Pawn this[int x, int y]
         {
-            get { return _tafl[x,y]; }
+            get { return _tafl[x, y]; }
             set { _tafl[x, y] = value; }
         }
 
@@ -101,8 +102,8 @@ namespace ITI.GameCore
 
         }
 
-        public TaflCompressed( ITafl source )
-            : this( source.Width, source.Height )
+        public TaflCompressed(ITafl source)
+            : this(source.Width, source.Height)
         {
 
         }

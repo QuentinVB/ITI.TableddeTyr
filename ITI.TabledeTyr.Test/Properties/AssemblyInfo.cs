@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de 
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("ITI.GameCore")]
+[assembly: AssemblyTitle("ITI.TabledeTyr.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ITI.GameCore")]
+[assembly: AssemblyProduct("ITI.TabledeTyr.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("5edee01d-f675-4051-97ca-b0d3d7ebc1c9")]
+[assembly: Guid("50483fa4-cc60-4f31-aae6-8c00a93ff1da")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //

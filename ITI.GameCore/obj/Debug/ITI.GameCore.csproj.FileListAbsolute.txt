@@ -1,5 +1,0 @@
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore\bin\Debug\ITI.GameCore.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore\bin\Debug\ITI.GameCore.pdb
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore\obj\Debug\ITI.GameCore.csprojResolveAssemblyReference.cache
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore\obj\Debug\ITI.GameCore.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore\obj\Debug\ITI.GameCore.pdb
