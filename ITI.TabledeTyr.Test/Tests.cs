@@ -15,39 +15,32 @@ namespace ITI.TabledeTyr.Test
         /// 1 : 01 : atk : attacker,
         /// 2 : 10 : def : defensor,
         /// 3 : 11 : kig : king
-        [TestCase(1, 1)]
-        [TestCase(3, 3)]
-        public void Tafl_test(int a, int b)
-        {
-            Assert.That(a, Is.EqualTo(b));
-        }
-        /*
-        public void playing_with_tafl()
-        {
-            Assert.Throws<ArgumentException>(() => new TaflBasic(12, 35));
-            TaflBasic t = new TaflBasic(13, 13);
-
-            t[2, 2] = Pawn.Defender;
-            Assert.That(t[2, 2], Is.EqualTo(Pawn.Attacker));
-        }
-        */
         //not even
-        [TestCase(5, 6)]// 6
-        [TestCase(6, 5)]// 6 
-        [TestCase(11, 12)]// 12
-        [TestCase(12, 11)]// over 6
-        [TestCase(22, 22)]// over 22
-        public void Tafl_ctor_with_even_args_should_throw_ArgumentException(int width, int height)
+        [TestCase(7, 6)]
+        [TestCase(7, 8)] 
+        [TestCase(7, 10)]
+        [TestCase(7, 12)]
+        [TestCase(7, 22)]
+        public void Tafl_ctor_width_with_even_args_should_throw_ArgumentException(int width, int height)
         {
             Assert.Throws<ArgumentException>(() => new TaflBasic(width, height));
         }
-        //n>4 , n<15
-        [TestCase(4, 5)]// no
-        [TestCase(5, 4)]// no 
-        [TestCase(15, 16)]// lower than 7
-        [TestCase(16, 15)]// over 15
-        [TestCase(21, 21)]// over 15
-        public void Tafl_ctor_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
+        [TestCase(6, 7)]
+        [TestCase(8, 7)]
+        [TestCase(10, 7)]
+        [TestCase(12, 7)]
+        [TestCase(22, 7)]
+        public void Tafl_ctor_height_with_even_args_should_throw_ArgumentException(int width, int height)
+        {
+            Assert.Throws<ArgumentException>(() => new TaflBasic(width, height));
+        }
+        //n>4,n<15
+        [TestCase(3, 7)]
+        [TestCase(4, 7)]
+        [TestCase(15, 7)]
+        [TestCase(17, 7)]
+        [TestCase(21, 7)]
+        public void Tafl_ctor_width_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => new TaflBasic(width, height));
         }
@@ -220,7 +213,7 @@ namespace ITI.TabledeTyr.Test
         [TestCase(-7, 2)]
         public void Tafl_creating_piece_out_of_the_tafl_should_throw_arg_exc(int left, int up)
         {
-            TaflBasic sut = new TaflBasic(10, 10);
+            TaflBasic sut = new TaflBasic(11, 11);
 
             sut[3, 2] = Pawn.Attacker;
 
@@ -231,7 +224,9 @@ namespace ITI.TabledeTyr.Test
         {
 
         }
-        public void Game_setting_complete_turn()
+
+        [TestCase(2, 3)]
+        public void Game_setting_complete_turn(int x,int y)
         {
             // L'interlocuteur demande l'Initialisation du jeu: 
             //    -Le core créé le tafl, si l'interlocuteur lui a envoyé une configuration spéciale (taille,disposition des pièces) il en prendra compte dans sa création 
@@ -256,8 +251,6 @@ namespace ITI.TabledeTyr.Test
             Assert.That(movableTafl[2,0], Is.EqualTo(true));
             // ACTION UTILISATEUR
             // L'interlocuteur sélectionne une pièce (directement dans les tests ou après un événement de l'utilisateur dans l'UI) 
-            int x = 2;
-            int y = 0;
             // L'interlocuteur appelle TryMove pour savoir les mouvements possible du pion sélectionné. 
             //- le core lui envoie un Array de Pawn correspondant aux mouvements possible basé sur l'état du Tafl 
             pawnDestinations = sut.TryMove(x,y);
@@ -268,7 +261,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(pawnDestinations[2, 10], Is.EqualTo(false));
             //ACTION UTILISATEUR
             //-L'interlocuteur valide le mouvement en appellant AllowMove
-            sut.AllowMove(x, y, x , y + 3);
+            bool pawnMoved = sut.AllowMove(x, y, x , y + 3);
             //- Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
             //- Le core appelle CheckVictoryCondition
             // - CheckVictoryCondition vérifie si le roi à été pris en appellant le tafl Si c'est le cas il renvoie True à update turn
