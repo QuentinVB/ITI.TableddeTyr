@@ -5,14 +5,14 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de 
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("ITI. TabledeTyr.Test")]
+[assembly: AssemblyTitle("ITI.TabledeTyr.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ITI. TabledeTyr.Test")]
+[assembly: AssemblyProduct("ITI.TabledeTyr.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("fr")]
+[assembly: AssemblyCulture("")]
 
 // L'affectation de la valeur false à ComVisible rend les types invisibles dans cet assembly 
 // aux composants COM.  Si vous devez accéder à un type dans cet assembly à partir de 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("872179b5-6140-4917-aa3c-9f13f05ecf1b")]
+[assembly: Guid("50483fa4-cc60-4f31-aae6-8c00a93ff1da")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //

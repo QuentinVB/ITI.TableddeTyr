@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{872179B5-6140-4917-AA3C-9F13F05ECF1B}</ProjectGuid>
+    <ProjectGuid>{50483FA4-CC60-4F31-AAE6-8C00A93FF1DA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ITI.TabledeTyr.Test</RootNamespace>
@@ -48,13 +48,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ITI.GameCore\ITI.GameCore.csproj">
-      <Project>{878eb81f-aab7-411a-b0db-1e3108534147}</Project>
-      <Name>ITI.GameCore</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\ITI.GameCore\ITI.GameCore.csproj">
+      <Project>{5edee01d-f675-4051-97ca-b0d3d7ebc1c9}</Project>
+      <Name>ITI.GameCore</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

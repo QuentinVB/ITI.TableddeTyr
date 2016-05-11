@@ -17,7 +17,7 @@ namespace ITI.TabledeTyr.Test
         /// 3 : 11 : kig : king
         [TestCase(1, 1)]
         [TestCase(3, 3)]
-        public void Tafl_test(int a,int b)
+        public void Tafl_test(int a, int b)
         {
             Assert.That(a, Is.EqualTo(b));
         }
@@ -31,14 +31,14 @@ namespace ITI.TabledeTyr.Test
             Assert.That(t[2, 2], Is.EqualTo(Pawn.Attacker));
         }
         */
-
-        [TestCase(0, 3)]
-        [TestCase(5, 0)]
-        [TestCase(2, 3)]
-        [TestCase(9, 6)]
+        //n>5 , n<15
+        [TestCase(0, 3)]// no
+        [TestCase(5, 0)]// no 
+        [TestCase(2, 3)]// lower than 7
+        [TestCase(16, 5)]// over 15
         public void Tafl_ctor_with_invalid_args_should_throw_ArgumentException(int width, int height)
         {
-            Assert.Throws<ArgumentException>(() => new TaflBasic(width, height));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new TaflBasic(width, height));
         }
 
         [TestCase(13, 13)]

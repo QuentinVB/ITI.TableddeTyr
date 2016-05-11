@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{878EB81F-AAB7-411A-B0DB-1E3108534147}</ProjectGuid>
+    <ProjectGuid>{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ITI.GameCore</RootNamespace>

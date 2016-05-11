@@ -1,9 +1,0 @@
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.TabledeTyr.Test.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.TabledeTyr.Test.pdb
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.GameCore.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\nunit.framework.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\ITI.GameCore.pdb
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\bin\Debug\nunit.framework.xml
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\obj\Debug\ITI. TabledeTyr.Test.csprojResolveAssemblyReference.cache
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\obj\Debug\ITI.TabledeTyr.Test.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI. TabledeTyr.Test\obj\Debug\ITI.TabledeTyr.Test.pdb
