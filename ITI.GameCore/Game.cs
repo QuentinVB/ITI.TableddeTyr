@@ -84,6 +84,8 @@ namespace ITI.GameCore
             }
         }
 
+        public Pawn[,] GetTafl { get; }
+
         //Methods - internal                
         /// <summary>
         /// check the capture around this piece then remove the piece(s).
