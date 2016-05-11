@@ -33,7 +33,7 @@ namespace ITI.GameCore
             //Creating the new _tafl
             _width = width;
             _height = height;
-            _tafl = new Pawn[width, height];
+            _tafl = new Pawn[width-1, height-1];
         }
 
         public TaflBasic(ITafl source)
@@ -41,12 +41,12 @@ namespace ITI.GameCore
         {
             //Tests in case of very critical problem. If these are triggered, nuke the matrix.
             if (Width % 2 == 0) throw new ArgumentException("Width of the tafl must be odd", nameof(Width));
-            if (Width < 7 || Width > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(Width));
+            if (Width < 5 || Width > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(Width));
             if (Height % 2 == 0) throw new ArgumentException("Height of the tafl must be odd", nameof(Height));
-            if (Height < 7 || Height > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(Height));
+            if (Height < 5 || Height > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(Height));
             _width = Width;
             _height = Height;
-            _tafl = new Pawn[Width, Height];
+            _tafl = new Pawn[Width-1, Height-1];
         }
 
         public int Width

@@ -22,14 +22,15 @@ namespace ITI.GameCore
         {
             _tafl = new TaflBasic (11, 11);
             //Set an empty tafl
-            for(int x = 0; x < 11; x++ )
+            for(int y = 0; y < 11; y++ )
             {
-                for(int y = 0; y < 11; y++)
+                for(int x = 0; x < 11; x++)
                 {
                     _tafl[x, y] = Pawn.None;
                 }
             }
             //Set board for a standard 11*11 game [Hardcoded for IT1]
+            #region Setting the board
             //Set the king and defenders
             _tafl[5, 5] = Pawn.King;
             _tafl[3, 5] = Pawn.Defender;
@@ -69,7 +70,8 @@ namespace ITI.GameCore
             _tafl[10, 5] = Pawn.Attacker;
             _tafl[10, 6] = Pawn.Attacker;
             _tafl[10, 7] = Pawn.Attacker;
-            
+            #endregion
+
             //set the attacker as the first turn, allowing the game to start
             _atkTurn = true;
         }
@@ -113,6 +115,36 @@ namespace ITI.GameCore
             if (!_tafl.HasKing) return true;
             return false;
         }
+        
+        internal bool CheckUp(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        {
+            if (y - 1 < 0) return false;
+            if (_tafl[x, y - 1] != Pawn.None) return false;
+            if (_tafl[x, y - 1] == Pawn.None) return true;
+            return false;
+        }
+
+        internal bool CheckDown(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        {
+            if (y + 1 < 10) return false;
+            if (_tafl[x, y + 1] != Pawn.None) return false;
+            if (_tafl[x, y + 1] == Pawn.None) return true;
+            return false;
+        }
+        internal bool CheckLeft(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        {
+            if (x - 1 < 0) return false;
+            if (_tafl[x - 1, y] != Pawn.None) return false;
+            if (_tafl[x - 1, y] == Pawn.None) return true;
+            return false;
+        }
+        internal bool CheckRight(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        {
+            if (x + 1 > 10) return false;
+            if (_tafl[x + 1, y] != Pawn.None) return false;
+            if (_tafl[x + 1, y] == Pawn.None) return true;
+            return false;
+        }
         //methodes - public        
         /// <summary>
         /// Send to the UI ou AI the piece(s) that are movable for this turn.
@@ -121,8 +153,21 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         public bool[,] CheckMove()
         {
-            throw new NotImplementedException();
+            bool[,] ret = new bool[_tafl.Width, _tafl.Height] ;
+            for (int y = 0; y < 11; y++)
+            {
+                for (int x = 0; x < 11; x++)
+                {
+                    if (CheckUp(x, y) == true) ret[x, y] = true;
+                    else if (CheckDown(x, y) == true) ret[x, y] = true;
+                    else if (CheckLeft(x, y) == true) ret[x, y] = true;
+                    else if (CheckRight(x, y) == true) ret[x, y] = true;
+                    else ret[x, y] = false;
+                }
+            }
+            return ret;
         }
+
         /// <summary>
         /// Send to the UI ou AI the possible position for this piece for this turn.
         /// </summary>
