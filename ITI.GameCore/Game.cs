@@ -20,7 +20,7 @@ namespace ITI.GameCore
         /// </summary>
         public Game()
         {
-            _tafl = new TaflBasic (11, 11);
+            _tafl = new TaflBasic (10, 10);
             //Set an empty tafl
             for(int y = 0; y < 11; y++ )
             {
@@ -96,7 +96,9 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         internal bool CheckCapture(int x, int y)
         {
-            //heavy code here ! Checking capture AND checking capture of the king (aka circling the king and his defensor)
+            //Scaning around
+            //Basic capture of a pawn - For now, tricky tricks won't be implemented
+            //Basic capture of the king - For now, tricky tricks won't be implemented
             throw new NotImplementedException();
             
         }
@@ -115,8 +117,8 @@ namespace ITI.GameCore
             if (!_tafl.HasKing) return true;
             return false;
         }
-        
-        internal bool CheckUp(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        #region Checkers for emptyness
+        internal bool CheckUp(int x, int y)             
         {
             if (y - 1 < 0) return false;
             if (_tafl[x, y - 1] != Pawn.None) return false;
@@ -124,27 +126,29 @@ namespace ITI.GameCore
             return false;
         }
 
-        internal bool CheckDown(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        internal bool CheckDown(int x, int y)             
         {
-            if (y + 1 < 10) return false;
+            if (y + 1 < _tafl.Height) return false;
             if (_tafl[x, y + 1] != Pawn.None) return false;
             if (_tafl[x, y + 1] == Pawn.None) return true;
             return false;
         }
-        internal bool CheckLeft(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        internal bool CheckLeft(int x, int y)             
         {
             if (x - 1 < 0) return false;
             if (_tafl[x - 1, y] != Pawn.None) return false;
             if (_tafl[x - 1, y] == Pawn.None) return true;
             return false;
         }
-        internal bool CheckRight(int x, int y)             //TRIGGER WARNING - MAGIC NUMER HERE !
+        internal bool CheckRight(int x, int y)             
         {
-            if (x + 1 > 10) return false;
+            if (x + 1 > _tafl.Width) return false;
             if (_tafl[x + 1, y] != Pawn.None) return false;
             if (_tafl[x + 1, y] == Pawn.None) return true;
             return false;
         }
+        #endregion
+
         //methodes - public        
         /// <summary>
         /// Send to the UI ou AI the piece(s) that are movable for this turn.
@@ -154,9 +158,9 @@ namespace ITI.GameCore
         public bool[,] CheckMove()
         {
             bool[,] ret = new bool[_tafl.Width, _tafl.Height] ;
-            for (int y = 0; y < 11; y++)
+            for (int y = 0; y < _tafl.Height+1; y++)
             {
-                for (int x = 0; x < 11; x++)
+                for (int x = 0; x < _tafl.Width+1; x++)
                 {
                     if (CheckUp(x, y) == true) ret[x, y] = true;
                     else if (CheckDown(x, y) == true) ret[x, y] = true;
@@ -177,7 +181,44 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         public bool[,] TryMove(int x, int y)//
         {
-            throw new NotImplementedException();
+            Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
+            bool[,] ret = new bool[_tafl.Width, _tafl.Height];
+            //Checking squares above
+            int i = y - 1;
+            while (CheckUp(x,i) == true){
+                if (CheckUp(x, i) == false) break;
+                ret[x, i] = true;
+                i--;
+                if (i < 0) break;
+            }
+            //Checking squares under
+            i = y+1;
+            while (CheckDown(x, i) == true)
+            {
+                if (CheckDown(x, i) == false) break;
+                ret[x, i] = true;
+                i++;
+                if (i > _tafl.Height) break;
+            }
+            //Checking suqares right
+            i = x+1;
+            while (CheckRight(i, y)==true)
+            {
+                if (CheckRight(i, y) == false) break;
+                ret[i, y] = true;
+                i++;
+                if (i > _tafl.Width) break;
+            }
+            //Checking squares left
+            i = x - 1;
+            while (CheckRight(i, y) == true)
+            {
+                if (CheckRight(i, y) == false) break;
+                ret[i, y] = true;
+                i++;
+                if (i < 0) break;
+            }
+            return ret;
         }
         /// <summary>
         /// Allows the designated pieces to move the piece to another coordinate, 
@@ -191,7 +232,52 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         public bool AllowMove(int x, int y, int x2, int y2)
         {
-            throw new NotImplementedException();
+            Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
+            Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
+            if (x != x2 && y != y2) return false;
+            //Verifying that the move is leggit (TryMove might've been bypassed)
+            if (x > x2)
+            {
+                for(int i = x; i > x2; i--)
+                {
+                    if (!CheckLeft(i, y)) return false;
+                }
+                _tafl[x2, y2] = _tafl[x, y];
+                _tafl[x, y] = Pawn.None;
+                return true;
+            }
+            if (x < x2)
+            {
+                for (int i = x; i < x2; i++)
+                {
+                    if (!CheckLeft(i, y)) return false;
+                }
+                _tafl[x2, y2] = _tafl[x, y];
+                _tafl[x, y] = Pawn.None;
+                return true;
+            }
+            if (y > y2)
+            {
+                for (int i = y; i > y2; i--)
+                {
+                    if (!CheckLeft(x, i)) return false;
+                }
+                _tafl[x2, y2] = _tafl[x, y];
+                _tafl[x, y] = Pawn.None;
+                return true;
+            }
+            if (y < y2)
+            {
+                for (int i = y; i < y2; i++)
+                {
+                    if (!CheckLeft(x, i)) return false;
+                }
+                _tafl[x2, y2] = _tafl[x, y];
+                _tafl[x, y] = Pawn.None;
+                return true;
+            }
+            return false;
+
         }
         /// <summary>
         /// Called by the player's UI after getting the confirmation of his move in <see cref="AllowMove"/>
