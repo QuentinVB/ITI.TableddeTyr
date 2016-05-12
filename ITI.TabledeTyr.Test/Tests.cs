@@ -34,10 +34,9 @@ namespace ITI.TabledeTyr.Test
         {
             Assert.Throws<ArgumentException>(() => new TaflBasic(width, height));
         }
-        //n>4,n<15
+        //4<n<16
         [TestCase(3, 7)]
         [TestCase(4, 7)]
-        [TestCase(15, 7)]
         [TestCase(17, 7)]
         [TestCase(21, 7)]
         public void Tafl_ctor_width_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
@@ -46,7 +45,6 @@ namespace ITI.TabledeTyr.Test
         }
         [TestCase(7, 3)]
         [TestCase(7, 4)]
-        [TestCase(7, 15)]
         [TestCase(7, 17)]
         [TestCase(7, 21)]
         public void Tafl_ctor_height_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
@@ -63,11 +61,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.Height, Is.EqualTo(height));
         }
 
-        [TestCase(9, 7)]
-        [TestCase(7, 7)]
         [TestCase(11, 11)]
-        [TestCase(13, 13)]
-        [TestCase(15, 15)]
         public void Tafl_check_non_presence_of_pawn_at_fortress_square(int width, int height)
         {
             TaflBasic sut = new TaflBasic(width, height);
@@ -237,19 +231,19 @@ namespace ITI.TabledeTyr.Test
         public void Game_setting_complete_turn(int x,int y)
         {
             // L'interlocuteur demande l'Initialisation du jeu: 
-            //    -Le core créé le tafl, si l'interlocuteur lui a envoyé une configuration spéciale (taille,disposition des pièces) il en prendra compte dans sa création 
-            //    -Le core pose les pions dessus 
-            //    -Le core pose le isAttackerTurn à True 
+            // - Le core créé le tafl, si l'interlocuteur lui a envoyé une configuration spéciale (taille,disposition des pièces) il en prendra compte dans sa création 
+            // - Le core pose les pions dessus 
+            // - Le core pose le isAttackerTurn à True 
             Game sut = new Game();
             Pawn[,] currentTafl = new Pawn[10, 10];
             bool[,] movableTafl = new bool[10, 10];
             bool[,] pawnDestinations = new bool[10, 10];
             // L'interlocuteur récupère l'état du plateau 
-            //    -Le core lui envoie un Array de Pawn 
+            // - Le core lui envoie un Array de Pawn 
             currentTafl = sut.GetTafl;
             // DEBUT SEQUENCE DE TOUR 
             // L'interlocuteur appelle qui joue 
-            // -Le core lui envoie True false basé sur IsAttackerTurn 
+            // - Le core lui envoie True false basé sur IsAttackerTurn 
             bool atkPlaying = sut.IsAtkPlaying;
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
 
@@ -260,18 +254,18 @@ namespace ITI.TabledeTyr.Test
             // ACTION UTILISATEUR
             // L'interlocuteur sélectionne une pièce (directement dans les tests ou après un événement de l'utilisateur dans l'UI) 
             // L'interlocuteur appelle TryMove pour savoir les mouvements possible du pion sélectionné. 
-            //- le core lui envoie un Array de Pawn correspondant aux mouvements possible basé sur l'état du Tafl 
-            pawnDestinations = sut.TryMove(x,y);
+            // - le core lui envoie un Array de Pawn correspondant aux mouvements possible basé sur l'état du Tafl 
+            pawnDestinations = sut.TryMove(2,0);
             for (int i = 1; i <= 9; i++)
             {
                 Assert.That(pawnDestinations[2, i], Is.EqualTo(true));
             }
             Assert.That(pawnDestinations[2, 10], Is.EqualTo(false));
             //ACTION UTILISATEUR
-            //-L'interlocuteur valide le mouvement en appellant AllowMove
-            bool pawnMoved = sut.AllowMove(x, y, x , y + 3);
-            //- Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
-            //- Le core appelle CheckVictoryCondition
+            // -L'interlocuteur valide le mouvement en appellant AllowMove
+            bool pawnMoved = sut.AllowMove(2, 0, x , y);
+            // - Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
+            // - Le core appelle CheckVictoryCondition
             // - CheckVictoryCondition vérifie si le roi à été pris en appellant le tafl Si c'est le cas il renvoie True à update turn
             // - checkVictoryCondition vérifie si le roi est dans une forteresse.Si c'est le cas il renvoie True à update turn. 
             // - Le core renvoie false à L'interlocuteur via update turn si il y a un gagnant. Sinon il switch le IsAttackerTurn et envoie True à L'interlocuteur. 
@@ -283,14 +277,14 @@ namespace ITI.TabledeTyr.Test
                 //break;
             }
             // Si l'interlocuteur n' as pas reçu false il récupère l'état du plateau 
-            //- Le core lui envoie un Array de Pawn
+            // - Le core lui envoie un Array de Pawn
             else
             {
                 currentTafl = sut.GetTafl;
             }
             Assert.That(currentTafl[2, 0], Is.EqualTo(Pawn.None));
             Assert.That(currentTafl[2, 3], Is.EqualTo(Pawn.Attacker));
-            // L'interlocuteur recommence le séquence de Tour. 
+            //L'interlocuteur recommence le séquence de Tour. 
             //FIN DE LA SÉQUENCE
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
