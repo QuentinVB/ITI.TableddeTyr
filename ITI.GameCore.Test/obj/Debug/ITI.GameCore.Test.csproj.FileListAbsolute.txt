@@ -1,9 +1,0 @@
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\obj\Debug\ITI.GameCore.Test.csprojResolveAssemblyReference.cache
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.Test.pdb
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\nunit.framework.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\ITI.GameCore.pdb
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\bin\Debug\nunit.framework.xml
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\obj\Debug\ITI.GameCore.Test.dll
-D:\Documents\01-COURS\04-PI\ITI.TableddeTyr\ITI.GameCore.Test\obj\Debug\ITI.GameCore.Test.pdb
