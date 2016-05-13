@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 /packages
-
-#ignore thumbnails created by windows
+=======
+.vs/ITI.TabledeTyr/v14/.suo
+.vs/ITI.TabledeTyr/v14/.suo
+.vs/ITI.TabledeTyr/v14/.suo
+>>>>>>> origin/GameCore
 
 #ignore thumbnails created by windows
 Thumbs.db
@@ -22,6 +26,10 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
+<<<<<<< HEAD
+*cache
+=======
+>>>>>>> origin/GameCore
 [Bb]in
 [Dd]ebug*/
 *.lib
@@ -30,4 +38,7 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+<<<<<<< HEAD
+=======
 [Pp]ackages
+>>>>>>> origin/GameCore
