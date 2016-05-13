@@ -16,7 +16,7 @@ namespace ITI.InterfaceUser
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new m_GameBoard(11, 11));
+            Application.Run(new Menu());
         }
     }
 }

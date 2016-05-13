@@ -12,7 +12,12 @@ namespace ITI.InterfaceUser
 {
     public partial class m_GameBoard : Form
     {
-        int[,] _plateau;
+        public int[,] _plateau;
+        bool XX = false;
+        bool endTurn = false;
+
+        int X, XXX, Y, YYY;
+        
 
         /// <summary>
         /// Call the form m_GameBoard
@@ -23,7 +28,7 @@ namespace ITI.InterfaceUser
         public m_GameBoard(int width, int height)
         {
             InitializeComponent();
-
+            #region hardcode
             _plateau = new int[11, 11];
 
             _plateau[3, 0] = 1;
@@ -72,6 +77,9 @@ namespace ITI.InterfaceUser
             _plateau[7, 5] = 2;
 
             _plateau[5, 5] = 3;
+            #endregion
+
+
         }
 
 
@@ -83,6 +91,12 @@ namespace ITI.InterfaceUser
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             int i = 0, j = 0;
+
+            //vérifiez les conditions de victoire
+            // si victoire affichez la victoire
+            //sinon : pictureBox1.Refresh();
+            // m_PlayerTurn.Refresh();
+
             for (int y = 22; y < 490; y++)
             {
                 for (int x = 21; x < 490; x++)
@@ -116,6 +130,8 @@ namespace ITI.InterfaceUser
                 j++;
                 y = y + 42;
             }
+            
+            
         }
 
         /// <summary>
@@ -127,14 +143,34 @@ namespace ITI.InterfaceUser
         /// <param name="e"></param>
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
+            
             int i = 0, j = 0;
+
             for (int y = 22; y < 490; y++)
             {
                 for (int x = 21; x < 490; x++)
                 {
                     if (e.X > x && e.X < x + 48 && e.Y > y && e.Y < y + 50)
                     {
-                        m_positionSouris.Text = "x = " + i + " y = " + j;
+                        //m_positionSouris.Text = "x = " + i + " y = " + j;
+
+                        // check move
+                        if(XX == false)
+                        {
+                            //checkMove (i, j)
+                            // if true,
+                            X = i;
+                            Y = j;
+                            XX = true;
+                        }else
+                        {
+                            // AllowMove (i,j)
+                            // if true,
+                            XXX = i;
+                            YYY = j;
+                            endTurn = true;
+                        }
+                        
                     }
                     i++;
                     x = x + 42;
@@ -143,6 +179,7 @@ namespace ITI.InterfaceUser
                 j++;
                 y = y + 42;
             }
+            
         }
 
         /// <summary>
@@ -154,7 +191,33 @@ namespace ITI.InterfaceUser
         /// <param name="e"></param>
         private void m_GameBoard_Load(object sender, EventArgs e)
         {
-            m_PlayerTurn.Text = "C'est au tour de :" /*+ _atkturn*/;
+            
+            /*if (_ATKTurn == true)
+            {
+                m_PlayerTurn.Text = "c'est au tour de l'attaquant";
+            }
+            else
+            {
+                m_PlayerTurn.Text = "C'est au tour du défenseur";
+            }*/
+            m_PlayerTurn.Text = "C'est au tour de :";
         }
+
+        private void m_updateTurn_Click(object sender, EventArgs e)
+        {
+            _plateau[XXX, YYY] = _plateau[X,Y];
+            _plateau[X, Y] = 0;
+
+            if(endTurn == true)
+            {
+                m_positionSouris.Text = "x = " + XX;
+                pictureBox1.Refresh();
+                m_PlayerTurn.Refresh();
+            }
+            XX = false;
+            endTurn = false;
+
+        }
+
     }
 }

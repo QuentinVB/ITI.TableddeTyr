@@ -12,10 +12,10 @@ namespace ITI.InterfaceUser
 {
     public partial class PlayInterface : Form
     {
+
         public PlayInterface()
         {
             InitializeComponent();
-
         }
 
         private void m_ButtonReturn_Click(object sender, EventArgs e)
@@ -31,6 +31,7 @@ namespace ITI.InterfaceUser
             {
                 F3.Dispose();
             }
+
             this.Show();
             
         }

@@ -31,6 +31,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.m_positionSouris = new System.Windows.Forms.TextBox();
             this.m_PlayerTurn = new System.Windows.Forms.TextBox();
+            this.m_updateTurn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,11 +64,22 @@
             this.m_PlayerTurn.TabStop = false;
             this.m_PlayerTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // m_updateTurn
+            // 
+            this.m_updateTurn.Location = new System.Drawing.Point(765, 319);
+            this.m_updateTurn.Name = "m_updateTurn";
+            this.m_updateTurn.Size = new System.Drawing.Size(133, 57);
+            this.m_updateTurn.TabIndex = 3;
+            this.m_updateTurn.Text = "TestUpdate";
+            this.m_updateTurn.UseVisualStyleBackColor = true;
+            this.m_updateTurn.Click += new System.EventHandler(this.m_updateTurn_Click);
+            // 
             // m_GameBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 673);
+            this.Controls.Add(this.m_updateTurn);
             this.Controls.Add(this.m_PlayerTurn);
             this.Controls.Add(this.m_positionSouris);
             this.Controls.Add(this.pictureBox1);
@@ -86,5 +98,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox m_positionSouris;
         private System.Windows.Forms.TextBox m_PlayerTurn;
+        private System.Windows.Forms.Button m_updateTurn;
     }
 }
