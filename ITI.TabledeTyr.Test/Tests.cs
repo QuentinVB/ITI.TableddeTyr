@@ -88,7 +88,7 @@ namespace ITI.TabledeTyr.Test
         {
             TaflBasic sut = new TaflBasic(width, height);
             /*
-             X 01 02 03 04 05 06 07 08 09 10 11 x
+             x 01 02 03 04 05 06 07 08 09 10 11 x
             01 -- -- 01 01 01 01 01 01 01 -- --
             02 -- -- -- -- -- 01 -- -- -- -- --
             03 01 -- -- -- -- -- -- -- -- -- 01
@@ -155,6 +155,7 @@ namespace ITI.TabledeTyr.Test
             sut[11, 9] = Pawn.Attacker;
             sut[10, 6] = Pawn.Attacker;
             #endregion
+            #region checking pawns
             //check the king
             Assert.That(sut[6, 6], Is.EqualTo(Pawn.King));
 
@@ -205,7 +206,7 @@ namespace ITI.TabledeTyr.Test
                 Assert.That(sut[i, 7], Is.EqualTo(Pawn.Defender));
             }
             Assert.That(sut[6, 8], Is.EqualTo(Pawn.Defender));
-
+            #endregion
         }
 
         //test : try moving pawn out of the tafl (4 cases : north, south, east, west)
