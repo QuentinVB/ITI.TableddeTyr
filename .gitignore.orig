@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 /packages
 
 #ignore thumbnails created by windows
 
+=======
+>>>>>>> origin/InterfaceUser
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
@@ -30,4 +33,8 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+<<<<<<< HEAD
 [Pp]ackages
+=======
+[pP]ackages
+>>>>>>> origin/InterfaceUser
