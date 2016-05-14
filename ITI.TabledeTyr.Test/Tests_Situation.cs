@@ -111,13 +111,19 @@ namespace ITI.TabledeTyr.Test
 
             do
             {
-                if (i == 1) { pawnMovedX = 2; pawnMovedY = 0; pawnDestinationX = 2; pawnDestinationY = 1; }
-                if (i == 2) { pawnMovedX = 2; pawnMovedY = 1; pawnDestinationX = 3; pawnDestinationY = 1; }
+                if (i == 1) { pawnMovedX = 3; pawnMovedY = 0; pawnDestinationX = 3; pawnDestinationY = 1; }
+                if (i == 2) { pawnMovedX = 3; pawnMovedY = 1; pawnDestinationX = 3; pawnDestinationY = 0; }
 
                 bool atkPlaying = sut.IsAtkPlaying;
                 movableTafl = sut.CheckMove();
+                if (i == 2)
+                {
+                    Assert.Throws<ArgumentException>(() => pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY));
+                }
                 pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
-                bool pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+                bool pawnMoved;
+                pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+
                 if (sut.UpdateTurn() == false)
                 {
                     atkPlaying = sut.IsAtkPlaying;
@@ -181,6 +187,7 @@ namespace ITI.TabledeTyr.Test
             } while (i < 15);//MAIN LOOP
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.King));
         }
+        //TODO
         //test : try moving beyond another pawn (4 cases : north by south, south by north, east by west, west by east)
         //test : cannot entering into a forteress (try each forteress from each angle, aka 8 try)
         //test : the king is on one of the forteress    
