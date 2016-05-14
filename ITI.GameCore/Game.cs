@@ -10,17 +10,15 @@ namespace ITI.GameCore
     {
         //attributes        
         bool _atkTurn; //true if it is the turn of attacker, else false if the turn of defensor
-
         //collection
         internal ITafl _tafl;
-
         //constructor(s)        
         /// <summary>
         /// Initializes a new instance of the <see cref="Game"/> class.
         /// </summary>
         public Game()
         {
-            _tafl = new TaflBasic (10, 10);
+            _tafl = new TaflBasic (11, 11);
             //Set an empty tafl
             for(int y = 0; y < 11; y++ )
             {
@@ -31,6 +29,22 @@ namespace ITI.GameCore
             }
             //Set board for a standard 11*11 game [Hardcoded for IT1]
             #region Setting the board
+            /*
+             x 00 01 02 03 04 05 06 07 08 09 10 x
+            00 -- -- -- 01 01 01 01 01 -- -- --
+            01 -- -- -- -- -- 01 -- -- -- -- --
+            02 -- -- -- -- -- -- -- -- -- -- --
+            03 01 -- -- -- -- 10 -- -- -- -- 01
+            04 01 -- -- -- 10 10 10 -- -- -- 01
+            05 01 01 -- 10 10 11 10 10 -- 01 01
+            06 01 -- -- -- 10 10 10 -- -- -- 01
+            07 01 -- -- -- -- 10 -- -- -- -- 01
+            08 -- -- -- -- -- -- -- -- -- -- --
+            09 -- -- -- -- -- 01 -- -- -- -- --
+            10 -- -- -- 01 01 01 01 01 -- -- --
+            y
+
+            */
             //Set the king and defenders
             _tafl[5, 5] = Pawn.King;
             _tafl[3, 5] = Pawn.Defender;
@@ -85,8 +99,22 @@ namespace ITI.GameCore
                 return _atkTurn;
             }
         }
-
-        public Pawn[,] GetTafl { get; }
+        //implémented but VERY VERY DIRTY !
+        public Pawn[,] GetTafl
+        {
+            get
+            {
+                Pawn[,] transmittedTafl = new Pawn[_tafl.Width, _tafl.Height]; 
+                for (int i = 0; i < _tafl.Width; i++)
+                {
+                    for (int j = 0; j < _tafl.Height; j++)
+                    {
+                        transmittedTafl[i, j] = _tafl[i, j];
+                    }
+                }
+                return transmittedTafl;
+            }
+        }
 
         //Methods - internal                
         /// <summary>
@@ -130,7 +158,7 @@ namespace ITI.GameCore
 
         internal bool CheckDown(int x, int y)             
         {
-            if (y + 1 < _tafl.Height) return false;
+            if (y+1 >= _tafl.Height) return false;
             if (_tafl[x, y + 1] != Pawn.None) return false;
             if (_tafl[x, y + 1] == Pawn.None) return true;
             return false;
@@ -144,7 +172,7 @@ namespace ITI.GameCore
         }
         internal bool CheckRight(int x, int y)             
         {
-            if (x + 1 > _tafl.Width) return false;
+            if (x + 1 >= _tafl.Width) return false;
             if (_tafl[x + 1, y] != Pawn.None) return false;
             if (_tafl[x + 1, y] == Pawn.None) return true;
             return false;
@@ -160,9 +188,9 @@ namespace ITI.GameCore
         public bool[,] CheckMove()
         {
             bool[,] ret = new bool[_tafl.Width, _tafl.Height] ;
-            for (int y = 0; y < _tafl.Height+1; y++)
+            for (int y = 0; y < _tafl.Height; y++)
             {
-                for (int x = 0; x < _tafl.Width+1; x++)
+                for (int x = 0; x < _tafl.Width; x++)
                 {
                     if (CheckUp(x, y) == true) ret[x, y] = true;
                     else if (CheckDown(x, y) == true) ret[x, y] = true;
@@ -231,7 +259,6 @@ namespace ITI.GameCore
         /// <param name="x2">The x2 targeted position of the piece who move.</param>
         /// <param name="y2">The y2 targeted position of the piece who move.</param>
         /// <returns>true if the move is good. false something bad happend. FI: god(s) kill(s) a kitten</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public bool AllowMove(int x, int y, int x2, int y2)
         {
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);

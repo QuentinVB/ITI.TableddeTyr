@@ -196,10 +196,11 @@ namespace ITI.TabledeTyr.Test
                 Assert.That(sut[i, 4], Is.EqualTo(Pawn.Defender));
             }
 
-            for (int i = 3; i <= 7; i++)
-            {
-                Assert.That(sut[i, 5], Is.EqualTo(Pawn.Defender));
-            }
+            Assert.That(sut[3, 5], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut[4, 5], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut[6, 5], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut[7, 5], Is.EqualTo(Pawn.Defender));
+
 
             for (int i = 4; i <= 6; i++)
             {

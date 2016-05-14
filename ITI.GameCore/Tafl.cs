@@ -16,7 +16,6 @@ namespace ITI.GameCore
         Defender,
         King
     }
-
     public class TaflBasic : ITafl
     {
         int _width;
@@ -33,7 +32,7 @@ namespace ITI.GameCore
             //Creating the new _tafl
             _width = width;
             _height = height;
-            _tafl = new Pawn[width-1, height-1];
+            _tafl = new Pawn[width, height];
         }
 
         public TaflBasic(ITafl source)
@@ -46,7 +45,7 @@ namespace ITI.GameCore
             if (Height < 7 || Height > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(Height));
             _width = Width;
             _height = Height;
-            _tafl = new Pawn[Width-1, Height-1];
+            _tafl = new Pawn[Width, Height];
         }
 
         public int Width
