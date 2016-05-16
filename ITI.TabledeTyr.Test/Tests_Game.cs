@@ -40,15 +40,48 @@ namespace ITI.TabledeTyr.Test
         [Test]
         public void Game_03_turn_checkMove()
         {
-            Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
-
-            currentTafl = sut.GetTafl;
-            bool atkPlaying = sut.IsAtkPlaying;
+            Game sut = new Game(); 
+            bool[,] movableTafl = new bool[11, 11];         
             movableTafl = sut.CheckMove();
-            Assert.That(movableTafl[2, 0], Is.EqualTo(true));
+            Assert.That(movableTafl[0, 0], Is.EqualTo(true));
+            Assert.That(movableTafl[3, 0], Is.EqualTo(true));
+            Assert.That(movableTafl[4, 0], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 0], Is.EqualTo(false));//unmovable
+            Assert.That(movableTafl[6, 0], Is.EqualTo(true));
+            Assert.That(movableTafl[7, 0], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 1], Is.EqualTo(true));
+            Assert.That(movableTafl[0, 3], Is.EqualTo(true));
+            Assert.That(movableTafl[0, 4], Is.EqualTo(true));
+            Assert.That(movableTafl[0, 5], Is.EqualTo(false));//unmovable
+            Assert.That(movableTafl[0, 6], Is.EqualTo(true));
+            Assert.That(movableTafl[0, 7], Is.EqualTo(true));
+            Assert.That(movableTafl[0, 8], Is.EqualTo(true));
+            Assert.That(movableTafl[1, 5], Is.EqualTo(true));
+            Assert.That(movableTafl[3, 10], Is.EqualTo(true));
+            Assert.That(movableTafl[4, 10], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 10], Is.EqualTo(false));//unmovable
+            Assert.That(movableTafl[6, 10], Is.EqualTo(true));
+            Assert.That(movableTafl[7, 10], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 9], Is.EqualTo(true));
+            Assert.That(movableTafl[10, 3], Is.EqualTo(true));
+            Assert.That(movableTafl[10, 4], Is.EqualTo(true));
+            Assert.That(movableTafl[10, 5], Is.EqualTo(false));//unmovable
+            Assert.That(movableTafl[10, 6], Is.EqualTo(true));
+            Assert.That(movableTafl[10, 7], Is.EqualTo(true));
+            Assert.That(movableTafl[9, 5], Is.EqualTo(true));
+            Assert.That(movableTafl[3, 5], Is.EqualTo(true));
+            Assert.That(movableTafl[4, 4], Is.EqualTo(true));
+            Assert.That(movableTafl[4, 5], Is.EqualTo(true));
+            Assert.That(movableTafl[4, 6], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 3], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 4], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 5], Is.EqualTo(false));//unmovable
+            Assert.That(movableTafl[5, 6], Is.EqualTo(true));
+            Assert.That(movableTafl[5, 7], Is.EqualTo(true));
+            Assert.That(movableTafl[6, 4], Is.EqualTo(true));
+            Assert.That(movableTafl[6, 5], Is.EqualTo(true));
+            Assert.That(movableTafl[6, 6], Is.EqualTo(true));
+            Assert.That(movableTafl[7, 5], Is.EqualTo(true));
         }
         //Game test tryMove
         [Test]
