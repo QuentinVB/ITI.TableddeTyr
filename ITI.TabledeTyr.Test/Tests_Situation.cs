@@ -137,7 +137,7 @@ namespace ITI.TabledeTyr.Test
             } while (i < 2);//MAIN LOOP
             
         }
-        //Game test if th king escapes
+        //Game test if the king escapes
         [TestCase(10, 0)]
         public void Situation_escape_of_the_king(int x, int y)
         {
@@ -193,14 +193,55 @@ namespace ITI.TabledeTyr.Test
             pawnDestinations = sut.TryMove(x, y);
             Assert.That(pawnDestinations[x2, y2], Is.EqualTo(false));
         }
-
-        //TODO
-        //test : try moving beyond another pawn (4 cases : north by south, south by north, east by west, west by east)
-        //test : the king is on one of the forteress    
-        //test : cannot moving while not his turn !
-        //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
         //test : moving non-king pawn across the throne
-        //test : moving non-king pawn inside the throne
+        [Test]
+        public void Situation_moving_non_king_across_throne()
+        {
+            int i = 1;
+            int pawnMovedX = 0;
+            int pawnMovedY = 0;
+            int pawnDestinationX = 0;
+            int pawnDestinationY = 0;
+
+            Game sut = new Game();
+            Pawn[,] currentTafl = new Pawn[11, 11];
+            bool[,] movableTafl = new bool[11, 11];
+            bool[,] pawnDestinations = new bool[11, 11];
+            currentTafl = sut.GetTafl;
+
+            do
+            {
+                if (i == 1) { pawnMovedX = 3; pawnMovedY = 0; pawnDestinationX = 3; pawnDestinationY = 1; }//Atk
+                if (i == 2) { pawnMovedX = 3; pawnMovedY = 5; pawnDestinationX = 2; pawnDestinationY = 5; }
+                if (i == 3) { pawnMovedX = 3; pawnMovedY = 1; pawnDestinationX = 3; pawnDestinationY = 0; }//Atk
+                if (i == 4) { pawnMovedX = 4; pawnMovedY = 5; pawnDestinationX = 3; pawnDestinationY = 5; }
+                if (i == 5) { pawnMovedX = 3; pawnMovedY = 0; pawnDestinationX = 3; pawnDestinationY = 1; }//Atk
+                if (i == 6) { pawnMovedX = 5; pawnMovedY = 5; pawnDestinationX = 4; pawnDestinationY = 5; }
+                if (i == 7) { pawnMovedX = 3; pawnMovedY = 1; pawnDestinationX = 3; pawnDestinationY = 0; }//Atk
+
+                if (i == 8) { pawnMovedX = 6; pawnMovedY = 5; pawnDestinationX = 5; pawnDestinationY = 5; }
+
+                bool atkPlaying = sut.IsAtkPlaying;
+                movableTafl = sut.CheckMove();
+                pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
+                bool pawnMoved;
+                if (i == 8)
+                {
+                    Assert.That(pawnDestinations[5, 5], Is.EqualTo(false));
+                    Assert.Throws<ArgumentException>(() => pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY));
+                }
+                else
+                {
+                    pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+                }
+                i++;
+            } while (i < 9);//MAIN LOOP
+            currentTafl = sut.GetTafl; 
+        }
+        //TODO
+        //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
+
+
     }
 }
 
