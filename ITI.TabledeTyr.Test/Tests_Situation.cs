@@ -256,8 +256,6 @@ namespace ITI.TabledeTyr.Test
        
         //TODO
         //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
-
-
     }
 }
 
