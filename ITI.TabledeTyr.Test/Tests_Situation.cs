@@ -26,10 +26,8 @@ namespace ITI.TabledeTyr.Test
         08 -- -- -- -- -- -- -- -- -- -- --
         09 -- -- -- -- -- 01 -- -- -- -- --
         10 -- -- -- 01 01 01 01 01 -- -- --
-        y
-        */
+        y*/
         #endregion
-
         //test : take a pawn
         [TestCase(5,4)]
         public void Situation_capture_pawn(int x, int y)
@@ -193,7 +191,7 @@ namespace ITI.TabledeTyr.Test
             pawnDestinations = sut.TryMove(x, y);
             Assert.That(pawnDestinations[x2, y2], Is.EqualTo(false));
         }
-        //test : moving non-king pawn across the throne
+        //test : cannot moving non-king pawn across the throne
         [Test]
         public void Situation_moving_non_king_across_throne()
         {
@@ -236,8 +234,26 @@ namespace ITI.TabledeTyr.Test
                 }
                 i++;
             } while (i < 9);//MAIN LOOP
-            currentTafl = sut.GetTafl; 
         }
+        //test : cannot moving pawn across existing pawn
+        [TestCase(4,0,2,0)]
+        public void Situation_moving_across_existing_pawn(int x, int y, int x2, int y2)
+        {
+            Game sut = new Game();
+            Pawn[,] currentTafl = new Pawn[11, 11];
+            bool[,] movableTafl = new bool[11, 11];
+            bool[,] pawnDestinations = new bool[11, 11];
+            currentTafl = sut.GetTafl;
+ 
+            bool atkPlaying = sut.IsAtkPlaying;
+            movableTafl = sut.CheckMove();
+            pawnDestinations = sut.TryMove(x, y);
+            bool pawnMoved;
+            currentTafl = sut.GetTafl;
+            Assert.That(pawnDestinations[2, 0], Is.EqualTo(false));
+            Assert.Throws<ArgumentException>(() => pawnMoved = sut.AllowMove(x, y, x2, y2));
+        }
+       
         //TODO
         //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
 
