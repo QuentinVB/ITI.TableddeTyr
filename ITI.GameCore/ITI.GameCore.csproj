@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{878EB81F-AAB7-411A-B0DB-1E3108534147}</ProjectGuid>
+    <ProjectGuid>{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ITI.GameCore</RootNamespace>
@@ -41,8 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
-    <Compile Include="Piece.cs" />
+    <Compile Include="ITafl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tafl.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
