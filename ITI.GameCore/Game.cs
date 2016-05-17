@@ -6,6 +6,40 @@ using System.Threading.Tasks;
 
 namespace ITI.GameCore
 {
+    //struct for can move answer
+    public struct PossibleMove
+    {
+        public int _x;
+        public int _y;
+        public int _north;
+        public int _south;   
+        public int _east;
+        public int _west;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
+        /// </summary>
+        /// <param name="x">The x position of the analyzed pawn.</param>
+        /// <param name="y">The y position of the analyzed pawn.</param>
+        /// <param name="north">The north maximum move for this pawn.</param>
+        /// <param name="south">The south maximum move for this pawn.</param>
+        /// <param name="east">The east maximum move for this pawn.</param>
+        /// <param name="west">The west maximum move for this pawn.</param>
+        public PossibleMove (int x, int y, int north, int south, int east, int west)
+        {
+            _x = x;
+            _y = y;
+            _north = north;
+            _south = south;
+            _east = east;
+            _west = west;
+        }
+        public int North => _north;
+        public int South => _south;
+        public int East => _east;
+        public int West => _west;
+        public int X => _x;
+        public int Y => _y;
+    }
     public class Game
     {
         //attributes        
@@ -14,7 +48,7 @@ namespace ITI.GameCore
         internal ITafl _tafl;
         //constructor(s)        
         /// <summary>
-        /// Initializes a new instance of the <see cref="Game"/> class.
+        /// Initializes a new instance of the <see cref="Game" /> class.
         /// </summary>
         public Game()
         {
@@ -90,29 +124,9 @@ namespace ITI.GameCore
             _atkTurn = true;
         }
         //properties
-        public bool IsAtkPlaying //get the current team who play turn, true if it is the the attacker
-        {
-            get
-            {
-                return _atkTurn;
-            }
-        }
-        //implémented but VERY VERY DIRTY !
-        public Pawn[,] GetTafl
-        {
-            get
-            {
-                Pawn[,] transmittedTafl = new Pawn[_tafl.Width, _tafl.Height];
-                for (int i = 0; i < _tafl.Width; i++)
-                {
-                    for (int j = 0; j < _tafl.Height; j++)
-                    {
-                        transmittedTafl[i, j] = _tafl[i, j];
-                    }
-                }
-                return transmittedTafl;
-            }
-        }
+        public bool IsAtkPlaying => _atkTurn;//get the current team who play turn, true if it is the the attacker     
+        public IReadOnlyTafl Tafl => _tafl;
+
         //Methods - internal                
         /// <summary>
         /// check the capture around this piece then remove the piece(s).
@@ -349,6 +363,7 @@ namespace ITI.GameCore
         }
         #endregion
         //methodes - public        
+        /*
         /// <summary>
         /// Send to the UI ou AI the piece(s) that are movable for this turn.
         /// </summary>
@@ -356,6 +371,7 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         public bool[,] CheckMove()
         {
+            //Ne renvoyer que des ciblés
             bool[,] ret = new bool[_tafl.Width, _tafl.Height];
             for (int y = 0; y < _tafl.Height; y++)
             {
@@ -367,7 +383,6 @@ namespace ITI.GameCore
                         else if (CheckDown(x, y) == true) ret[x, y] = true;
                         else if (CheckLeft(x, y) == true) ret[x, y] = true;
                         else if (CheckRight(x, y) == true) ret[x, y] = true;
-                        else ret[x, y] = false;
                     }
                 }
             }
@@ -383,10 +398,9 @@ namespace ITI.GameCore
         public bool[,] TryMove(int x, int y)//
         {
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
-            
-            if(IsAtkPlaying == true && _tafl[x, y] == Pawn.Defender) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
-            if(IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
-            
+
+            if (IsAtkPlaying == true && _tafl[x, y] == Pawn.Defender) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             bool[,] ret = new bool[_tafl.Width, _tafl.Height];
             //Checking squares above
             int i = y - 1;
@@ -426,17 +440,34 @@ namespace ITI.GameCore
             }
             return ret;
         }
+        */
+        public bool CanMove(int x, int y)
+        {
+            return _tafl[x, y] != Pawn.None
+                    && (CheckUp(x, y)
+                        || CheckDown(x, y)
+                        || CheckLeft(x, y)
+                        || CheckRight(x, y));
+        }
+
+
         /// <summary>
-        /// Allows the designated pieces to move the piece to another coordinate, 
-        /// call <see cref="CheckMove"/> by secure.
+        /// Allows the designated pieces to move the piece to another coordinate,
+        /// call <see cref="CheckMove" /> by secure.
         /// </summary>
         /// <param name="x">The x position of the piece who move.</param>
         /// <param name="y">The y position of the piece who move.</param>
         /// <param name="x2">The x2 targeted position of the piece who move.</param>
         /// <param name="y2">The y2 targeted position of the piece who move.</param>
-        /// <returns>true if the move is good. false something bad happend. FI: god(s) kill(s) a kitten</returns>
-        public bool AllowMove(int x, int y, int x2, int y2)
+        /// <returns>
+        /// true if the move is good. false something bad happend. FI: god(s) kill(s) a kitten
+        /// </returns>
+        /// <exception cref="System.ArgumentException">Cannot enter the throne</exception>
+        /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
+        public bool MovePawn(int x, int y, int x2, int y2)
         {
+            if (IsAtkPlaying == true && _tafl[x, y] == Pawn.Defender) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
             if (x == x2 && y == y2) return false;
@@ -450,7 +481,7 @@ namespace ITI.GameCore
                     (x2 == 5 && y2 == 5))
                     throw new ArgumentException("Cannot enter the throne");
             }
-            
+
             //Verifying that the move is leggit (TryMove might've been bypassed)
             if (x > x2)
             {
@@ -500,10 +531,12 @@ namespace ITI.GameCore
 
         }
         /// <summary>
-        /// Called by the player's UI after getting the confirmation of his move in <see cref="AllowMove"/>
-        /// Call <see cref="CheckCapture"/>, <see cref="CheckVictoryCondition"/> and switch to next player.
+        /// Called by the player's UI after getting the confirmation of his move in <see cref="MovePawn" />
+        /// Call <see cref="CheckCapture" />, <see cref="CheckVictoryCondition" /> and switch to next player.
         /// </summary>
-        /// <returns>false if the game is over and break before flipping the turn. The current <paramref name="_atkTurn"/> is the winner.</returns>
+        /// <returns>
+        /// false if the game is over and break before flipping the turn. The current <paramref name="_atkTurn" /> is the winner.
+        /// </returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public bool UpdateTurn()
         {
@@ -511,7 +544,7 @@ namespace ITI.GameCore
             if (CheckVictoryCondition()) return false;
             else
             {
-                _atkTurn = !_atkTurn;               
+                _atkTurn = !_atkTurn;
                 return true;
             }
         }

@@ -13,7 +13,7 @@ namespace ITI.InterfaceUser
 {
     public partial class m_GameBoard : Form
     {
-        public Pawn[,] _plateau = new Pawn[11,11];
+        public IReadOnlyTafl _plateau;
         bool _checkMove;
         public bool _allowMove = false;
         public bool[,] _tryMove;
@@ -36,7 +36,7 @@ namespace ITI.InterfaceUser
             InitializeComponent();
             Game partie = new Game();
             _partie = partie;
-            _plateau = partie.GetTafl;
+            _plateau = partie.Tafl;
             _tryMove = new bool[11, 11];
             
             #region hardcode du tafl
@@ -224,8 +224,8 @@ namespace ITI.InterfaceUser
             
             if (_endTurn == true)
             {
-                _allowMove = _partie.AllowMove(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
-                _plateau = _partie.GetTafl;
+                _allowMove = _partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
+                _plateau = _partie.Tafl;
 
                 if (_allowMove == true)
                 {
