@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.GameCore", "ITI.GameCore\ITI.GameCore.csproj", "{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.TabledeTyr.Test", "ITI.TabledeTyr.Test\ITI.TabledeTyr.Test.csproj", "{50483FA4-CC60-4F31-AAE6-8C00A93FF1DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.InterfaceUser", "ITI.InterfaceUser\ITI.InterfaceUser.csproj", "{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDEE01D-F675-4051-97CA-B0D3D7EBC1C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50483FA4-CC60-4F31-AAE6-8C00A93FF1DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50483FA4-CC60-4F31-AAE6-8C00A93FF1DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50483FA4-CC60-4F31-AAE6-8C00A93FF1DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50483FA4-CC60-4F31-AAE6-8C00A93FF1DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
