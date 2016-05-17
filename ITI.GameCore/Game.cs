@@ -97,7 +97,7 @@ namespace ITI.GameCore
                 return _atkTurn;
             }
         }
-        //implémented but VERY VERY DIRTY !
+        //implémented but VERY VERY DIRTY ! Need rebuilding
         public Pawn[,] GetTafl
         {
             get
