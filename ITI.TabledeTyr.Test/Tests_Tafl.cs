@@ -36,7 +36,6 @@ namespace ITI.TabledeTyr.Test
         }
         //4<n<16
         [TestCase(3, 7)]
-        [TestCase(4, 7)]
         [TestCase(17, 7)]
         [TestCase(21, 7)]
         public void Tafl_ctor_width_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
@@ -44,7 +43,6 @@ namespace ITI.TabledeTyr.Test
             Assert.Throws<ArgumentOutOfRangeException>(() => new TaflBasic(width, height));
         }
         [TestCase(7, 3)]
-        [TestCase(7, 4)]
         [TestCase(7, 17)]
         [TestCase(7, 21)]
         public void Tafl_ctor_height_with_invalid_args_should_throw_ArgumentOutOfRangeException(int width, int height)
