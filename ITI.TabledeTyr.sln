@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.TabledeTyr.Test", "ITI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.InterfaceUser", "ITI.InterfaceUser\ITI.InterfaceUser.csproj", "{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITI.TabledeTyr.Freyja", "ITI.TabledeTyr.Freyja\ITI.TabledeTyr.Freyja.csproj", "{4B88DC40-ED60-4D33-96BD-08FE098C57A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF68AB59-611A-4BEB-BEC8-C5EF1CD04F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B88DC40-ED60-4D33-96BD-08FE098C57A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B88DC40-ED60-4D33-96BD-08FE098C57A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B88DC40-ED60-4D33-96BD-08FE098C57A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B88DC40-ED60-4D33-96BD-08FE098C57A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
