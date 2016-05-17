@@ -29,7 +29,7 @@ namespace ITI.TabledeTyr.Test
         y*/
         #endregion
         //test : take a pawn
-        [TestCase(5,4)]
+        [TestCase(4,3)]
         public void Situation_capture_pawn(int x, int y)
         {
             //Arrange
@@ -93,8 +93,8 @@ namespace ITI.TabledeTyr.Test
 
         }
         //test : cannot moving while not his turn !
-        [TestCase(5, 4)]
-        public void Situation_cannot_use_opposite_pawn(int x, int y)
+        [Test]
+        public void Situation_cannot_use_opposite_pawn()
         {
             //arrange
             int i = 1;
@@ -108,20 +108,23 @@ namespace ITI.TabledeTyr.Test
             bool[,] movableTafl = new bool[11, 11];
             bool[,] pawnDestinations = new bool[11, 11];
             currentTafl = sut.GetTafl;
+            bool atkPlaying;
+            bool pawnMoved;
 
             do
             {
                 if (i == 1) { pawnMovedX = 3; pawnMovedY = 0; pawnDestinationX = 3; pawnDestinationY = 1; }
                 if (i == 2) { pawnMovedX = 3; pawnMovedY = 1; pawnDestinationX = 3; pawnDestinationY = 0; }
 
-                bool atkPlaying = sut.IsAtkPlaying;
-                movableTafl = sut.CheckMove();
+                atkPlaying = sut.IsAtkPlaying;
+
                 if (i == 2)
                 {
                     Assert.Throws<ArgumentException>(() => pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY));
+                    break;
                 }
                 pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
-                bool pawnMoved;
+                
                 pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
 
                 if (sut.UpdateTurn() == false)
