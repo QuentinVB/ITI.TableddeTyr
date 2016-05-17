@@ -84,16 +84,10 @@ namespace ITI.TabledeTyr.Test
 
             Game sut = new Game();
             Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
-            currentTafl = sut.GetTafl;
-            
-            pawnMovedX = 2; pawnMovedY = 0; pawnDestinationX = 2; pawnDestinationY = -1;
-            //act    
-            bool atkPlaying = sut.IsAtkPlaying;
-            movableTafl = sut.CheckMove();
-            pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
             bool pawnMoved;
+            currentTafl = sut.GetTafl;
+            //act    
+            pawnMovedX = 2; pawnMovedY = 0; pawnDestinationX = 2; pawnDestinationY = -1;
             //assert
             Assert.Throws<ArgumentOutOfRangeException>(() => pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY));
 
@@ -102,6 +96,7 @@ namespace ITI.TabledeTyr.Test
         [TestCase(5, 4)]
         public void Situation_cannot_use_opposite_pawn(int x, int y)
         {
+            //arrange
             int i = 1;
             int pawnMovedX = 0;
             int pawnMovedY = 0;
@@ -139,7 +134,7 @@ namespace ITI.TabledeTyr.Test
                     currentTafl = sut.GetTafl;
                 }
                 i++;
-            } while (i < 2);//MAIN LOOP
+            } while (i <= 2);//MAIN LOOP
             
         }
         //Game test if the king escapes
@@ -156,7 +151,10 @@ namespace ITI.TabledeTyr.Test
             Pawn[,] currentTafl = new Pawn[11, 11];
             bool[,] movableTafl = new bool[11, 11];
             bool[,] pawnDestinations = new bool[11, 11];
+            bool atkPlaying;
+            bool pawnMoved;
             currentTafl = sut.GetTafl;
+
 
             do
             {
@@ -174,14 +172,13 @@ namespace ITI.TabledeTyr.Test
                 if (i == 12) { pawnMovedX = 9; pawnMovedY = 3; pawnDestinationX = 9; pawnDestinationY = 0; }
                 if (i == 13) { pawnMovedX = 3; pawnMovedY = 0; pawnDestinationX = 3; pawnDestinationY = 1; }//Atk
                 if (i == 14) { pawnMovedX = 9; pawnMovedY = 0; pawnDestinationX = 10; pawnDestinationY = 0; }
-
-                bool atkPlaying = sut.IsAtkPlaying;
+                atkPlaying = sut.IsAtkPlaying;
                 movableTafl = sut.CheckMove();
                 pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
-                bool pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+                pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
                
                 i++;
-            } while (i < 15);//MAIN LOOP
+            } while (i <= 14);//MAIN LOOP
             currentTafl = sut.GetTafl;
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.King));
         }
@@ -240,7 +237,7 @@ namespace ITI.TabledeTyr.Test
                     pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
                 }
                 i++;
-            } while (i < 9);//MAIN LOOP
+            } while (i <= 8);//MAIN LOOP
         }
         //test : cannot moving pawn across existing pawn
         [TestCase(4,0,2,0)]
