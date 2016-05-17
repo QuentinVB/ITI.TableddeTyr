@@ -9,7 +9,7 @@ using ITI.GameCore;
 namespace ITI.TabledeTyr.Test
 {
     [TestFixture]
-    public class Tests_Tafl
+    public class t01_Tests_Tafl
     {
         /// 0 : 00 : empty,
         /// 1 : 01 : atk : attacker,
@@ -223,6 +223,5 @@ namespace ITI.TabledeTyr.Test
 
             Assert.Throws<ArgumentOutOfRangeException>(() => sut[left, up] = Pawn.Attacker);
         }
-
     }
 }
