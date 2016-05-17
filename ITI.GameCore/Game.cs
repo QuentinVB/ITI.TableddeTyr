@@ -263,7 +263,7 @@ namespace ITI.GameCore
         {
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
-            if (x != x2 && y != y2) return false;
+            if (x == x2 && y == y2) return false;
             //Verifying that the move is leggit (TryMove might've been bypassed)
             if (x > x2)
             {
@@ -279,7 +279,7 @@ namespace ITI.GameCore
             {
                 for (int i = x; i < x2; i++)
                 {
-                    if (!CheckLeft(i, y)) return false;
+                    if (!CheckRight(i, y)) return false;
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
@@ -289,7 +289,7 @@ namespace ITI.GameCore
             {
                 for (int i = y; i > y2; i--)
                 {
-                    if (!CheckLeft(x, i)) return false;
+                    if (!CheckUp(x, i)) return false;
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
@@ -299,7 +299,7 @@ namespace ITI.GameCore
             {
                 for (int i = y; i < y2; i++)
                 {
-                    if (!CheckLeft(x, i)) return false;
+                    if (!CheckDown(x, i)) return false;
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
