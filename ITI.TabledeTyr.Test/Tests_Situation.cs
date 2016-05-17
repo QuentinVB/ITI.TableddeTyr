@@ -29,6 +29,49 @@ namespace ITI.TabledeTyr.Test
         y*/
         #endregion
         //test : take a pawn
+        [TestCase(4, 3)]
+        public void Situation_move_pawn(int x, int y)
+        {
+            //Arrange
+            int i = 1;
+            int pawnMovedX = 0;
+            int pawnMovedY = 0;
+            int pawnDestinationX = 0;
+            int pawnDestinationY = 0;
+
+            Game sut = new Game();
+            Pawn[,] currentTafl = new Pawn[11, 11];
+            bool[,] movableTafl = new bool[11, 11];
+            bool[,] pawnDestinations = new bool[11, 11];
+            currentTafl = sut.GetTafl;
+            bool atkPlaying;
+            bool pawnMoved;
+            //act
+            do
+            {
+                if (i == 1) { pawnMovedX = 4; pawnMovedY = 0; pawnDestinationX = 4; pawnDestinationY = 3; }
+               
+                atkPlaying = sut.IsAtkPlaying;
+                movableTafl = sut.CheckMove();
+                pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
+                pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+
+                if (sut.UpdateTurn() == false)
+                {
+                    atkPlaying = sut.IsAtkPlaying;
+                    break;
+                }
+                else
+                {
+                    currentTafl = sut.GetTafl;
+                }
+                i++;
+            } while (i <= 1);//MAIN LOOP
+            //assert
+            currentTafl = sut.GetTafl;
+            Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.Attacker));
+        }
+        //test : take a pawn
         [TestCase(4,3)]
         public void Situation_capture_pawn(int x, int y)
         {
@@ -55,6 +98,7 @@ namespace ITI.TabledeTyr.Test
                 atkPlaying = sut.IsAtkPlaying;
                 movableTafl = sut.CheckMove();
                 pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
+
                 pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
 
                 if (sut.UpdateTurn() == false)

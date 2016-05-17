@@ -89,9 +89,7 @@ namespace ITI.GameCore
             //set the attacker as the first turn, allowing the game to start
             _atkTurn = true;
         }
-
         //properties
-
         public bool IsAtkPlaying //get the current team who play turn, true if it is the the attacker
         {
             get
@@ -115,7 +113,6 @@ namespace ITI.GameCore
                 return transmittedTafl;
             }
         }
-
         //Methods - internal                
         /// <summary>
         /// check the capture around this piece then remove the piece(s).
@@ -292,8 +289,7 @@ namespace ITI.GameCore
                 }
 
             }
-            #endregion
-            CheckVictoryCondition();
+            #endregion            
         }
         //Checkers for fortresses
         internal bool CheckWalls(int x, int y)
@@ -330,7 +326,6 @@ namespace ITI.GameCore
             if (_tafl[x, y - 1] == Pawn.None) return true;
             return false;
         }
-
         internal bool CheckDown(int x, int y)
         {
             if (y + 1 >= _tafl.Height) return false;
@@ -353,7 +348,6 @@ namespace ITI.GameCore
             return false;
         }
         #endregion
-
         //methodes - public        
         /// <summary>
         /// Send to the UI ou AI the piece(s) that are movable for this turn.
@@ -379,7 +373,6 @@ namespace ITI.GameCore
             }
             return ret;
         }
-
         /// <summary>
         /// Send to the UI ou AI the possible position for this piece for this turn.
         /// </summary>
@@ -467,6 +460,7 @@ namespace ITI.GameCore
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
+                CheckCapture(x2, y2);
                 return true;
             }
             if (x < x2)
@@ -477,6 +471,7 @@ namespace ITI.GameCore
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
+                CheckCapture(x2, y2);
                 return true;
             }
             if (y > y2)
@@ -487,6 +482,7 @@ namespace ITI.GameCore
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
+                CheckCapture(x2, y2);
                 return true;
             }
             if (y < y2)
@@ -497,6 +493,7 @@ namespace ITI.GameCore
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
+                CheckCapture(x2, y2);
                 return true;
             }
             return false;
@@ -510,10 +507,11 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         public bool UpdateTurn()
         {
+            CheckVictoryCondition();
             if (CheckVictoryCondition()) return false;
             else
             {
-                _atkTurn = !_atkTurn;
+                _atkTurn = !_atkTurn;               
                 return true;
             }
         }
