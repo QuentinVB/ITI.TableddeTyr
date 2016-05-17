@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.GameCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +13,16 @@ namespace ITI.InterfaceUser
 {
     public partial class m_GameBoard : Form
     {
-        public int[,] _plateau;
-        bool XX = false;
-        bool endTurn = false;
-
-        int X, XXX, Y, YYY;
+        public Pawn[,] _plateau = new Pawn[11,11];
+        bool _checkMove;
+        public bool _allowMove = false;
+        public bool[,] _tryMove;
+        bool _endTurn;
+        public Game _partie;
+        public int _pawnMoveX;
+        public int _pawnMoveY;
+        public int _pawnDestinationX;
+        public int _pawnDestinationY;
         
 
         /// <summary>
@@ -28,7 +34,13 @@ namespace ITI.InterfaceUser
         public m_GameBoard(int width, int height)
         {
             InitializeComponent();
-            #region hardcode
+            Game partie = new Game();
+            _partie = partie;
+            _plateau = partie.GetTafl;
+            _tryMove = new bool[11, 11];
+            
+            #region hardcode du tafl
+            /*
             _plateau = new int[11, 11];
 
             _plateau[3, 0] = 1;
@@ -77,8 +89,9 @@ namespace ITI.InterfaceUser
             _plateau[7, 5] = 2;
 
             _plateau[5, 5] = 3;
+            */
             #endregion
-
+            
 
         }
 
@@ -102,21 +115,21 @@ namespace ITI.InterfaceUser
                 for (int x = 21; x < 490; x++)
                 {
 
-                    if (_plateau[i, j] == 1)
+                    if (_plateau[i, j] == Pawn.Attacker)
                     {
                         using (Pen g = new Pen(Brushes.DarkBlue))
                         {
                             e.Graphics.DrawEllipse(g, x, y, 38, 38);
                         }
                     }
-                    if (_plateau[i, j] == 2)
+                    if (_plateau[i, j] == Pawn.Defender)
                     {
                         using (Pen a = new Pen(Brushes.White))
                         {
                             e.Graphics.DrawEllipse(a, x, y, 38, 38);
                         }
                     }
-                    if (_plateau[i, j] == 3)
+                    if (_plateau[i, j] == Pawn.King)
                     {
                         using (Pen h = new Pen(Brushes.Green))
                         {
@@ -152,25 +165,23 @@ namespace ITI.InterfaceUser
                 {
                     if (e.X > x && e.X < x + 48 && e.Y > y && e.Y < y + 50)
                     {
-                        //m_positionSouris.Text = "x = " + i + " y = " + j;
 
-                        // check move
-                        if(XX == false)
+                        if (_checkMove == false)
                         {
-                            //checkMove (i, j)
-                            // if true,
-                            X = i;
-                            Y = j;
-                            XX = true;
-                        }else
-                        {
-                            // AllowMove (i,j)
-                            // if true,
-                            XXX = i;
-                            YYY = j;
-                            endTurn = true;
+                            _pawnMoveX = i;
+                            _pawnMoveY = j;
+                            _checkMove = true;
+                            m_positionSouris.Text = "x = " + _pawnMoveX + "y = " + _pawnMoveY;
                         }
-                        
+                        else
+                        {
+
+                            _pawnDestinationX = i;
+                            _pawnDestinationY = j;
+                            m_positionSouris.Text = "x = " + _pawnDestinationX + "y = " + _pawnDestinationY;
+                            _endTurn = true;
+                            _allowMove = true;
+                        }
                     }
                     i++;
                     x = x + 42;
@@ -205,17 +216,31 @@ namespace ITI.InterfaceUser
 
         private void m_updateTurn_Click(object sender, EventArgs e)
         {
-            _plateau[XXX, YYY] = _plateau[X,Y];
-            _plateau[X, Y] = 0;
-
-            if(endTurn == true)
+            /*
+            _plateau[_pawnDestinationX, _pawnDestinationY] = _plateau[_pawnMoveX,_pawnMoveY];
+            _plateau[_pawnMoveX, _pawnMoveY] = Pawn.None;
+            */
+            _allowMove = true;
+            
+            if (_endTurn == true)
             {
-                m_positionSouris.Text = "x = " + XX;
-                pictureBox1.Refresh();
-                m_PlayerTurn.Refresh();
+                _allowMove = _partie.AllowMove(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
+                _plateau = _partie.GetTafl;
+
+                if (_allowMove == true)
+                {
+                    m_PlayerTurn.Refresh();
+                    _endTurn = false;
+                    _checkMove = false;
+                    _allowMove = false;
+                    pictureBox1.Refresh();
+                }
+                else
+                {
+                    _checkMove = false;
+                    _allowMove = false;
+                }
             }
-            XX = false;
-            endTurn = false;
 
         }
 
