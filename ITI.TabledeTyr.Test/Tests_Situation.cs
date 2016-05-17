@@ -32,6 +32,7 @@ namespace ITI.TabledeTyr.Test
         [TestCase(5,4)]
         public void Situation_capture_pawn(int x, int y)
         {
+            //Arrange
             int i = 1;
             int pawnMovedX = 0;
             int pawnMovedY = 0;
@@ -43,16 +44,19 @@ namespace ITI.TabledeTyr.Test
             bool[,] movableTafl = new bool[11, 11];
             bool[,] pawnDestinations = new bool[11, 11];
             currentTafl = sut.GetTafl;
-
+            bool atkPlaying;
+            bool pawnMoved;
+            //act
             do
             {
                 if (i == 1) { pawnMovedX = 4; pawnMovedY = 0; pawnDestinationX = 4; pawnDestinationY = 3; }
                 if (i == 2) { pawnMovedX = 3; pawnMovedY = 5; pawnDestinationX = 3; pawnDestinationY = 3; }
 
-                bool atkPlaying = sut.IsAtkPlaying;
+                atkPlaying = sut.IsAtkPlaying;
                 movableTafl = sut.CheckMove();
                 pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
-                bool pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+                pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+
                 if (sut.UpdateTurn() == false)
                 {
                     atkPlaying = sut.IsAtkPlaying;
@@ -63,7 +67,8 @@ namespace ITI.TabledeTyr.Test
                     currentTafl = sut.GetTafl;
                 }
                 i++;
-            } while (i<2);//MAIN LOOP
+            } while (i<=2);//MAIN LOOP
+            //assert
             currentTafl = sut.GetTafl;
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.None));
         }
@@ -71,6 +76,7 @@ namespace ITI.TabledeTyr.Test
         [TestCase(5, 4)]
         public void Situation_cannot_moving_pawn_out_of_the_tafl(int x, int y)
         {
+            //arrange
             int pawnMovedX = 0;
             int pawnMovedY = 0;
             int pawnDestinationX = 0;
@@ -82,12 +88,13 @@ namespace ITI.TabledeTyr.Test
             bool[,] pawnDestinations = new bool[11, 11];
             currentTafl = sut.GetTafl;
             
-                pawnMovedX = 2; pawnMovedY = 0; pawnDestinationX = 2; pawnDestinationY = -1;
-                
-                bool atkPlaying = sut.IsAtkPlaying;
-                movableTafl = sut.CheckMove();
-                pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
-                bool pawnMoved;
+            pawnMovedX = 2; pawnMovedY = 0; pawnDestinationX = 2; pawnDestinationY = -1;
+            //act    
+            bool atkPlaying = sut.IsAtkPlaying;
+            movableTafl = sut.CheckMove();
+            pawnDestinations = sut.TryMove(pawnMovedX, pawnMovedY);
+            bool pawnMoved;
+            //assert
             Assert.Throws<ArgumentOutOfRangeException>(() => pawnMoved = sut.AllowMove(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY));
 
         }
@@ -253,7 +260,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(pawnDestinations[2, 0], Is.EqualTo(false));
             Assert.Throws<ArgumentException>(() => pawnMoved = sut.AllowMove(x, y, x2, y2));
         }
-       
+        
         //TODO
         //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
     }

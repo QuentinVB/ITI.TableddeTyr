@@ -17,9 +17,6 @@ namespace ITI.TabledeTyr.Test
         {
             Game sut = new Game();
             Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
-
             currentTafl = sut.GetTafl;
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.King));
         }
@@ -28,11 +25,6 @@ namespace ITI.TabledeTyr.Test
         public void Game_02_setting_first_turn_check_player()
         {
             Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
-
-            currentTafl = sut.GetTafl;
             bool atkPlaying = sut.IsAtkPlaying;
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
         }
@@ -87,15 +79,14 @@ namespace ITI.TabledeTyr.Test
         [Test]
         public void Game_04_turn_tryMove()
         {
+            //arrange
             Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
             bool[,] pawnDestinations = new bool[11, 11];
 
-            currentTafl = sut.GetTafl;
-            bool atkPlaying = sut.IsAtkPlaying;
-            movableTafl = sut.CheckMove();
+            //act
             pawnDestinations = sut.TryMove(2, 0);
+
+            //assert
             for (int i = 1; i <= 9; i++)
             {
                 Assert.That(pawnDestinations[2, i], Is.EqualTo(true));
@@ -107,16 +98,12 @@ namespace ITI.TabledeTyr.Test
         [TestCase(3, 3)]
         public void Game_05_turn_allowMove(int x, int y)
         {
+            //arrange
             Game sut = new Game();
             Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
-
-            currentTafl = sut.GetTafl;
-            bool atkPlaying = sut.IsAtkPlaying;
-            movableTafl = sut.CheckMove();
-            pawnDestinations = sut.TryMove(3, 0);
+            //act
             bool pawnMoved = sut.AllowMove(3, 0, x, y);
+            //assert
             currentTafl = sut.GetTafl;
             Assert.That(currentTafl[3, 0], Is.EqualTo(Pawn.None));
             Assert.That(currentTafl[3, 3], Is.EqualTo(Pawn.Attacker));
@@ -126,11 +113,12 @@ namespace ITI.TabledeTyr.Test
         [TestCase(3, 3)]
         public void Game_06_turn_updateTurn(int x, int y)
         {
+            //arrange
             Game sut = new Game();
             Pawn[,] currentTafl = new Pawn[11, 11];
             bool[,] movableTafl = new bool[11, 11];
             bool[,] pawnDestinations = new bool[11, 11];
-
+            //Act
             currentTafl = sut.GetTafl;
             bool atkPlaying = sut.IsAtkPlaying;
             movableTafl = sut.CheckMove();
@@ -145,6 +133,7 @@ namespace ITI.TabledeTyr.Test
             {
                 currentTafl = sut.GetTafl;
             }
+            //assert
             currentTafl = sut.GetTafl;
             Assert.That(currentTafl[3, 0], Is.EqualTo(Pawn.None));
             Assert.That(currentTafl[3, 3], Is.EqualTo(Pawn.Attacker));
@@ -207,10 +196,13 @@ namespace ITI.TabledeTyr.Test
             {
                 currentTafl = sut.GetTafl;
             }
-            Assert.That(currentTafl[2, 0], Is.EqualTo(Pawn.None));
-            Assert.That(currentTafl[2, 3], Is.EqualTo(Pawn.Attacker));
             //L'interlocuteur recommence le séquence de Tour. 
             //FIN DE LA SÉQUENCE
+            //assert
+            currentTafl = sut.GetTafl;
+            Assert.That(currentTafl[2, 0], Is.EqualTo(Pawn.None));
+            Assert.That(currentTafl[2, 3], Is.EqualTo(Pawn.Attacker));
+            
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
         
