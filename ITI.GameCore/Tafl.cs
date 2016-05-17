@@ -35,7 +35,7 @@ namespace ITI.GameCore
             _tafl = new Pawn[width, height];
         }
 
-        public TaflBasic(ITafl source)
+        public TaflBasic(IReadOnlyTafl source)
             : this(source.Width, source.Height)
         {
             //Tests in case of very critical problem. If these are triggered, nuke the matrix.
