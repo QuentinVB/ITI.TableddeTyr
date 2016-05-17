@@ -223,6 +223,5 @@ namespace ITI.TabledeTyr.Test
 
             Assert.Throws<ArgumentOutOfRangeException>(() => sut[left, up] = Pawn.Attacker);
         }
-
     }
 }
