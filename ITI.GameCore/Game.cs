@@ -367,11 +367,14 @@ namespace ITI.GameCore
             {
                 for (int x = 0; x < _tafl.Width; x++)
                 {
-                    if (CheckUp(x, y) == true) ret[x, y] = true;
-                    else if (CheckDown(x, y) == true) ret[x, y] = true;
-                    else if (CheckLeft(x, y) == true) ret[x, y] = true;
-                    else if (CheckRight(x, y) == true) ret[x, y] = true;
-                    else ret[x, y] = false;
+                    if (_tafl[x, y] != Pawn.None)
+                    {
+                        if (CheckUp(x, y) == true) ret[x, y] = true;
+                        else if (CheckDown(x, y) == true) ret[x, y] = true;
+                        else if (CheckLeft(x, y) == true) ret[x, y] = true;
+                        else if (CheckRight(x, y) == true) ret[x, y] = true;
+                        else ret[x, y] = false;
+                    }
                 }
             }
             return ret;
@@ -387,6 +390,10 @@ namespace ITI.GameCore
         public bool[,] TryMove(int x, int y)//
         {
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
+            
+            if(IsAtkPlaying == true && _tafl[x, y] == Pawn.Defender) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if(IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            
             bool[,] ret = new bool[_tafl.Width, _tafl.Height];
             //Checking squares above
             int i = y - 1;
@@ -439,15 +446,18 @@ namespace ITI.GameCore
         {
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
-            if (x != x2 && y != y2) return false;
+            if (x == x2 && y == y2) return false;
             if (_tafl[x, y] != Pawn.King)
             {
-                if (x2 == 0 && y2 == 0) return false;
-                if (x2 == 10 && y2 == 0) return false;
-                if (x2 == 0 && y2 == 10) return false;
-                if (x2 == 10 && y2 == 10) return false;
-                if (x2 == 5 && y2 == 5) return false;
+                if (
+                    (x2 == 0 && y2 == 0) ||
+                    (x2 == 10 && y2 == 0) ||
+                    (x2 == 0 && y2 == 10) ||
+                    (x2 == 10 && y2 == 10) ||
+                    (x2 == 5 && y2 == 5))
+                    throw new ArgumentException("Cannot enter the throne");
             }
+            
             //Verifying that the move is leggit (TryMove might've been bypassed)
             if (x > x2)
             {
@@ -463,7 +473,7 @@ namespace ITI.GameCore
             {
                 for (int i = x; i < x2; i++)
                 {
-                    if (!CheckLeft(i, y)) return false;
+                    if (!CheckRight(i, y)) return false;
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
@@ -473,7 +483,7 @@ namespace ITI.GameCore
             {
                 for (int i = y; i > y2; i--)
                 {
-                    if (!CheckLeft(x, i)) return false;
+                    if (!CheckUp(x, i)) return false;
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
@@ -483,7 +493,7 @@ namespace ITI.GameCore
             {
                 for (int i = y; i < y2; i++)
                 {
-                    if (!CheckLeft(x, i)) return false;
+                    if (!CheckDown(x, i)) return false;
                 }
                 _tafl[x2, y2] = _tafl[x, y];
                 _tafl[x, y] = Pawn.None;
