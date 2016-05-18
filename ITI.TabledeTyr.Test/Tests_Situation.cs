@@ -68,8 +68,9 @@ namespace ITI.TabledeTyr.Test
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.Attacker));
         }
         //test : take a pawn
-        [TestCase(4,3)]
-        public void Situation_capture_pawn(int x, int y)
+        [TestCase(4,3,4,0,4,3,3,5,3,3)]
+        [TestCase(7,0,3,0,3,1,7,5,7,1)]
+        public void Situation_capture_pawn(int x, int y, int xA, int yA, int xB, int yB, int xC, int yC, int xD, int yD)
         {
             //Arrange
             int i = 1;
@@ -85,8 +86,8 @@ namespace ITI.TabledeTyr.Test
             //act
             do
             {
-                if (i == 1) { pawnMovedX = 4; pawnMovedY = 0; pawnDestinationX = 4; pawnDestinationY = 3; }
-                if (i == 2) { pawnMovedX = 3; pawnMovedY = 5; pawnDestinationX = 3; pawnDestinationY = 3; }
+                if (i == 1) { pawnMovedX = xA; pawnMovedY = yA; pawnDestinationX = xB; pawnDestinationY = yB; }
+                if (i == 2) { pawnMovedX = xC; pawnMovedY = yC; pawnDestinationX = xD; pawnDestinationY = yD; }
 
                 atkPlaying = sut.IsAtkPlaying;
 
