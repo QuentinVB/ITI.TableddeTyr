@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ITI.TabledeTyr.Freyja</RootNamespace>
     <AssemblyName>ITI.TabledeTyr.Freyja</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="00-IO Function\ISensor.cs" />
     <Compile Include="02-Analyze\BlockMove.cs" />
     <Compile Include="02-Analyze\MoveKeeper.cs" />
     <Compile Include="02-Analyze\StupidMove.cs" />
