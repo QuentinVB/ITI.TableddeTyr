@@ -279,15 +279,11 @@ namespace ITI.TabledeTyr.Test
                 bool pawnMoved;
                 if (i == 10 && x==5)
                 {
-                    PossibleMove testedMove = new PossibleMove(6, 5, 0, 0, 0, 2);
-                    Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
-                    Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY));
+                      Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY));
                 }
                 else if (i == 10 && x == 3)
                 {
-                    PossibleMove testedMove = new PossibleMove(6, 5, 0, 0, 0, 2);
-                    Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
-                    sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+                     sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
                 }
                 else
                 {
@@ -314,9 +310,8 @@ namespace ITI.TabledeTyr.Test
             Game sut = new Game();
             var currentTafl = sut.Tafl;
             bool atkPlaying = sut.IsAtkPlaying;
-            bool pawnMoved;
             currentTafl = sut.Tafl;
-            Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(x, y, x2, y2));
+            Assert.That(sut.MovePawn(x, y, x2, y2), Is.EqualTo(false));
         }
         //Game test if the king is captured
         [Test]
