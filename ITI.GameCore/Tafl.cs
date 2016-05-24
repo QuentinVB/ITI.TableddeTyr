@@ -14,7 +14,8 @@ namespace ITI.GameCore
         None,
         Attacker,
         Defender,
-        King
+        King,
+        Wall
     }
     public class TaflBasic : ITafl
     {
@@ -99,7 +100,7 @@ namespace ITI.GameCore
         public Pawn this[int x, int y]
         {
             get {
-                Helper.CheckRange(_width, _height, x, y);
+                if (x < 0 || x > _width || y < 0 || y > _height) return Pawn.Wall;
                 return _tafl[x,y]; }
             set {
                 Helper.CheckRange(_width, _height, x, y);
