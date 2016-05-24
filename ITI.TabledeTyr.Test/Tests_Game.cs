@@ -105,7 +105,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
             //ACTION UTILISATEUR
             // -L'interlocuteur valide le mouvement en appellant AllowMove
-            bool pawnMoved = sut.MovePawn(2, 0, x, y);
+            bool pawnMoved = sut.MovePawn(x, y, x2, y2);
             // - Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
             // - Le core appelle CheckVictoryCondition
             // - CheckVictoryCondition vérifie si le roi à été pris en appellant le tafl Si c'est le cas il renvoie True à update turn
