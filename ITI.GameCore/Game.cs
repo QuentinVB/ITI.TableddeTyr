@@ -5,41 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ITI.GameCore
-{
-    //struct for can move answer
-    public struct PossibleMove
-    {
-        public int _x;
-        public int _y;
-        public int _north;
-        public int _south;   
-        public int _east;
-        public int _west;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
-        /// </summary>
-        /// <param name="x">The x position of the analyzed pawn.</param>
-        /// <param name="y">The y position of the analyzed pawn.</param>
-        /// <param name="north">The north maximum move for this pawn.</param>
-        /// <param name="south">The south maximum move for this pawn.</param>
-        /// <param name="east">The east maximum move for this pawn.</param>
-        /// <param name="west">The west maximum move for this pawn.</param>
-        public PossibleMove (int x, int y, int north, int south, int east, int west)
-        {
-            _x = x;
-            _y = y;
-            _north = north;
-            _south = south;
-            _east = east;
-            _west = west;
-        }
-        public int North => _north;
-        public int South => _south;
-        public int East => _east;
-        public int West => _west;
-        public int X => _x;
-        public int Y => _y;
-    }
+{  
     public class Game
     {
         //attributes        
@@ -142,12 +108,16 @@ namespace ITI.GameCore
             {
                 //Checking Up (x,y-1)
                 #region Up
-                if (!CheckWalls(x, y - 1))
+                if (!CheckWallsAndForteress(x, y - 1))
                 {
                     //Finding a simple defender
                     if (_tafl[x, y - 1] == Pawn.Defender)
                     {
-                        if (_tafl[x, y - 2] == Pawn.Attacker || CheckWalls(x, y - 2))
+                        if(CheckWallsAndForteress(x, y - 2))
+                        {
+                            _tafl[x, y - 1] = Pawn.None;
+                        }
+                        else if (_tafl[x, y - 2] == Pawn.Attacker)
                         {
                             _tafl[x, y - 1] = Pawn.None;
                         }
@@ -155,11 +125,21 @@ namespace ITI.GameCore
                     //Finding the King
                     if (_tafl[x, y - 1] == Pawn.King)
                     {
-                        if (_tafl[x, y - 2] == Pawn.Attacker || CheckWalls(x, y - 2))//Above
+                        if (CheckWallsAndForteress(x, y - 2))//Above
                         {
-                            if (_tafl[x - 1, y - 1] == Pawn.Attacker || CheckWalls(x - 1, y - 1))//Left
+                            if (CheckWallsAndForteress(x - 1, y - 1))//Left
                             {
-                                if (_tafl[x + 1, y + 1] == Pawn.Attacker || CheckWalls(x + 1, y - 1))//Right
+                                if (CheckWallsAndForteress(x + 1, y - 1))//Right
+                                {
+                                    _tafl[x, y - 1] = Pawn.None;
+                                }
+                            }
+                        }
+                        else if (_tafl[x, y - 2] == Pawn.Attacker)//Above
+                        {
+                            if (_tafl[x - 1, y - 1] == Pawn.Attacker)//Left
+                            {
+                                if (_tafl[x + 1, y + 1] == Pawn.Attacker)//Right
                                 {
                                     _tafl[x, y - 1] = Pawn.None;
                                 }
@@ -170,12 +150,16 @@ namespace ITI.GameCore
                 #endregion
                 //Checking Down (x,y+1)
                 #region Down
-                if (!CheckWalls(x, y + 1))
+                if (!CheckWallsAndForteress(x, y + 1))
                 {
                     //Finding a simple defender
                     if (_tafl[x, y + 1] == Pawn.Defender)
                     {
-                        if (_tafl[x, y + 2] == Pawn.Attacker || CheckWalls(x, y + 2))
+                        if(CheckWallsAndForteress(x, y + 2))
+                        {
+                            _tafl[x, y + 1] = Pawn.None;
+                        }
+                        else if (_tafl[x, y + 2] == Pawn.Attacker)
                         {
                             _tafl[x, y + 1] = Pawn.None;
                         }
@@ -183,11 +167,21 @@ namespace ITI.GameCore
                     //Finding the King
                     if (_tafl[x, y + 1] == Pawn.King)
                     {
-                        if (_tafl[x, y + 2] == Pawn.Attacker || CheckWalls(x, y + 2))//Under
+                        if (CheckWallsAndForteress(x, y + 2))//Under
                         {
-                            if (_tafl[x - 1, y + 1] == Pawn.Attacker || CheckWalls(x - 1, y + 1))//Left
+                            if (CheckWallsAndForteress(x - 1, y + 1))//Left
                             {
-                                if (_tafl[x + 1, y + 1] == Pawn.Attacker || CheckWalls(x + 1, y + 1))//Right
+                                if (CheckWallsAndForteress(x + 1, y + 1))//Right
+                                {
+                                    _tafl[x, y + 1] = Pawn.None;
+                                }
+                            }
+                        }
+                        if (_tafl[x, y + 2] == Pawn.Attacker)//Under
+                        {
+                            if (_tafl[x - 1, y + 1] == Pawn.Attacker)//Left
+                            {
+                                if (_tafl[x + 1, y + 1] == Pawn.Attacker)//Right
                                 {
                                     _tafl[x, y + 1] = Pawn.None;
                                 }
@@ -198,12 +192,16 @@ namespace ITI.GameCore
                 #endregion
                 //Checking Left Left(x-1,y)
                 #region Left
-                if (!CheckWalls(x - 1, y))
+                if (!CheckWallsAndForteress(x - 1, y))
                 {
                     //Finding a simple defender
                     if (_tafl[x - 1, y] == Pawn.Defender)
                     {
-                        if (_tafl[x - 2, y] == Pawn.Attacker || CheckWalls(x - 2, y))
+                        if(CheckWallsAndForteress(x - 2, y))
+                        {
+                            _tafl[x - 1, y] = Pawn.None;
+                        }
+                        else if (_tafl[x - 2, y] == Pawn.Attacker)
                         {
                             _tafl[x - 1, y] = Pawn.None;
                         }
@@ -211,11 +209,21 @@ namespace ITI.GameCore
                     //Finding the King
                     if (_tafl[x - 1, y] == Pawn.King)
                     {
-                        if (_tafl[x - 1, y - 1] == Pawn.Attacker || CheckWalls(x - 1, y - 1))//Above
+                        if (CheckWallsAndForteress(x - 1, y - 1))//Above
                         {
-                            if (_tafl[x - 1, y + 1] == Pawn.Attacker || CheckWalls(x - 1, y + 1))//Under
+                            if (CheckWallsAndForteress(x - 1, y + 1))//Under
                             {
-                                if (_tafl[x - 2, y] == Pawn.Attacker || CheckWalls(x - 2, y))//Left
+                                if (CheckWallsAndForteress(x - 2, y))//Left
+                                {
+                                    _tafl[x - 1, y] = Pawn.None;
+                                }
+                            }
+                        }
+                        if (_tafl[x - 1, y - 1] == Pawn.Attacker)//Above
+                        {
+                            if (_tafl[x - 1, y + 1] == Pawn.Attacker)//Under
+                            {
+                                if (_tafl[x - 2, y] == Pawn.Attacker)//Left
                                 {
                                     _tafl[x - 1, y] = Pawn.None;
                                 }
@@ -226,12 +234,16 @@ namespace ITI.GameCore
                 #endregion
                 //Checking Right(x+1,y)
                 #region Right
-                if (!CheckWalls(x + 1, y))
+                if (!CheckWallsAndForteress(x + 1, y))
                 {
                     //Finding a simple defender
                     if (_tafl[x + 1, y] == Pawn.Defender)
                     {
-                        if (_tafl[x + 2, y] == Pawn.Attacker || CheckWalls(x + 2, y))
+                        if(CheckWallsAndForteress(x + 2, y))
+                        {
+                            _tafl[x + 1, y] = Pawn.None;
+                        }
+                        else if (_tafl[x + 2, y] == Pawn.Attacker)
                         {
                             _tafl[x + 1, y] = Pawn.None;
                         }
@@ -239,11 +251,21 @@ namespace ITI.GameCore
                     //Finding the King
                     if (_tafl[x + 1, y] == Pawn.King)
                     {
-                        if (_tafl[x + 1, y - 1] == Pawn.Attacker || CheckWalls(x + 1, y - 1))//Above
+                        if (CheckWallsAndForteress(x + 1, y - 1))//Above
                         {
-                            if (_tafl[x + 1, y + 1] == Pawn.Attacker || CheckWalls(x + 1, y + 1))//Under
+                            if (CheckWallsAndForteress(x + 1, y + 1))//Under
                             {
-                                if (_tafl[x + 2, y] == Pawn.Attacker || CheckWalls(x + 2, y))//Right
+                                if (CheckWallsAndForteress(x + 2, y))//Right
+                                {
+                                    _tafl[x + 1, y] = Pawn.None;
+                                }
+                            }
+                        }
+                        else if (_tafl[x + 1, y - 1] == Pawn.Attacker)//Above
+                        {
+                            if (_tafl[x + 1, y + 1] == Pawn.Attacker)//Under
+                            {
+                                if (_tafl[x + 2, y] == Pawn.Attacker)//Right
                                 {
                                     _tafl[x + 1, y] = Pawn.None;
                                 }
@@ -258,44 +280,60 @@ namespace ITI.GameCore
             if (_atkTurn == false)
             {
                 //Checking Up (x,y-1)
-                if (!CheckWalls(x, y - 1))
+                if (!CheckWallsAndForteress(x, y - 1))
                 {
                     if (_tafl[x, y - 1] == Pawn.Attacker)
                     {
-                        if (_tafl[x, y - 2] == Pawn.Defender || _tafl[x, y - 2] == Pawn.King || CheckWalls(x, y - 2))
+                        if (CheckWallsAndForteress(x, y - 2))
+                        {
+                            _tafl[x, y - 1] = Pawn.None;
+                        }
+                        else if (_tafl[x, y - 2] == Pawn.Defender || _tafl[x, y - 2] == Pawn.King)
                         {
                             _tafl[x, y - 1] = Pawn.None;
                         }
                     }
                 }
                 //Checking Down (x,y+1)
-                if (!CheckWalls(x, y + 1))
+                if (!CheckWallsAndForteress(x, y + 1))
                 {
                     if (_tafl[x, y + 1] == Pawn.Attacker)
                     {
-                        if (_tafl[x, y + 2] == Pawn.Defender || _tafl[x, y + 2] == Pawn.King || CheckWalls(x, y + 2))
+                        if(CheckWallsAndForteress(x, y + 2))
+                        {
+                            _tafl[x, y + 1] = Pawn.None;
+                        }
+                        else if (_tafl[x, y + 2] == Pawn.Defender || _tafl[x, y + 2] == Pawn.King)
                         {
                             _tafl[x, y + 1] = Pawn.None;
                         }
                     }
                 }
                 //Checking Left Left(x-1,y)
-                if (!CheckWalls(x - 1, y))
+                if (!CheckWallsAndForteress(x - 1, y))
                 {
                     if (_tafl[x - 1, y] == Pawn.Attacker)
                     {
-                        if (_tafl[x - 2, y] == Pawn.Defender || _tafl[x - 2, y] == Pawn.King || CheckWalls(x - 2, y))
+                        if (CheckWallsAndForteress(x - 2, y))
+                        {
+                            _tafl[x - 1, y] = Pawn.None;
+                        }
+                        else if (_tafl[x - 2, y] == Pawn.Defender || _tafl[x - 2, y] == Pawn.King)
                         {
                             _tafl[x - 1, y] = Pawn.None;
                         }
                     }
                 }
                 //Checking Right(x+1,y)
-                if (!CheckWalls(x + 1, y))
+                if (!CheckWallsAndForteress(x + 1, y))
                 {
                     if (_tafl[x + 1, y] == Pawn.Attacker)
                     {
-                        if (_tafl[x + 2, y] == Pawn.Defender || _tafl[x + 2, y] == Pawn.King || CheckWalls(x + 2, y))
+                        if(CheckWallsAndForteress(x + 2, y))
+                        {
+                            _tafl[x + 1, y] = Pawn.None;
+                        }
+                        else if (_tafl[x + 2, y] == Pawn.Defender || _tafl[x + 2, y] == Pawn.King)
                         {
                             _tafl[x + 1, y] = Pawn.None;
                         }
@@ -305,16 +343,16 @@ namespace ITI.GameCore
             }
             #endregion            
         }
-        //Checkers for fortresses
-        internal bool CheckWalls(int x, int y)
+        //Checkers for fortresses and walls
+        internal bool CheckWallsAndForteress(int x, int y) //comptactable 
         {
-            if (x == 0 && y == 0) return true; //Top left corner
-            if (x == _tafl.Width - 1 && y == 0) return true; //Top right corner
-            if (x == 0 && y == _tafl.Height - 1) return true; //Bot left corner
-            if (x == _tafl.Width - 1 && y == _tafl.Height - 1) return true; //Bot right corner
-            if (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2) return true; //Center
-            if (x < _tafl.Width || x > 0) return true; //Border
-            if (y < _tafl.Height || y > 0) return true; //Border
+            if (x == 0 && y == 0) return true; //Top left corner : forteress
+            if (x == _tafl.Width - 1 && y == 0) return true; //Top right corner : forteress
+            if (x == 0 && y == _tafl.Height - 1) return true; //Bot left corner : forteress
+            if (x == _tafl.Width - 1 && y == _tafl.Height - 1) return true; //Bot right corner : forteress
+            if (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2) return true; //Center : throne
+            if (x > _tafl.Width-1 || x < 0) return true; //Border north-south
+            if (y > _tafl.Height-1|| y < 0) return true; //Border left-right
             return false;
         }
         /// <summary>
@@ -325,10 +363,12 @@ namespace ITI.GameCore
         /// <exception cref="System.NotImplementedException"></exception>
         internal bool CheckVictoryCondition()
         {
+            //check présence of the king in each forteress
             if (_tafl[0, 0] == Pawn.King) return true;
             if (_tafl[0, _tafl.Height - 1] == Pawn.King) return true;
             if (_tafl[_tafl.Width - 1, 0] == Pawn.King) return true;
             if (_tafl[_tafl.Width - 1, _tafl.Height - 1] == Pawn.King) return true;
+            //check if the king is still alive
             if (!_tafl.HasKing) return true;
             return false;
         }
@@ -443,14 +483,13 @@ namespace ITI.GameCore
         */
         public bool CanMove(int x, int y)
         {
-            return _tafl[x, y] != Pawn.None
-                    && (CheckUp(x, y)
-                        || CheckDown(x, y)
-                        || CheckLeft(x, y)
-                        || CheckRight(x, y));
+            return _tafl[x, y] != Pawn.None //If the pawn is not none aka : true pawn
+                   && (CheckUp(x, y) //AND up is empty
+                    || CheckDown(x, y) //OR down...
+                    || CheckLeft(x, y)//OR left...
+                    || CheckRight(x, y));//Or right  then He can move (true)
+            //AND not trying to enter a forterss while being a non-king pawn  !!!! using check wall and forteress ?
         }
-
-
         /// <summary>
         /// Allows the designated pieces to move the piece to another coordinate,
         /// call <see cref="CheckMove" /> by secure.
@@ -466,20 +505,15 @@ namespace ITI.GameCore
         /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
         public bool MovePawn(int x, int y, int x2, int y2)
         {
-            if (IsAtkPlaying == true && _tafl[x, y] == Pawn.Defender) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
             if (x == x2 && y == y2) return false;
             if (_tafl[x, y] != Pawn.King)
             {
-                if (
-                    (x2 == 0 && y2 == 0) ||
-                    (x2 == 10 && y2 == 0) ||
-                    (x2 == 0 && y2 == 10) ||
-                    (x2 == 10 && y2 == 10) ||
-                    (x2 == 5 && y2 == 5))
-                    throw new ArgumentException("Cannot enter the throne");
+                if (CheckWallsAndForteress(x2,y2))
+                    throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
             }
 
             //Verifying that the move is leggit (TryMove might've been bypassed)

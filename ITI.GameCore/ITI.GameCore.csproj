@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="ITafl.cs" />
+    <Compile Include="PossibleMove.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tafl.cs" />
   </ItemGroup>

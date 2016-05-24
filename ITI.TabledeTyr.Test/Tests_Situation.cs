@@ -68,8 +68,9 @@ namespace ITI.TabledeTyr.Test
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.Attacker));
         }
         //test : take a pawn
-        [TestCase(4,3)]
-        public void Situation_capture_pawn(int x, int y)
+        [TestCase(4,3,4,0,4,3,3,5,3,3)]
+        [TestCase(7,0,3,0,3,1,7,5,7,1)]
+        public void Situation_capture_pawn(int x, int y, int xA, int yA, int xB, int yB, int xC, int yC, int xD, int yD)
         {
             //Arrange
             int i = 1;
@@ -85,8 +86,8 @@ namespace ITI.TabledeTyr.Test
             //act
             do
             {
-                if (i == 1) { pawnMovedX = 4; pawnMovedY = 0; pawnDestinationX = 4; pawnDestinationY = 3; }
-                if (i == 2) { pawnMovedX = 3; pawnMovedY = 5; pawnDestinationX = 3; pawnDestinationY = 3; }
+                if (i == 1) { pawnMovedX = xA; pawnMovedY = yA; pawnDestinationX = xB; pawnDestinationY = yB; }
+                if (i == 2) { pawnMovedX = xC; pawnMovedY = yC; pawnDestinationX = xD; pawnDestinationY = yD; }
 
                 atkPlaying = sut.IsAtkPlaying;
 
@@ -287,9 +288,49 @@ namespace ITI.TabledeTyr.Test
             currentTafl = sut.Tafl;
             Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(x, y, x2, y2));
         }
-        
+        //Game test if the king is captured
+        [Test]
+        public void Situation_capture_of_the_king()
+        {
+            int i = 1;
+            int pawnMovedX = 0;
+            int pawnMovedY = 0;
+            int pawnDestinationX = 0;
+            int pawnDestinationY = 0;
+
+            Game sut = new Game();
+            var currentTafl = sut.Tafl;
+            bool atkPlaying;
+            bool pawnMoved;
+            do
+            {
+                if (i == 1) { pawnMovedX = 7; pawnMovedY = 10; pawnDestinationX = 8; pawnDestinationY = 10; }//Atk
+                if (i == 2) { pawnMovedX = 7; pawnMovedY = 5; pawnDestinationX = 7; pawnDestinationY = 1; }
+                if (i == 3) { pawnMovedX = 9; pawnMovedY = 5; pawnDestinationX = 9; pawnDestinationY = 6; }//Atk
+                if (i == 4) { pawnMovedX = 6; pawnMovedY = 5; pawnDestinationX = 9; pawnDestinationY = 5; }
+                if (i == 5) { pawnMovedX = 10; pawnMovedY = 3; pawnDestinationX = 6; pawnDestinationY = 3; }//Atk
+                if (i == 6) { pawnMovedX = 9; pawnMovedY = 5; pawnDestinationX = 9; pawnDestinationY = 1; }
+                if (i == 7) { pawnMovedX = 8; pawnMovedY = 10; pawnDestinationX = 7; pawnDestinationY = 10; }//Atk
+                if (i == 8) { pawnMovedX = 5; pawnMovedY = 5; pawnDestinationX = 10; pawnDestinationY = 5; }
+                if (i == 9) { pawnMovedX = 9; pawnMovedY = 6; pawnDestinationX = 9; pawnDestinationY = 5; }//Atk
+                atkPlaying = sut.IsAtkPlaying;
+                pawnMoved = sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);               
+                if (sut.UpdateTurn() == false)
+                {
+                    atkPlaying = sut.IsAtkPlaying;
+                    break;
+                }
+                else
+                {
+                    currentTafl = sut.Tafl;
+                }
+                i++;
+            } while (i <= 9);//MAIN LOOP
+            currentTafl = sut.Tafl;
+            Assert.That(currentTafl[9, 5], Is.EqualTo(Pawn.None));
+        }
         //TODO
-        //test : encircle the king and his servant (try simple case, 1 servant. Then 2, 3... Try the big one with all servant !)
+        //canMove new gen
     }
 }
 
