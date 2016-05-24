@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
+	/*
+	        Dictionary<string,SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+            SimulationNode root =  new SimulationNode(Guid.NewGuid().ToString());//create the root of the tree (getting the current state of the system)
+            string key = Guid.NewGuid().ToString();//generating new key
+            SimulatedTree[key] = new SimulationNode(key);//creating new node
+            root.AddChild(SimulatedTree[key]);//linking root, designating the new created node as one of his childs  
+	*/
     class SimulationNode : IEnumerable<SimulationNode>
     {
         public readonly string id; //UUID of the node

@@ -40,9 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="02-Analyze\BlockMove.cs" />
+    <Compile Include="02-Analyze\MoveKeeper.cs" />
+    <Compile Include="02-Analyze\StupidMove.cs" />
     <Compile Include="AI_Core.cs" />
+    <Compile Include="02-Analyze\Analyze.cs" />
+    <Compile Include="03-Decision\Decision.cs" />
+    <Compile Include="00-IO Function\Effector.cs" />
+    <Compile Include="Monitoring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimulationTree.cs" />
+    <Compile Include="00-IO Function\Sensor.cs" />
+    <Compile Include="01-Simulation\Simulate.cs" />
+    <Compile Include="01-Simulation\SimulationTree.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ITI.GameCore\ITI.GameCore.csproj">
