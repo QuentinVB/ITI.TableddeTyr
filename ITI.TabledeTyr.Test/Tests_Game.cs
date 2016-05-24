@@ -32,6 +32,7 @@ namespace ITI.TabledeTyr.Test
         [TestCase(5, 5, 0, 0, 0, 0)]
         [TestCase(0, 5, 0, 0, 0, 0)]
         [TestCase(9, 5, 5, 5, 0, 1)]
+        [TestCase(6, 4, 3, 0, 3, 0)]
         public void Game_03_turn_canMove(int x, int y, int up, int down, int right, int left)
         {
             Game sut = new Game();
@@ -41,6 +42,7 @@ namespace ITI.TabledeTyr.Test
         }
         //Game test allowMove
         [TestCase(3, 3)]
+        [TestCase(1, 0)]
         public void Game_05_turn_allowMove(int x, int y)
         {
             //arrange
@@ -51,8 +53,7 @@ namespace ITI.TabledeTyr.Test
             //assert
             currentTafl = sut.Tafl;
             Assert.That(currentTafl[3, 0], Is.EqualTo(Pawn.None));
-            Assert.That(currentTafl[3, 3], Is.EqualTo(Pawn.Attacker));
-
+            Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.Attacker));
         }
         //Game test updateTurn
         [TestCase(3, 3)]
