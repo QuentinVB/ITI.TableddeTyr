@@ -347,6 +347,9 @@ namespace ITI.GameCore
         internal bool CheckWalls(int x, int y)
         {
             if (_tafl[x, y] == Pawn.Wall) return true;
+            if (x == 0 && y == 0) return true; //Top left corner
+            if (x == 0 && y == _tafl.Height - 1) return true; //Bot left corner
+            if (x == _tafl.Width - 1 && y == 0) return true; //top right corner
             if (x == _tafl.Width - 1 && y == _tafl.Height - 1) return true; //Bot right corner
             if (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2) return true; //Throne
             return false;
