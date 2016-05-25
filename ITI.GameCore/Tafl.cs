@@ -100,7 +100,7 @@ namespace ITI.GameCore
         public Pawn this[int x, int y]
         {
             get {
-                if (x < 0 || x > _width || y < 0 || y > _height) return Pawn.Wall;
+                if (x < 0 || x > _width-1 || y < 0 || y > _height-1) return Pawn.Wall;
                 return _tafl[x,y]; }
             set {
                 Helper.CheckRange(_width, _height, x, y);

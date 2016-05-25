@@ -235,11 +235,11 @@ namespace ITI.TabledeTyr.Test
             atkPlaying = sut.IsAtkPlaying;
             Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(x, y, x2, y2));
         }
-        [TestCase(3, 0, 0, 4,2,0)]
-        [TestCase(7, 0, 0, 4,0,2)]
-        [TestCase(3, 10, 4, 0,2,0)]
-        [TestCase(7, 10, 4, 0,0,2)]
-        public void Situation_canMove_tell_you_cannot_move_into_each_forteress(int x, int y, int up,int down,int left,int right)
+        [TestCase(3, 0, 0, 4, 2, 0)]
+        [TestCase(7, 0, 0, 4, 0, 2)]
+        [TestCase(3, 10, 4, 0, 2, 0)]
+        [TestCase(7, 10, 4, 0, 0, 2)]
+        public void Situation_canMove_ignore_each_forteress(int x, int y, int up,int down,int left,int right)
         {
             Game sut = new Game();
             var currentTafl = sut.Tafl;

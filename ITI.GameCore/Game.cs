@@ -346,12 +346,13 @@ namespace ITI.GameCore
         //Checkers for walls & fortresses
         internal bool CheckWalls(int x, int y)
         {
-            if (_tafl[x, y] == Pawn.Wall) return true;
-            if (x == 0 && y == 0) return true; //Top left corner
-            if (x == 0 && y == _tafl.Height - 1) return true; //Bot left corner
-            if (x == _tafl.Width - 1 && y == 0) return true; //top right corner
-            if (x == _tafl.Width - 1 && y == _tafl.Height - 1) return true; //Bot right corner
-            if (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2) return true; //Throne
+            if ((_tafl[x, y] == Pawn.Wall)
+                ||(x == 0 && y == 0)  //Top left corner
+                ||(x == 0 && y == _tafl.Height - 1) //Bot left corner
+                ||(x == _tafl.Width - 1 && y == 0)  //top right corner
+                ||(x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
+                || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2)//Throne
+                ) return true; 
             return false;
         }
         /// <summary>
@@ -403,41 +404,41 @@ namespace ITI.GameCore
             //Exception goes here
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             //Creating directions
-            int north = 0;
-            int south = 0;
-            int west = 0;
-            int east = 0;
+            int up = 0;
+            int down = 0;
+            int left = 0;
+            int right = 0;
             int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
             //Checks above
             m = y;
             while (CheckUp(x, m))
             {
                 m--;
-                north++;
+                up++;
             }
             //Check below
             m = y;
             while (CheckDown(x, m))
             {
                 m++;
-                south++;
+                down++;
             }
             //Check left
             m = x;
             while (CheckLeft(m, y))
             {
                 m--;
-                east++;
+                left++;
             }
             //Check right
             m = x;
             while (CheckRight(m, y))
             {
                 m++;
-                west++;
+                right++;
             }
             //struct ConstrucTHOR & return
-            PossibleMove _possibleMove = new PossibleMove(x, y, north, south, west, east);
+            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right);
             return _possibleMove;
         }
         /// <summary>
