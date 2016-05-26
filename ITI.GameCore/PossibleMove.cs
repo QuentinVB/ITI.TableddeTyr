@@ -9,12 +9,12 @@ namespace ITI.GameCore
     //struct for can move answer
     public struct PossibleMove
     {
-        public int _x;
-        public int _y;
-        public int _north;
-        public int _south;
-        public int _east;
-        public int _west;
+        public readonly int X;
+        public readonly int Y;
+        public readonly int Up;
+        public readonly int Down;
+        public readonly int Left;
+        public readonly int Right;
         /// <summary>
         /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
         /// </summary>
@@ -24,20 +24,14 @@ namespace ITI.GameCore
         /// <param name="south">The south maximum move for this pawn.</param>
         /// <param name="east">The east maximum move for this pawn.</param>
         /// <param name="west">The west maximum move for this pawn.</param>
-        public PossibleMove(int x, int y, int north, int south, int east, int west)
+        public PossibleMove(int x, int y, int up, int down, int left, int right )
         {
-            _x = x;
-            _y = y;
-            _north = north;
-            _south = south;
-            _east = east;
-            _west = west;
+            X = x;
+            Y = y;
+            Up = up;
+            Down = down;
+            Left = left;
+            Right = right;
         }
-        public int North => _north;
-        public int South => _south;
-        public int East => _east;
-        public int West => _west;
-        public int X => _x;
-        public int Y => _y;
     }
 }
