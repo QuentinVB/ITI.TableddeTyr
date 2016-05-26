@@ -14,15 +14,17 @@ namespace ITI.InterfaceUser
     public partial class m_GameBoard : Form
     {
         public IReadOnlyTafl _plateau;
-        bool _checkMove;
+        bool _firstClick;
         public bool _allowMove = false;
-        public bool[,] _tryMove;
         bool _endTurn;
         public Game _partie;
+        public bool _atkTurn;
         public int _pawnMoveX;
         public int _pawnMoveY;
         public int _pawnDestinationX;
         public int _pawnDestinationY;
+        int _height;
+        int _width;
         
 
         /// <summary>
@@ -37,7 +39,8 @@ namespace ITI.InterfaceUser
             Game partie = new Game();
             _partie = partie;
             _plateau = partie.Tafl;
-            _tryMove = new bool[11, 11];
+            _height = height;
+            _width = width;
             
             #region hardcode du tafl
             /*
@@ -104,37 +107,68 @@ namespace ITI.InterfaceUser
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             int i = 0, j = 0;
+            Image Piece;
+            Rectangle Rect;
+            Graphics g = e.Graphics;
 
-            //vérifiez les conditions de victoire
-            // si victoire affichez la victoire
-            //sinon : pictureBox1.Refresh();
-            // m_PlayerTurn.Refresh();
+            if (_width == 7 && _height == 7)
+            {
+                pictureBox1.BackgroundImage = ITI.InterfaceUser.Properties.Resources.Board7x7;
+            }
+            if (_width == 9 && _height == 9)
+            {
+                pictureBox1.BackgroundImage = ITI.InterfaceUser.Properties.Resources.Board9x9;
+            }
+            if (_width == 11 && _height == 11)
+            {
+                pictureBox1.BackgroundImage = ITI.InterfaceUser.Properties.Resources.Board11x11;
+            }
+            if (_width == 13 && _height == 13)
+            {
+                pictureBox1.BackgroundImage = ITI.InterfaceUser.Properties.Resources.Board13x13;
+            }
+
+
 
             for (int y = 22; y < 490; y++)
             {
                 for (int x = 21; x < 490; x++)
                 {
-
+                    
                     if (_plateau[i, j] == Pawn.Attacker)
                     {
+                        /*
                         using (Pen g = new Pen(Brushes.DarkBlue))
                         {
                             e.Graphics.DrawEllipse(g, x, y, 38, 38);
-                        }
+                        }*/
+                        Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
+                        Rect = new Rectangle(x, y, 38, 38);
+                        g.DrawImage(Piece, Rect);
+                        
                     }
                     if (_plateau[i, j] == Pawn.Defender)
                     {
+                        /*
                         using (Pen a = new Pen(Brushes.White))
                         {
                             e.Graphics.DrawEllipse(a, x, y, 38, 38);
-                        }
+                        }*/
+                        Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
+                        Rect = new Rectangle(x, y, 38, 38);
+                        g.DrawImage(Piece, Rect);
                     }
                     if (_plateau[i, j] == Pawn.King)
                     {
+                        /*
                         using (Pen h = new Pen(Brushes.Green))
                         {
                             e.Graphics.DrawEllipse(h, x, y, 38, 38);
-                        }
+                        }*/
+                        Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
+                        Rect = new Rectangle(x, y, 38, 38);
+                        g.DrawImage(Piece, Rect);
+
                     }
                     i++;
                     x = x + 42;
@@ -166,11 +200,11 @@ namespace ITI.InterfaceUser
                     if (e.X > x && e.X < x + 48 && e.Y > y && e.Y < y + 50)
                     {
 
-                        if (_checkMove == false)
+                        if (_firstClick == false)
                         {
                             _pawnMoveX = i;
                             _pawnMoveY = j;
-                            _checkMove = true;
+                            _firstClick = true;
                             m_positionSouris.Text = "x = " + _pawnMoveX + "y = " + _pawnMoveY;
                         }
                         else
@@ -179,8 +213,30 @@ namespace ITI.InterfaceUser
                             _pawnDestinationX = i;
                             _pawnDestinationY = j;
                             m_positionSouris.Text = "x = " + _pawnDestinationX + "y = " + _pawnDestinationY;
+                            // if allow move == true faire
                             _endTurn = true;
-                            _allowMove = true;
+                        }
+
+                        //a enlever
+                        if (_endTurn == true)
+                        {
+                            _allowMove = _partie.AllowMove(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
+                            _plateau = _partie.GetTafl;
+                            //
+
+                            if (_allowMove == true) // pas allow move mais si _endTurn == true
+                            {
+                                m_PlayerTurn.Refresh();
+                                _endTurn = false;
+                                _firstClick = false;
+                                _allowMove = false;
+                                pictureBox1.Refresh();
+                            }
+                            else
+                            {
+                                _firstClick = false;
+                                _allowMove = false;
+                            }
                         }
                     }
                     i++;
@@ -202,16 +258,15 @@ namespace ITI.InterfaceUser
         /// <param name="e"></param>
         private void m_GameBoard_Load(object sender, EventArgs e)
         {
-            
-            /*if (_ATKTurn == true)
+            _atkTurn = _partie.IsAtkPlaying;
+            if (_atkTurn == true)
             {
                 m_PlayerTurn.Text = "c'est au tour de l'attaquant";
             }
             else
             {
                 m_PlayerTurn.Text = "C'est au tour du défenseur";
-            }*/
-            m_PlayerTurn.Text = "C'est au tour de :";
+            }
         }
 
         private void m_updateTurn_Click(object sender, EventArgs e)
@@ -220,7 +275,7 @@ namespace ITI.InterfaceUser
             _plateau[_pawnDestinationX, _pawnDestinationY] = _plateau[_pawnMoveX,_pawnMoveY];
             _plateau[_pawnMoveX, _pawnMoveY] = Pawn.None;
             */
-            _allowMove = true;
+            /*_allowMove = true;
             
             if (_endTurn == true)
             {
@@ -240,7 +295,7 @@ namespace ITI.InterfaceUser
                     _checkMove = false;
                     _allowMove = false;
                 }
-            }
+            }*/
 
         }
 

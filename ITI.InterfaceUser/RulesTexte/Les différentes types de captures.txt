@@ -1,0 +1,29 @@
+Capture de pion
+
+	Un pion est battu et retiré du tablier s'il se retrouve, dans un alignement orthogonal, 
+	ris en tenailles par deux adversaires sur deux côtés opposés de la case qu'il occupe.
+
+	Le roi peut participer à battre un pion adverse mais on ne peut pas le battre de la même façon.
+
+	Un pion est également battu s'il se retrouve pris en tenailles par un adversaire et une forteresse.  
+	Il est possible de prendre deux ou trois pions en déplaçant un seul pion. 
+
+	Un pion qui se déplace lui-même entre deux adversaires n'est pas capturé. 
+
+  
+Capture du Roi
+
+	La capture du roi constitue le but du jeu pour les assaillants.  
+
+	Pour capturer le roi, il faut l'entourer sur ses quatre côtés.
+
+	Si le roi est sur un bord, trois pions suffisent à le capturer.
+
+	Il est également possible de capturer un roi qui touche sa forteresse centrale 
+	avec trois pions seulement.  
+
+	Un roi qui touche une forteresse de coin peut même être capturé avec deux 
+	pions seulement.  
+
+	Pour capturer un roi qui se regroupe avec un ou plusieurs de ses partisans, 
+	l'assaillant doit entourer la totalité du groupe.  

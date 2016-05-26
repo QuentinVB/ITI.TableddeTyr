@@ -117,44 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="plateau1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\PlateauJeu\plateau.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Board11x11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\RègleJeu\Board11x11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TableDeTyr1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Autre\TableDeTyr.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PionBlanc" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Pion\PionBlanc.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PionNoir" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Pion\PionNoir.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PionRoi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Pion\PionRoi.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Board13x13" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\RègleJeu\Board13x13.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Board7x7" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\RègleJeu\Board7x7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Board9x9" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\RègleJeu\Board9x9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Initialisation_d_un_plateau" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RulesTexte\Initialisation d'un plateau.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Les_conditions_de_victoires" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RulesTexte\Les conditions de victoires.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Les_différentes_types_de_captures" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RulesTexte\Les différentes types de captures.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="Les_pions" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RulesTexte\Les pions.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
 </root>

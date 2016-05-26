@@ -28,28 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.m_positionSouris = new System.Windows.Forms.TextBox();
             this.m_PlayerTurn = new System.Windows.Forms.TextBox();
             this.m_updateTurn = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImage = global::ITI.InterfaceUser.Properties.Resources.plateau1;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(686, 633);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
-            // 
             // m_positionSouris
             // 
-            this.m_positionSouris.Location = new System.Drawing.Point(470, 15);
+            this.m_positionSouris.Location = new System.Drawing.Point(740, 128);
             this.m_positionSouris.Name = "m_positionSouris";
             this.m_positionSouris.Size = new System.Drawing.Size(198, 22);
             this.m_positionSouris.TabIndex = 1;
@@ -73,6 +61,17 @@
             this.m_updateTurn.Text = "TestUpdate";
             this.m_updateTurn.UseVisualStyleBackColor = true;
             this.m_updateTurn.Click += new System.EventHandler(this.m_updateTurn_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(686, 633);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
             // m_GameBoard
             // 

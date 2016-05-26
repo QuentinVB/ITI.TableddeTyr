@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HnefataflRules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HnefataflRules.Designer.cs">
+      <DependentUpon>HnefataflRules.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="HnefataflRules.resx">
+      <DependentUpon>HnefataflRules.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,6 +121,37 @@
       <Project>{5edee01d-f675-4051-97ca-b0d3d7ebc1c9}</Project>
       <Name>ITI.GameCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\PionBlanc.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\PionNoir.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\PionRoi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board7x7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board9x9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board13x13.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="RulesTexte\Initialisation d%27un plateau.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Les conditions de victoires.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Les différentes types de captures.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Les pions.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

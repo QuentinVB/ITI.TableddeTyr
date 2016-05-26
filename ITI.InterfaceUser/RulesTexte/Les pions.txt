@@ -1,0 +1,6 @@
+Les assaillants jouent en premier. 
+
+Les pions se déplacent orthogonalement vers un emplacement libre, d'une ou plusieurs cases, comme la tour au jeu d'échecs. 
+Toutes les cases empruntées lors du déplacement doivent être libres. 
+Aucun autre pion que le Roi ne peut accéder aux quatre forteresses situées aux coins, ni à la forteresse centrale parfois appelée trône. 
+Mais ils peuvent passer au-dessus de la case centrale si elle est libre. 

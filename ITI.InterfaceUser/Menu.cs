@@ -20,17 +20,23 @@ namespace ITI.InterfaceUser
         private void m_ButtonPlay_Click(object sender, EventArgs e)
         {
             this.Hide();
-            PlayInterface F2 = new PlayInterface();
-            if(F2.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            PlayInterface InterfaceForm = new PlayInterface();
+            if(InterfaceForm.ShowDialog() == DialogResult.Cancel)
             {
-                F2.Dispose();
+                InterfaceForm.Dispose();
             }
             this.Show();
         }
 
         private void m_ButtonRules_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            HnefataflRules RulesForm = new HnefataflRules();
+            if (RulesForm.ShowDialog() == DialogResult.Cancel)
+            {
+                RulesForm.Dispose();
+            }
+            this.Show();
         }
 
         private void m_ButtonLeave_Click(object sender, EventArgs e)
