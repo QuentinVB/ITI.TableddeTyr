@@ -8,5 +8,11 @@ namespace ITI.TabledeTyr.Freyja
 {
     class Decision
     {
+        private Freyja_Core freyja_Core;
+
+        public Decision(Freyja_Core freyja_Core)
+        {
+            this.freyja_Core = freyja_Core;
+        }
     }
 }

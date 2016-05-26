@@ -45,7 +45,7 @@
     <Compile Include="02-Analyze\BlockMove.cs" />
     <Compile Include="02-Analyze\MoveKeeper.cs" />
     <Compile Include="02-Analyze\StupidMove.cs" />
-    <Compile Include="AI_Core.cs" />
+    <Compile Include="Freyja_Core.cs" />
     <Compile Include="02-Analyze\Analyze.cs" />
     <Compile Include="03-Decision\Decision.cs" />
     <Compile Include="00-IO Function\Effector.cs" />

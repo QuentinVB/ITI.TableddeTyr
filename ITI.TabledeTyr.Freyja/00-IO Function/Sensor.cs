@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
-    class Sensor
+    class Sensor : ISensor
     {
+        Freyja_Core _ctx;
+
+        public Sensor(Freyja_Core ctx)
+        {
+            _ctx = ctx;
+        }
     }
 }
