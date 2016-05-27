@@ -15,6 +15,7 @@ namespace ITI.GameCore
         public readonly int Down;
         public readonly int Left;
         public readonly int Right;
+        public readonly Pawn Value;
         /// <summary>
         /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
         /// </summary>
@@ -24,7 +25,7 @@ namespace ITI.GameCore
         /// <param name="south">The south maximum move for this pawn.</param>
         /// <param name="east">The east maximum move for this pawn.</param>
         /// <param name="west">The west maximum move for this pawn.</param>
-        public PossibleMove(int x, int y, int up, int down, int left, int right )
+        public PossibleMove(int x, int y, int up, int down, int left, int right, IReadOnlyTafl tafl )
         {
             X = x;
             Y = y;
@@ -32,6 +33,12 @@ namespace ITI.GameCore
             Down = down;
             Left = left;
             Right = right;
+            Value = tafl[x, y];
+        }
+        public bool IsFree()
+        {
+            if (Up == 0 && Down == 0 && Left == 0 && Right == 0) return false;
+            return true;
         }
     }
 }
