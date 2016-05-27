@@ -17,15 +17,16 @@ namespace ITI.TabledeTyr.Freyja
         Analyze Analyze;
         Decision Decison;
 
-        public Freyja_Core(Game game)
+        public Freyja_Core(Game game,bool isFreyjaAtk)
         {
             //IO
-            Sensor = new Sensor(this);
+            Sensor = new Sensor(this,game, isFreyjaAtk);
             Effector = new Effector(this);
             //Core
             Simulate = new Simulate(this);
             Analyze = new Analyze(this);
             Decison = new Decision(this);
+            
         }
 
     }
