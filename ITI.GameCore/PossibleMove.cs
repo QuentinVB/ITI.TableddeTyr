@@ -25,7 +25,7 @@ namespace ITI.GameCore
         /// <param name="south">The south maximum move for this pawn.</param>
         /// <param name="east">The east maximum move for this pawn.</param>
         /// <param name="west">The west maximum move for this pawn.</param>
-        public PossibleMove(int x, int y, int up, int down, int left, int right, IReadOnlyTafl tafl )
+        public PossibleMove(int x, int y, int up, int down, int left, int right, Pawn value )
         {
             X = x;
             Y = y;
@@ -33,7 +33,7 @@ namespace ITI.GameCore
             Down = down;
             Left = left;
             Right = right;
-            Value = tafl[x, y];
+            Value = value;
         }
         public bool IsFree()
         {
