@@ -28,19 +28,22 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
         }
         //Game test canMove
-        [TestCase(3, 0, 0, 4, 0, 3)]
+        [TestCase(3, 0, 0, 4, 3, 0)]
         [TestCase(5, 5, 0, 0, 0, 0)]
         [TestCase(0, 5, 0, 0, 0, 0)]
-        [TestCase(9, 5, 5, 5, 0, 1)]
-        public void Game_03_turn_canMove(int x, int y, int up, int down, int right, int left)
+        [TestCase(9, 5, 5, 5, 1, 0)]
+        [TestCase(6, 4, 3, 0, 0, 3)]
+        public void Game_03_turn_canMove(int x, int y, int up, int down, int left, int right)
         {
             Game sut = new Game();
-            PossibleMove testedMove = new PossibleMove(x, y, up, down, right, left);
+            var testTafl = sut.Tafl;
+            PossibleMove testedMove = new PossibleMove(x, y, up, down, left, right, testTafl[x,y]);
             bool atkPlaying = sut.IsAtkPlaying;
             Assert.That(sut.CanMove(x,y), Is.EqualTo(testedMove));
         }
         //Game test allowMove
         [TestCase(3, 3)]
+        [TestCase(1, 0)]
         public void Game_05_turn_allowMove(int x, int y)
         {
             //arrange
@@ -51,8 +54,7 @@ namespace ITI.TabledeTyr.Test
             //assert
             currentTafl = sut.Tafl;
             Assert.That(currentTafl[3, 0], Is.EqualTo(Pawn.None));
-            Assert.That(currentTafl[3, 3], Is.EqualTo(Pawn.Attacker));
-
+            Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.Attacker));
         }
         //Game test updateTurn
         [TestCase(3, 3)]
@@ -100,11 +102,11 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
             // ACTION UTILISATEUR
             // L'interlocuteur sélectionne une pièce (directement dans les tests ou après un événement de l'utilisateur dans l'UI) 
-            PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 0, 3);
+            PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 3, 0, currentTafl[x, y]);
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
             //ACTION UTILISATEUR
             // -L'interlocuteur valide le mouvement en appellant AllowMove
-            bool pawnMoved = sut.MovePawn(2, 0, x, y);
+            bool pawnMoved = sut.MovePawn(x, y, x2, y2);
             // - Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
             // - Le core appelle CheckVictoryCondition
             // - CheckVictoryCondition vérifie si le roi à été pris en appellant le tafl Si c'est le cas il renvoie True à update turn
