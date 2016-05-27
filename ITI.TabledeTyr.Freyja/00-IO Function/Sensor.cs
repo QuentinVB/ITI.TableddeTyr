@@ -16,13 +16,13 @@ namespace ITI.TabledeTyr.Freyja
         internal IReadOnlyTafl currentTafl;
         internal ITafl convertedTafl;
 
-        public Sensor(Freyja_Core ctx, Game game, bool isFreyjaAtk)
+        public Sensor(Freyja_Core ctx, bool isFreyjaAtk)
         {
             _ctx = ctx;
-            _game = game;
+            _game = _ctx.originGame;
             _isFreyjaAtk = isFreyjaAtk;
-            _isAtkplaying = game.IsAtkPlaying;
-            currentTafl = game.Tafl;
+            _isAtkplaying = _game.IsAtkPlaying;
+            currentTafl = _game.Tafl;
 
         }
         internal TaflCompressed ConvertTaflBasicIntoCompressed (TaflBasic source)

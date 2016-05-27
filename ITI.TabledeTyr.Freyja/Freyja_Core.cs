@@ -10,23 +10,27 @@ namespace ITI.TabledeTyr.Freyja
     public class Freyja_Core
     {
         //IO
-        Sensor Sensor;
-        Effector Effector;
+        internal Sensor _Sensor;
+        internal Effector _Effector;
         //Core
-        Simulate Simulate;
-        Analyze Analyze;
-        Decision Decison;
+        internal Simulate _Simulate;
+        internal Analyze _Analyze;
+        internal Decision _Decision;
+        //data
+        internal Game originGame;
 
         public Freyja_Core(Game game,bool isFreyjaAtk)
         {
-            //IO
-            Sensor = new Sensor(this,game, isFreyjaAtk);
-            Effector = new Effector(this);
+            originGame = game;
+            //Input
+            _Sensor = new Sensor(this, isFreyjaAtk);          
             //Core
-            Simulate = new Simulate(this);
-            Analyze = new Analyze(this);
-            Decison = new Decision(this);
-            
+            _Simulate = new Simulate(this);
+            _Analyze = new Analyze(this);
+            _Decision = new Decision(this);
+            //output
+            _Effector = new Effector(this);
+
         }
 
     }
