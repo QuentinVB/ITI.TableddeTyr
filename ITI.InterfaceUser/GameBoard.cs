@@ -14,10 +14,11 @@ namespace ITI.InterfaceUser
     public partial class m_GameBoard : Form
     {
         public IReadOnlyTafl _plateau;
-        bool _firstClick;
+        bool _firstClick = false;
         public bool _allowMove = false;
-        bool _endTurn;
+        bool _endTurn = false;
         public Game _partie;
+        public PossibleMove _possibleMove;
         public bool _atkTurn;
         public int _pawnMoveX;
         public int _pawnMoveY;
@@ -192,6 +193,7 @@ namespace ITI.InterfaceUser
         {
             
             int i = 0, j = 0;
+            //int up = 0, down = 0, left = 0, right = 0;
 
             for (int y = 22; y < 490; y++)
             {
@@ -206,6 +208,17 @@ namespace ITI.InterfaceUser
                             _pawnMoveY = j;
                             _firstClick = true;
                             m_positionSouris.Text = "x = " + _pawnMoveX + "y = " + _pawnMoveY;
+
+                            _possibleMove = _partie.CanMove(_pawnMoveX, _pawnMoveY);
+                            /*
+                            if(_possibleMove.isFree == true)
+                            {
+                                _firstclock = true;
+                                up = _possibleMove.Up;
+                                down = _possibleMove.Down;
+                                left = _possibleMove.left;
+                                right = _possibleMove.Right
+                            */
                         }
                         else
                         {
@@ -213,31 +226,31 @@ namespace ITI.InterfaceUser
                             _pawnDestinationX = i;
                             _pawnDestinationY = j;
                             m_positionSouris.Text = "x = " + _pawnDestinationX + "y = " + _pawnDestinationY;
-                            // if allow move == true faire
-                            _endTurn = true;
-                        }
 
-                        //a enlever
-                        if (_endTurn == true)
-                        {
-                            _allowMove = _partie.AllowMove(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
-                            _plateau = _partie.GetTafl;
-                            //
+                            _allowMove = _partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
 
-                            if (_allowMove == true) // pas allow move mais si _endTurn == true
+                            if(_allowMove == true)
                             {
-                                m_PlayerTurn.Refresh();
-                                _endTurn = false;
-                                _firstClick = false;
-                                _allowMove = false;
-                                pictureBox1.Refresh();
+                                _endTurn = true;
                             }
                             else
                             {
                                 _firstClick = false;
                                 _allowMove = false;
+                                pictureBox1.Refresh();
                             }
                         }
+
+                        if (_endTurn == true)
+                        {
+                            _plateau = _partie.Tafl;
+                            m_PlayerTurn.Refresh();
+                            _endTurn = false;
+                            _firstClick = false;
+                            _allowMove = false;
+                            pictureBox1.Refresh();
+                        }
+                        
                     }
                     i++;
                     x = x + 42;

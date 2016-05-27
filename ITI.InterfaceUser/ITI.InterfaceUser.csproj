@@ -52,14 +52,21 @@
     <Compile Include="HnefataflRules.Designer.cs">
       <DependentUpon>HnefataflRules.cs</DependentUpon>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <Compile Include="GameBoard.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameBoard.cs" />
     <Compile Include="GameBoard.Designer.cs">
       <DependentUpon>GameBoard.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlayInterface.cs" />
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlayInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PlayInterface.Designer.cs">
       <DependentUpon>PlayInterface.cs</DependentUpon>
     </Compile>
@@ -68,11 +75,11 @@
     <EmbeddedResource Include="HnefataflRules.resx">
       <DependentUpon>HnefataflRules.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menu.resx">
-      <DependentUpon>Menu.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GameBoard.resx">
       <DependentUpon>GameBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayInterface.resx">
       <DependentUpon>PlayInterface.cs</DependentUpon>
@@ -82,6 +89,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -133,7 +141,9 @@
   <ItemGroup>
     <None Include="Image\RègleJeu\Board13x13.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Image\Autre\attaquant.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="RulesTexte\Initialisation d%27un plateau.txt" />
   </ItemGroup>
@@ -145,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="RulesTexte\Les pions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\défenseur.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -14,7 +14,6 @@ namespace ITI.InterfaceUser
     {
         
         bool _launchGame;
-        PictureBox PlayerEnemy = new PictureBox();
         
 
         public PlayInterface()
@@ -30,16 +29,56 @@ namespace ITI.InterfaceUser
 
         private void m_ButtonBoard11x11_Click(object sender, EventArgs e)
         {
+            Image Défenseur;
+            Défenseur = ITI.InterfaceUser.Properties.Resources.défenseur;
+            Button defenseur = new Button();
+            defenseur.Text = "Défenseur";
+            defenseur.Location = new Point(50, 50);
+            defenseur.Size = new System.Drawing.Size(200, 200);
+            defenseur.Image = (Image)Défenseur;
+            this.Controls.Add(defenseur);
+            defenseur.BringToFront();
 
-            PlayerEnemy.Width = 400;
-            PlayerEnemy.Height = 400;
+            Image ATK;
+            ATK = ITI.InterfaceUser.Properties.Resources.attaquant;
+            Button attaquant = new Button();
+            attaquant.Text = "Attaquanttttttttt";
+            attaquant.Location = new Point(250, 50);
+            attaquant.Size = new System.Drawing.Size(200, 200);
+            attaquant.Image = (Image)ATK;
+            this.Controls.Add(attaquant);
+            attaquant.BringToFront();
 
-            Image test01;
-            test01 = ITI.InterfaceUser.Properties.Resources.PionRoi;
-            PlayerEnemy.Image = (Image)test01;
+            Button retour = new Button();
+            retour.Text = "retour";
 
-            this.Controls.Add(PlayerEnemy);
-            PlayerEnemy.BringToFront();
+
+
+            /*
+            PictureBox Defenseur = new PictureBox();
+            Image Défenseur;
+            Défenseur = ITI.InterfaceUser.Properties.Resources.défenseur;
+            Defenseur.Location = new Point(200, 200);
+            Defenseur.Size = new System.Drawing.Size(300, 300);
+            Defenseur.Image = (Image)Défenseur;
+            Defenseur.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Controls.Add(Defenseur);
+            Defenseur.BringToFront();
+            */
+            //créer boutons a la place de la picture box pour vérifiez si le joueur choisi le pvp ou pvia
+            //créer boutons pour choisir le role
+
+            /*
+            PictureBox Atkplayer = new PictureBox();
+            Image Attaquant;
+            Attaquant = ITI.InterfaceUser.Properties.Resources.attaquant;
+            Atkplayer.Location = new Point(350, 200);
+            Atkplayer.Size = new System.Drawing.Size(150, 150);
+            Atkplayer.Image = (Image)Attaquant;
+            Atkplayer.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Controls.Add(Atkplayer);
+            Atkplayer.BringToFront();
+            */
 
             if (_launchGame == true)
             {
@@ -52,6 +91,7 @@ namespace ITI.InterfaceUser
                 this.Show();
             }
         }
+        
 
         private void m_ButtonBoard9x9_Click(object sender, EventArgs e)
         {

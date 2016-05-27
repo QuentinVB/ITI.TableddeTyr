@@ -63,6 +63,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap attaquant {
+            get {
+                object obj = ResourceManager.GetObject("attaquant", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Board11x11 {
             get {
                 object obj = ResourceManager.GetObject("Board11x11", resourceCulture);
@@ -96,6 +106,16 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap Board9x9 {
             get {
                 object obj = ResourceManager.GetObject("Board9x9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap défenseur {
+            get {
+                object obj = ResourceManager.GetObject("défenseur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
