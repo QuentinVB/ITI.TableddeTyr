@@ -243,8 +243,20 @@ namespace ITI.TabledeTyr.Test
         {
             Game sut = new Game();
             var currentTafl = sut.Tafl;
-            PossibleMove testedMove = new PossibleMove(x, y, up, down, left, right);
+            PossibleMove testedMove = new PossibleMove(x, y, up, down, left, right,currentTafl[x, y]);
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
+        }
+        [TestCase(5, 5, false)]
+        [TestCase(5, 0, false)]
+        [TestCase(5, 3, true)]
+        [TestCase(0, 3, true)]
+        [TestCase(6, 6, true)]
+        public void Situation_canMove_isFree(int x, int y,bool answer)
+        {
+            Game sut = new Game();
+            var currentTafl = sut.Tafl;
+            PossibleMove testedMove = sut.CanMove(x, y);
+            Assert.That(testedMove.IsFree, Is.EqualTo(answer));
         }
         //test : cannot moving non-king pawn on the throne but across it's fine
         [TestCase(5,5)]

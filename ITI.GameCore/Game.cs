@@ -438,7 +438,7 @@ namespace ITI.GameCore
                 right++;
             }
             //struct ConstrucTHOR & return
-            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right, _tafl);
+            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right, _tafl[x,y]);
             return _possibleMove;
         }
         /// <summary>
