@@ -113,6 +113,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Case_en_bois {
+            get {
+                object obj = ResourceManager.GetObject("Case_en_bois", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap défenseur {
             get {
                 object obj = ResourceManager.GetObject("défenseur", resourceCulture);
@@ -194,6 +204,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PawnHnefatafl {
+            get {
+                object obj = ResourceManager.GetObject("PawnHnefatafl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PionBlanc {
             get {
                 object obj = ResourceManager.GetObject("PionBlanc", resourceCulture);
@@ -217,16 +237,6 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap PionRoi {
             get {
                 object obj = ResourceManager.GetObject("PionRoi", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap plateau1 {
-            get {
-                object obj = ResourceManager.GetObject("plateau1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

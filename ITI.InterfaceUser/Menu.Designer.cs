@@ -47,7 +47,7 @@
             // 
             // m_buttonPlay
             // 
-            this.m_buttonPlay.Location = new System.Drawing.Point(438, 245);
+            this.m_buttonPlay.Location = new System.Drawing.Point(438, 194);
             this.m_buttonPlay.Name = "m_buttonPlay";
             this.m_buttonPlay.Size = new System.Drawing.Size(177, 85);
             this.m_buttonPlay.TabIndex = 1;
@@ -57,7 +57,7 @@
             // 
             // m_buttonRules
             // 
-            this.m_buttonRules.Location = new System.Drawing.Point(438, 380);
+            this.m_buttonRules.Location = new System.Drawing.Point(438, 308);
             this.m_buttonRules.Name = "m_buttonRules";
             this.m_buttonRules.Size = new System.Drawing.Size(177, 84);
             this.m_buttonRules.TabIndex = 2;
@@ -67,7 +67,7 @@
             // 
             // m_buttonLeave
             // 
-            this.m_buttonLeave.Location = new System.Drawing.Point(438, 517);
+            this.m_buttonLeave.Location = new System.Drawing.Point(438, 442);
             this.m_buttonLeave.Name = "m_buttonLeave";
             this.m_buttonLeave.Size = new System.Drawing.Size(177, 85);
             this.m_buttonLeave.TabIndex = 3;
