@@ -8,16 +8,16 @@ namespace ITI.TabledeTyr.Freyja
 {
     public struct Move
     {
-        public readonly int x;
-        public readonly int x2;
-        public readonly int y;
-        public readonly int y2;
+        public readonly int sourceX;
+        public readonly int sourceY;
+        public readonly int destinationX;
+        public readonly int destinationY;
         public Move(int x, int y, int x2, int y2)
         {
-            this.x = x;
-            this.y = y;
-            this.x2 = x2;
-            this.y2 = y2;
+            sourceX = x;            
+            sourceY = y;
+            destinationX = x2;
+            destinationY = y2;
         }
     }
     static internal class Helper

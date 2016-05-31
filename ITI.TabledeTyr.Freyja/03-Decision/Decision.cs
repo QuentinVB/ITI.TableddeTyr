@@ -14,5 +14,10 @@ namespace ITI.TabledeTyr.Freyja
         {
             this.freyja_Core = freyja_Core;
         }
+
+        internal Move Result()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -89,7 +89,7 @@ namespace ITI.GameCore
             //Sets the attacker as the first turn, allowing the game to start
             _atkTurn = true;
         }
-        //properties
+      //properties
         public bool IsAtkPlaying => _atkTurn;//get the current player turn, true if it is the the attacker     
         public IReadOnlyTafl Tafl => _tafl;
 
@@ -532,6 +532,11 @@ namespace ITI.GameCore
                 _atkTurn = !_atkTurn;
                 return true;
             }
+        }
+        public Game DeedCopy()
+        {
+           Game copy = (Game)MemberwiseClone();
+            return copy; 
         }
 
     }

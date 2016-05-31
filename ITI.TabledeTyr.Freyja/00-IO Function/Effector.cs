@@ -18,8 +18,8 @@ namespace ITI.TabledeTyr.Freyja
         {
             get {
                 Move control = _ctx._Decision.Result();
-                Helper.CheckRange(_ctx._Sensor.currentTafl.Width, _ctx._Sensor.currentTafl.Height, control.x, control.y); 
-                Helper.CheckRange(_ctx._Sensor.currentTafl.Width, _ctx._Sensor.currentTafl.Height, control.x2, control.y2);
+                Helper.CheckRange(_ctx._Sensor.currentTafl.Width, _ctx._Sensor.currentTafl.Height, control.sourceX, control.sourceY); 
+                Helper.CheckRange(_ctx._Sensor.currentTafl.Width, _ctx._Sensor.currentTafl.Height, control.sourceY, control.destinationY);
                 return control;
             }
         }

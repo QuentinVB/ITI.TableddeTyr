@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.GameCore;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +17,27 @@ namespace ITI.TabledeTyr.Freyja
 	*/
     class SimulationNode : IEnumerable<SimulationNode>
     {
-        public readonly string id; //UUID of the node
+        //attributes
+        internal readonly string id; //UUID of the node
+        internal IReadOnlyTafl _taflstored;
+        internal readonly Move _move;
+        internal int _score;
+        //collections
         Dictionary<string, SimulationNode> _childs = new Dictionary<string, SimulationNode>(); //dictionnary of his childs
-        public SimulationNode Parent { get; private set; } //get,set of the parent
-
-        byte[] _tafl;
-
-        int score;
-
-        int sourceX;
-        int sourceY;
-        int destinationX;
-        int destinationY;
-
-        public SimulationNode(string id)//constructor
+        //constructor
+        internal SimulationNode(string id, IReadOnlyTafl tafl, int score)//if the node is the first node : no move
+            :this(id, tafl, 0, new Move())
+            { }
+        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move)//constructor
         {
             this.id = id;
+            _taflstored = tafl;
+            _move = move;
+            _score = score;
         }
+
         #region node methods and props
+        public SimulationNode Parent { get; private set; } //get,set of the parent
         public SimulationNode GetChild(string id)//return the child named by his UUID of this node
         {
             return this._childs[id];
