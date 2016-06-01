@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateBoard.Designer.cs">
+      <DependentUpon>CreateBoard.cs</DependentUpon>
+    </Compile>
     <Compile Include="HnefataflRules.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CreateBoard.resx">
+      <DependentUpon>CreateBoard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HnefataflRules.resx">
       <DependentUpon>HnefataflRules.cs</DependentUpon>
     </EmbeddedResource>

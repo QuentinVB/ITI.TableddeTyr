@@ -259,6 +259,7 @@ namespace ITI.InterfaceUser
             
             Image Piece;
             Image Case;
+            Image caseInterdite;
 
             Rectangle Rect;
 
@@ -266,6 +267,7 @@ namespace ITI.InterfaceUser
             Graphics Board = e.Graphics;
 
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
+            caseInterdite = ITI.InterfaceUser.Properties.Resources.PawnHnefatafl;
             pictureBox1.BackColor = Color.Black;
 
             
@@ -276,22 +278,37 @@ namespace ITI.InterfaceUser
                 x = _valeurXBoard;
                 for (int i = 0; i < _width; i++)
                 {
+                    /*
                     Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
                     Board.DrawImage(Case, Rect);
+                    */
+                    if (((i == 0) && (j == 0))
+                       || ((i == _width - 1) && (j == _height - 1))
+                           || ((i == _width - 1) && (j == 0))
+                           || ((i == 0) && (j == _height - 1)))
+                    {
+                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
+                        Board.DrawImage(caseInterdite, Rect);
+                    }
+                    else
+                    {
+                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
+                        Board.DrawImage(Case, Rect);
+                    }
                     //if (_plateau[i, j] == GameCore.Pawn.Attacker)
-                    if(plateau[i,j] == 1)
+                    if (plateau[i,j] == 1)     // test
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
                         Pawn.DrawImage(Piece, Rect);
                     }
                     //if (_plateau[i, j] == GameCore.Pawn.Defender)
-                    if (plateau[i, j] == 2)
+                    if (plateau[i, j] == 2)     // test
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
                         Pawn.DrawImage(Piece, Rect);
                     }
                     //if (_plateau[i, j] == GameCore.Pawn.King)
-                    if (plateau[i, j] == 3)
+                    if (plateau[i, j] == 3)     // test
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
                         Pawn.DrawImage(Piece, Rect);
@@ -398,26 +415,6 @@ namespace ITI.InterfaceUser
             {
                 m_PlayerTurn.Text = "C'est au tour du défenseur";
             }
-
-        }
-
-
-
-
-        /// <summary>
-        /// Show who is playing, 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void m_GameBoard_Load(object sender, EventArgs e)
-        {
-            //_atkTurn = _partie.IsAtkPlaying;
-            
-        }
-
-        private void m_buttonRetourMenu_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

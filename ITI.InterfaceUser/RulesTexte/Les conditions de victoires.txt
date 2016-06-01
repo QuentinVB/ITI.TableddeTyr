@@ -1,7 +1,8 @@
-Victoire du défenseur :
+1. Victoire du défenseur :
 
-	Pour gagner, le défenseur blanc doit amener son roi sur l'une des quatre forteresses situées aux coins. 
+	Pour gagner, le défenseur blanc doit amener son roi sur l'une des quatre forteresses situées
+	aux coins. 
 
-Victoire de l'attaquant ; 
+2. Victoire de l'attaquant ; 
 
 	Pour gagner, l'attaquant noir doit capturer le roi. 

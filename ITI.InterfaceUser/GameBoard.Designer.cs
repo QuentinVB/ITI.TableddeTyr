@@ -72,7 +72,6 @@
             this.m_buttonRetourMenu.TabIndex = 3;
             this.m_buttonRetourMenu.Text = "Retour au choix des plateaux";
             this.m_buttonRetourMenu.UseVisualStyleBackColor = true;
-            this.m_buttonRetourMenu.Click += new System.EventHandler(this.m_buttonRetourMenu_Click);
             // 
             // m_GameBoard
             // 
@@ -86,7 +85,6 @@
             this.Name = "m_GameBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "La Table de Tyr";
-            this.Load += new System.EventHandler(this.m_GameBoard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
