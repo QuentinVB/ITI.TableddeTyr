@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITI.GameCore
 {
-    //struct for can move answer
+    //struct for can move to answer
     public struct PossibleMove
     {
         public readonly int X;
@@ -25,7 +25,7 @@ namespace ITI.GameCore
         /// <param name="south">The south maximum move for this pawn.</param>
         /// <param name="east">The east maximum move for this pawn.</param>
         /// <param name="west">The west maximum move for this pawn.</param>
-        public PossibleMove(int x, int y, int up, int down, int left, int right, Pawn value )
+        public PossibleMove(int x, int y, int up, int down, int left, int right, Pawn value)
         {
             X = x;
             Y = y;
@@ -39,6 +39,17 @@ namespace ITI.GameCore
         {
             if (Up == 0 && Down == 0 && Left == 0 && Right == 0) return false;
             return true;
+        }
+    }
+    public struct StudiedPawn
+    {
+        public readonly int X;
+        public readonly int Y;
+
+        public StudiedPawn(int x, int y)
+        {
+            X = x;
+            Y = y;
         }
     }
 }
