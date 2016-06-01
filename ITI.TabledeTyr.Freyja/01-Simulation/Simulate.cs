@@ -10,10 +10,10 @@ namespace ITI.TabledeTyr.Freyja
     class Simulate
     {
         private Freyja_Core _ctx;
-        internal string _key;
-        internal bool _isSimulatedFreyjaAtk;
-        internal Game _simulatedGame;
-        internal SimulationNode root;
+        string _key;
+        bool _isSimulatedFreyjaAtk;
+        Game _simulatedGame;
+        SimulationNode root;
 
         internal Dictionary<string, SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
@@ -24,12 +24,12 @@ namespace ITI.TabledeTyr.Freyja
         {
             _ctx = ctx;
             _isSimulatedFreyjaAtk = _ctx._Sensor._isFreyjaAtk;
-            _simulatedGame = _ctx._Sensor._game.DeepCopy();//COPY OF THE GAME WITH HIS TAFL !
+            _simulatedGame = _ctx._Sensor._game.DeepCopy();//copy the initial game and ad a copy
         }
         /// <summary>
         /// Updates the simulation.
         /// </summary>
-        void UpdateSimulation()
+        internal void UpdateSimulation()
         {
             root = new SimulationNode(Guid.NewGuid().ToString(),_ctx._Sensor.currentTafl , 0);//create the root of the tree (getting the current state of the system)
 
@@ -124,6 +124,7 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="y2">The y2.</param>
         void SimulatedNode(int x,int y,int x2,int y2)
         {
+            _simulatedGame = new Game(_simulatedGame.Tafl);
             _simulatedGame.MovePawn(x, y, x2, y2);
             _simulatedGame.UpdateTurn();
 
@@ -131,6 +132,7 @@ namespace ITI.TabledeTyr.Freyja
 
             _key = Guid.NewGuid().ToString();//generating new key
             SimulatedTree[_key] = new SimulationNode(_key, _simulatedGame.Tafl,0, move);//creating new node
+
             root.AddChild(SimulatedTree[_key]);//linking root, designating the new created node as one of his childs 
         }
         /*

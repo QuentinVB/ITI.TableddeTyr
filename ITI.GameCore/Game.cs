@@ -11,19 +11,31 @@ namespace ITI.GameCore
         //attributes        
         bool _atkTurn; //true if it is the turn of attacker, else false if the turn of defender
         //collection
-        internal ITafl _tafl;
+        ITafl _tafl;
         //constructor(s)        
         /// <summary>
-        /// Initializes a new instance of the <see cref="Game" /> class.
+        /// Initializes a new instance of the <see cref="Game" /> class. If nothing recieved, create a default game and initalize the game
         /// </summary>
         public Game()
+            : this(GetDefaultTafl(), true)
         {
-            //Sets the attacker as the first turn, allowing the game to start
-            _atkTurn = true;
+        }
+        //if wanted to create a game based on a specific tafl :
+        public Game(IReadOnlyTafl tafl, bool atkTurn)
+        {
+            _tafl = new TaflBasic(tafl);
+            _atkTurn = atkTurn;
+        }
+
+        /// <summary>
+        /// Gets the default tafl.
+        /// </summary>
+        /// <returns>A IReadOnlyTafl with default 11*11</returns>
+        static IReadOnlyTafl GetDefaultTafl()
+        {
             //if no tafl send, create a new default tafl
-            _tafl = new TaflBasic(11, 11);
+            TaflBasic tafl = new TaflBasic(11, 11);
             //Sets board for a standard 11*11 game [Hardcoded for IT1]
-            #region Setting the board
             /*
              x 00 01 02 03 04 05 06 07 08 09 10 x
             00 -- -- -- 01 01 01 01 01 -- -- --
@@ -41,45 +53,46 @@ namespace ITI.GameCore
 
             */
             //Set the king and defenders
-            _tafl[5, 5] = Pawn.King;
-            _tafl[3, 5] = Pawn.Defender;
-            _tafl[4, 4] = Pawn.Defender;
-            _tafl[4, 5] = Pawn.Defender;
-            _tafl[4, 6] = Pawn.Defender;
-            _tafl[5, 3] = Pawn.Defender;
-            _tafl[5, 4] = Pawn.Defender;
-            _tafl[5, 6] = Pawn.Defender;
-            _tafl[5, 7] = Pawn.Defender;
-            _tafl[6, 4] = Pawn.Defender;
-            _tafl[6, 5] = Pawn.Defender;
-            _tafl[6, 6] = Pawn.Defender;
-            _tafl[7, 5] = Pawn.Defender;
+            tafl[5, 5] = Pawn.King;
+            tafl[3, 5] = Pawn.Defender;
+            tafl[4, 4] = Pawn.Defender;
+            tafl[4, 5] = Pawn.Defender;
+            tafl[4, 6] = Pawn.Defender;
+            tafl[5, 3] = Pawn.Defender;
+            tafl[5, 4] = Pawn.Defender;
+            tafl[5, 6] = Pawn.Defender;
+            tafl[5, 7] = Pawn.Defender;
+            tafl[6, 4] = Pawn.Defender;
+            tafl[6, 5] = Pawn.Defender;
+            tafl[6, 6] = Pawn.Defender;
+            tafl[7, 5] = Pawn.Defender;
             //Set the attackers
-            _tafl[0, 3] = Pawn.Attacker;
-            _tafl[0, 4] = Pawn.Attacker;
-            _tafl[0, 5] = Pawn.Attacker;
-            _tafl[0, 6] = Pawn.Attacker;
-            _tafl[0, 7] = Pawn.Attacker;
-            _tafl[1, 5] = Pawn.Attacker;
-            _tafl[3, 0] = Pawn.Attacker;
-            _tafl[3, 10] = Pawn.Attacker;
-            _tafl[4, 0] = Pawn.Attacker;
-            _tafl[4, 10] = Pawn.Attacker;
-            _tafl[5, 0] = Pawn.Attacker;
-            _tafl[5, 1] = Pawn.Attacker;
-            _tafl[5, 9] = Pawn.Attacker;
-            _tafl[5, 10] = Pawn.Attacker;
-            _tafl[6, 0] = Pawn.Attacker;
-            _tafl[6, 10] = Pawn.Attacker;
-            _tafl[7, 0] = Pawn.Attacker;
-            _tafl[7, 10] = Pawn.Attacker;
-            _tafl[9, 5] = Pawn.Attacker;
-            _tafl[10, 3] = Pawn.Attacker;
-            _tafl[10, 4] = Pawn.Attacker;
-            _tafl[10, 5] = Pawn.Attacker;
-            _tafl[10, 6] = Pawn.Attacker;
-            _tafl[10, 7] = Pawn.Attacker;
-            #endregion
+            tafl[0, 3] = Pawn.Attacker;
+            tafl[0, 4] = Pawn.Attacker;
+            tafl[0, 5] = Pawn.Attacker;
+            tafl[0, 6] = Pawn.Attacker;
+            tafl[0, 7] = Pawn.Attacker;
+            tafl[1, 5] = Pawn.Attacker;
+            tafl[3, 0] = Pawn.Attacker;
+            tafl[3, 10] = Pawn.Attacker;
+            tafl[4, 0] = Pawn.Attacker;
+            tafl[4, 10] = Pawn.Attacker;
+            tafl[5, 0] = Pawn.Attacker;
+            tafl[5, 1] = Pawn.Attacker;
+            tafl[5, 9] = Pawn.Attacker;
+            tafl[5, 10] = Pawn.Attacker;
+            tafl[6, 0] = Pawn.Attacker;
+            tafl[6, 10] = Pawn.Attacker;
+            tafl[7, 0] = Pawn.Attacker;
+            tafl[7, 10] = Pawn.Attacker;
+            tafl[9, 5] = Pawn.Attacker;
+            tafl[10, 3] = Pawn.Attacker;
+            tafl[10, 4] = Pawn.Attacker;
+            tafl[10, 5] = Pawn.Attacker;
+            tafl[10, 6] = Pawn.Attacker;
+            tafl[10, 7] = Pawn.Attacker;
+
+            return tafl;
         }
 
         //properties
