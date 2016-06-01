@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITI.GameCore
 {
-    public class Game
+    public class Game : IGame
     {
         //attributes        
         bool _atkTurn; //true if it is the turn of attacker, else false if the turn of defender
@@ -18,15 +18,10 @@ namespace ITI.GameCore
         /// </summary>
         public Game()
         {
+            //Sets the attacker as the first turn, allowing the game to start
+            _atkTurn = true;
+            //if no tafl send, create a new default tafl
             _tafl = new TaflBasic(11, 11);
-            //Sets an empty tafl
-            for (int y = 0; y < 11; y++)
-            {
-                for (int x = 0; x < 11; x++)
-                {
-                    _tafl[x, y] = Pawn.None;
-                }
-            }
             //Sets board for a standard 11*11 game [Hardcoded for IT1]
             #region Setting the board
             /*
@@ -85,11 +80,9 @@ namespace ITI.GameCore
             _tafl[10, 6] = Pawn.Attacker;
             _tafl[10, 7] = Pawn.Attacker;
             #endregion
-
-            //Sets the attacker as the first turn, allowing the game to start
-            _atkTurn = true;
         }
-      //properties
+
+        //properties
         public bool IsAtkPlaying => _atkTurn;//get the current player turn, true if it is the the attacker     
         public IReadOnlyTafl Tafl => _tafl;
 
@@ -99,8 +92,6 @@ namespace ITI.GameCore
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
-        /// <returns>If the piece captured is the king, return true</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         internal void CheckCapture(int x, int y)
         {
             #region Checks for defenders and King (a.k.a attackers are playing)
@@ -344,6 +335,12 @@ namespace ITI.GameCore
             #endregion            
         }
         //Checkers for walls & fortresses
+        /// <summary>
+        /// Checks the walls pawn, forteress corner and throne If detected return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
         internal bool CheckWalls(int x, int y)
         {
             if ((_tafl[x, y] == Pawn.Wall)
@@ -360,7 +357,6 @@ namespace ITI.GameCore
         ///or stop while recieving true from <see cref="CheckCapture"/> the king is alredy dead. Long live the king !
         /// </summary>
         /// <returns>true : someone as won, false : nobody won, next turn</returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         internal bool CheckVictoryCondition()
         {
             //check presence of the king in each forteress
@@ -373,6 +369,12 @@ namespace ITI.GameCore
             return false;
         }
         #region Checkers for emptyness
+        /// <summary>
+        /// Checks if the pawn above/down/left/right is empty, if so, return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
         internal bool CheckUp(int x, int y)
         {
             if (y - 1 < 0 || _tafl[x, y - 1] != Pawn.None) return false;
@@ -399,6 +401,13 @@ namespace ITI.GameCore
         }
         #endregion
         //methodes - public        
+        /// <summary>
+        /// Determines if the pawn designated by x and y can move and how many step in each direction. 
+        /// Store it inside a Struct <see cref="PossibleMove"/>.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
         public PossibleMove CanMove(int x, int y)
         {
             //Exception goes here
@@ -443,7 +452,7 @@ namespace ITI.GameCore
         }
         /// <summary>
         /// Allows the designated pieces to move the piece to another coordinate,
-        /// call <see cref="CheckMove" /> by secure.
+        /// call <see cref="CheckWalls" /> by secure.
         /// </summary>
         /// <param name="x">The x position of the piece who move.</param>
         /// <param name="y">The y position of the piece who move.</param>
@@ -452,7 +461,7 @@ namespace ITI.GameCore
         /// <returns>
         /// true if the move is good. false something bad happend. FI: god(s) kill(s) a kitten
         /// </returns>
-        /// <exception cref="System.ArgumentException">Cannot enter the throne</exception>
+        /// <exception cref="System.ArgumentException">Cannot enter the throne you puny pawn !</exception>
         /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
         public bool MovePawn(int x, int y, int x2, int y2)
         {
@@ -522,7 +531,6 @@ namespace ITI.GameCore
         /// <returns>
         /// false if the game is over and break before flipping the turn. The current <paramref name="_atkTurn" /> is the winner.
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         public bool UpdateTurn()
         {
             CheckVictoryCondition();
@@ -533,11 +541,17 @@ namespace ITI.GameCore
                 return true;
             }
         }
-        public Game DeedCopy()
+        //tools for freyja :p
+
+        /// <summary>
+        /// Copy in deep the game and the tafl.
+        /// </summary>
+        /// <returns>A clone of this Game</returns>
+        public Game DeepCopy()
         {
-           Game copy = (Game)MemberwiseClone();
+            Game copy = (Game)MemberwiseClone();
+            copy._tafl = new TaflBasic(_tafl);
             return copy; 
         }
-
     }
 }
