@@ -19,7 +19,7 @@ namespace ITI.TabledeTyr.Freyja
     {
         //attributes
         internal readonly string id; //UUID of the node
-        internal IReadOnlyTafl _taflstored;
+        internal readonly IReadOnlyTafl _taflstored;
         internal readonly Move _move;
         internal int _score;
         //collections
@@ -34,6 +34,7 @@ namespace ITI.TabledeTyr.Freyja
             _taflstored = tafl;
             _move = move;
             _score = score;
+            Parent = null;
         }
 
         #region node methods and props

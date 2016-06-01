@@ -33,7 +33,7 @@ namespace ITI.TabledeTyr.Freyja
         {
             return new TaflBasic(source);
         }
-        public void updateSensor(Game newGameTurn)
+        public void UpdateSensor(Game newGameTurn)
         {
             _game = newGameTurn;
             _isAtkplaying = newGameTurn.IsAtkPlaying;

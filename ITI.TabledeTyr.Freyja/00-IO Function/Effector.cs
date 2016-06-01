@@ -17,9 +17,9 @@ namespace ITI.TabledeTyr.Freyja
         public Move UpdateEffector
         {
             get {
-                Move control = _ctx._Decision.Result();
-                Helper.CheckRange(_ctx._Sensor.currentTafl.Width, _ctx._Sensor.currentTafl.Height, control.sourceX, control.sourceY); 
-                Helper.CheckRange(_ctx._Sensor.currentTafl.Width, _ctx._Sensor.currentTafl.Height, control.sourceY, control.destinationY);
+                Move control = _ctx.Decision.Result();
+                Helper.CheckRange(_ctx.Sensor.currentTafl.Width, _ctx.Sensor.currentTafl.Height, control.sourceX, control.sourceY); 
+                Helper.CheckRange(_ctx.Sensor.currentTafl.Width, _ctx.Sensor.currentTafl.Height, control.sourceY, control.destinationY);
                 return control;
             }
         }

@@ -33,8 +33,8 @@ namespace ITI.TabledeTyr.Freyja
 
         }
         //IO
-        public Sensor Sensor { get { return _Sensor; } set { value = _Sensor; } }
-        public Effector Effector { get { return _Effector; } set { value = _Effector; } }
+        internal Sensor Sensor { get { return _Sensor; } set { value = _Sensor; } }
+        internal Effector Effector { get { return _Effector; } set { value = _Effector; } }
         //Core
         internal Simulate Simulate { get { return _Simulate; } set { value = _Simulate; } }
         internal Analyze Analyze { get { return _Analyze; } set { value = _Analyze; } }
@@ -45,9 +45,15 @@ namespace ITI.TabledeTyr.Freyja
         public void UpdateFreyja()
         {
             _Simulate.UpdateSimulation();
-
         }
-        
+        public void UpdateSensor(Game newGameTurn)
+        {
+            Sensor.UpdateSensor(newGameTurn);
+        }
+        public Move UpdateEffector()
+        {
+            return Effector.UpdateEffector;
+        }
 
     }
 }
