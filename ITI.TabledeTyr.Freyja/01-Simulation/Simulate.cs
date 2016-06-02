@@ -15,7 +15,6 @@ namespace ITI.TabledeTyr.Freyja
         Game _simulatedGame;
         SimulationNode root;
         string activeNode;
-
         internal Dictionary<string, SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.
