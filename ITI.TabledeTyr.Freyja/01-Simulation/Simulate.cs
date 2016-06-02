@@ -24,16 +24,16 @@ namespace ITI.TabledeTyr.Freyja
         public Simulate(Freyja_Core ctx)
         {
             _ctx = ctx;
-            _isSimulatedFreyjaAtk = _ctx.Sensor._isFreyjaAtk;
-            _simulatedGame = _ctx.Sensor._game.DeepCopy();//copy the initial game and ad a copy
+            _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
+            _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and ad a copy
         }
         /// <summary>
         /// Updates the simulation.
         /// </summary>
         internal void UpdateSimulation()
         {
-            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.currentTafl , 0);//create the root of the tree (getting the current state of the system)
-            activeNode = root.id;
+            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl , 0);//create the root of the tree (getting the current state of the system)
+            activeNode = root.ID;
 
             foreach (ValueType s in SimulatedTree)//NOPE
             {
@@ -54,7 +54,7 @@ namespace ITI.TabledeTyr.Freyja
             SimulationNode Parent;
             SimulatedTree.TryGetValue(activeNode, out Parent);
 
-            _simulatedGame = new Game(_simulatedGame.Tafl, _ctx.Sensor._isAtkplaying);
+            _simulatedGame = new Game(_simulatedGame.Tafl, _ctx.Sensor.IsActiveAtkPlaying);
             _simulatedGame.MovePawn(x, y, x2, y2);
             _simulatedGame.UpdateTurn();
 
@@ -67,7 +67,7 @@ namespace ITI.TabledeTyr.Freyja
         }
         /*
         Dictionary<string, SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
-        SimulationNode root = new SimulationNode(Guid.NewGuid().ToString(),_ctx._Sensor.currentTafl , 0);//create the root of the tree (getting the current state of the system)
+        SimulationNode root = new SimulationNode(Guid.NewGuid().ToString(),_ctx._Sensor.ActiveTafl , 0);//create the root of the tree (getting the current state of the system)
            
         string key = Guid.NewGuid().ToString();//generating new key
         SimulatedTree[key] = new SimulationNode(key);//creating new node
@@ -75,9 +75,9 @@ namespace ITI.TabledeTyr.Freyja
         */
         void simulateBranch()
         {
-            for (int i = 0; i < _ctx.Sensor.currentTafl.Width; i++)
+            for (int i = 0; i < _ctx.Sensor.ActiveTafl.Width; i++)
             {
-                for (int j = 0; j < _ctx.Sensor.currentTafl.Height; j++)
+                for (int j = 0; j < _ctx.Sensor.ActiveTafl.Height; j++)
                 {
                     PossibleMove possibleMove = _ctx.originGame.CanMove(i, j);
                     if (possibleMove.IsFree() == true)
@@ -85,7 +85,7 @@ namespace ITI.TabledeTyr.Freyja
                         if (_isSimulatedFreyjaAtk == true)
                         {
 
-                            if (_ctx.Sensor.currentTafl[i, j] == Pawn.Attacker)
+                            if (_ctx.Sensor.ActiveTafl[i, j] == Pawn.Attacker)
                             {
                                 if (possibleMove.Up > 0)
                                 {
@@ -119,7 +119,7 @@ namespace ITI.TabledeTyr.Freyja
                         }
                         else
                         {
-                            if (_ctx.Sensor.currentTafl[i, j] == Pawn.Defender || _ctx.Sensor.currentTafl[i, j] == Pawn.King)
+                            if (_ctx.Sensor.ActiveTafl[i, j] == Pawn.Defender || _ctx.Sensor.ActiveTafl[i, j] == Pawn.King)
                             {
                                 if (possibleMove.Up > 0)
                                 {
