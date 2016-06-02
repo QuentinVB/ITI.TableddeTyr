@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
+    /// <summary>
+    /// A move is a compacted structure containing the moved pawn's coordinate and the destination coordinate, making easier to manipulate
+    /// </summary>
     public struct Move
     {
         public readonly int sourceX;

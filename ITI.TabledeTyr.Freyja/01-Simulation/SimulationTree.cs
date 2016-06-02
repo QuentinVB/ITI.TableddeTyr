@@ -8,18 +8,21 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
-	/*
-	        Dictionary<string,SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
-            SimulationNode root =  new SimulationNode(Guid.NewGuid().ToString());//create the root of the tree (getting the current state of the system)
-            string key = Guid.NewGuid().ToString();//generating new key
-            SimulatedTree[key] = new SimulationNode(key);//creating new node
-            root.AddChild(SimulatedTree[key]);//linking root, designating the new created node as one of his childs  
-	*/
+    /// <summary>
+    /// A simulation Node contain :
+    /// </summary>
+    /// <param name="Parent">The parent of the node.</param>
+    /// <param name="GetChilds">The childs of the node.</param>
+    /// <param name="ID">The UUID of the node.</param>
+    /// <param name="TaflStored">The stored Tafl of the node. BasicTafl actualy</param>
+    /// <param name="Move">The Move made to get to the Tafl stored at this node</param>
+    /// <param name="Score">The score of the Node, todo : recursive addition</param>
+    /// <seealso cref="System.Collections.Generic.IEnumerable{ITI.TabledeTyr.Freyja.SimulationNode}" />
     class SimulationNode : IEnumerable<SimulationNode>
     {
         //attributes
-        internal readonly string id; //UUID of the node
-        internal IReadOnlyTafl _taflstored;
+        readonly string id; //UUID of the node
+        readonly IReadOnlyTafl _taflstored;
         internal readonly Move _move;
         internal int _score;
         //collections
@@ -34,11 +37,17 @@ namespace ITI.TabledeTyr.Freyja
             _taflstored = tafl;
             _move = move;
             _score = score;
+            Parent = null;
         }
+        //props to communicate with the data stored
+        internal string ID { get { return id; } } 
+        internal IReadOnlyTafl TaflStored { get { return _taflstored; } }
+        internal Move MoveStored{ get { return _move; } }
+        internal int Score { get { return _score; } set { _score = value; } }//to do : recursive addition for childs scores
 
-        #region node methods and props
+        #region node managment methods and props
         public SimulationNode Parent { get; private set; } //get,set of the parent
-        public SimulationNode GetChild(string id)//return the child named by his UUID of this node
+        public SimulationNode GetChilds(string id)//return the child named by his UUID of this node
         {
             return this._childs[id];
         }
@@ -65,5 +74,12 @@ namespace ITI.TabledeTyr.Freyja
             get { return this._childs.Count; }
         }
         #endregion
+        /*
+        Dictionary<string,SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        SimulationNode root =  new SimulationNode(Guid.NewGuid().ToString());//create the root of the tree (getting the current state of the system)
+        string key = Guid.NewGuid().ToString();//generating new key
+        SimulatedTree[key] = new SimulationNode(key);//creating new node
+        root.AddChild(SimulatedTree[key]);//linking root, designating the new created node as one of his childs  
+        */
     }
 }
