@@ -347,6 +347,70 @@ namespace ITI.GameCore
             }
             #endregion            
         }
+        //Complex capture and King capture algorithm
+        internal void IsCircled(int x, int y)
+        {
+            Pawn target = _tafl[x, y];
+            int count = 1;
+            Dictionary<int, StudiedPawn> Explored = new Dictionary<int, StudiedPawn>();
+            StudiedPawn FirstPawn = new StudiedPawn(x, y);
+            Explored.Add(count, FirstPawn);
+            foreach (StudiedPawn value in Explored.Values)
+            {
+                PossibleMove Tested = CanMove(value.X, value.Y);
+                if (Tested.IsFree())
+                {
+                    Explored.Clear();
+                    break;
+                }
+                if (!Tested.IsFree())
+                {
+                    int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
+                    //Checks for an ally up (y--)
+                    m = y-1;
+                    if(IsFriendly(target, x, m))
+                    {
+                        StudiedPawn studiedPawn = new StudiedPawn(x, y);
+                        Explored.Add(count, studiedPawn);
+                    }
+                    //Checks for an ally down (y++)
+                    m = y+1;
+                    if (IsFriendly(target, x, m))
+                    {
+                        StudiedPawn studiedPawn = new StudiedPawn(x, y);
+                        Explored.Add(count, studiedPawn);
+                    }
+                    //Checks for an ally left (x--)
+                    m = x-1;
+                    if (IsFriendly(target, m, y))
+                    {
+                        StudiedPawn studiedPawn = new StudiedPawn(x, y);
+                        Explored.Add(count, studiedPawn);
+                    }
+                    //Checks for an ally right (x++)
+                    m = x+1;
+                    if (IsFriendly(target, m, y))
+                    {
+                        StudiedPawn studiedPawn = new StudiedPawn(x, y);
+                        Explored.Add(count, studiedPawn);
+                    }
+                }
+            }
+            if (Explored.Count != 0)
+            {
+                foreach (StudiedPawn value in Explored.Values)
+                {
+                    _tafl[value.X, value.Y] = Pawn.None;
+                }
+            }
+        }
+        //Checks if the pawn is friendly (used in IsCircled)
+        internal bool IsFriendly(Pawn target, int x, int y)
+        {
+            if (target == Pawn.Attacker && _tafl[x, y] == Pawn.Attacker) return true;
+            if ((target == Pawn.Defender || target == Pawn.King) && (target == Pawn.Defender || target == Pawn.King)) return true;
+            return false;
+        }
         //Checkers for walls & fortresses
         /// <summary>
         /// Checks the walls pawn, forteress corner and throne If detected return true.
@@ -357,12 +421,12 @@ namespace ITI.GameCore
         internal bool CheckWalls(int x, int y)
         {
             if ((_tafl[x, y] == Pawn.Wall)
-                ||(x == 0 && y == 0)  //Top left corner
-                ||(x == 0 && y == _tafl.Height - 1) //Bot left corner
-                ||(x == _tafl.Width - 1 && y == 0)  //top right corner
-                ||(x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
+                || (x == 0 && y == 0)  //Top left corner
+                || (x == 0 && y == _tafl.Height - 1) //Bot left corner
+                || (x == _tafl.Width - 1 && y == 0)  //top right corner
+                || (x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
                 || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2)//Throne
-                ) return true; 
+                ) return true;
             return false;
         }
         /// <summary>
@@ -460,7 +524,7 @@ namespace ITI.GameCore
                 right++;
             }
             //struct ConstrucTHOR & return
-            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right, _tafl[x,y]);
+            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right, _tafl[x, y]);
             return _possibleMove;
         }
         /// <summary>
