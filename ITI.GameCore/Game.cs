@@ -107,255 +107,61 @@ namespace ITI.GameCore
         /// <param name="y">The y.</param>
         internal void CheckCapture(int x, int y)
         {
-            #region Checks for defenders and King (a.k.a attackers are playing)
-            if (_atkTurn == true)
+            Pawn target = _tafl[x, y];
+            //Checking up (x,y-1)
+            if (!CheckWalls(x, y - 1))
             {
-                //Checking Up (x,y-1)
-                #region Up
-                if (!CheckWalls(x, y - 1))
+                if (!IsFriendly(target, x, y - 1) && _tafl[x, y - 1] != Pawn.None)
                 {
-                    //Finding a simple defender
-                    if (_tafl[x, y - 1] == Pawn.Defender)
-                    {
-                        if (CheckWalls(x, y - 2))
-                        {
-                            _tafl[x, y - 1] = Pawn.None;
-                        }
-                        else if (_tafl[x, y - 2] == Pawn.Attacker)
-                        {
-                            _tafl[x, y - 1] = Pawn.None;
-                        }
-                    }
-                    //Finding the King
-                    if (_tafl[x, y - 1] == Pawn.King)
-                    {
-                        if (CheckWalls(x, y - 2))//Above
-                        {
-                            if (CheckWalls(x - 1, y - 1))//Left
-                            {
-                                if (CheckWalls(x + 1, y - 1))//Right
-                                {
-                                    _tafl[x, y - 1] = Pawn.None;
-                                }
-                            }
-                        }
-                        else if (_tafl[x, y - 2] == Pawn.Attacker)//Above
-                        {
-                            if (_tafl[x - 1, y - 1] == Pawn.Attacker)//Left
-                            {
-                                if (_tafl[x + 1, y + 1] == Pawn.Attacker)//Right
-                                {
-                                    _tafl[x, y - 1] = Pawn.None;
-                                }
-                            }
-                        }
-                    }
+                    if (_tafl[x, y - 1] == Pawn.King) IsCircled(x, y - 1);
+                    else if (CheckWalls(x, y - 2)) _tafl[x, y - 1] = Pawn.None;
+                    else if (IsFriendly(target, x, y - 2)) _tafl[x, y - 1] = Pawn.None;
+                    else if (!IsFriendly(target, x, y - 2)) IsCircled(x, y - 1);
                 }
-                #endregion
-                //Checking Down (x,y+1)
-                #region Down
-                if (!CheckWalls(x, y + 1))
-                {
-                    //Finding a simple defender
-                    if (_tafl[x, y + 1] == Pawn.Defender)
-                    {
-                        if (CheckWalls(x, y + 2))
-                        {
-                            _tafl[x, y + 1] = Pawn.None;
-                        }
-                        else if (_tafl[x, y + 2] == Pawn.Attacker)
-                        {
-                            _tafl[x, y + 1] = Pawn.None;
-                        }
-                    }
-                    //Finding the King
-                    if (_tafl[x, y + 1] == Pawn.King)
-                    {
-                        if (CheckWalls(x, y + 2))//Under
-                        {
-                            if (CheckWalls(x - 1, y + 1))//Left
-                            {
-                                if (CheckWalls(x + 1, y + 1))//Right
-                                {
-                                    _tafl[x, y + 1] = Pawn.None;
-                                }
-                            }
-                        }
-                        if (_tafl[x, y + 2] == Pawn.Attacker)//Under
-                        {
-                            if (_tafl[x - 1, y + 1] == Pawn.Attacker)//Left
-                            {
-                                if (_tafl[x + 1, y + 1] == Pawn.Attacker)//Right
-                                {
-                                    _tafl[x, y + 1] = Pawn.None;
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
-                //Checking Left Left(x-1,y)
-                #region Left
-                if (!CheckWalls(x - 1, y))
-                {
-                    //Finding a simple defender
-                    if (_tafl[x - 1, y] == Pawn.Defender)
-                    {
-                        if (CheckWalls(x - 2, y))
-                        {
-                            _tafl[x - 1, y] = Pawn.None;
-                        }
-                        else if (_tafl[x - 2, y] == Pawn.Attacker)
-                        {
-                            _tafl[x - 1, y] = Pawn.None;
-                        }
-                    }
-                    //Finding the King
-                    if (_tafl[x - 1, y] == Pawn.King)
-                    {
-                        if (CheckWalls(x - 1, y - 1))//Above
-                        {
-                            if (CheckWalls(x - 1, y + 1))//Under
-                            {
-                                if (CheckWalls(x - 2, y))//Left
-                                {
-                                    _tafl[x - 1, y] = Pawn.None;
-                                }
-                            }
-                        }
-                        if (_tafl[x - 1, y - 1] == Pawn.Attacker)//Above
-                        {
-                            if (_tafl[x - 1, y + 1] == Pawn.Attacker)//Under
-                            {
-                                if (_tafl[x - 2, y] == Pawn.Attacker)//Left
-                                {
-                                    _tafl[x - 1, y] = Pawn.None;
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
-                //Checking Right(x+1,y)
-                #region Right
-                if (!CheckWalls(x + 1, y))
-                {
-                    //Finding a simple defender
-                    if (_tafl[x + 1, y] == Pawn.Defender)
-                    {
-                        if (CheckWalls(x + 2, y))
-                        {
-                            _tafl[x + 1, y] = Pawn.None;
-                        }
-                        else if (_tafl[x + 2, y] == Pawn.Attacker)
-                        {
-                            _tafl[x + 1, y] = Pawn.None;
-                        }
-                    }
-                    //Finding the King
-                    if (_tafl[x + 1, y] == Pawn.King)
-                    {
-                        if (CheckWalls(x + 1, y - 1))//Above
-                        {
-                            if (CheckWalls(x + 1, y + 1))//Under
-                            {
-                                if (CheckWalls(x + 2, y))//Right
-                                {
-                                    _tafl[x + 1, y] = Pawn.None;
-                                }
-                            }
-                        }
-                        else if (_tafl[x + 1, y - 1] == Pawn.Attacker)//Above
-                        {
-                            if (_tafl[x + 1, y + 1] == Pawn.Attacker)//Under
-                            {
-                                if (_tafl[x + 2, y] == Pawn.Attacker)//Right
-                                {
-                                    _tafl[x + 1, y] = Pawn.None;
-                                }
-                            }
-                        }
-                    }
-                }
-                #endregion
             }
-            #endregion
-            #region Checks for attackers (a.k.a defenders are playing)
-            if (_atkTurn == false)
+            //Checking down (x,y+1)
+            if (!CheckWalls(x, y + 1))
             {
-                //Checking Up (x,y-1)
-                if (!CheckWalls(x, y - 1))
+                if (!IsFriendly(target, x, y + 1) && _tafl[x, y + 1] != Pawn.None)
                 {
-                    if (_tafl[x, y - 1] == Pawn.Attacker)
-                    {
-                        if (CheckWalls(x, y - 2))
-                        {
-                            _tafl[x, y - 1] = Pawn.None;
-                        }
-                        else if (_tafl[x, y - 2] == Pawn.Defender || _tafl[x, y - 2] == Pawn.King)
-                        {
-                            _tafl[x, y - 1] = Pawn.None;
-                        }
-                    }
+                    if (_tafl[x, y + 1] == Pawn.King) IsCircled(x, y + 1);
+                    else if (CheckWalls(x, y + 2)) _tafl[x, y + 1] = Pawn.None;
+                    else if (IsFriendly(target, x, y + 2)) _tafl[x, y + 1] = Pawn.None;
+                    else if (!IsFriendly(target, x, y + 2)) IsCircled(x, y + 1);
                 }
-                //Checking Down (x,y+1)
-                if (!CheckWalls(x, y + 1))
-                {
-                    if (_tafl[x, y + 1] == Pawn.Attacker)
-                    {
-                        if (CheckWalls(x, y + 2))
-                        {
-                            _tafl[x, y + 1] = Pawn.None;
-                        }
-                        else if (_tafl[x, y + 2] == Pawn.Defender || _tafl[x, y + 2] == Pawn.King)
-                        {
-                            _tafl[x, y + 1] = Pawn.None;
-                        }
-                    }
-                }
-                //Checking Left Left(x-1,y)
-                if (!CheckWalls(x - 1, y))
-                {
-                    if (_tafl[x - 1, y] == Pawn.Attacker)
-                    {
-                        if (CheckWalls(x - 2, y))
-                        {
-                            _tafl[x - 1, y] = Pawn.None;
-                        }
-                        else if (_tafl[x - 2, y] == Pawn.Defender || _tafl[x - 2, y] == Pawn.King)
-                        {
-                            _tafl[x - 1, y] = Pawn.None;
-                        }
-                    }
-                }
-                //Checking Right(x+1,y)
-                if (!CheckWalls(x + 1, y))
-                {
-                    if (_tafl[x + 1, y] == Pawn.Attacker)
-                    {
-                        if (CheckWalls(x + 2, y))
-                        {
-                            _tafl[x + 1, y] = Pawn.None;
-                        }
-                        else if (_tafl[x + 2, y] == Pawn.Defender || _tafl[x + 2, y] == Pawn.King)
-                        {
-                            _tafl[x + 1, y] = Pawn.None;
-                        }
-                    }
-                }
-
             }
-            #endregion            
+            //Checking left (x-1,y)
+            if (!CheckWalls(x - 1, y))
+            {
+                if (!IsFriendly(target, x - 1, y) && _tafl[x - 1, y] != Pawn.None)
+                {
+                    if (_tafl[x - 1, y] == Pawn.King) IsCircled(x - 1, y);
+                    else if (CheckWalls(x - 2, y)) _tafl[x - 1, y] = Pawn.None;
+                    else if (IsFriendly(target, x - 2, y)) _tafl[x - 1, y] = Pawn.None;
+                    else if (!IsFriendly(target, x - 2, y)) IsCircled(x - 1, y);
+                }
+            }
+            //Checking right(x+1,y)
+            if (!CheckWalls(x + 1, y))
+            {
+                if (!IsFriendly(target, x + 1, y) && _tafl[x + 1, y] != Pawn.None)
+                {
+                    if (_tafl[x + 1, y] == Pawn.King) IsCircled(x + 1, y);
+                    else if (CheckWalls(x + 2, y)) _tafl[x + 1, y] = Pawn.None;
+                    else if (IsFriendly(target, x + 2, y)) _tafl[x + 1, y] = Pawn.None;
+                    else if (!IsFriendly(target, x + 2, y)) IsCircled(x + 1, y);
+                }
+            }
         }
         //Complex capture and King capture algorithm
         internal void IsCircled(int x, int y)
         {
             Pawn target = _tafl[x, y];
             int count = 1;
-            Dictionary<int, StudiedPawn> Explored = new Dictionary<int, StudiedPawn>();
+            List<StudiedPawn> Explored = new List<StudiedPawn>();
             StudiedPawn FirstPawn = new StudiedPawn(x, y);
-            Explored.Add(count, FirstPawn);
-            foreach (StudiedPawn value in Explored.Values)
+            Explored.Add(FirstPawn);
+            foreach (StudiedPawn value in Explored)
             {
                 PossibleMove Tested = CanMove(value.X, value.Y);
                 if (Tested.IsFree())
@@ -367,44 +173,49 @@ namespace ITI.GameCore
                 {
                     int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
                     //Checks for an ally up (y--)
-                    m = y-1;
-                    if(IsFriendly(target, x, m))
-                    {
-                        StudiedPawn studiedPawn = new StudiedPawn(x, y);
-                        Explored.Add(count, studiedPawn);
-                    }
-                    //Checks for an ally down (y++)
-                    m = y+1;
+                    m = y - 1;
                     if (IsFriendly(target, x, m))
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
-                        Explored.Add(count, studiedPawn);
+                        count++;
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
+
+                    }
+                    //Checks for an ally down (y++)
+                    m = y + 1;
+                    if (IsFriendly(target, x, m))
+                    {
+                        StudiedPawn studiedPawn = new StudiedPawn(x, y);
+                        count++;
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
                     }
                     //Checks for an ally left (x--)
-                    m = x-1;
+                    m = x - 1;
                     if (IsFriendly(target, m, y))
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
-                        Explored.Add(count, studiedPawn);
+                        count++;
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
                     }
                     //Checks for an ally right (x++)
-                    m = x+1;
+                    m = x + 1;
                     if (IsFriendly(target, m, y))
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
-                        Explored.Add(count, studiedPawn);
+                        count++;
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
                     }
                 }
             }
             if (Explored.Count != 0)
             {
-                foreach (StudiedPawn value in Explored.Values)
+                foreach (StudiedPawn value in Explored)
                 {
                     _tafl[value.X, value.Y] = Pawn.None;
                 }
             }
         }
-        //Checks if the pawn is friendly (used in IsCircled)
+        //Checks if the pawn is friendly
         internal bool IsFriendly(Pawn target, int x, int y)
         {
             if (target == Pawn.Attacker && _tafl[x, y] == Pawn.Attacker) return true;
@@ -490,41 +301,42 @@ namespace ITI.GameCore
             //Exception goes here
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             //Creating directions
-            int up = 0;
-            int down = 0;
-            int left = 0;
-            int right = 0;
+            List<StudiedPawn> FreeSquares = new List<StudiedPawn>();
             int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
             //Checks above
             m = y;
             while (CheckUp(x, m))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                FreeSquares.Add(studiedPawn);
                 m--;
-                up++;
             }
             //Check below
             m = y;
             while (CheckDown(x, m))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                FreeSquares.Add(studiedPawn);
                 m++;
-                down++;
             }
             //Check left
             m = x;
             while (CheckLeft(m, y))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                FreeSquares.Add(studiedPawn);
                 m--;
-                left++;
             }
             //Check right
             m = x;
             while (CheckRight(m, y))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                FreeSquares.Add(studiedPawn);
                 m++;
-                right++;
             }
             //struct ConstrucTHOR & return
-            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right, _tafl[x, y]);
+            PossibleMove _possibleMove = new PossibleMove(x, y, FreeSquares, _tafl[x, y]);
             return _possibleMove;
         }
         /// <summary>
