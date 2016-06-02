@@ -61,6 +61,7 @@
             this.Controls.Add(this.m_PictureBoxCreateBoard);
             this.Controls.Add(this.m_buttonRetourMenu);
             this.Name = "CreateBoard";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CreateBoard";
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxCreateBoard)).EndInit();
             this.ResumeLayout(false);

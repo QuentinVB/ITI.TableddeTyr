@@ -43,5 +43,21 @@ namespace ITI.InterfaceUser
         {
             Close();
         }
+
+        private void m_buttonCreateNewBoard_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            CreateBoard createBoard = new CreateBoard();
+            if (createBoard.ShowDialog() == DialogResult.Cancel)
+            {
+                createBoard.Dispose();
+            }
+            this.Show();
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

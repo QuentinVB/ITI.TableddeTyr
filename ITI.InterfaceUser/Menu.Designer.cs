@@ -32,6 +32,7 @@
             this.m_buttonPlay = new System.Windows.Forms.Button();
             this.m_buttonRules = new System.Windows.Forms.Button();
             this.m_buttonLeave = new System.Windows.Forms.Button();
+            this.m_buttonCreateNewBoard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +58,7 @@
             // 
             // m_buttonRules
             // 
-            this.m_buttonRules.Location = new System.Drawing.Point(438, 308);
+            this.m_buttonRules.Location = new System.Drawing.Point(438, 429);
             this.m_buttonRules.Name = "m_buttonRules";
             this.m_buttonRules.Size = new System.Drawing.Size(177, 84);
             this.m_buttonRules.TabIndex = 2;
@@ -67,7 +68,7 @@
             // 
             // m_buttonLeave
             // 
-            this.m_buttonLeave.Location = new System.Drawing.Point(438, 442);
+            this.m_buttonLeave.Location = new System.Drawing.Point(438, 553);
             this.m_buttonLeave.Name = "m_buttonLeave";
             this.m_buttonLeave.Size = new System.Drawing.Size(177, 85);
             this.m_buttonLeave.TabIndex = 3;
@@ -75,11 +76,22 @@
             this.m_buttonLeave.UseVisualStyleBackColor = true;
             this.m_buttonLeave.Click += new System.EventHandler(this.m_buttonLeave_Click);
             // 
+            // m_buttonCreateNewBoard
+            // 
+            this.m_buttonCreateNewBoard.Location = new System.Drawing.Point(438, 319);
+            this.m_buttonCreateNewBoard.Name = "m_buttonCreateNewBoard";
+            this.m_buttonCreateNewBoard.Size = new System.Drawing.Size(177, 75);
+            this.m_buttonCreateNewBoard.TabIndex = 4;
+            this.m_buttonCreateNewBoard.Text = "Create New Board";
+            this.m_buttonCreateNewBoard.UseVisualStyleBackColor = true;
+            this.m_buttonCreateNewBoard.Click += new System.EventHandler(this.m_buttonCreateNewBoard_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 673);
+            this.Controls.Add(this.m_buttonCreateNewBoard);
             this.Controls.Add(this.m_buttonLeave);
             this.Controls.Add(this.m_buttonRules);
             this.Controls.Add(this.m_buttonPlay);
@@ -87,6 +99,7 @@
             this.Name = "Menu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menu";
+            this.Load += new System.EventHandler(this.Menu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -98,5 +111,6 @@
         private System.Windows.Forms.Button m_buttonPlay;
         private System.Windows.Forms.Button m_buttonRules;
         private System.Windows.Forms.Button m_buttonLeave;
+        private System.Windows.Forms.Button m_buttonCreateNewBoard;
     }
 }

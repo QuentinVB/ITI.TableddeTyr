@@ -19,13 +19,12 @@ namespace ITI.InterfaceUser
 
         Button _putAtkOnBoard;
         Button _putDefOnBoard;
-        Button _generateBoard;
+        Button _putCase;
         Button _confirmSave;
         Button _cancelSave;
         Button _save;
 
         TextBox _textBoxName;
-        TextBox _textBoxTest;
 
         int _valeurXBoard;
         int _valeurYBoard;
@@ -34,8 +33,8 @@ namespace ITI.InterfaceUser
         int _valeurXBoardNextCase;
         int _valeurYBoardNextCase;
 
-        int _width = 15;
-        int _height = 15;
+        int _width = 7;
+        int _height = 7;
 
         int[,] plateau;
         int _pawn = 0;
@@ -44,6 +43,9 @@ namespace ITI.InterfaceUser
         {
             InitializeComponent();
             CreateControlNewBoard();
+            _confirmSave.Hide();
+            _cancelSave.Hide();
+            plateau = new int[_width, _height];
         }
 
         private void m_PictureBoxCreateBoard_Paint(object sender, PaintEventArgs e)
@@ -58,7 +60,7 @@ namespace ITI.InterfaceUser
             Image Piece;
             Image caseInterdite;
 
-            plateau = new int[_width, _height];
+            
 
             #region variable création plateau
             if(_width == 7)
@@ -223,16 +225,16 @@ namespace ITI.InterfaceUser
             #endregion
 
             #region Button générer plateau 
-            _generateBoard = new Button();
-            _generateBoard.Text = "Génerer le plateau personnalisé";
-            _generateBoard.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
-            _generateBoard.Size = new System.Drawing.Size(150, 75);
-            _generateBoard.Click += delegate (object sender, EventArgs e)
+            _putCase = new Button();
+            _putCase.Text = "Retirer un pion du plateau";
+            _putCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _putCase.Size = new System.Drawing.Size(150, 75);
+            _putCase.Click += delegate (object sender, EventArgs e)
             {
-                m_PictureBoxCreateBoard.Refresh();
+                _pawn = 0;
             };
-            this.Controls.Add(_generateBoard);
-            _generateBoard.BringToFront();
+            this.Controls.Add(_putCase);
+            _putCase.BringToFront();
             #endregion
 
             #region numericUpDown longueur plateau
@@ -246,6 +248,8 @@ namespace ITI.InterfaceUser
             _choixLongueurPlateau.Click += delegate (object sender, EventArgs e)
             {
                 _width = Longueur;
+                plateau = new int[_width, _height];
+                m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixLongueurPlateau);
             _choixLongueurPlateau.BringToFront();
@@ -262,6 +266,8 @@ namespace ITI.InterfaceUser
             _choixHauteurPlateau.Click += delegate (object sender, EventArgs e)
             {
                 _height = Hauteur;
+                plateau = new int[_width, _height];
+                m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixHauteurPlateau);
             _choixHauteurPlateau.BringToFront();
@@ -278,13 +284,97 @@ namespace ITI.InterfaceUser
                 _putDefOnBoard.Hide();
                 _choixHauteurPlateau.Hide();
                 _choixLongueurPlateau.Hide();
-                _generateBoard.Hide();
+                _putCase.Hide();
                 _save.Hide();
-                saveNewBoard();
+                _confirmSave.Show();
+                _cancelSave.Show();
             };
             this.Controls.Add(_save);
             _save.BringToFront();
             #endregion
+
+            #region Button confirm save
+            _confirmSave = new Button();
+            _confirmSave.Text = "Confirmer la sauvegarde du plateau";
+            _confirmSave.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _confirmSave.Size = new System.Drawing.Size(150, 75);
+            _confirmSave.Click += delegate (object sender, EventArgs e)
+            {
+                _textBoxName = new TextBox();
+                _textBoxName.Location = new Point(this.Location.X + 500, this.Location.Y + 300);
+                _textBoxName.Text = saveName;
+                _textBoxName.Size = new System.Drawing.Size(150, 75);
+                this.Controls.Add(_textBoxName);
+                _textBoxName.BringToFront();
+
+                WriteXML();
+            };
+            this.Controls.Add(_confirmSave);
+            _confirmSave.BringToFront();
+            #endregion
+
+            #region Button Cancel save
+            _cancelSave = new Button();
+            _cancelSave.Text = "Annuler la sauvegarde du plateau";
+            _cancelSave.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
+            _cancelSave.Size = new System.Drawing.Size(150, 75);
+            _cancelSave.Click += delegate (object sender, EventArgs e)
+            {
+
+                _confirmSave.Hide();
+                _cancelSave.Hide();
+                _choixLongueurPlateau.Show();
+                _choixHauteurPlateau.Show();
+                _putAtkOnBoard.Show();
+                _putDefOnBoard.Show();
+                _putCase.Show();
+                _save.Show();
+            };
+            this.Controls.Add(_cancelSave);
+            _cancelSave.BringToFront();
+            #endregion
+        }
+
+
+        /// <summary>
+        /// sauvegarder le nouveau plateau sur un fichier XML dans un dossier externe.
+        /// -----------
+        /// implémentez un objet pour ouvrir le dossier, affichez et ouvrir les fichier XML présent
+        /// ---------------
+        /// testez en sauvegardant un ficher XML contenant des pions et charger ce fichier et comparer.
+        /// </summary>
+        public void WriteXML()
+        {
+            XDocument _saveBoard = new XDocument();
+            new XElement("plateau",
+                new XAttribute("width", _width),
+                new XAttribute("height", _height)
+                );
+
+            for (int i = 0; i < _height; i++)
+            {
+                for (int j = 0; j < _width; j++)
+                {
+                    if (plateau[i, j] != 0)
+                    {
+                        if (plateau[i, j] == 1)
+                        {
+                            new XElement("ATK",
+                                new XAttribute("positionX", i),
+                                new XAttribute("positionY", j)
+                            );
+                        }
+                        if (plateau[i, j] == 2)
+                        {
+                            new XElement("DEF",
+                                new XAttribute("positionX", i),
+                                new XAttribute("positionY", j)
+                            );
+                        }
+                    }
+                }
+            }
+            _saveBoard.Save(_textBoxName.Text);
         }
 
         public int Longueur
@@ -303,55 +393,6 @@ namespace ITI.InterfaceUser
             }
         }
 
-        private void saveNewBoard()
-        {
-
-            #region Button confirm save
-            _confirmSave = new Button();
-            _confirmSave.Text = "Confirmer la sauvegarde du plateau";
-            _confirmSave.Location = new Point(this.Location.X + 500, this.Location.Y + 100);
-            _confirmSave.Size = new System.Drawing.Size(150, 75);
-            _confirmSave.Click += delegate (object sender, EventArgs e)
-            {
-                _textBoxTest = new TextBox();
-                _textBoxTest.Location = new Point(this.Location.X + 250, this.Location.Y + 300);
-                _textBoxTest.Text = saveName;
-                _textBoxTest.Size = new System.Drawing.Size(50, 150);
-                this.Controls.Add(_textBoxTest);
-                _textBoxTest.BringToFront();
-            };
-            this.Controls.Add(_confirmSave);
-            _confirmSave.BringToFront();
-            #endregion
-
-            #region Button Cancel save
-            _cancelSave = new Button();
-            _cancelSave.Text = "Annuler la sauvegarde du plateau";
-            _cancelSave.Location = new Point(this.Location.X + 500, this.Location.Y + 200);
-            _cancelSave.Size = new System.Drawing.Size(150, 75);
-            _cancelSave.Click += delegate (object sender, EventArgs e)
-            {
-                _choixLongueurPlateau.Show();
-                _choixHauteurPlateau.Show();
-                _putAtkOnBoard.Show();
-                _putDefOnBoard.Show();
-                _generateBoard.Show();
-                _save.Show();
-                _confirmSave.Hide();
-                _cancelSave.Hide();
-            };
-            this.Controls.Add(_cancelSave);
-            _cancelSave.BringToFront();
-            #endregion
-            /*
-            _textBoxName = new TextBox();
-            _textBoxName.Location = new Point(this.Location.X + 450, this.Location.Y + 300);
-            _textBoxName.Size = new System.Drawing.Size(50, 150);
-            _textBoxName.Text = "unnamed";
-            this.Controls.Add(_textBoxName);
-            _textBoxName.BringToFront();*/
-        }
-
         public string saveName
         {
             get
@@ -359,33 +400,5 @@ namespace ITI.InterfaceUser
                 return _textBoxName.Text;
             }
         }
-        
-        private void saveBoard()
-        {
-            
-
-            TextBox textBoxName = new TextBox();
-            TextBox textBoxTest = new TextBox();
-
-            textBoxName.Text = "aAé2@=";
-
-            XDocument test = new XDocument(
-                new XElement("user",
-                    new XElement("name", textBoxName.Text)
-                )
-            );
-            test.Save("user.xml");
-
-            //
-            textBoxTest.Location = new Point(this.Location.X + 450, this.Location.Y + 300);
-            textBoxTest.Text = Convert.ToString(test);
-            textBoxTest.Size = new System.Drawing.Size(50, 150);
-            this.Controls.Add(textBoxTest);
-            textBoxTest.BringToFront();
-            //
-
-        }
-        
-
     }
 }
