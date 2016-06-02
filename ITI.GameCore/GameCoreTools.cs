@@ -11,10 +11,7 @@ namespace ITI.GameCore
     {
         public readonly int X;
         public readonly int Y;
-        public readonly int Up;
-        public readonly int Down;
-        public readonly int Left;
-        public readonly int Right;
+        public readonly List<StudiedPawn> FreeSquares;
         public readonly Pawn Value;
         /// <summary>
         /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
@@ -25,20 +22,53 @@ namespace ITI.GameCore
         /// <param name="south">The south maximum move for this pawn.</param>
         /// <param name="east">The east maximum move for this pawn.</param>
         /// <param name="west">The west maximum move for this pawn.</param>
-        public PossibleMove(int x, int y, int up, int down, int left, int right, Pawn value)
+        public PossibleMove(int x, int y, List<StudiedPawn> freeSquares, Pawn value)
         {
             X = x;
             Y = y;
-            Up = up;
-            Down = down;
-            Left = left;
-            Right = right;
+            FreeSquares = freeSquares;
             Value = value;
         }
         public bool IsFree()
         {
-            if (Up == 0 && Down == 0 && Left == 0 && Right == 0) return false;
+            if (FreeSquares.Count == 0) return false;
             return true;
+        }
+        public int Up()
+        {
+            int up = 0;
+            foreach (StudiedPawn value in FreeSquares)
+            {
+                if (value.X == X && value.Y < Y) up++;
+            }
+            return up;
+        }
+        public int Down()
+        {
+            int down = 0;
+            foreach (StudiedPawn value in FreeSquares)
+            {
+                if (value.X == X && value.Y > Y) down++;
+            }
+            return down;
+        }
+        public int Left()
+        {
+            int left = 0;
+            foreach (StudiedPawn value in FreeSquares)
+            {
+                if (value.X < X && value.Y == Y) left++;
+            }
+            return left;
+        }
+        public int Right()
+        {
+            int right = 0;
+            foreach (StudiedPawn value in FreeSquares)
+            {
+                if (value.X > X && value.Y == Y) right++;
+            }
+            return right;
         }
     }
     public struct StudiedPawn
