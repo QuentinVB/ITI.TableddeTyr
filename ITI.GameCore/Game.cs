@@ -107,7 +107,7 @@ namespace ITI.GameCore
             //Checking up (x,y-1)
             if (!CheckWalls(x, y - 1))
             {
-                if (!IsFriendly(target, x, y - 1) && _tafl[x,y-1]!=Pawn.None)
+                if (!IsFriendly(target, x, y - 1) && _tafl[x, y - 1] != Pawn.None)
                 {
                     if (_tafl[x, y - 1] == Pawn.King) IsCircled(x, y - 1);
                     else if (CheckWalls(x, y - 2)) _tafl[x, y - 1] = Pawn.None;
@@ -154,10 +154,10 @@ namespace ITI.GameCore
         {
             Pawn target = _tafl[x, y];
             int count = 1;
-            Dictionary<int, StudiedPawn> Explored = new Dictionary<int, StudiedPawn>();
+            List<StudiedPawn> Explored = new List<StudiedPawn>();
             StudiedPawn FirstPawn = new StudiedPawn(x, y);
-            Explored.Add(count, FirstPawn);
-            foreach (StudiedPawn value in Explored.Values)
+            Explored.Add(FirstPawn);
+            foreach (StudiedPawn value in Explored)
             {
                 PossibleMove Tested = CanMove(value.X, value.Y);
                 if (Tested.IsFree())
@@ -174,7 +174,8 @@ namespace ITI.GameCore
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
                         count++;
-                        Explored.Add(count, studiedPawn);
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
+
                     }
                     //Checks for an ally down (y++)
                     m = y + 1;
@@ -182,7 +183,7 @@ namespace ITI.GameCore
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
                         count++;
-                        Explored.Add(count, studiedPawn);
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
                     }
                     //Checks for an ally left (x--)
                     m = x - 1;
@@ -190,7 +191,7 @@ namespace ITI.GameCore
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
                         count++;
-                        Explored.Add(count, studiedPawn);
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
                     }
                     //Checks for an ally right (x++)
                     m = x + 1;
@@ -198,13 +199,13 @@ namespace ITI.GameCore
                     {
                         StudiedPawn studiedPawn = new StudiedPawn(x, y);
                         count++;
-                        Explored.Add(count, studiedPawn);
+                        if (!Explored.Contains(studiedPawn)) Explored.Add(studiedPawn);
                     }
                 }
             }
             if (Explored.Count != 0)
             {
-                foreach (StudiedPawn value in Explored.Values)
+                foreach (StudiedPawn value in Explored)
                 {
                     _tafl[value.X, value.Y] = Pawn.None;
                 }
@@ -278,41 +279,42 @@ namespace ITI.GameCore
             //Exception goes here
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             //Creating directions
-            int up = 0;
-            int down = 0;
-            int left = 0;
-            int right = 0;
+            List<StudiedPawn> FreeSquares = new List<StudiedPawn>();
             int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
             //Checks above
             m = y;
             while (CheckUp(x, m))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                FreeSquares.Add(studiedPawn);
                 m--;
-                up++;
             }
             //Check below
             m = y;
             while (CheckDown(x, m))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                FreeSquares.Add(studiedPawn);
                 m++;
-                down++;
             }
             //Check left
             m = x;
             while (CheckLeft(m, y))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                FreeSquares.Add(studiedPawn);
                 m--;
-                left++;
             }
             //Check right
             m = x;
             while (CheckRight(m, y))
             {
+                StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                FreeSquares.Add(studiedPawn);
                 m++;
-                right++;
             }
             //struct ConstrucTHOR & return
-            PossibleMove _possibleMove = new PossibleMove(x, y, up, down, left, right, _tafl[x, y]);
+            PossibleMove _possibleMove = new PossibleMove(x, y, FreeSquares, _tafl[x, y]);
             return _possibleMove;
         }
         /// <summary>
