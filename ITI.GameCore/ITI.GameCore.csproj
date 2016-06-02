@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ITI.GameCore</RootNamespace>
     <AssemblyName>ITI.GameCore</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game.cs" />
+    <Compile Include="IGame.cs" />
     <Compile Include="ITafl.cs" />
     <Compile Include="GameCoreTools.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
