@@ -47,6 +47,14 @@ namespace ITI.GameCore
             _width = Width;
             _height = Height;
             _tafl = new Pawn[Width, Height];
+            //fill the new taflBasci with the IReadOnlyTafl values
+            for (int i = 0; i < _width; i++)
+            {
+                for (int j = 0; j < _height; j++)
+                {
+                    _tafl[i, j] = source[i, j];
+                }
+            }
         }
 
         public int Width
