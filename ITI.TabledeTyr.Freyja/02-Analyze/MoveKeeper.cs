@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITI.TabledeTyr.Freyja
+namespace ITI.TabledeTyr.Freyja._02_Analyze
 {
-    public class AI_Core
+    class MoveKeeper
     {
-        //BEHOLD THE FOUNDATION OF THE MIGHTY FREYJA !
     }
 }
