@@ -219,7 +219,7 @@ namespace ITI.GameCore
         internal bool IsFriendly(Pawn target, int x, int y)
         {
             if (target == Pawn.Attacker && _tafl[x, y] == Pawn.Attacker) return true;
-            if ((target == Pawn.Defender || target == Pawn.King) && (target == Pawn.Defender || target == Pawn.King)) return true;
+            if ((target == Pawn.Defender || target == Pawn.King) && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) return true;
             return false;
         }
         //Checkers for walls & fortresses
