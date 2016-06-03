@@ -25,41 +25,43 @@ namespace ITI.TabledeTyr.Freyja
         readonly IReadOnlyTafl _taflstored;
         internal readonly Move _move;
         internal int _score;
+        internal bool isAtkPlaying;
         //collections
         Dictionary<string, SimulationNode> _childs = new Dictionary<string, SimulationNode>(); //dictionnary of his childs
         //constructor
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score)//if the node is the first node : no move
-            :this(id, tafl, 0, new Move())
-            { }
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move)//constructor
+        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, bool isAtkPlaying)//if the node is the first node : no move
+            :this(id, tafl, 0, new Move(), isAtkPlaying, true)
+            {
+                Parent = null;
+            }
+        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move, bool isAtkPlaying, bool stillPlayable)//constructor
         {
             this.id = id;
             _taflstored = tafl;
             _move = move;
             _score = score;
-            Parent = null;
         }
         //props to communicate with the data stored
         internal string ID { get { return id; } } 
         internal IReadOnlyTafl TaflStored { get { return _taflstored; } }
         internal Move MoveStored{ get { return _move; } }
         internal int Score { get { return _score; } set { _score = value; } }//to do : recursive addition for childs scores
-
+        public bool IsAtkPlaying { get { return isAtkPlaying; } internal set { isAtkPlaying=value; }  }
         #region node managment methods and props
         public SimulationNode Parent { get; private set; } //get,set of the parent
         public SimulationNode GetChilds(string id)//return the child named by his UUID of this node
         {
             return this._childs[id];
         }
-        public void AddChild(SimulationNode item)//add a new child to this node
+        public void AddChild(SimulationNode node)//add a new child to this node
         {
-            if (item.Parent != null)//if the child has already a parent,
+            if (node.Parent != null)//if the child has already a parent,
             {
-                item.Parent._childs.Remove(item.id);//remove this node from child list of the older parent
+                node.Parent._childs.Remove(node.id);//remove this node from child list of the older parent
             }
 
-            item.Parent = this;//add the active node has the parent of the added node
-            this._childs.Add(item.id, item);//add the new node inside the list using his UUID as key
+            node.Parent = this;//add the active node has the parent of the added node
+            this._childs.Add(node.id, node);//add the new node inside the list using his UUID as key
         }
         public IEnumerator<SimulationNode> GetEnumerator()//allow the child list to be enumerable
         {
@@ -73,6 +75,8 @@ namespace ITI.TabledeTyr.Freyja
         {
             get { return this._childs.Count; }
         }
+
+      
         #endregion
         /*
         Dictionary<string,SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree

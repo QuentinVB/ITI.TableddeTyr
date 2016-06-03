@@ -28,6 +28,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
         }
         //Game test canMove
+        /*
         [TestCase(3, 0, 0, 4, 3, 0)]
         [TestCase(5, 5, 0, 0, 0, 0)]
         [TestCase(0, 5, 0, 0, 0, 0)]
@@ -41,6 +42,7 @@ namespace ITI.TabledeTyr.Test
             bool atkPlaying = sut.IsAtkPlaying;
             Assert.That(sut.CanMove(x,y), Is.EqualTo(testedMove));
         }
+        */
         //Game test allowMove
         [TestCase(3, 3)]
         [TestCase(1, 0)]
@@ -102,8 +104,10 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
             // ACTION UTILISATEUR
             // L'interlocuteur sélectionne une pièce (directement dans les tests ou après un événement de l'utilisateur dans l'UI) 
-            PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 3, 0, currentTafl[x, y]);
+            /*
+             * PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 3, 0, currentTafl[x, y]);
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
+            */
             //ACTION UTILISATEUR
             // -L'interlocuteur valide le mouvement en appellant AllowMove
             bool pawnMoved = sut.MovePawn(x, y, x2, y2);
