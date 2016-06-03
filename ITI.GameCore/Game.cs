@@ -390,7 +390,7 @@ namespace ITI.GameCore
             }
             if (y > y2)
             {
-                for (int si = y; i > y2; i--)
+                for (int i = y; i > y2; i--)
                 {
                     if (!CheckUp(x, i)) return false;
                 }

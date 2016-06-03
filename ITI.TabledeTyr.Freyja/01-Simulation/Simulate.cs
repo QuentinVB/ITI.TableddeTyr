@@ -15,6 +15,7 @@ namespace ITI.TabledeTyr.Freyja
         Game _simulatedGame;
         SimulationNode root;
         string activeNode;
+        //collection
         internal Dictionary<string, SimulationNode> SimulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.
@@ -32,7 +33,7 @@ namespace ITI.TabledeTyr.Freyja
         internal void UpdateSimulation()
         {
             //create the root of the tree (getting the current state of the system)
-            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl , 0);
+            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl ,0,_simulatedGame.IsAtkPlaying);
             SimulationTree.Add(root.ID,root);//Add it to the tree
             simulateBranchs(root);//simulate the branchs of the root
 
@@ -48,10 +49,11 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="y">The y.</param>
         /// <param name="x2">The x2.</param>
         /// <param name="y2">The y2.</param>
-        SimulationNode GenerateNode(int x,int y,int x2,int y2)
+        SimulationNode GenerateNode(int x,int y,int x2,int y2,SimulationNode node)
         {
-                _simulatedGame.MovePawn(x, y, x2, y2);
-
+            _simulatedGame = new Game(node.TaflStored, node.IsAtkPlaying); //INSIDE !
+            _simulatedGame.MovePawn(x, y, x2, y2);
+    
                 bool stillPlayable = _simulatedGame.UpdateTurn();
                 Move move = new Move(x, y, x2, y2);
 
@@ -64,8 +66,11 @@ namespace ITI.TabledeTyr.Freyja
             {
                 for (int j = 0; j < node.TaflStored.Height; j++)
                 {
-                     _simulatedGame = new Game(node.TaflStored, node.IsAtkPlaying);
-                    PossibleMove possibleMove = _simulatedGame.CanMove(i, j);
+                    if(node.TaflStored[i,j]==Pawn.None)
+                    { }
+                    else
+                    { 
+                     PossibleMove possibleMove = _ctx.Sensor.ActiveGame.CanMove(i, j);
 
                     if (possibleMove.IsFree() == true)
                     {
@@ -78,28 +83,28 @@ namespace ITI.TabledeTyr.Freyja
                                     for (int up = 0; up < possibleMove.Up(); up++)
                                     {
                                         //linking node just created, designating the new created node as one of childs of the active node
-                                        node.AddChild(GenerateNode(i, j, i, up));
+                                        node.AddChild(GenerateNode(i, j, i, up,node));
                                     }
                                 }
                                 if (possibleMove.Down() > 0)
                                 {
                                     for (int down = 0; down < possibleMove.Down(); down++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, i, down));
+                                        node.AddChild(GenerateNode(i, j, i, down, node));
                                     }
                                 }
                                 if (possibleMove.Left() > 0)
                                 {
                                     for (int left = 0; left < possibleMove.Left(); left++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, left, j));
+                                        node.AddChild(GenerateNode(i, j, left, j, node));
                                     }
                                 }
                                 if (possibleMove.Right() > 0)
                                 {
                                     for (int right = 0; right < possibleMove.Right(); right++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, right, j));
+                                        node.AddChild(GenerateNode(i, j, right, j, node));
                                     }
                                 }
                             }
@@ -112,28 +117,28 @@ namespace ITI.TabledeTyr.Freyja
                                 {
                                     for (int up = 0; up < possibleMove.Up(); up++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, i, up));
+                                        node.AddChild(GenerateNode(i, j, i, up, node));
                                     }
                                 }
                                 if (possibleMove.Down() > 0)
                                 {
                                     for (int down = 0; down < possibleMove.Down(); down++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, i, down));
+                                        node.AddChild(GenerateNode(i, j, i, down, node));
                                     }
                                 }
                                 if (possibleMove.Left() > 0)
                                 {
                                     for (int left = 0; left < possibleMove.Left(); left++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, left, j));
+                                        node.AddChild(GenerateNode(i, j, left, j, node));
                                     }
                                 }
                                 if (possibleMove.Right() > 0)
                                 {
                                     for (int right = 0; right < possibleMove.Right(); right++)
                                     {
-                                        node.AddChild(GenerateNode(i, j, right, j));
+                                        node.AddChild(GenerateNode(i, j, right, j, node));
                                     }
                                 }
                             }
@@ -142,6 +147,7 @@ namespace ITI.TabledeTyr.Freyja
                     //possible move
                 }
             }
+         }
         }
     }
 }

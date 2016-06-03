@@ -29,12 +29,12 @@ namespace ITI.TabledeTyr.Freyja
         //collections
         Dictionary<string, SimulationNode> _childs = new Dictionary<string, SimulationNode>(); //dictionnary of his childs
         //constructor
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score)//if the node is the first node : no move
-            :this(id, tafl, 0, new Move(), true, true)
+        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, bool isAtkPlaying)//if the node is the first node : no move
+            :this(id, tafl, 0, new Move(), isAtkPlaying, true)
             {
                 Parent = null;
             }
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move, bool stillPlayable, bool isAtkPlaying)//constructor
+        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move, bool isAtkPlaying, bool stillPlayable)//constructor
         {
             this.id = id;
             _taflstored = tafl;
