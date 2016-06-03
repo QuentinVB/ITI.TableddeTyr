@@ -52,8 +52,10 @@ namespace ITI.GameCore
             y
 
             */
+
             //Set the king and defenders
             tafl[5, 5] = Pawn.King;
+
             tafl[3, 5] = Pawn.Defender;
             tafl[4, 4] = Pawn.Defender;
             tafl[4, 5] = Pawn.Defender;
@@ -66,6 +68,7 @@ namespace ITI.GameCore
             tafl[6, 5] = Pawn.Defender;
             tafl[6, 6] = Pawn.Defender;
             tafl[7, 5] = Pawn.Defender;
+
             //Set the attackers
             tafl[0, 3] = Pawn.Attacker;
             tafl[0, 4] = Pawn.Attacker;
@@ -354,15 +357,15 @@ namespace ITI.GameCore
         /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
         public bool MovePawn(int x, int y, int x2, int y2)
         {
-            //if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
-            //if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
             if (x == x2 && y == y2) return false;
             if (_tafl[x, y] != Pawn.King)
             {
-                //if (CheckWalls(x2, y2))
-                    //throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
+                if (CheckWalls(x2, y2))
+                    throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
             }
 
             //Verifying that the move is leggit (TryMove might've been bypassed)
