@@ -16,7 +16,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode root;
         string activeNode;
         //collection
-        Dictionary<string, SimulationNode> SimulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        Dictionary<string, SimulationNode> _simulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.
         /// </summary>
@@ -34,10 +34,10 @@ namespace ITI.TabledeTyr.Freyja
         {
             //create the root of the tree (getting the current state of the system)
             root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl ,0,_simulatedGame.IsAtkPlaying);
-            SimulationTree.Add(root.ID,root);//Add it to the tree
+            _simulationTree.Add(root.ID,root);//Add it to the tree
             simulateBranchs(root);//simulate the branchs of the root
 
-            foreach (SimulationNode node in SimulationTree.Values)
+            foreach (SimulationNode node in _simulationTree.Values)
             {
                  simulateBranchs(node);
             }
@@ -149,6 +149,6 @@ namespace ITI.TabledeTyr.Freyja
             }
          }
         }
-        internal Dictionary<string, SimulationNode>  GetSimulationTree { get { return SimulationTree; } }
+        public Dictionary<string, SimulationNode>  GetSimulationTree { get { return _simulationTree; } }
     }
 }
