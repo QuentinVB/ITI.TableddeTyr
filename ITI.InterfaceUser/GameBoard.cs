@@ -15,7 +15,6 @@ namespace ITI.InterfaceUser
     {
         public IReadOnlyTafl _plateau;
         bool _firstClick = false;
-        public bool _allowMove = false;
         bool _endTurn = false;
         public Game _partie;
         public PossibleMove _possibleMove;
@@ -37,6 +36,7 @@ namespace ITI.InterfaceUser
 
         //// test
         int[,] plateau;
+        int[,] _mvtPossible;
 
 
         /// <summary>
@@ -62,6 +62,80 @@ namespace ITI.InterfaceUser
             int roi = 3;
             plateau = new int[_width, _height];
             //
+
+            //
+            _mvtPossible = new int[_width, _height];
+            
+            //
+
+            ////a utilisez lorsque les plateaux 7x7 9x9 11x11 13x13 mis en XML
+            #region variable création plateau
+            /*
+            if (_width == 7)
+            {
+                _valeurXBoard = 3;
+                _widthBoard = 70;
+                _valeurXBoardNextCase = 73;
+            }
+            if (_width == 9)
+            {
+                _valeurXBoard = 6;
+                _widthBoard = 53;
+                _valeurXBoardNextCase = 56;
+            }
+            if (_width == 11)
+            {
+                _valeurXBoard = 5;
+                _widthBoard = 43;
+                _valeurXBoardNextCase = 46;
+            }
+            if (_width == 13)
+            {
+                _valeurXBoard = 5;
+                _widthBoard = 36;
+                _valeurXBoardNextCase = 39;
+            }
+            if (_width == 15)
+            {
+                _valeurXBoard = 4;
+                _widthBoard = 31;
+                _valeurXBoardNextCase = 34;
+            }
+
+            if (_height == 7)
+            {
+                _valeurYBoard = 3;
+                _heightBoard = 70;
+                _valeurYBoardNextCase = 73;
+            }
+            if (_height == 9)
+            {
+                _valeurYBoard = 6;
+                _heightBoard = 53;
+                _valeurYBoardNextCase = 56;
+            }
+            if (_height == 11)
+            {
+                _valeurYBoard = 5;
+                _heightBoard = 43;
+                _valeurYBoardNextCase = 46;
+            }
+            if (_height == 13)
+            {
+                _valeurYBoard = 5;
+                _heightBoard = 36;
+                _valeurYBoardNextCase = 39;
+            }
+            if (_height == 15)
+            {
+                _valeurYBoard = 4;
+                _heightBoard = 31;
+                _valeurYBoardNextCase = 34;
+
+            }
+            */
+            #endregion
+
 
             if (_width == 7 && _height == 7)
             {
@@ -242,8 +316,10 @@ namespace ITI.InterfaceUser
 
                 plateau[6, 6] = roi;
                 #endregion
+
             }
 
+            m_positionSouris.Text = "choisir un pion";
 
         }
 
@@ -260,6 +336,8 @@ namespace ITI.InterfaceUser
             Image Piece;
             Image Case;
             Image caseInterdite;
+            Image mvtPiecePossible;
+            
 
             Rectangle Rect;
 
@@ -267,7 +345,8 @@ namespace ITI.InterfaceUser
             Graphics Board = e.Graphics;
 
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
-            caseInterdite = ITI.InterfaceUser.Properties.Resources.PawnHnefatafl;
+            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
+            mvtPiecePossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
             pictureBox1.BackColor = Color.Black;
 
             
@@ -278,14 +357,11 @@ namespace ITI.InterfaceUser
                 x = _valeurXBoard;
                 for (int i = 0; i < _width; i++)
                 {
-                    /*
-                    Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                    Board.DrawImage(Case, Rect);
-                    */
                     if (((i == 0) && (j == 0))
-                       || ((i == _width - 1) && (j == _height - 1))
-                           || ((i == _width - 1) && (j == 0))
-                           || ((i == 0) && (j == _height - 1)))
+                            || ((i == _width - 1) && (j == _height - 1))
+                            || ((i == _width - 1) && (j == 0))
+                            || ((i == 0) && (j == _height - 1))
+                            || ((i == ((_width - 1) / 2)) && (j == ((_height - 1) / 2))))
                     {
                         Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
                         Board.DrawImage(caseInterdite, Rect);
@@ -295,6 +371,13 @@ namespace ITI.InterfaceUser
                         Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
                         Board.DrawImage(Case, Rect);
                     }
+                    
+                    if(_mvtPossible[i, j] == 1)
+                    {
+                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
+                        Board.DrawImage(mvtPiecePossible, Rect);
+                    }
+
                     //if (_plateau[i, j] == GameCore.Pawn.Attacker)
                     if (plateau[i,j] == 1)     // test
                     {
@@ -329,7 +412,6 @@ namespace ITI.InterfaceUser
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             int x = 0, y = 0;
-            //int up = 0, down = 0, left = 0, right = 0;
 
             for (int j = 0; j < _height; j++)
             {
@@ -346,30 +428,42 @@ namespace ITI.InterfaceUser
                             if(plateau[_pawnMoveX, _pawnMoveY] != 0)
                             {
                                 _firstClick = true;
-                                m_positionSouris.Text = "x = " + _pawnMoveX + " y = " + _pawnMoveY;
+                                //m_positionSouris.Text = "x = " + _pawnMoveX + " y = " + _pawnMoveY;
                                 _possibleMove = _partie.CanMove(_pawnMoveX, _pawnMoveY);
+                                m_positionSouris.Text = "Choisir destination pion";
+
+                                ///
+                                showHelpPlayer(_pawnMoveX, _pawnMoveY);
+                                pictureBox1.Refresh();
+                                ///
+
                             }
                             /*
                             if(_possibleMove.isFree == true)
                             {
-                                _firstclock = true;
-                                up = _possibleMove.Up;
-                                down = _possibleMove.Down;
-                                left = _possibleMove.left;
-                                right = _possibleMove.Right
-                            */
+                                _mvtPossible = new int[_width, _height];
+
+                                for(y = 0; y < _height; y++)
+                                {
+                                    for(x = 0; x < _width; x++)
+                                    {
+                                        _mvtPossible[x, y] = _possibleMove.plateau[x, y];
+                                    }
+                                }
+                                pictureBox1.Refresh();
+                            }*/
+                            
                         }
                         else
                         {
-
                             _pawnDestinationX = i;
                             _pawnDestinationY = j;
+
                             if (plateau[_pawnDestinationX, _pawnDestinationY] != plateau[_pawnMoveX, _pawnMoveY]
-                                && plateau[_pawnDestinationX, _pawnDestinationY] != 1
-                                && plateau[_pawnDestinationX, _pawnDestinationY] != 2
-                                && plateau[_pawnDestinationX, _pawnDestinationY] != 3)
+                                && plateau[_pawnDestinationX, _pawnDestinationY] == 0)
                             {
-                                m_positionSouris.Text = "x = " + _pawnDestinationX + " y = " + _pawnDestinationY;
+                                //m_positionSouris.Text = "x = " + _pawnDestinationX + " y = " + _pawnDestinationY;
+
                                 if (_partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY) == true)
                                 {
                                     _endTurn = true;
@@ -378,19 +472,33 @@ namespace ITI.InterfaceUser
                                 {
                                     m_positionSouris.Text = "Mouvement Impossible";
                                     _firstClick = false;
-                                    //pictureBox1.Refresh(); refresh les cases vertes
+                                    m_positionSouris.Text = "Choisir un pion";
+                                    resetHelpPlayer();
+                                    pictureBox1.Refresh();
                                 }
+                            }else
+                            {
+                                _firstClick = false;
+                                m_positionSouris.Text = "Choisir un pion";
+                                resetHelpPlayer();
+                                pictureBox1.Refresh();
                             }
                         }
 
                         if (_endTurn == true)
                         {
                             //_plateau = _partie.Tafl;
+
+                            //
+
                             plateau[_pawnDestinationX, _pawnDestinationY] = plateau[_pawnMoveX, _pawnMoveY];
                             plateau[_pawnMoveX, _pawnMoveY] = 0;
+                            //
+                            
+                            resetHelpPlayer();
                             _endTurn = false;
                             _firstClick = false;
-                            _allowMove = false;
+                            m_positionSouris.Text = "Choisir un pion";
                             showPlayerTurn();
                             pictureBox1.Refresh();
                         }
@@ -414,6 +522,69 @@ namespace ITI.InterfaceUser
             else
             {
                 m_PlayerTurn.Text = "C'est au tour du défenseur";
+            }
+        }
+
+        private void resetHelpPlayer()
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    _mvtPossible[x, y] = 0;
+                }
+            }
+        }
+
+        private void showHelpPlayer(int pawnLocationX, int pawnLocationY)
+        {
+            int x = 0;
+
+            for(x = pawnLocationX; x >= 0; x--)
+            {
+                if(_plateau[x, pawnLocationY] == 0)
+                {
+                    _mvtPossible[x, pawnLocationY] = 1;
+                }else
+                {
+                    break;
+                }
+            }
+
+            for (x = pawnLocationX; x < _width; x++)
+            {
+                if (_plateau[x, pawnLocationY] == 0)
+                {
+                    _mvtPossible[x, pawnLocationY] = 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (x = pawnLocationY; x >= 0; x--)
+            {
+                if (_plateau[pawnLocationX, x] == 0)
+                {
+                    _mvtPossible[pawnLocationX, x] = 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            for (x = pawnLocationY; x < _height; x--)
+            {
+                if (_plateau[pawnLocationX, x] == 0)
+                {
+                    _mvtPossible[pawnLocationX, x] = 1;
+                }
+                else
+                {
+                    break;
+                }
             }
         }
     }
