@@ -18,10 +18,8 @@ namespace ITI.GameCore
         /// </summary>
         /// <param name="x">The x position of the analyzed pawn.</param>
         /// <param name="y">The y position of the analyzed pawn.</param>
-        /// <param name="north">The north maximum move for this pawn.</param>
-        /// <param name="south">The south maximum move for this pawn.</param>
-        /// <param name="east">The east maximum move for this pawn.</param>
-        /// <param name="west">The west maximum move for this pawn.</param>
+        /// <param name="freeSquares">The free squares.</param>
+        /// <param name="value">The value.</param>
         public PossibleMove(int x, int y, List<StudiedPawn> freeSquares, Pawn value)
         {
             X = x;

@@ -235,6 +235,7 @@ namespace ITI.TabledeTyr.Test
             atkPlaying = sut.IsAtkPlaying;
             Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(x, y, x2, y2));
         }
+        /*
         [TestCase(3, 0, 0, 4, 2, 0)]
         [TestCase(7, 0, 0, 4, 0, 2)]
         [TestCase(3, 10, 4, 0, 2, 0)]
@@ -246,6 +247,7 @@ namespace ITI.TabledeTyr.Test
             PossibleMove testedMove = new PossibleMove(x, y, up, down, left, right,currentTafl[x, y]);
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
         }
+        */
         [TestCase(5, 5, false)]
         [TestCase(5, 0, false)]
         [TestCase(5, 3, true)]

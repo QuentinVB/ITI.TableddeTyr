@@ -15,7 +15,7 @@ namespace ITI.TabledeTyr.Freyja
         Game _simulatedGame;
         SimulationNode root;
         string activeNode;
-        internal Dictionary<string, SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        internal Dictionary<string, SimulationNode> SimulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.
         /// </summary>
@@ -24,22 +24,22 @@ namespace ITI.TabledeTyr.Freyja
         {
             _ctx = ctx;
             _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
-            _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and ad a copy
+            _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and and a copy of the tafl inside
         }
         /// <summary>
-        /// Updates the simulation.
+        /// Updates the simulation. aka : CPU and RAM now suffers !!
         /// </summary>
         internal void UpdateSimulation()
         {
-            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl , 0);//create the root of the tree (getting the current state of the system)
-            activeNode = root.ID;
+            //create the root of the tree (getting the current state of the system)
+            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl , 0);
+            SimulationTree.Add(root.ID,root);//Add it to the tree
+            simulateBranchs(root);//simulate the branchs of the root
 
-            foreach (ValueType s in SimulatedTree)//NOPE
+            foreach (SimulationNode node in SimulationTree.Values)
             {
-                simulateBranch();
+                 simulateBranchs(node);
             }
-
-
         }
         /// <summary>
         /// Simulated nodes.
@@ -48,70 +48,58 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="y">The y.</param>
         /// <param name="x2">The x2.</param>
         /// <param name="y2">The y2.</param>
-        void SimulatedNode(int x,int y,int x2,int y2)
+        SimulationNode GenerateNode(int x,int y,int x2,int y2)
         {
-            SimulationNode Parent;
-            SimulatedTree.TryGetValue(activeNode, out Parent);
+                _simulatedGame.MovePawn(x, y, x2, y2);
 
-            _simulatedGame = new Game(_simulatedGame.Tafl, _ctx.Sensor.IsActiveAtkPlaying);
-            _simulatedGame.MovePawn(x, y, x2, y2);
-            _simulatedGame.UpdateTurn();
+                bool stillPlayable = _simulatedGame.UpdateTurn();
+                Move move = new Move(x, y, x2, y2);
 
-            Move move = new Move(x, y, x2, y2);
-
-            _key = Guid.NewGuid().ToString();//generating new key
-            SimulatedTree[_key] = new SimulationNode(_key, _simulatedGame.Tafl,0, move);//creating new node
-
-            Parent.AddChild(SimulatedTree[_key]);//linking root, designating the new created node as one of his childs 
+                _key = Guid.NewGuid().ToString();//generating new key
+                return new SimulationNode(_key, _simulatedGame.Tafl, 0, move, stillPlayable,_simulatedGame.IsAtkPlaying);//creating new node               
         }
-        /*
-        Dictionary<string, SimulationNode> SimulatedTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
-        SimulationNode root = new SimulationNode(Guid.NewGuid().ToString(),_ctx._Sensor.ActiveTafl , 0);//create the root of the tree (getting the current state of the system)
-           
-        string key = Guid.NewGuid().ToString();//generating new key
-        SimulatedTree[key] = new SimulationNode(key);//creating new node
-        root.AddChild(SimulatedTree[key]);//linking root, designating the new created node as one of his childs 
-        */
-        void simulateBranch()
+        void simulateBranchs(SimulationNode node)
         {
-            for (int i = 0; i < _ctx.Sensor.ActiveTafl.Width; i++)
+            for (int i = 0; i < node.TaflStored.Width; i++)
             {
-                for (int j = 0; j < _ctx.Sensor.ActiveTafl.Height; j++)
+                for (int j = 0; j < node.TaflStored.Height; j++)
                 {
-                    PossibleMove possibleMove = _ctx.originGame.CanMove(i, j);
+                     _simulatedGame = new Game(node.TaflStored, node.IsAtkPlaying);
+                    PossibleMove possibleMove = _simulatedGame.CanMove(i, j);
+
                     if (possibleMove.IsFree() == true)
                     {
-                        if (_isSimulatedFreyjaAtk == true)
+                        if (node.IsAtkPlaying == true)
                         {
-
                             if (_ctx.Sensor.ActiveTafl[i, j] == Pawn.Attacker)
                             {
-                                if (possibleMove.Up > 0)
+                                if (possibleMove.Up() > 0)
                                 {
-                                    for (int up = 0; up < possibleMove.Up; up++)
+                                    for (int up = 0; up < possibleMove.Up(); up++)
                                     {
-                                        SimulatedNode(i, j, i, up);
+                                        //linking node just created, designating the new created node as one of childs of the active node
+                                        node.AddChild(GenerateNode(i, j, i, up));
                                     }
                                 }
-                                if (possibleMove.Down > 0)
+                                if (possibleMove.Down() > 0)
                                 {
-                                    for (int down = 0; down < possibleMove.Up; down++)
+                                    for (int down = 0; down < possibleMove.Down(); down++)
                                     {
-                                        SimulatedNode(i, j, i, down);
+                                        node.AddChild(GenerateNode(i, j, i, down));
                                     }
                                 }
-                                if (possibleMove.Left > 0)
+                                if (possibleMove.Left() > 0)
                                 {
-                                    for (int left = 0; left < possibleMove.Up; left++)
+                                    for (int left = 0; left < possibleMove.Left(); left++)
                                     {
-                                        SimulatedNode(i, j, left, j);
+                                        node.AddChild(GenerateNode(i, j, left, j));
                                     }
                                 }
-                                if (possibleMove.Right > 0)
+                                if (possibleMove.Right() > 0)
                                 {
-                                    for (int right = 0; right < possibleMove.Up; right++)
+                                    for (int right = 0; right < possibleMove.Right(); right++)
                                     {
-                                        SimulatedNode(i, j, right, j);
+                                        node.AddChild(GenerateNode(i, j, right, j));
                                     }
                                 }
                             }
@@ -120,37 +108,38 @@ namespace ITI.TabledeTyr.Freyja
                         {
                             if (_ctx.Sensor.ActiveTafl[i, j] == Pawn.Defender || _ctx.Sensor.ActiveTafl[i, j] == Pawn.King)
                             {
-                                if (possibleMove.Up > 0)
+                                if (possibleMove.Up() > 0)
                                 {
-                                    for (int up = 0; up < possibleMove.Up; up++)
+                                    for (int up = 0; up < possibleMove.Up(); up++)
                                     {
-                                        SimulatedNode(i, j, i, up);
+                                        node.AddChild(GenerateNode(i, j, i, up));
                                     }
                                 }
-                                if (possibleMove.Down > 0)
+                                if (possibleMove.Down() > 0)
                                 {
-                                    for (int down = 0; down < possibleMove.Up; down++)
+                                    for (int down = 0; down < possibleMove.Down(); down++)
                                     {
-                                        SimulatedNode(i, j, i, down);
+                                        node.AddChild(GenerateNode(i, j, i, down));
                                     }
                                 }
-                                if (possibleMove.Left > 0)
+                                if (possibleMove.Left() > 0)
                                 {
-                                    for (int left = 0; left < possibleMove.Up; left++)
+                                    for (int left = 0; left < possibleMove.Left(); left++)
                                     {
-                                        SimulatedNode(i, j, left, j);
+                                        node.AddChild(GenerateNode(i, j, left, j));
                                     }
                                 }
-                                if (possibleMove.Right > 0)
+                                if (possibleMove.Right() > 0)
                                 {
-                                    for (int right = 0; right < possibleMove.Up; right++)
+                                    for (int right = 0; right < possibleMove.Right(); right++)
                                     {
-                                        SimulatedNode(i, j, right, j);
+                                        node.AddChild(GenerateNode(i, j, right, j));
                                     }
                                 }
                             }
                         }
                     }
+                    //possible move
                 }
             }
         }
