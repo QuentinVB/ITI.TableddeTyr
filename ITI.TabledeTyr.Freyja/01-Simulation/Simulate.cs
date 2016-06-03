@@ -16,7 +16,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode root;
         string activeNode;
         //collection
-        internal Dictionary<string, SimulationNode> SimulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        Dictionary<string, SimulationNode> SimulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.
         /// </summary>
@@ -149,5 +149,6 @@ namespace ITI.TabledeTyr.Freyja
             }
          }
         }
+        internal Dictionary<string, SimulationNode>  GetSimulationTree { get { return SimulationTree; } }
     }
 }
