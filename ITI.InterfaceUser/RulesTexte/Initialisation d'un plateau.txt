@@ -1,0 +1,15 @@
+1. La famille des jeux de Tafl regroupe différents jeux possédant plusieurs caractéristiques communes : 
+
+	- Un plateau de jeu carré. 
+	- Des cases marquées symétriquement. 	
+	- Des forces inégales. 
+	- Un principe de prise par encadrement. 
+	- Des objectifs de jeux différents. 
+	- Une pièce particulière, le roi. 
+
+
+2. Le but des jeux de Tafl est de : 
+
+	- Pour l’attaquant, de prendre le roi adverse. 
+
+	- Pour le défenseur, d’amener le roi dans une forteresse : les cases dans les coins du plateau. 

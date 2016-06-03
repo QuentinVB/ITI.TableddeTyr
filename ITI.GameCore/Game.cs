@@ -405,8 +405,7 @@ namespace ITI.GameCore
             if (x == x2 && y == y2) return false;
             if (_tafl[x, y] != Pawn.King)
             {
-                if (CheckWalls(x2, y2))
-                    throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
+                if (CheckWalls(x2, y2)) throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
             }
 
             //Verifying that the move is leggit (TryMove might've been bypassed)
