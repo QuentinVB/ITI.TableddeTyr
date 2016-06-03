@@ -540,7 +540,7 @@ namespace ITI.InterfaceUser
         {
             int x = 0;
 
-            for(x = pawnLocationX; x >= 0; x--)
+            for(x = pawnLocationX - 1; x >= 0; x--)
             {
                 if(_plateau[x, pawnLocationY] == 0)
                 {
@@ -551,7 +551,7 @@ namespace ITI.InterfaceUser
                 }
             }
 
-            for (x = pawnLocationX; x < _width; x++)
+            for (x = pawnLocationX + 1; x < _width; x++)
             {
                 if (_plateau[x, pawnLocationY] == 0)
                 {
@@ -563,7 +563,7 @@ namespace ITI.InterfaceUser
                 }
             }
 
-            for (x = pawnLocationY; x >= 0; x--)
+            for (x = pawnLocationY - 1; x >= 0; x--)
             {
                 if (_plateau[pawnLocationX, x] == 0)
                 {
@@ -575,7 +575,7 @@ namespace ITI.InterfaceUser
                 }
             }
 
-            for (x = pawnLocationY; x < _height; x--)
+            for (x = pawnLocationY + 1; x < _height; x++)
             {
                 if (_plateau[pawnLocationX, x] == 0)
                 {
