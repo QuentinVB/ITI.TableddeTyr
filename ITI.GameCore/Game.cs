@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITI.GameCore
 {
@@ -248,12 +245,12 @@ namespace ITI.GameCore
         internal bool CheckVictoryCondition()
         {
             //check presence of the king in each forteress
-            if (_tafl[0, 0] == Pawn.King) return true;
-            if (_tafl[0, _tafl.Height - 1] == Pawn.King) return true;
-            if (_tafl[_tafl.Width - 1, 0] == Pawn.King) return true;
-            if (_tafl[_tafl.Width - 1, _tafl.Height - 1] == Pawn.King) return true;
-            //check if the king is still alive
-            if (!_tafl.HasKing) return true;
+            if ((_tafl[0, 0] == Pawn.King)
+                ||( _tafl[0, _tafl.Height - 1] == Pawn.King)
+                ||(_tafl[_tafl.Width - 1, 0] == Pawn.King)
+                ||(_tafl[_tafl.Width - 1, _tafl.Height - 1] == Pawn.King)
+                || (!_tafl.HasKing)//check if the king is still alive
+                ) return true;            
             return false;
         }
         #region Checkers for emptyness
