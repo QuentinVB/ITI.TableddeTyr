@@ -28,20 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.m_positionSouris = new System.Windows.Forms.TextBox();
             this.m_PlayerTurn = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.m_buttonRetourMenu = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // m_positionSouris
-            // 
-            this.m_positionSouris.Location = new System.Drawing.Point(740, 128);
-            this.m_positionSouris.Name = "m_positionSouris";
-            this.m_positionSouris.Size = new System.Drawing.Size(198, 22);
-            this.m_positionSouris.TabIndex = 1;
-            this.m_positionSouris.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // m_PlayerTurn
             // 
@@ -80,7 +71,6 @@
             this.ClientSize = new System.Drawing.Size(983, 673);
             this.Controls.Add(this.m_buttonRetourMenu);
             this.Controls.Add(this.m_PlayerTurn);
-            this.Controls.Add(this.m_positionSouris);
             this.Controls.Add(this.pictureBox1);
             this.Name = "m_GameBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -94,7 +84,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox m_positionSouris;
         private System.Windows.Forms.TextBox m_PlayerTurn;
         private System.Windows.Forms.Button m_buttonRetourMenu;
     }

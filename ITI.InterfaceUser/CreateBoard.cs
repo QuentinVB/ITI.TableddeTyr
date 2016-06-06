@@ -129,7 +129,7 @@ namespace ITI.InterfaceUser
 
             m_PictureBoxCreateBoard.BackColor = Color.Black;
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
-            caseInterdite = ITI.InterfaceUser.Properties.Resources.PawnHnefatafl;
+            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
 
             plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
 
