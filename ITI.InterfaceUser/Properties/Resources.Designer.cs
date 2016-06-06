@@ -123,6 +123,26 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Case_en_bois_effet {
+            get {
+                object obj = ResourceManager.GetObject("Case_en_bois_effet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CaseInterdite {
+            get {
+                object obj = ResourceManager.GetObject("CaseInterdite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap défenseur {
             get {
                 object obj = ResourceManager.GetObject("défenseur", resourceCulture);
@@ -131,21 +151,21 @@ namespace ITI.InterfaceUser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La famille des jeux de Tafl regroupe différents jeux possédant plusieurs caractéristiques communes : 
+        ///   Looks up a localized string similar to 1. La famille des jeux de Tafl regroupe différents jeux possédant plusieurs caractéristiques communes : 
         ///
-        ///	Un tablier (plateau) de jeu carré. 
-        ///	Des cases marquées symétriquement. 	
-        ///	Des forces inégales. 
-        ///	Un principe de prise par encadrement. 
-        ///	Des objectifs de jeux différents. 
-        ///	Une pièce particulière, le roi. 
+        ///	- Un plateau de jeu carré. 
+        ///	- Des cases marquées symétriquement. 	
+        ///	- Des forces inégales. 
+        ///	- Un principe de prise par encadrement. 
+        ///	- Des objectifs de jeux différents. 
+        ///	- Une pièce particulière, le roi. 
         ///
-        ///Le but des jeux de Tafl est de : 
         ///
-        ///Pour l’attaquant, de prendre le roi adverse. 
-        ///Pour le défenseur, d’amener le roi dans une forteresse : les cases dans les coins du tablier. 
+        ///2. Le but des jeux de Tafl est de : 
         ///
-        ///Les plate [rest of string was truncated]&quot;;.
+        ///	- Pour l’attaquant, de prendre le roi adverse. 
+        ///
+        ///	- Pour le défenseur, d’amener le roi dans une forteresse : les cases dans les coins du plat [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Initialisation_d_un_plateau {
             get {
@@ -154,11 +174,12 @@ namespace ITI.InterfaceUser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Victoire du défenseur :
+        ///   Looks up a localized string similar to 1. Victoire du défenseur :
         ///
-        ///	Pour gagner, le défenseur blanc doit amener son roi sur l&apos;une des quatre forteresses situées aux coins. 
+        ///	Pour gagner, le défenseur blanc doit amener son roi sur l&apos;une des quatre forteresses situées
+        ///	aux coins. 
         ///
-        ///Victoire de l&apos;attaquant ; 
+        ///2. Victoire de l&apos;attaquant ; 
         ///
         ///	Pour gagner, l&apos;attaquant noir doit capturer le roi. .
         /// </summary>
@@ -169,17 +190,19 @@ namespace ITI.InterfaceUser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Capture de pion
+        ///   Looks up a localized string similar to 1. Capture de pion
         ///
-        ///	Un pion est battu et retiré du tablier s&apos;il se retrouve, dans un alignement orthogonal, 
-        ///	ris en tenailles par deux adversaires sur deux côtés opposés de la case qu&apos;il occupe.
+        ///	- Un pion est battu et retiré du tablier s&apos;il se retrouve, dans un alignement orthogonal, 
+        ///	  pris en tenailles par deux adversaires sur deux côtés opposés de la case qu&apos;il occupe.
         ///
-        ///	Le roi peut participer à battre un pion adverse mais on ne peut pas le battre de la même façon.
+        ///	- Le roi peut participer à battre un pion adverse mais on ne peut pas le battre de la même
+        ///	  façon.
         ///
-        ///	Un pion est également battu s&apos;il se retrouve pris en tenailles par un adversaire et une forteresse.  
-        ///	Il est possible de prendre deux ou trois pions en déplaçant un seul pion. 
+        ///	- Un pion est également battu s&apos;il se retrouve pris en tenailles par un adversaire et une 
+        ///	  forteresse.  
+        ///	  Il est possible de prendre deux ou trois pions en déplaçant un seul pion. 
         ///
-        ///	Un pion qui se déplace lui-m [rest of string was truncated]&quot;;.
+        ///	- Un  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Les_différentes_types_de_captures {
             get {
@@ -188,26 +211,20 @@ namespace ITI.InterfaceUser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Les assaillants jouent en premier. 
+        ///   Looks up a localized string similar to - Le joueur attaquant joue en premier. 
         ///
-        ///Les pions se déplacent orthogonalement vers un emplacement libre, d&apos;une ou plusieurs cases, comme la tour au jeu d&apos;échecs. 
-        ///Toutes les cases empruntées lors du déplacement doivent être libres. 
-        ///Aucun autre pion que le Roi ne peut accéder aux quatre forteresses situées aux coins, ni à la forteresse centrale parfois appelée trône. 
-        ///Mais ils peuvent passer au-dessus de la case centrale si elle est libre. .
+        ///- Les pions se déplacent orthogonalement vers un emplacement libre, d&apos;une ou plusieurs cases, comme 
+        ///  la tour au jeu d&apos;échecs. 
+        ///
+        ///- Toutes les cases empruntées lors du déplacement doivent être libres. 
+        ///
+        ///- Aucun autre pion que le Roi ne peut accéder aux quatre forteresses situées aux coins, ni à la 
+        ///  forteresse centrale parfois appelée trône. 
+        ///  Mais ils peuvent passer au-dessus de la case centrale si elle est libre. .
         /// </summary>
         internal static string Les_pions {
             get {
                 return ResourceManager.GetString("Les_pions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PawnHnefatafl {
-            get {
-                object obj = ResourceManager.GetObject("PawnHnefatafl", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -247,6 +264,16 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap TableDeTyr1 {
             get {
                 object obj = ResourceManager.GetObject("TableDeTyr1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Victoire {
+            get {
+                object obj = ResourceManager.GetObject("Victoire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
