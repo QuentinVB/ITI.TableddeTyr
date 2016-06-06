@@ -331,42 +331,49 @@ namespace ITI.TabledeTyr.Test
         [Test]
         public void Situation_capture_of_the_king()
         {
-            int i = 1;
-            int pawnMovedX = 0;
-            int pawnMovedY = 0;
-            int pawnDestinationX = 0;
-            int pawnDestinationY = 0;
+           //Arrange
+            TaflBasic taflut = new TaflBasic(11, 11);
 
-            Game sut = new Game();
+            taflut[5, 5] = Pawn.King;
+            taflut[5, 4] = Pawn.Defender;
+            taflut[6, 4] = Pawn.Defender;
+            taflut[6, 5] = Pawn.Defender;
+            taflut[6, 6] = Pawn.Defender;
+            taflut[4, 5] = Pawn.Defender;
+            taflut[4, 6] = Pawn.Defender;
+            taflut[5, 6] = Pawn.Defender;
+
+            taflut[4, 1] = Pawn.Attacker;
+
+            taflut[5, 3] = Pawn.Attacker;
+            taflut[6, 3] = Pawn.Attacker;
+            taflut[7, 4] = Pawn.Attacker;
+            taflut[7, 5] = Pawn.Attacker;
+            taflut[7, 6] = Pawn.Attacker;
+            taflut[3, 5] = Pawn.Attacker;
+            taflut[3, 6] = Pawn.Attacker;
+            taflut[4, 7] = Pawn.Attacker;
+            taflut[5, 7] = Pawn.Attacker;
+            taflut[6, 7] = Pawn.Attacker;
+
+            Game sut = new Game(taflut,true);
             var currentTafl = sut.Tafl;
             bool atkPlaying;
             bool pawnMoved;
-            do
+            atkPlaying = sut.IsAtkPlaying;
+            //Act
+            pawnMoved = sut.MovePawn(4, 1, 4,4);               
+            if (sut.UpdateTurn() == false)
             {
-                if (i == 1) { pawnMovedX = 7; pawnMovedY = 10; pawnDestinationX = 8; pawnDestinationY = 10; }//Atk
-                if (i == 2) { pawnMovedX = 7; pawnMovedY = 5; pawnDestinationX = 7; pawnDestinationY = 1; }
-                if (i == 3) { pawnMovedX = 9; pawnMovedY = 5; pawnDestinationX = 9; pawnDestinationY = 6; }//Atk
-                if (i == 4) { pawnMovedX = 6; pawnMovedY = 5; pawnDestinationX = 9; pawnDestinationY = 5; }
-                if (i == 5) { pawnMovedX = 10; pawnMovedY = 3; pawnDestinationX = 6; pawnDestinationY = 3; }//Atk
-                if (i == 6) { pawnMovedX = 9; pawnMovedY = 5; pawnDestinationX = 9; pawnDestinationY = 1; }
-                if (i == 7) { pawnMovedX = 8; pawnMovedY = 10; pawnDestinationX = 7; pawnDestinationY = 10; }//Atk
-                if (i == 8) { pawnMovedX = 5; pawnMovedY = 5; pawnDestinationX = 10; pawnDestinationY = 5; }
-                if (i == 9) { pawnMovedX = 9; pawnMovedY = 6; pawnDestinationX = 9; pawnDestinationY = 5; }//Atk
                 atkPlaying = sut.IsAtkPlaying;
-                pawnMoved = sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);               
-                if (sut.UpdateTurn() == false)
-                {
-                    atkPlaying = sut.IsAtkPlaying;
-                    break;
-                }
-                else
-                {
-                    currentTafl = sut.Tafl;
-                }
-                i++;
-            } while (i <= 9);//MAIN LOOP
+            }
+            else
+            {
+                currentTafl = sut.Tafl;
+            }
             currentTafl = sut.Tafl;
-            Assert.That(currentTafl[9, 5], Is.EqualTo(Pawn.None));
+            //assert
+            Assert.That(currentTafl[5, 5], Is.EqualTo(Pawn.None));
         }
         //TODO
         //canMove new gen
