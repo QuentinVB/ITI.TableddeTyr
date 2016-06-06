@@ -10,7 +10,6 @@ namespace ITI.TabledeTyr.Freyja
     {
         Freyja_Core _ctx;
         Dictionary<string, SimulationNode> simulatedTree;
-
         public Analyze(Freyja_Core freyja_Core)
         {
             _ctx = freyja_Core;
