@@ -105,48 +105,28 @@ namespace ITI.GameCore
         internal void CheckCapture(int x, int y)
         {
             Pawn target = _tafl[x, y];
-            //Checking up (x,y-1)
-            if (!CheckWalls(x, y - 1))
+            int xMartyr=0;
+            int yMartyr=0;
+            int beyond=0;
+            for (int i = 0; i < 4; i++)
             {
-                if (!IsFriendly(target, x, y - 1) && _tafl[x, y - 1] != Pawn.None)
-                {
-                    if (_tafl[x, y - 1] == Pawn.King) IsCircled(x, y - 1);
-                    else if (CheckWalls(x, y - 2)) _tafl[x, y - 1] = Pawn.None;
-                    else if (IsFriendly(target, x, y - 2)) _tafl[x, y - 1] = Pawn.None;
-                    else if (!IsFriendly(target, x, y - 2)) IsCircled(x, y - 1);
-                }
-            }
-            //Checking down (x,y+1)
-            if (!CheckWalls(x, y + 1))
+                if (i == 0) { xMartyr = x; yMartyr = y - 1; beyond = y - 2; }//Checking up (x,y-1)
+                if (i == 1) { xMartyr = x; yMartyr = y + 1; beyond = y + 2; }//Checking down (x,y+1)
+                if (i == 2) { xMartyr = x-1; yMartyr = y; beyond = x - 2; }//Checking left (x-1,y)
+                if (i == 3) { xMartyr = x+1; yMartyr = y; beyond = x + 2; }//Checking right(x+1,y)
+                fuckthatshit(target, xMartyr, yMartyr,beyond);
+            }        
+        }
+        internal void fuckthatshit(Pawn target, int xA,int yA,int beyond)
+        {
+            if (!CheckWalls(xA, yA))
             {
-                if (!IsFriendly(target, x, y + 1) && _tafl[x, y + 1] != Pawn.None)
+                if (!IsFriendly(target, xA,yA) && _tafl[xA, yA] != Pawn.None)
                 {
-                    if (_tafl[x, y + 1] == Pawn.King) IsCircled(x, y + 1);
-                    else if (CheckWalls(x, y + 2)) _tafl[x, y + 1] = Pawn.None;
-                    else if (IsFriendly(target, x, y + 2)) _tafl[x, y + 1] = Pawn.None;
-                    else if (!IsFriendly(target, x, y + 2)) IsCircled(x, y + 1);
-                }
-            }
-            //Checking left (x-1,y)
-            if (!CheckWalls(x - 1, y))
-            {
-                if (!IsFriendly(target, x - 1, y) && _tafl[x - 1, y] != Pawn.None)
-                {
-                    if (_tafl[x - 1, y] == Pawn.King) IsCircled(x - 1, y);
-                    else if (CheckWalls(x - 2, y)) _tafl[x - 1, y] = Pawn.None;
-                    else if (IsFriendly(target, x - 2, y)) _tafl[x - 1, y] = Pawn.None;
-                    else if (!IsFriendly(target, x - 2, y)) IsCircled(x - 1, y);
-                }
-            }
-            //Checking right(x+1,y)
-            if (!CheckWalls(x + 1, y))
-            {
-                if (!IsFriendly(target, x + 1, y) && _tafl[x + 1, y] != Pawn.None)
-                {
-                    if (_tafl[x + 1, y] == Pawn.King) IsCircled(x + 1, y);
-                    else if (CheckWalls(x + 2, y)) _tafl[x + 1, y] = Pawn.None;
-                    else if (IsFriendly(target, x + 2, y)) _tafl[x + 1, y] = Pawn.None;
-                    else if (!IsFriendly(target, x + 2, y)) IsCircled(x + 1, y);
+                    if (_tafl[xA, yA] == Pawn.King) IsCircled(xA, yA);
+                    else if (CheckWalls(xA, beyond)) _tafl[xA, yA] = Pawn.None;
+                    else if (IsFriendly(target, xA, beyond)) _tafl[xA, yA] = Pawn.None;
+                    else if (!IsFriendly(target, xA, beyond)) IsCircled(xA, yA);
                 }
             }
         }
@@ -216,7 +196,7 @@ namespace ITI.GameCore
         internal bool IsFriendly(Pawn target, int x, int y)
         {
             if (target == Pawn.Attacker && _tafl[x, y] == Pawn.Attacker) return true;
-            if ((target == Pawn.Defender || target == Pawn.King) && (target == Pawn.Defender || target == Pawn.King)) return true;
+            if ((target == Pawn.Defender || target == Pawn.King) && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) return true;
             return false;
         }
         //Checkers for walls & fortresses
@@ -395,15 +375,14 @@ namespace ITI.GameCore
         /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
         public bool MovePawn(int x, int y, int x2, int y2)
         {
-            //if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
-            //if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
             if (x == x2 && y == y2) return false;
             if (_tafl[x, y] != Pawn.King)
             {
-                //if (CheckWalls(x2, y2))
-                    //throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
+                if (CheckWalls(x2, y2)) throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
             }
 
             //Verifying that the move is leggit (TryMove might've been bypassed)
