@@ -63,9 +63,9 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Board11x111 {
+        internal static System.Drawing.Bitmap attaquant {
             get {
-                object obj = ResourceManager.GetObject("Board11x111", resourceCulture);
+                object obj = ResourceManager.GetObject("attaquant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,187 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap plateau1 {
+        internal static System.Drawing.Bitmap Board11x11 {
             get {
-                object obj = ResourceManager.GetObject("plateau1", resourceCulture);
+                object obj = ResourceManager.GetObject("Board11x11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Board13x13 {
+            get {
+                object obj = ResourceManager.GetObject("Board13x13", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Board7x7 {
+            get {
+                object obj = ResourceManager.GetObject("Board7x7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Board9x9 {
+            get {
+                object obj = ResourceManager.GetObject("Board9x9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Case_en_bois {
+            get {
+                object obj = ResourceManager.GetObject("Case_en_bois", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Case_en_bois_effet {
+            get {
+                object obj = ResourceManager.GetObject("Case_en_bois_effet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CaseInterdite {
+            get {
+                object obj = ResourceManager.GetObject("CaseInterdite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap défenseur {
+            get {
+                object obj = ResourceManager.GetObject("défenseur", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. La famille des jeux de Tafl regroupe différents jeux possédant plusieurs caractéristiques communes : 
+        ///
+        ///	- Un plateau de jeu carré. 
+        ///	- Des cases marquées symétriquement. 	
+        ///	- Des forces inégales. 
+        ///	- Un principe de prise par encadrement. 
+        ///	- Des objectifs de jeux différents. 
+        ///	- Une pièce particulière, le roi. 
+        ///
+        ///
+        ///2. Le but des jeux de Tafl est de : 
+        ///
+        ///	- Pour l’attaquant, de prendre le roi adverse. 
+        ///
+        ///	- Pour le défenseur, d’amener le roi dans une forteresse : les cases dans les coins du plat [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Initialisation_d_un_plateau {
+            get {
+                return ResourceManager.GetString("Initialisation_d_un_plateau", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. Victoire du défenseur :
+        ///
+        ///	Pour gagner, le défenseur blanc doit amener son roi sur l&apos;une des quatre forteresses situées
+        ///	aux coins. 
+        ///
+        ///2. Victoire de l&apos;attaquant ; 
+        ///
+        ///	Pour gagner, l&apos;attaquant noir doit capturer le roi. .
+        /// </summary>
+        internal static string Les_conditions_de_victoires {
+            get {
+                return ResourceManager.GetString("Les_conditions_de_victoires", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. Capture de pion
+        ///
+        ///	- Un pion est battu et retiré du tablier s&apos;il se retrouve, dans un alignement orthogonal, 
+        ///	  pris en tenailles par deux adversaires sur deux côtés opposés de la case qu&apos;il occupe.
+        ///
+        ///	- Le roi peut participer à battre un pion adverse mais on ne peut pas le battre de la même
+        ///	  façon.
+        ///
+        ///	- Un pion est également battu s&apos;il se retrouve pris en tenailles par un adversaire et une 
+        ///	  forteresse.  
+        ///	  Il est possible de prendre deux ou trois pions en déplaçant un seul pion. 
+        ///
+        ///	- Un  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Les_différentes_types_de_captures {
+            get {
+                return ResourceManager.GetString("Les_différentes_types_de_captures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to - Le joueur attaquant joue en premier. 
+        ///
+        ///- Les pions se déplacent orthogonalement vers un emplacement libre, d&apos;une ou plusieurs cases, comme 
+        ///  la tour au jeu d&apos;échecs. 
+        ///
+        ///- Toutes les cases empruntées lors du déplacement doivent être libres. 
+        ///
+        ///- Aucun autre pion que le Roi ne peut accéder aux quatre forteresses situées aux coins, ni à la 
+        ///  forteresse centrale parfois appelée trône. 
+        ///  Mais ils peuvent passer au-dessus de la case centrale si elle est libre. .
+        /// </summary>
+        internal static string Les_pions {
+            get {
+                return ResourceManager.GetString("Les_pions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PionBlanc {
+            get {
+                object obj = ResourceManager.GetObject("PionBlanc", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PionNoir {
+            get {
+                object obj = ResourceManager.GetObject("PionNoir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PionRoi {
+            get {
+                object obj = ResourceManager.GetObject("PionRoi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,6 +264,16 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap TableDeTyr1 {
             get {
                 object obj = ResourceManager.GetObject("TableDeTyr1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Victoire {
+            get {
+                object obj = ResourceManager.GetObject("Victoire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

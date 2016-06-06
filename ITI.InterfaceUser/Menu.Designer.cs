@@ -28,80 +28,89 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
-            this.m_ButtonPlay = new System.Windows.Forms.Button();
-            this.m_ButtonRules = new System.Windows.Forms.Button();
-            this.m_ButtonLeave = new System.Windows.Forms.Button();
-            this.m_PictureBoxTittle = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxTittle)).BeginInit();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.m_buttonPlay = new System.Windows.Forms.Button();
+            this.m_buttonRules = new System.Windows.Forms.Button();
+            this.m_buttonLeave = new System.Windows.Forms.Button();
+            this.m_buttonCreateNewBoard = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // m_ButtonPlay
+            // pictureBox1
             // 
-            this.m_ButtonPlay.Location = new System.Drawing.Point(402, 217);
-            this.m_ButtonPlay.Name = "m_ButtonPlay";
-            this.m_ButtonPlay.Size = new System.Drawing.Size(197, 92);
-            this.m_ButtonPlay.TabIndex = 0;
-            this.m_ButtonPlay.Text = "Play";
-            this.m_ButtonPlay.UseVisualStyleBackColor = true;
-            this.m_ButtonPlay.Click += new System.EventHandler(this.m_ButtonPlay_Click);
+            this.pictureBox1.BackgroundImage = global::ITI.InterfaceUser.Properties.Resources.TableDeTyr1;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(219, 23);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(565, 129);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
-            // m_ButtonRules
+            // m_buttonPlay
             // 
-            this.m_ButtonRules.Location = new System.Drawing.Point(402, 358);
-            this.m_ButtonRules.Name = "m_ButtonRules";
-            this.m_ButtonRules.Size = new System.Drawing.Size(197, 92);
-            this.m_ButtonRules.TabIndex = 1;
-            this.m_ButtonRules.Text = "Rules";
-            this.m_ButtonRules.UseVisualStyleBackColor = true;
-            this.m_ButtonRules.Click += new System.EventHandler(this.m_ButtonRules_Click);
+            this.m_buttonPlay.Location = new System.Drawing.Point(438, 194);
+            this.m_buttonPlay.Name = "m_buttonPlay";
+            this.m_buttonPlay.Size = new System.Drawing.Size(177, 85);
+            this.m_buttonPlay.TabIndex = 1;
+            this.m_buttonPlay.Text = "Play";
+            this.m_buttonPlay.UseVisualStyleBackColor = true;
+            this.m_buttonPlay.Click += new System.EventHandler(this.m_buttonPlay_Click);
             // 
-            // m_ButtonLeave
+            // m_buttonRules
             // 
-            this.m_ButtonLeave.Location = new System.Drawing.Point(402, 496);
-            this.m_ButtonLeave.Name = "m_ButtonLeave";
-            this.m_ButtonLeave.Size = new System.Drawing.Size(197, 92);
-            this.m_ButtonLeave.TabIndex = 2;
-            this.m_ButtonLeave.Text = "Leave";
-            this.m_ButtonLeave.UseVisualStyleBackColor = true;
-            this.m_ButtonLeave.Click += new System.EventHandler(this.m_ButtonLeave_Click);
+            this.m_buttonRules.Location = new System.Drawing.Point(438, 429);
+            this.m_buttonRules.Name = "m_buttonRules";
+            this.m_buttonRules.Size = new System.Drawing.Size(177, 84);
+            this.m_buttonRules.TabIndex = 2;
+            this.m_buttonRules.Text = "Rules";
+            this.m_buttonRules.UseVisualStyleBackColor = true;
+            this.m_buttonRules.Click += new System.EventHandler(this.m_buttonRules_Click);
             // 
-            // m_PictureBoxTittle
+            // m_buttonLeave
             // 
-            this.m_PictureBoxTittle.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("m_PictureBoxTittle.BackgroundImage")));
-            this.m_PictureBoxTittle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.m_PictureBoxTittle.InitialImage = null;
-            this.m_PictureBoxTittle.Location = new System.Drawing.Point(204, 2);
-            this.m_PictureBoxTittle.Name = "m_PictureBoxTittle";
-            this.m_PictureBoxTittle.Size = new System.Drawing.Size(651, 182);
-            this.m_PictureBoxTittle.TabIndex = 3;
-            this.m_PictureBoxTittle.TabStop = false;
-            this.m_PictureBoxTittle.Click += new System.EventHandler(this.m_PictureBoxTittle_Click);
+            this.m_buttonLeave.Location = new System.Drawing.Point(438, 553);
+            this.m_buttonLeave.Name = "m_buttonLeave";
+            this.m_buttonLeave.Size = new System.Drawing.Size(177, 85);
+            this.m_buttonLeave.TabIndex = 3;
+            this.m_buttonLeave.Text = "Leave";
+            this.m_buttonLeave.UseVisualStyleBackColor = true;
+            this.m_buttonLeave.Click += new System.EventHandler(this.m_buttonLeave_Click);
+            // 
+            // m_buttonCreateNewBoard
+            // 
+            this.m_buttonCreateNewBoard.Location = new System.Drawing.Point(438, 319);
+            this.m_buttonCreateNewBoard.Name = "m_buttonCreateNewBoard";
+            this.m_buttonCreateNewBoard.Size = new System.Drawing.Size(177, 75);
+            this.m_buttonCreateNewBoard.TabIndex = 4;
+            this.m_buttonCreateNewBoard.Text = "Create New Board";
+            this.m_buttonCreateNewBoard.UseVisualStyleBackColor = true;
+            this.m_buttonCreateNewBoard.Click += new System.EventHandler(this.m_buttonCreateNewBoard_Click);
             // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 673);
-            this.Controls.Add(this.m_PictureBoxTittle);
-            this.Controls.Add(this.m_ButtonLeave);
-            this.Controls.Add(this.m_ButtonRules);
-            this.Controls.Add(this.m_ButtonPlay);
+            this.Controls.Add(this.m_buttonCreateNewBoard);
+            this.Controls.Add(this.m_buttonLeave);
+            this.Controls.Add(this.m_buttonRules);
+            this.Controls.Add(this.m_buttonPlay);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "Menu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "La Table de Tyr";
+            this.Text = "Menu";
             this.Load += new System.EventHandler(this.Menu_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxTittle)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button m_ButtonPlay;
-        private System.Windows.Forms.Button m_ButtonRules;
-        private System.Windows.Forms.Button m_ButtonLeave;
-        private System.Windows.Forms.PictureBox m_PictureBoxTittle;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button m_buttonPlay;
+        private System.Windows.Forms.Button m_buttonRules;
+        private System.Windows.Forms.Button m_buttonLeave;
+        private System.Windows.Forms.Button m_buttonCreateNewBoard;
     }
 }
-
