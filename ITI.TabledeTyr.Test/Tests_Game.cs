@@ -28,7 +28,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
         }
         //Game test canMove
-        [TestCase(3, 0, 0, 4, 3, 0)]
+        [TestCase(3, 0, 0, 4, 2, 0)]
         [TestCase(5, 5, 0, 0, 0, 0)]
         [TestCase(0, 5, 0, 0, 0, 0)]
         [TestCase(9, 5, 5, 5, 1, 0)]
@@ -60,8 +60,8 @@ namespace ITI.TabledeTyr.Test
             StudiedPawn sp10 = new StudiedPawn(8,5); pawnList.Add(sp10);
 
             PossibleMove testedMove = new PossibleMove(x, y, pawnList, testTafl[x, y]);
-
-            Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
+            PossibleMove bla = sut.CanMove(x, y);
+            Assert.That(bla, Is.EqualTo(testedMove));
         }
         //Game test allowMove
         [TestCase(3, 3)]
