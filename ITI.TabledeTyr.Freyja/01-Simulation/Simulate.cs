@@ -1,9 +1,6 @@
 ﻿using ITI.GameCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
@@ -16,11 +13,11 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode root;
         string activeNode;
         //collection
-        Dictionary<string, SimulationNode> _simulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        readonly Dictionary<string, SimulationNode> _simulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.
         /// </summary>
-        /// <param name="ctx">The CTX.</param>
+        /// <param name="ctx">The contexte.</param>
         public Simulate(Freyja_Core ctx)
         {
             _ctx = ctx;
@@ -51,7 +48,7 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="y2">The y2.</param>
         SimulationNode GenerateNode(int x,int y,int x2,int y2,SimulationNode node)
         {
-            _simulatedGame = new Game(node.TaflStored, node.IsAtkPlaying); //INSIDE !
+            _simulatedGame = new Game(node.TaflStored, node.IsAtkPlayed); //INSIDE !
             _simulatedGame.MovePawn(x, y, x2, y2);
     
                 bool stillPlayable = _simulatedGame.UpdateTurn();
@@ -74,7 +71,7 @@ namespace ITI.TabledeTyr.Freyja
 
                     if (possibleMove.IsFree() == true)
                     {
-                        if (node.IsAtkPlaying == true)
+                        if (node.IsAtkPlayed == true)
                         {
                             if (_ctx.Sensor.ActiveTafl[i, j] == Pawn.Attacker)
                             {
@@ -149,6 +146,6 @@ namespace ITI.TabledeTyr.Freyja
             }
          }
         }
-        public Dictionary<string, SimulationNode>  GetSimulationTree { get { return _simulationTree; } }
+        internal Dictionary<string, SimulationNode> GetSimulationTree { get { return _simulationTree; } }
     }
 }
