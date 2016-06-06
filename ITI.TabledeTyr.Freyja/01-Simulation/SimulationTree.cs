@@ -17,6 +17,7 @@ namespace ITI.TabledeTyr.Freyja
     /// <param name="TaflStored">The stored Tafl of the node. BasicTafl actualy</param>
     /// <param name="Move">The Move made to get to the Tafl stored at this node</param>
     /// <param name="Score">The score of the Node, todo : recursive addition</param>
+    /// <param name="IsAtkPlayed">The score of the Node, todo : recursive addition</param>
     /// <seealso cref="System.Collections.Generic.IEnumerable{ITI.TabledeTyr.Freyja.SimulationNode}" />
     class SimulationNode : IEnumerable<SimulationNode>
     {
@@ -46,7 +47,7 @@ namespace ITI.TabledeTyr.Freyja
         internal IReadOnlyTafl TaflStored { get { return _taflstored; } }
         internal Move MoveStored{ get { return _move; } }
         internal int Score { get { return _score; } set { _score = value; } }//to do : recursive addition for childs scores
-        public bool IsAtkPlaying { get { return isAtkPlaying; } internal set { isAtkPlaying=value; }  }
+        public bool IsAtkPlayed { get { return isAtkPlaying; } internal set { isAtkPlaying=value; }  }
         #region node managment methods and props
         public SimulationNode Parent { get; private set; } //get,set of the parent
         public SimulationNode GetChilds(string id)//return the child named by his UUID of this node

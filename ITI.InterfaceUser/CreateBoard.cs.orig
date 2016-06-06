@@ -129,7 +129,11 @@ namespace ITI.InterfaceUser
 
             m_PictureBoxCreateBoard.BackColor = Color.Black;
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
+<<<<<<< HEAD
+            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
+=======
             caseInterdite = ITI.InterfaceUser.Properties.Resources.PawnHnefatafl;
+>>>>>>> AI_Freyja
 
             plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
 

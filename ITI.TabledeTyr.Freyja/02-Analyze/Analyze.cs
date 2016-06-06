@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
-    class Analyze : IAnalyze
+    class Analyze
     {
         Freyja_Core _ctx;
         Dictionary<string, SimulationNode> simulatedTree;
@@ -16,18 +16,6 @@ namespace ITI.TabledeTyr.Freyja
             _ctx = freyja_Core;
             simulatedTree = _ctx.Simulate.GetSimulationTree;
         }
-        public Dictionary<string, SimulationNode> PonderateTree { get; }
-    }
-    class AnalyzeBasic : IAnalyze
-    {
-        Freyja_Core _ctx;
-        Dictionary<string, SimulationNode> simulatedTree;
-
-        public AnalyzeBasic(Freyja_Core freyja_Core)
-        {
-             _ctx = freyja_Core;
-            simulatedTree = _ctx.Simulate.GetSimulationTree;
-        }
-        public Dictionary<string, SimulationNode> PonderateTree { get; }
+        public Dictionary<string, SimulationNode> PonderateTree { get{ return simulatedTree; } }
     }
 }
