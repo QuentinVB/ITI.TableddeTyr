@@ -51,7 +51,7 @@ namespace ITI.GameCore
             */
 
             //Set the king and defenders
-            tafl[10, 9] = Pawn.King;
+            tafl[5, 5] = Pawn.King;
 
             tafl[3, 5] = Pawn.Defender;
             tafl[4, 4] = Pawn.Defender;

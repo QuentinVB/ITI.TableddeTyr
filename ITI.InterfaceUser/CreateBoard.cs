@@ -24,6 +24,8 @@ namespace ITI.InterfaceUser
         Button _cancelSave;
         Button _save;
 
+        TextBox _textBoxName;
+
         int _valeurXBoard;
         int _valeurYBoard;
         int _widthBoard;
