@@ -46,17 +46,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu.cs">
+    <Compile Include="CreateBoard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu.Designer.cs">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <Compile Include="CreateBoard.Designer.cs">
+      <DependentUpon>CreateBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HnefataflRules.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HnefataflRules.Designer.cs">
+      <DependentUpon>HnefataflRules.cs</DependentUpon>
     </Compile>
     <Compile Include="GameBoard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GameBoard.Designer.cs">
       <DependentUpon>GameBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menu.Designer.cs">
+      <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
     <Compile Include="PlayInterface.cs">
       <SubType>Form</SubType>
@@ -66,11 +78,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Menu.resx">
-      <DependentUpon>Menu.cs</DependentUpon>
+    <EmbeddedResource Include="CreateBoard.resx">
+      <DependentUpon>CreateBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HnefataflRules.resx">
+      <DependentUpon>HnefataflRules.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameBoard.resx">
       <DependentUpon>GameBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menu.resx">
+      <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlayInterface.resx">
       <DependentUpon>PlayInterface.cs</DependentUpon>
@@ -80,6 +98,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -112,6 +131,57 @@
       <Project>{5edee01d-f675-4051-97ca-b0d3d7ebc1c9}</Project>
       <Name>ITI.GameCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\PionBlanc.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\PionNoir.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\PionRoi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board7x7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board9x9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board13x13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\attaquant.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Initialisation d%27un plateau.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Les conditions de victoires.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Les différentes types de captures.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RulesTexte\Les pions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\défenseur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\PlateauJeu\Case en bois.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\PawnHnefatafl.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\PlateauJeu\Case en bois effet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\PlateauJeu\CaseInterdite.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Victoire.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

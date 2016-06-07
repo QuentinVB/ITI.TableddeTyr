@@ -17,35 +17,47 @@ namespace ITI.InterfaceUser
             InitializeComponent();
         }
 
-        private void m_ButtonPlay_Click(object sender, EventArgs e)
+        private void m_buttonPlay_Click(object sender, EventArgs e)
         {
             this.Hide();
-            PlayInterface F2 = new PlayInterface();
-            if(F2.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            PlayInterface Interface = new PlayInterface();
+            if (Interface.ShowDialog() == DialogResult.Cancel)
             {
-                F2.Dispose();
+                Interface.Dispose();
             }
             this.Show();
         }
 
-        private void m_ButtonRules_Click(object sender, EventArgs e)
+        private void m_buttonRules_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            HnefataflRules Rules = new HnefataflRules();
+            if (Rules.ShowDialog() == DialogResult.Cancel)
+            {
+                Rules.Dispose();
+            }
+            this.Show();
         }
 
-        private void m_ButtonLeave_Click(object sender, EventArgs e)
+        private void m_buttonLeave_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void m_PictureBoxTittle_Click(object sender, EventArgs e)
+        private void m_buttonCreateNewBoard_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            CreateBoard createBoard = new CreateBoard();
+            if (createBoard.ShowDialog() == DialogResult.Cancel)
+            {
+                createBoard.Dispose();
+            }
+            this.Show();
         }
 
         private void Menu_Load(object sender, EventArgs e)
         {
-            
+
         }
     }
 }

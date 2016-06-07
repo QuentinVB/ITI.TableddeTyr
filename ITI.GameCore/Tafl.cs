@@ -14,7 +14,8 @@ namespace ITI.GameCore
         None,
         Attacker,
         Defender,
-        King
+        King,
+        Wall
     }
     public class TaflBasic : ITafl
     {
@@ -35,7 +36,7 @@ namespace ITI.GameCore
             _tafl = new Pawn[width, height];
         }
 
-        public TaflBasic(ITafl source)
+        public TaflBasic(IReadOnlyTafl source)
             : this(source.Width, source.Height)
         {
             //Tests in case of very critical problem. If these are triggered, nuke the matrix.
@@ -46,6 +47,14 @@ namespace ITI.GameCore
             _width = Width;
             _height = Height;
             _tafl = new Pawn[Width, Height];
+            //fill the new taflBasci with the IReadOnlyTafl values
+            for (int i = 0; i < _width; i++)
+            {
+                for (int j = 0; j < _height; j++)
+                {
+                    _tafl[i, j] = source[i, j];
+                }
+            }
         }
 
         public int Width
@@ -99,7 +108,7 @@ namespace ITI.GameCore
         public Pawn this[int x, int y]
         {
             get {
-                Helper.CheckRange(_width, _height, x, y);
+                if (x < 0 || x > _width-1 || y < 0 || y > _height-1) return Pawn.Wall;
                 return _tafl[x,y]; }
             set {
                 Helper.CheckRange(_width, _height, x, y);

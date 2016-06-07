@@ -16,11 +16,10 @@ namespace ITI.TabledeTyr.Test
         public void Game_01_setting_first_turn_check_king_presence(int x, int y)
         {
             Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
-            currentTafl = sut.GetTafl;
+            var currentTafl = sut.Tafl;
             Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.King));
         }
-        
+        //Game test check player
         [Test]
         public void Game_02_setting_first_turn_check_player()
         {
@@ -28,86 +27,56 @@ namespace ITI.TabledeTyr.Test
             bool atkPlaying = sut.IsAtkPlaying;
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
         }
-        //Game test checkMove
-        [Test]
-        public void Game_03_turn_checkMove()
+        //Game test canMove
+        [TestCase(3, 0, 0, 4, 2, 0)]
+        [TestCase(5, 5, 0, 0, 0, 0)]
+        [TestCase(0, 5, 0, 0, 0, 0)]
+        [TestCase(9, 5, 5, 5, 1, 0)]
+        [TestCase(6, 4, 3, 0, 0, 3)]
+        public void Game_03_turn_canMove_number(int x, int y, int up, int down, int left, int right)
         {
-            Game sut = new Game(); 
-            bool[,] movableTafl = new bool[11, 11];         
-            movableTafl = sut.CheckMove();
-            Assert.That(movableTafl[0, 0], Is.EqualTo(true));
-            Assert.That(movableTafl[3, 0], Is.EqualTo(true));
-            Assert.That(movableTafl[4, 0], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 0], Is.EqualTo(false));//unmovable
-            Assert.That(movableTafl[6, 0], Is.EqualTo(true));
-            Assert.That(movableTafl[7, 0], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 1], Is.EqualTo(true));
-            Assert.That(movableTafl[0, 3], Is.EqualTo(true));
-            Assert.That(movableTafl[0, 4], Is.EqualTo(true));
-            Assert.That(movableTafl[0, 5], Is.EqualTo(false));//unmovable
-            Assert.That(movableTafl[0, 6], Is.EqualTo(true));
-            Assert.That(movableTafl[0, 7], Is.EqualTo(true));
-            Assert.That(movableTafl[0, 8], Is.EqualTo(true));
-            Assert.That(movableTafl[1, 5], Is.EqualTo(true));
-            Assert.That(movableTafl[3, 10], Is.EqualTo(true));
-            Assert.That(movableTafl[4, 10], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 10], Is.EqualTo(false));//unmovable
-            Assert.That(movableTafl[6, 10], Is.EqualTo(true));
-            Assert.That(movableTafl[7, 10], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 9], Is.EqualTo(true));
-            Assert.That(movableTafl[10, 3], Is.EqualTo(true));
-            Assert.That(movableTafl[10, 4], Is.EqualTo(true));
-            Assert.That(movableTafl[10, 5], Is.EqualTo(false));//unmovable
-            Assert.That(movableTafl[10, 6], Is.EqualTo(true));
-            Assert.That(movableTafl[10, 7], Is.EqualTo(true));
-            Assert.That(movableTafl[9, 5], Is.EqualTo(true));
-            Assert.That(movableTafl[3, 5], Is.EqualTo(true));
-            Assert.That(movableTafl[4, 4], Is.EqualTo(true));
-            Assert.That(movableTafl[4, 5], Is.EqualTo(true));
-            Assert.That(movableTafl[4, 6], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 3], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 4], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 5], Is.EqualTo(false));//unmovable
-            Assert.That(movableTafl[5, 6], Is.EqualTo(true));
-            Assert.That(movableTafl[5, 7], Is.EqualTo(true));
-            Assert.That(movableTafl[6, 4], Is.EqualTo(true));
-            Assert.That(movableTafl[6, 5], Is.EqualTo(true));
-            Assert.That(movableTafl[6, 6], Is.EqualTo(true));
-            Assert.That(movableTafl[7, 5], Is.EqualTo(true));
-        }
-        //Game test tryMove
-        [Test]
-        public void Game_04_turn_tryMove()
-        {
-            //arrange
             Game sut = new Game();
-            bool[,] pawnDestinations = new bool[11, 11];
+            var testTafl = sut.Tafl;
+            PossibleMove testedMove = sut.CanMove(x, y);
+            Assert.That(testedMove.Up(), Is.EqualTo(up));
+            Assert.That(testedMove.Down(), Is.EqualTo(down));
+            Assert.That(testedMove.Left(), Is.EqualTo(left));
+            Assert.That(testedMove.Right(), Is.EqualTo(right));
+        }
+        [TestCase(7,5)]
+        public void Game_04_turn_canMove_List(int x, int y)
+        {
+            Game sut = new Game();
+            var testTafl = sut.Tafl;
+            List<StudiedPawn> pawnList = new List<StudiedPawn>();
+            StudiedPawn sp1 = new StudiedPawn(7,4); pawnList.Add(sp1);
+            StudiedPawn sp2 = new StudiedPawn(7,3); pawnList.Add(sp2);
+            StudiedPawn sp3 = new StudiedPawn(7,2); pawnList.Add(sp3);
+            StudiedPawn sp4 = new StudiedPawn(7,1); pawnList.Add(sp4);
+            StudiedPawn sp5 = new StudiedPawn(7,6); pawnList.Add(sp5);
+            StudiedPawn sp6 = new StudiedPawn(7,7); pawnList.Add(sp6);
+            StudiedPawn sp7 = new StudiedPawn(7,8); pawnList.Add(sp7);
+            StudiedPawn sp8 = new StudiedPawn(7,9); pawnList.Add(sp8);
+            StudiedPawn sp10 = new StudiedPawn(8,5); pawnList.Add(sp10);
 
-            //act
-            pawnDestinations = sut.TryMove(2, 0);
-
-            //assert
-            for (int i = 1; i <= 9; i++)
-            {
-                Assert.That(pawnDestinations[2, i], Is.EqualTo(true));
-            }
-            Assert.That(pawnDestinations[2, 10], Is.EqualTo(false));
-
+            PossibleMove testedMove = new PossibleMove(x, y, pawnList, testTafl[x, y]);
+            PossibleMove bla = sut.CanMove(x, y);
+            Assert.That(bla, Is.EqualTo(testedMove));
         }
         //Game test allowMove
         [TestCase(3, 3)]
+        [TestCase(1, 0)]
         public void Game_05_turn_allowMove(int x, int y)
         {
             //arrange
             Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
+            var currentTafl = sut.Tafl;
             //act
-            bool pawnMoved = sut.AllowMove(3, 0, x, y);
+            bool pawnMoved = sut.MovePawn(3, 0, x, y);
             //assert
-            currentTafl = sut.GetTafl;
+            currentTafl = sut.Tafl;
             Assert.That(currentTafl[3, 0], Is.EqualTo(Pawn.None));
-            Assert.That(currentTafl[3, 3], Is.EqualTo(Pawn.Attacker));
-
+            Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.Attacker));
         }
         //Game test updateTurn
         [TestCase(3, 3)]
@@ -115,15 +84,11 @@ namespace ITI.TabledeTyr.Test
         {
             //arrange
             Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
-            //Act
-            currentTafl = sut.GetTafl;
+            var currentTafl = sut.Tafl;
+            //Act            
             bool atkPlaying = sut.IsAtkPlaying;
-            movableTafl = sut.CheckMove();
-            pawnDestinations = sut.TryMove(3, 0);
-            bool pawnMoved = sut.AllowMove(3, 0, x, y);
+
+            bool pawnMoved = sut.MovePawn(3, 0, x, y);
             bool rsltTurn = sut.UpdateTurn();
             if (rsltTurn == false)
             {
@@ -131,53 +96,41 @@ namespace ITI.TabledeTyr.Test
             }
             else
             {
-                currentTafl = sut.GetTafl;
+                currentTafl = sut.Tafl;
             }
             //assert
-            currentTafl = sut.GetTafl;
+            currentTafl = sut.Tafl;
             Assert.That(currentTafl[3, 0], Is.EqualTo(Pawn.None));
             Assert.That(currentTafl[3, 3], Is.EqualTo(Pawn.Attacker));
 
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
         //complete turn
-        [TestCase(2, 3)]
-        public void Game_07_turn_complete_turn(int x, int y)
+        [TestCase(3, 0,3,4)]
+        public void Game_07_turn_complete_turn(int x, int y, int x2, int y2)
         {
             // L'interlocuteur demande l'Initialisation du jeu: 
             // - Le core créé le tafl, si l'interlocuteur lui a envoyé une configuration spéciale (taille,disposition des pièces) il en prendra compte dans sa création 
             // - Le core pose les pions dessus 
             // - Le core pose le isAttackerTurn à True 
             Game sut = new Game();
-            Pawn[,] currentTafl = new Pawn[11, 11];
-            bool[,] movableTafl = new bool[11, 11];
-            bool[,] pawnDestinations = new bool[11, 11];
+            var currentTafl = sut.Tafl;          
             // L'interlocuteur récupère l'état du plateau 
-            // - Le core lui envoie un Array de Pawn 
-            currentTafl = sut.GetTafl;
+            // - Le core lui envoie un Array de Pawn             
             // DEBUT SEQUENCE DE TOUR 
             // L'interlocuteur appelle qui joue 
             // - Le core lui envoie True false basé sur IsAttackerTurn 
             bool atkPlaying = sut.IsAtkPlaying;
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
-
-            // L'interlocuteur appelle checkMove pour savoir quels sont les pièces bougeable
-            //  - le core lui envoie un Array de Pawn basé sur l'état du Tafl.     
-            movableTafl = sut.CheckMove();
-            Assert.That(movableTafl[2, 0], Is.EqualTo(true));
             // ACTION UTILISATEUR
             // L'interlocuteur sélectionne une pièce (directement dans les tests ou après un événement de l'utilisateur dans l'UI) 
-            // L'interlocuteur appelle TryMove pour savoir les mouvements possible du pion sélectionné. 
-            // - le core lui envoie un Array de Pawn correspondant aux mouvements possible basé sur l'état du Tafl 
-            pawnDestinations = sut.TryMove(2, 0);
-            for (int i = 1; i <= 9; i++)
-            {
-                Assert.That(pawnDestinations[2, i], Is.EqualTo(true));
-            }
-            Assert.That(pawnDestinations[2, 10], Is.EqualTo(false));
+            /*
+             * PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 3, 0, currentTafl[x, y]);
+            Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
+            */
             //ACTION UTILISATEUR
             // -L'interlocuteur valide le mouvement en appellant AllowMove
-            bool pawnMoved = sut.AllowMove(2, 0, x, y);
+            bool pawnMoved = sut.MovePawn(x, y, x2, y2);
             // - Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
             // - Le core appelle CheckVictoryCondition
             // - CheckVictoryCondition vérifie si le roi à été pris en appellant le tafl Si c'est le cas il renvoie True à update turn
@@ -194,14 +147,14 @@ namespace ITI.TabledeTyr.Test
             // - Le core lui envoie un Array de Pawn
             else
             {
-                currentTafl = sut.GetTafl;
+                currentTafl = sut.Tafl;
             }
             //L'interlocuteur recommence le séquence de Tour. 
             //FIN DE LA SÉQUENCE
             //assert
-            currentTafl = sut.GetTafl;
-            Assert.That(currentTafl[2, 0], Is.EqualTo(Pawn.None));
-            Assert.That(currentTafl[2, 3], Is.EqualTo(Pawn.Attacker));
+            currentTafl = sut.Tafl;
+            Assert.That(currentTafl[x, y], Is.EqualTo(Pawn.None));
+            Assert.That(currentTafl[x2, y2], Is.EqualTo(Pawn.Attacker));
             
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
