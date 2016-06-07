@@ -15,6 +15,7 @@ namespace ITI.InterfaceUser
         public HnefataflRules()
         {
             InitializeComponent();
+            m_RichTextBoxRules.Text = ITI.InterfaceUser.Properties.Resources.Initialisation_d_un_plateau;
         }
 
         private void m_buttonInitialisationPlateau_Click(object sender, EventArgs e)

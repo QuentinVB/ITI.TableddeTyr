@@ -129,7 +129,11 @@ namespace ITI.InterfaceUser
 
             m_PictureBoxCreateBoard.BackColor = Color.Black;
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
+<<<<<<< HEAD
             caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
+=======
+            caseInterdite = ITI.InterfaceUser.Properties.Resources.PawnHnefatafl;
+>>>>>>> AI_Freyja
 
             plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
 
@@ -143,8 +147,7 @@ namespace ITI.InterfaceUser
                     if (((i == 0) && (j == 0))
                         || ((i == _width - 1) && (j == _height - 1))
                             || ((i == _width - 1) && (j == 0))
-                            || ((i == 0) && (j == _height - 1))
-                            || ((i == (_width - 1) / 2) && (j == (_height - 1)/2)))
+                            || ((i == 0) && (j == _height - 1)))
                     {
                         Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
                         Board.DrawImage(caseInterdite, Rect);
@@ -155,17 +158,17 @@ namespace ITI.InterfaceUser
                         Board.DrawImage(Case, Rect);
                     }
                     
-                    if (plateau[i, j] == 1) 
+                    if (plateau[i, j] == 1)     // test
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (plateau[i, j] == 2) 
+                    if (plateau[i, j] == 2)     // test
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (plateau[i, j] == 3)   
+                    if (plateau[i, j] == 3)     // test
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
                         Pawn.DrawImage(Piece, Rect);
@@ -188,20 +191,8 @@ namespace ITI.InterfaceUser
                 {
                     if (e.X > x && e.X < x + _widthBoard && e.Y > y && e.Y < y + _heightBoard)
                     {
-                        if ((i == 0 && j == 0)
-                            || (i == (_width - 1) && j == 0)
-                            || (i == 0 && j == (_height - 1))
-                            || (i == (_width - 1) && j == (_height - 1))
-                            || (i == (_width - 1) / 2 && j == (_height - 1) / 2))
-                        {
-                            m_PictureBoxCreateBoard.Refresh();
-                        }
-                        else
-                        {
-                            plateau[i, j] = _pawn;
-                            m_PictureBoxCreateBoard.Refresh();
-                        }
-                        
+                        plateau[i, j] = _pawn;
+                        m_PictureBoxCreateBoard.Refresh();
                     }
                     x = x + _valeurXBoardNextCase;
                 }
@@ -313,15 +304,14 @@ namespace ITI.InterfaceUser
             _confirmSave.Size = new System.Drawing.Size(150, 75);
             _confirmSave.Click += delegate (object sender, EventArgs e)
             {
-                /*
                 _textBoxName = new TextBox();
                 _textBoxName.Location = new Point(this.Location.X + 500, this.Location.Y + 300);
                 _textBoxName.Text = saveName;
                 _textBoxName.Size = new System.Drawing.Size(150, 75);
                 this.Controls.Add(_textBoxName);
                 _textBoxName.BringToFront();
+
                 WriteXML();
-                */
             };
             this.Controls.Add(_confirmSave);
             _confirmSave.BringToFront();

@@ -8,11 +8,13 @@ namespace ITI.TabledeTyr.Freyja
 {
     class Analyze
     {
-        private Freyja_Core freyja_Core;
-
+        Freyja_Core _ctx;
+        Dictionary<string, SimulationNode> simulatedTree;
         public Analyze(Freyja_Core freyja_Core)
         {
-            this.freyja_Core = freyja_Core;
+            _ctx = freyja_Core;
+            simulatedTree = _ctx.Simulate.GetSimulationTree;
         }
+        public Dictionary<string, SimulationNode> PonderateTree { get{ return simulatedTree; } }
     }
 }

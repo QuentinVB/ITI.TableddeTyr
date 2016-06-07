@@ -28,18 +28,40 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
         }
         //Game test canMove
-        [TestCase(3, 0, 0, 4, 3, 0)]
+        [TestCase(3, 0, 0, 4, 2, 0)]
         [TestCase(5, 5, 0, 0, 0, 0)]
         [TestCase(0, 5, 0, 0, 0, 0)]
         [TestCase(9, 5, 5, 5, 1, 0)]
         [TestCase(6, 4, 3, 0, 0, 3)]
-        public void Game_03_turn_canMove(int x, int y, int up, int down, int left, int right)
+        public void Game_03_turn_canMove_number(int x, int y, int up, int down, int left, int right)
         {
             Game sut = new Game();
             var testTafl = sut.Tafl;
-            PossibleMove testedMove = new PossibleMove(x, y, up, down, left, right, testTafl[x,y]);
-            bool atkPlaying = sut.IsAtkPlaying;
-            Assert.That(sut.CanMove(x,y), Is.EqualTo(testedMove));
+            PossibleMove testedMove = sut.CanMove(x, y);
+            Assert.That(testedMove.Up(), Is.EqualTo(up));
+            Assert.That(testedMove.Down(), Is.EqualTo(down));
+            Assert.That(testedMove.Left(), Is.EqualTo(left));
+            Assert.That(testedMove.Right(), Is.EqualTo(right));
+        }
+        [TestCase(7,5)]
+        public void Game_04_turn_canMove_List(int x, int y)
+        {
+            Game sut = new Game();
+            var testTafl = sut.Tafl;
+            List<StudiedPawn> pawnList = new List<StudiedPawn>();
+            StudiedPawn sp1 = new StudiedPawn(7,4); pawnList.Add(sp1);
+            StudiedPawn sp2 = new StudiedPawn(7,3); pawnList.Add(sp2);
+            StudiedPawn sp3 = new StudiedPawn(7,2); pawnList.Add(sp3);
+            StudiedPawn sp4 = new StudiedPawn(7,1); pawnList.Add(sp4);
+            StudiedPawn sp5 = new StudiedPawn(7,6); pawnList.Add(sp5);
+            StudiedPawn sp6 = new StudiedPawn(7,7); pawnList.Add(sp6);
+            StudiedPawn sp7 = new StudiedPawn(7,8); pawnList.Add(sp7);
+            StudiedPawn sp8 = new StudiedPawn(7,9); pawnList.Add(sp8);
+            StudiedPawn sp10 = new StudiedPawn(8,5); pawnList.Add(sp10);
+
+            PossibleMove testedMove = new PossibleMove(x, y, pawnList, testTafl[x, y]);
+            PossibleMove bla = sut.CanMove(x, y);
+            Assert.That(bla, Is.EqualTo(testedMove));
         }
         //Game test allowMove
         [TestCase(3, 3)]
@@ -102,8 +124,10 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(true));
             // ACTION UTILISATEUR
             // L'interlocuteur sélectionne une pièce (directement dans les tests ou après un événement de l'utilisateur dans l'UI) 
-            PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 3, 0, currentTafl[x, y]);
+            /*
+             * PossibleMove testedMove = new PossibleMove(x, y, 0, 4, 3, 0, currentTafl[x, y]);
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
+            */
             //ACTION UTILISATEUR
             // -L'interlocuteur valide le mouvement en appellant AllowMove
             bool pawnMoved = sut.MovePawn(x, y, x2, y2);
