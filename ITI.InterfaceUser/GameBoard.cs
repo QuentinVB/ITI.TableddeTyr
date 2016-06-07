@@ -70,7 +70,7 @@ namespace ITI.InterfaceUser
 
             ////a utilisez lorsque les plateaux 7x7 9x9 11x11 13x13 mis en XML
             #region variable création plateau
-            /*
+            
             if (_width == 7)
             {
                 _valeurXBoard = 3;
@@ -133,18 +133,9 @@ namespace ITI.InterfaceUser
                 _valeurYBoardNextCase = 34;
 
             }
-            */
             #endregion
 
             
-            if (_width == 7 && _height == 7)
-            {
-                _valeurXBoard = 3;
-                _valeurYBoard = 3;
-                _widthBoard = 70;
-                _heightBoard = 70;
-                _valeurXBoardNextCase = 73;
-                _valeurYBoardNextCase = 73;
                 /*
                 #region hard Code plateau7x7 (test)
                 plateau[2, 0] = atk;
@@ -176,15 +167,6 @@ namespace ITI.InterfaceUser
                 plateau[3, 3] = roi;
                 #endregion
                 */
-            }
-            if (_width == 9 && _height == 9)
-            {
-                _valeurXBoard = 6;
-                _valeurYBoard = 6;
-                _widthBoard = 53;
-                _heightBoard = 53;
-                _valeurXBoardNextCase = 56;
-                _valeurYBoardNextCase = 56;
                 /*
                 #region hard Code plateau9x9 (test)
                 plateau[3, 0] = atk;
@@ -215,15 +197,6 @@ namespace ITI.InterfaceUser
 
                 plateau[4, 4] = roi;
                 #endregion*/
-            }
-            if (_width == 11 && _height == 11)
-            {
-                _valeurXBoard = 5;
-                _valeurYBoard = 5;
-                _widthBoard = 43;
-                _heightBoard = 43;
-                _valeurXBoardNextCase = 46;
-                _valeurYBoardNextCase = 46;
                 /*
                 #region hard Code plateau11x11 (test)
                 plateau[3, 0] = atk;
@@ -266,15 +239,8 @@ namespace ITI.InterfaceUser
 
                 plateau[5, 5] = roi;
                 #endregion*/
-            }
-            if (_width == 13 && _height == 13)
-            {
-                _valeurXBoard = 5;
-                _valeurYBoard = 5;
-                _widthBoard = 36;
-                _heightBoard = 36;
-                _valeurXBoardNextCase = 39;
-                _valeurYBoardNextCase = 39;
+            
+            
                 /*
                 #region hard Code plateau13x13 (test)
                 plateau[4, 0] = atk;
@@ -318,7 +284,6 @@ namespace ITI.InterfaceUser
                 plateau[6, 6] = roi;
                 #endregion*/
 
-            }
 
         }
 
@@ -483,10 +448,12 @@ namespace ITI.InterfaceUser
                                 PictureBox finDelaPartie = new PictureBox();
                                 Image endGame;
                                 endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
-                                finDelaPartie.Location = new Point(this.Location.X, this.Location.Y);
-                                finDelaPartie.Size = new System.Drawing.Size(500, 500);
+                                finDelaPartie.Location = new Point(0, 0);
+                                finDelaPartie.Size = new System.Drawing.Size(750, 400);
                                 finDelaPartie.Image = (Image)endGame;
                                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
+                                pictureBox1.Hide();
+                                m_PlayerTurn.Hide();
                                 finDelaPartie.BringToFront();
                                 this.Controls.Add(finDelaPartie);
                             }
