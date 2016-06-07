@@ -18,6 +18,7 @@ namespace ITI.TabledeTyr.Freyja
         Decision _Decision;
         //data
         Game _originGame;
+        Monitor _Monitor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Freyja_Core"/> class. 
@@ -36,7 +37,7 @@ namespace ITI.TabledeTyr.Freyja
             _Decision = new Decision(this);
             //output
             _Effector = new Effector(this);
-
+            _Monitor = new Monitor(this);
         }
         //properties allowing a secured acces to the Freyja's module
         //IO
@@ -48,6 +49,7 @@ namespace ITI.TabledeTyr.Freyja
         internal Decision Decision { get { return _Decision; } set { value = _Decision; } }
         //data
         internal Game originGame { get { return _originGame; } set { value = _originGame; } }
+        internal Monitor Monitor { get { return _Monitor; } }
         //methodes
         //3 updates function in public, allowing to the outside world to communicate with Freyja
         public void UpdateFreyja()
@@ -63,6 +65,5 @@ namespace ITI.TabledeTyr.Freyja
         {
             return Effector.UpdateEffector;
         }
-
     }
 }
