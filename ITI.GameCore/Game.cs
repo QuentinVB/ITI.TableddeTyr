@@ -214,7 +214,7 @@ namespace ITI.GameCore
                 || (x == 0 && y == _tafl.Height - 1) //Bot left corner
                 || (x == _tafl.Width - 1 && y == 0)  //top right corner
                 || (x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
-                || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2 && (_tafl[((_tafl.Width - 1) / 2),((_tafl.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
+                || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2 && (_tafl[((_tafl.Width - 1) / 2), ((_tafl.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
                 ) return true;
             return false;
         }
@@ -376,60 +376,21 @@ namespace ITI.GameCore
         /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
         public bool MovePawn(int x, int y, int x2, int y2)
         {
+            //Exceptions and tests goes here
             if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
             if (x == x2 && y == y2) return false;
-            if (_tafl[x, y] != Pawn.King)
+            //Core
+            foreach (StudiedPawn current in CanMove(x,y).FreeSquares)
             {
-                if (CheckWalls(x2, y2)) throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
-            }
-
-            //Verifying that the move is leggit (TryMove might've been bypassed)
-            if (x > x2)
-            {
-                for (int i = x; i > x2; i--)
+                if (current.X == x2 && current.Y == y2)
                 {
-                    if (!CheckLeft(i, y)) return false;
+                    _tafl[x2, y2] = _tafl[x, y];
+                    _tafl[x, y] = Pawn.None;
+                    return true;
                 }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
-            }
-            if (x < x2)
-            {
-                for (int i = x; i < x2; i++)
-                {
-                    if (!CheckRight(i, y)) return false;
-                }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
-            }
-            if (y > y2)
-            {
-                for (int i = y; i > y2; i--)
-                {
-                    if (!CheckUp(x, i)) return false;
-                }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
-            }
-            if (y < y2)
-            {
-                for (int i = y; i < y2; i++)
-                {
-                    if (!CheckDown(x, i)) return false;
-                }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
             }
             return false;
 
