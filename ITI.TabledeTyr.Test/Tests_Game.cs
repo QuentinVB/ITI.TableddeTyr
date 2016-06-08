@@ -38,10 +38,10 @@ namespace ITI.TabledeTyr.Test
             Game sut = new Game();
             var testTafl = sut.Tafl;
             PossibleMove testedMove = sut.CanMove(x, y);
-            Assert.That(testedMove.Up(), Is.EqualTo(up));
-            Assert.That(testedMove.Down(), Is.EqualTo(down));
-            Assert.That(testedMove.Left(), Is.EqualTo(left));
-            Assert.That(testedMove.Right(), Is.EqualTo(right));
+            Assert.That(testedMove.Up, Is.EqualTo(up));
+            Assert.That(testedMove.Down, Is.EqualTo(down));
+            Assert.That(testedMove.Left, Is.EqualTo(left));
+            Assert.That(testedMove.Right, Is.EqualTo(right));
         }
         [TestCase(7,5)]
         public void Game_04_turn_canMove_List(int x, int y)

@@ -184,7 +184,7 @@ namespace ITI.GameCore
         {
             foreach (StudiedPawn current in pawnList)
             {
-                if (CanMove(current.X, current.Y).IsFree()) return false;
+                if (CanMove(current.X, current.Y).IsFree) return false;
             }
             return true;
         }

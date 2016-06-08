@@ -221,5 +221,42 @@ namespace ITI.TabledeTyr.Test
 
             Assert.Throws<ArgumentOutOfRangeException>(() => sut[left, up] = Pawn.Attacker);
         }
+        //Atk count
+        [TestCase(5)]
+        [TestCase(8)]
+        [TestCase(10)]
+        public void Tafl_Atk_Count(int amount)
+        {
+            TaflBasic sut = new TaflBasic(11,11);
+            for (int i = 0; i <= amount; i++)
+            {
+                sut[0, i] = Pawn.Attacker;
+            }
+           
+            Assert.That(sut.AttackerCount, Is.EqualTo(amount));
+        }
+        //def count
+        [TestCase(5)]
+        [TestCase(8)]
+        [TestCase(10)]
+        public void Tafl_def_Count(int amount)
+        {
+            TaflBasic sut = new TaflBasic(11, 11);
+            for (int i = 0; i <= amount; i++)
+            {
+                sut[0, i] = Pawn.Defender;
+            }
+
+            Assert.That(sut.DefenderCount, Is.EqualTo(amount));
+        }
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Tafl_HasKing(bool answer)
+        {
+            TaflBasic sut = new TaflBasic(11, 11);
+            if (answer){ sut[5, 5] = Pawn.King; }
+
+            Assert.That(sut.HasKing, Is.EqualTo(answer));
+        }
     }
 }
