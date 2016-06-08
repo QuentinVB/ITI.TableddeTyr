@@ -98,8 +98,8 @@ namespace ITI.TabledeTyr.Test
         {
             //arrage
             List<StudiedPawn> pawnList = new List<StudiedPawn>();
-            StudiedPawn sp1 = new StudiedPawn(x - 1, y); pawnList.Add(sp1);
-            StudiedPawn sp2 = new StudiedPawn(x - 2, y); pawnList.Add(sp2);
+            StudiedPawn sp1 = new StudiedPawn(x + 1, y); pawnList.Add(sp1);
+            StudiedPawn sp2 = new StudiedPawn(x + 2, y); pawnList.Add(sp2);
             //act
             PossibleMove sut = new PossibleMove(x, y, pawnList, Pawn.King);
             //assert
