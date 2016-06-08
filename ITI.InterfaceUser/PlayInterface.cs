@@ -17,6 +17,7 @@ namespace ITI.InterfaceUser
         PictureBox _plateau9x9;
         PictureBox _plateau11x11;
         PictureBox _plateau13x13;
+        PictureBox _plateauPerso;
 
         Button _button7x7;
         Button _button9x9;
@@ -28,6 +29,7 @@ namespace ITI.InterfaceUser
         Button _Def;
         Button _RetourChoixPlateau;
         Button _RetourChoixAdversaire;
+        Button _ButtonPerso;
 
         int _width;
         int _height;
@@ -84,6 +86,15 @@ namespace ITI.InterfaceUser
             _plateau13x13.Image = (Image)plateau13x13;
             _plateau13x13.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Controls.Add(_plateau13x13);
+
+            _plateauPerso = new PictureBox();
+            Image plateauPerso;
+            plateauPerso = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
+            _plateauPerso.Location = new Point(_ButtonPerso.Location.X, _ButtonPerso.Location.Y + 100);
+            _plateauPerso.Size = new System.Drawing.Size(150, 150);
+            _plateauPerso.Image = (Image)plateauPerso;
+            _plateauPerso.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Controls.Add(_plateauPerso);
         }
 
         private void ButtonBoard()
@@ -102,6 +113,8 @@ namespace ITI.InterfaceUser
                 _button9x9.Hide();
                 _button11x11.Hide();
                 _button13x13.Hide();
+                _ButtonPerso.Hide();
+                _plateauPerso.Hide();
 
                 _width = 7;
                 _height = 7;
@@ -127,6 +140,8 @@ namespace ITI.InterfaceUser
                 _button9x9.Hide();
                 _button11x11.Hide();
                 _button13x13.Hide();
+                _ButtonPerso.Hide();
+                _plateauPerso.Hide();
 
                 _width = 9;
                 _height = 9;
@@ -151,6 +166,8 @@ namespace ITI.InterfaceUser
                 _button9x9.Hide();
                 _button11x11.Hide();
                 _button13x13.Hide();
+                _ButtonPerso.Hide();
+                _plateauPerso.Hide();
 
                 _width = 11;
                 _height = 11;
@@ -175,6 +192,8 @@ namespace ITI.InterfaceUser
                 _button9x9.Hide();
                 _button11x11.Hide();
                 _button13x13.Hide();
+                _ButtonPerso.Hide();
+                _plateauPerso.Hide();
 
                 _width = 13;
                 _height = 13;
@@ -183,6 +202,26 @@ namespace ITI.InterfaceUser
             };
             this.Controls.Add(_button13x13);
             _button13x13.BringToFront();
+
+            _ButtonPerso = new Button();
+            _ButtonPerso.Text = "Jouez sur un plateau personnalisé";
+            _ButtonPerso.Location = new Point(this.Location.X + 250, this.Location.Y + 100);
+            _ButtonPerso.Size = new System.Drawing.Size(150, 75);
+            _ButtonPerso.Click += delegate (object sender, EventArgs e)
+            {
+                _plateau7x7.Hide();
+                _plateau9x9.Hide();
+                _plateau11x11.Hide();
+                _plateau13x13.Hide();
+                _button7x7.Hide();
+                _button9x9.Hide();
+                _button11x11.Hide();
+                _button13x13.Hide();
+                _ButtonPerso.Hide();
+                _plateauPerso.Hide();
+            };
+            this.Controls.Add(_ButtonPerso);
+            _ButtonPerso.BringToFront();
         }
 
         private void createButtonChoixAdversaire()

@@ -33,6 +33,7 @@
             this.m_buttonRules = new System.Windows.Forms.Button();
             this.m_buttonLeave = new System.Windows.Forms.Button();
             this.m_buttonCreateNewBoard = new System.Windows.Forms.Button();
+            this.m_buttonTutoriel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,7 +41,7 @@
             // 
             this.pictureBox1.BackgroundImage = global::ITI.InterfaceUser.Properties.Resources.TableDeTyr1;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(219, 23);
+            this.pictureBox1.Location = new System.Drawing.Point(220, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(565, 129);
             this.pictureBox1.TabIndex = 0;
@@ -48,7 +49,7 @@
             // 
             // m_buttonPlay
             // 
-            this.m_buttonPlay.Location = new System.Drawing.Point(438, 194);
+            this.m_buttonPlay.Location = new System.Drawing.Point(438, 166);
             this.m_buttonPlay.Name = "m_buttonPlay";
             this.m_buttonPlay.Size = new System.Drawing.Size(177, 85);
             this.m_buttonPlay.TabIndex = 1;
@@ -58,7 +59,7 @@
             // 
             // m_buttonRules
             // 
-            this.m_buttonRules.Location = new System.Drawing.Point(438, 429);
+            this.m_buttonRules.Location = new System.Drawing.Point(438, 364);
             this.m_buttonRules.Name = "m_buttonRules";
             this.m_buttonRules.Size = new System.Drawing.Size(177, 84);
             this.m_buttonRules.TabIndex = 2;
@@ -68,7 +69,7 @@
             // 
             // m_buttonLeave
             // 
-            this.m_buttonLeave.Location = new System.Drawing.Point(438, 553);
+            this.m_buttonLeave.Location = new System.Drawing.Point(438, 564);
             this.m_buttonLeave.Name = "m_buttonLeave";
             this.m_buttonLeave.Size = new System.Drawing.Size(177, 85);
             this.m_buttonLeave.TabIndex = 3;
@@ -78,7 +79,7 @@
             // 
             // m_buttonCreateNewBoard
             // 
-            this.m_buttonCreateNewBoard.Location = new System.Drawing.Point(438, 319);
+            this.m_buttonCreateNewBoard.Location = new System.Drawing.Point(438, 269);
             this.m_buttonCreateNewBoard.Name = "m_buttonCreateNewBoard";
             this.m_buttonCreateNewBoard.Size = new System.Drawing.Size(177, 75);
             this.m_buttonCreateNewBoard.TabIndex = 4;
@@ -86,11 +87,22 @@
             this.m_buttonCreateNewBoard.UseVisualStyleBackColor = true;
             this.m_buttonCreateNewBoard.Click += new System.EventHandler(this.m_buttonCreateNewBoard_Click);
             // 
+            // m_buttonTutoriel
+            // 
+            this.m_buttonTutoriel.Location = new System.Drawing.Point(438, 463);
+            this.m_buttonTutoriel.Name = "m_buttonTutoriel";
+            this.m_buttonTutoriel.Size = new System.Drawing.Size(177, 84);
+            this.m_buttonTutoriel.TabIndex = 5;
+            this.m_buttonTutoriel.Text = "Tutoriel";
+            this.m_buttonTutoriel.UseVisualStyleBackColor = true;
+            this.m_buttonTutoriel.Click += new System.EventHandler(this.m_buttonTutoriel_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 673);
+            this.Controls.Add(this.m_buttonTutoriel);
             this.Controls.Add(this.m_buttonCreateNewBoard);
             this.Controls.Add(this.m_buttonLeave);
             this.Controls.Add(this.m_buttonRules);
@@ -99,7 +111,6 @@
             this.Name = "Menu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Menu";
-            this.Load += new System.EventHandler(this.Menu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
@@ -112,5 +123,6 @@
         private System.Windows.Forms.Button m_buttonRules;
         private System.Windows.Forms.Button m_buttonLeave;
         private System.Windows.Forms.Button m_buttonCreateNewBoard;
+        private System.Windows.Forms.Button m_buttonTutoriel;
     }
 }

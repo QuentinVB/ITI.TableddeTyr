@@ -13,6 +13,7 @@ namespace ITI.GameCore
         public readonly int Y;
         public readonly List<StudiedPawn> FreeSquares;
         public readonly Pawn Value;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
         /// </summary>
@@ -41,6 +42,7 @@ namespace ITI.GameCore
             }
             return up;
         }
+
         public int Down()
         {
             int down = 0;

@@ -55,9 +55,15 @@ namespace ITI.InterfaceUser
             this.Show();
         }
 
-        private void Menu_Load(object sender, EventArgs e)
+        private void m_buttonTutoriel_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            Tutoriel playTutoriel = new Tutoriel();
+            if (playTutoriel.ShowDialog() == DialogResult.Cancel)
+            {
+                playTutoriel.Dispose();
+            }
+            this.Show();
         }
     }
 }

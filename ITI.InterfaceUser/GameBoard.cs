@@ -33,10 +33,22 @@ namespace ITI.InterfaceUser
         int _heightBoard;
         int _valeurXBoardNextCase;
         int _valeurYBoardNextCase;
-
-        //// test
-        //int[,] plateau;
+        //
+        
         int[,] _mvtPossible;
+
+        //lié au pseudoCore
+        int _AtkCount = 0;
+        int _DefCount = 0;
+        //
+
+        // Outil implémenter
+        PictureBox _atqTurn;
+        PictureBox _defTurn;
+
+        Button _nbAtk;
+        Button _nbDef;
+        //
 
 
         /// <summary>
@@ -54,19 +66,13 @@ namespace ITI.InterfaceUser
             _height = height;
             _width = width;
 
+
+            PseudoCoreCountAtkAndDef();             //////////////  pseudo Core
+            PseudoCoreAffichageMouvementPossible();
             showPlayerTurn();
+            _atkTurn = _partie.IsAtkPlaying;
 
-            // test hardcodage plateau
-            //int atk = 1;
-            //int def = 2;
-            //int roi = 3;
-            //plateau = new int[_width, _height];
-            //
-
-            //
             _mvtPossible = new int[_width, _height];
-            
-            //
 
             ////a utilisez lorsque les plateaux 7x7 9x9 11x11 13x13 mis en XML
             #region variable création plateau
@@ -136,8 +142,9 @@ namespace ITI.InterfaceUser
             #endregion
 
             
+                
+            #region hard Code plateau (test)
                 /*
-                #region hard Code plateau7x7 (test)
                 plateau[2, 0] = atk;
                 plateau[3, 0] = atk;
                 plateau[4, 0] = atk;
@@ -166,8 +173,8 @@ namespace ITI.InterfaceUser
 
                 plateau[3, 3] = roi;
                 #endregion
-                */
-                /*
+                
+                
                 #region hard Code plateau9x9 (test)
                 plateau[3, 0] = atk;
                 plateau[4, 0] = atk;
@@ -196,8 +203,8 @@ namespace ITI.InterfaceUser
                 plateau[4, 6] = def;
 
                 plateau[4, 4] = roi;
-                #endregion*/
-                /*
+                #endregion
+                
                 #region hard Code plateau11x11 (test)
                 plateau[3, 0] = atk;
                 plateau[4, 0] = atk;
@@ -238,10 +245,10 @@ namespace ITI.InterfaceUser
                 plateau[7, 5] = def;
 
                 plateau[5, 5] = roi;
-                #endregion*/
+                #endregion
             
             
-                /*
+                
                 #region hard Code plateau13x13 (test)
                 plateau[4, 0] = atk;
                 plateau[5, 0] = atk;
@@ -282,7 +289,8 @@ namespace ITI.InterfaceUser
                 plateau[9, 6] = def;
 
                 plateau[6, 6] = roi;
-                #endregion*/
+                */
+                #endregion
 
 
         }
@@ -296,7 +304,10 @@ namespace ITI.InterfaceUser
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             int x = 0, y = 0;
-            
+
+            //_AtkCount = _plateau.AttackerCount;
+            //_DefCount = _plateau.DefenderCount;
+
             Image Piece;
             Image Case;
             Image caseInterdite;
@@ -336,11 +347,11 @@ namespace ITI.InterfaceUser
                         Board.DrawImage(Case, Rect);
                     }
                     
-                    if(_mvtPossible[i, j] == 1)
+                    if(_mvtPossible[i, j] == 1)     //////////////  pseudo Core
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(mvtPiecePossible, Rect);
-                    }
+                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);      //////////////  pseudo Core
+                        Board.DrawImage(mvtPiecePossible, Rect);        //////////////  pseudo Core
+                    }       //////////////  pseudo Core
 
                     if (_plateau[i, j] == GameCore.Pawn.Attacker)
                     {
@@ -374,7 +385,6 @@ namespace ITI.InterfaceUser
         {
             int x = 0, y = 0;
             int pawnplay;
-            _atkTurn = _partie.IsAtkPlaying;
 
             if(_atkTurn == true)
             {
@@ -440,10 +450,10 @@ namespace ITI.InterfaceUser
 
                         if (_endTurn == true)
                         {
-                            _plateau = _partie.Tafl;
-                            
+                            _plateau = _partie.Tafl;    
                             resetHelpPlayer();
-                            if(_partie.UpdateTurn() == false)
+                            if((_partie.UpdateTurn() == false)
+                                || (PseudoCorecheckCaptureKing() == false))       //////////////  pseudo Core
                             {
                                 PictureBox finDelaPartie = new PictureBox();
                                 Image endGame;
@@ -453,14 +463,20 @@ namespace ITI.InterfaceUser
                                 finDelaPartie.Image = (Image)endGame;
                                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
                                 pictureBox1.Hide();
-                                m_PlayerTurn.Hide();
+                                _atqTurn.Hide();
+                                _defTurn.Hide();
+                                _nbAtk.Hide();
+                                _nbDef.Hide();
                                 finDelaPartie.BringToFront();
                                 this.Controls.Add(finDelaPartie);
+                            }else
+                            {
+                                _endTurn = false;
+                                _firstClick = false;
+                                showPlayerTurn();
+                                pictureBox1.Refresh();
                             }
-                            _endTurn = false;
-                            _firstClick = false;
-                            showPlayerTurn();
-                            pictureBox1.Refresh();
+                            
                         }
                         
                     }
@@ -476,11 +492,13 @@ namespace ITI.InterfaceUser
             _atkTurn = _partie.IsAtkPlaying;
             if (_atkTurn == true)
             {
-                m_PlayerTurn.Text = "c'est au tour de l'attaquant";
+                _atqTurn.Show();
+                _defTurn.Hide();
             }
             else
             {
-                m_PlayerTurn.Text = "C'est au tour du défenseur";
+                _atqTurn.Hide();
+                _defTurn.Show();
             }
         }
 
@@ -556,5 +574,72 @@ namespace ITI.InterfaceUser
 
             _mvtPossible[(_width - 1) / 2, (_height - 1) / 2] = 0;
         }
+
+        private void PseudoCoreAffichageMouvementPossible()
+        {
+            _atqTurn = new PictureBox();
+            Image atqTurn;
+            atqTurn = ITI.InterfaceUser.Properties.Resources.PionNoir;
+            _atqTurn.Location = new Point(this.Location.X + 550, this.Location.Y + 25);
+            _atqTurn.Image = (Image)atqTurn;
+            _atqTurn.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Controls.Add(_atqTurn);
+
+            _defTurn = new PictureBox();
+            Image defTurn;
+            defTurn = ITI.InterfaceUser.Properties.Resources.PionBlanc;
+            _defTurn.Location = new Point(this.Location.X + 550, this.Location.Y + 25);
+            _defTurn.Image = (Image)defTurn;
+            _defTurn.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Controls.Add(_defTurn);
+
+            _nbAtk = new Button();
+            _nbAtk.Text = "Nombre d'atk est de " + _AtkCount;
+            _nbAtk.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
+            _nbAtk.Size = new System.Drawing.Size(150, 75);
+            this.Controls.Add(_nbAtk);
+            _nbAtk.BringToFront();
+
+            _nbDef = new Button();
+            _nbDef.Text = "Nombre de def est de " + _DefCount;
+            _nbDef.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _nbDef.Size = new System.Drawing.Size(150, 75);
+            this.Controls.Add(_nbDef);
+            _nbDef.BringToFront();
+        }
+
+        private void PseudoCoreCountAtkAndDef()
+        {
+            for(int y = 0; y < _height; y++)
+            {
+                for(int x = 0; x < _width; x++)
+                {
+                    if(_plateau[x, y] == Pawn.Defender)
+                    {
+                        _DefCount = _DefCount + 1;
+                    }
+                    if(_plateau[x, y] == Pawn.Attacker)
+                    {
+                        _AtkCount = _AtkCount + 1;
+                    }
+                }
+            }
+        }
+
+        private bool PseudoCorecheckCaptureKing()
+        {
+            for (int y = 0; y < _height; y++)
+            {
+                for (int x = 0; x < _width; x++)
+                {
+                    if (_plateau[x, y] == Pawn.King)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }
