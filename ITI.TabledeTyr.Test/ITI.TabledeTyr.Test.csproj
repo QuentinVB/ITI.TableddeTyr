@@ -54,6 +54,7 @@
     <Compile Include="Tests_Situation.cs" />
     <Compile Include="Tests_Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests_Structs.cs" />
     <Compile Include="Tests_Tafl.cs" />
   </ItemGroup>
   <ItemGroup>
