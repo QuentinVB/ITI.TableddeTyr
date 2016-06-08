@@ -44,7 +44,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(testedMove.Right, Is.EqualTo(right));
         }
         [TestCase(7,5)]
-        public void Game_04_turn_canMove_List(int x, int y)
+        public void Game_03_turn_canMove_List(int x, int y)
         {
             Game sut = new Game();
             var testTafl = sut.Tafl;
@@ -66,7 +66,7 @@ namespace ITI.TabledeTyr.Test
         //Game test allowMove
         [TestCase(3, 3)]
         [TestCase(1, 0)]
-        public void Game_05_turn_allowMove(int x, int y)
+        public void Game_04_turn_MovePawn(int x, int y)
         {
             //arrange
             Game sut = new Game();
@@ -80,7 +80,7 @@ namespace ITI.TabledeTyr.Test
         }
         //Game test updateTurn
         [TestCase(3, 3)]
-        public void Game_06_turn_updateTurn(int x, int y)
+        public void Game_05_turn_updateTurn(int x, int y)
         {
             //arrange
             Game sut = new Game();
@@ -107,7 +107,7 @@ namespace ITI.TabledeTyr.Test
         }
         //complete turn
         [TestCase(3, 0,3,4)]
-        public void Game_07_turn_complete_turn(int x, int y, int x2, int y2)
+        public void Game_06_turn_complete_turn(int x, int y, int x2, int y2)
         {
             // L'interlocuteur demande l'Initialisation du jeu: 
             // - Le core créé le tafl, si l'interlocuteur lui a envoyé une configuration spéciale (taille,disposition des pièces) il en prendra compte dans sa création 
@@ -129,7 +129,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.CanMove(x, y), Is.EqualTo(testedMove));
             */
             //ACTION UTILISATEUR
-            // -L'interlocuteur valide le mouvement en appellant AllowMove
+            // -L'interlocuteur valide le mouvement en appellant Movepawn
             bool pawnMoved = sut.MovePawn(x, y, x2, y2);
             // - Le core déplace le pion sur le tafl et appelle checkCapture pour vérifier les éventuelles captures(l'encerclement du roi) et les résout. L'interlocuteur appelle updateTurn pour finir le tour.
             // - Le core appelle CheckVictoryCondition
