@@ -184,7 +184,7 @@ namespace ITI.GameCore
         {
             foreach (StudiedPawn current in pawnList)
             {
-                if (CanMove(current.X, current.Y).IsFree()) return false;
+                if (CanMove(current.X, current.Y).IsFree) return false;
             }
             return true;
         }
@@ -389,7 +389,6 @@ namespace ITI.GameCore
                 {
                     _tafl[x2, y2] = _tafl[x, y];
                     _tafl[x, y] = Pawn.None;
-                    CheckCapture(x2, y2);
                     return true;
                 }
             }
