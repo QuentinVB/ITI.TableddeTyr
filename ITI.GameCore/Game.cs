@@ -389,6 +389,7 @@ namespace ITI.GameCore
                 {
                     _tafl[x2, y2] = _tafl[x, y];
                     _tafl[x, y] = Pawn.None;
+                    CheckCapture(x2, y2);
                     return true;
                 }
             }
