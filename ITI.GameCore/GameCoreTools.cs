@@ -27,46 +27,56 @@ namespace ITI.GameCore
             FreeSquares = freeSquares;
             Value = value;
         }
-        public bool IsFree()
+        public bool IsFree
         {
+            get { 
             if (FreeSquares.Count == 0) return false;
             return true;
+            }
         }
-        public int Up()
+        public int Up
         {
+            get { 
             int up = 0;
             foreach (StudiedPawn value in FreeSquares)
             {
                 if (value.X == X && value.Y < Y) up++;
             }
             return up;
+            }
         }
-        public int Down()
+        public int Down
         {
+            get { 
             int down = 0;
             foreach (StudiedPawn value in FreeSquares)
             {
                 if (value.X == X && value.Y > Y) down++;
             }
             return down;
+            }
         }
-        public int Left()
+        public int Left
         {
+            get { 
             int left = 0;
             foreach (StudiedPawn value in FreeSquares)
             {
                 if (value.X < X && value.Y == Y) left++;
             }
             return left;
+            }
         }
-        public int Right()
+        public int Right
         {
+            get { 
             int right = 0;
             foreach (StudiedPawn value in FreeSquares)
             {
                 if (value.X > X && value.Y == Y) right++;
             }
             return right;
+            }
         }
     }
     public struct StudiedPawn
