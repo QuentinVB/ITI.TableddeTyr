@@ -77,7 +77,7 @@ namespace ITI.TabledeTyr.Freyja
     /// <summary>
     /// A simulation incubator contain the X element stored and simulated
     /// </summary>
-    class SimulationIncubator
+    class SimulationIncubator : IEnumerable
     {
         //attributes
         readonly int _maxIncubatedNode;
@@ -111,6 +111,13 @@ namespace ITI.TabledeTyr.Freyja
         { 
             get{ return _incubatorArray.Length; }
         }
+        internal SimulationNode[] IncubatorArray
+        {
+            get
+            {
+                return _incubatorArray;
+            }
+        }
         //set data
         /// <summary>
         /// Adds the specified node to the incubator. 
@@ -140,5 +147,14 @@ namespace ITI.TabledeTyr.Freyja
                 cursor++;
             }
         }
+        public IEnumerator<SimulationNode> GetEnumerator()//allow the child list to be enumerable
+        {
+            return this._childs.Values.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
     }
 }
