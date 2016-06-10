@@ -13,7 +13,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode root;
         string activeNode;
         //collection
-        readonly Dictionary<string, SimulationNode> _simulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        SimulationIncubator Incubator;
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class. 
         /// The simulate object will simulate each of pawn
@@ -22,6 +22,7 @@ namespace ITI.TabledeTyr.Freyja
         public Simulate(Freyja_Core ctx)
         {
             _ctx = ctx;
+            Incubator = new SimulationIncubator(_ctx.Monitor.maxIncubatedNode);
             _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
             _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and and a copy of the tafl inside
         }
@@ -31,18 +32,48 @@ namespace ITI.TabledeTyr.Freyja
         internal void UpdateSimulation()
         {
             //create the root of the tree (getting the current state of the system)
-            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl ,0,_simulatedGame.IsAtkPlaying);
-            _simulationTree.Add(root.ID,root);//Add it to the tree
-            simulateBranchs(root);//simulate the branchs of the root to populate the dictionnary
+            root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,0,_simulatedGame.IsAtkPlaying);
+
+            Incubator.Add(root);//Add it to the incubator
+
+            //how many turn should i simulate ?
+            for (int turn = 0; turn < _ctx.Monitor.MaxSim; turn++)
+            {
+                //i get the nodes into the incubator
+                foreach (SimulationNode node in Incubator.)
+                {
+
+                }
+                //set up a Game for reference the possible move
+                Game controlGame = new Game(node.TaflStored, node.IsAtkPlay); //serve as reference for possible move
+
+                //which pawns should i simulate ?
+                List<StudiedPawn> PawnToSimulate = PawnSimulatedSelector();
+                //i simulate each of these pawns
+                foreach (StudiedPawn p in PawnToSimulate)
+                {
+                     //where can i simulate them ?
+                    int up 
+                    //how should i simulate these pawns ?
+
+                }
+            }
+            simulateNode(root);//simulate the branchs of the root to populate the incubator
+
             foreach (SimulationNode node in _simulationTree.Values)
             {
-                if (node.Turn == _ctx.Monitor.MaxSim) break;
+                if (node.Turn == ) break;
                  simulateBranchs(node);
             }
         }
-        void simulateBranchs(SimulationNode node)
+
+        private List<StudiedPawn> PawnSimulatedSelector()
         {
-            Game controlGame = new Game(node.TaflStored, node.IsAtkPlay); //serve as reference for possible move
+            throw new NotImplementedException();
+        }
+
+        void simulateNode(SimulationNode node)
+        {
             //explore each pawn
             for (int i = 0; i < node.TaflStored.Width; i++)
             {
