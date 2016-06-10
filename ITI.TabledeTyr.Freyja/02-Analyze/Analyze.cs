@@ -9,12 +9,15 @@ namespace ITI.TabledeTyr.Freyja
     class Analyze
     {
         Freyja_Core _ctx;
-        Dictionary<string, SimulationNode> simulatedTree;
         public Analyze(Freyja_Core freyja_Core)
         {
-            _ctx = freyja_Core;
-            simulatedTree = _ctx.Simulate.GetSimulationTree;
+            _ctx = freyja_Core;            
         }
-        public Dictionary<string, SimulationNode> PonderateTree { get{ return simulatedTree; } }
+        
+        internal SimulationNode UpdateAnalyze(SimulationNode father, SimulationNode child)
+        {
+            throw new NotImplementedException();
+            return child;
+        }
     }
 }
