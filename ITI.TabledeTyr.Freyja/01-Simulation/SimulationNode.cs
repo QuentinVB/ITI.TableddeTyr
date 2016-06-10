@@ -77,17 +77,17 @@ namespace ITI.TabledeTyr.Freyja
     /// <summary>
     /// A simulation incubator contain the X element stored and simulated
     /// </summary>
-    class SimulationIncubator : IEnumerable
+    class Incubator : IEnumerable
     {
         //attributes
         readonly int _maxIncubatedNode;
         readonly SimulationNode[] _incubatorArray;
         //constructor
         /// <summary>
-        /// Initializes a new instance of the <see cref="SimulationIncubator"/> class.
+        /// Initializes a new instance of the <see cref="Incubator"/> class.
         /// </summary>
         /// <param name="maxIncubatedNode">The maximum incubated nodes.</param>
-        internal SimulationIncubator(int maxIncubatedNode)
+        internal Incubator(int maxIncubatedNode)
         {
             _maxIncubatedNode = maxIncubatedNode;
             _incubatorArray = new SimulationNode[_maxIncubatedNode];
@@ -111,11 +111,11 @@ namespace ITI.TabledeTyr.Freyja
         { 
             get{ return _incubatorArray.Length; }
         }
-        internal SimulationNode[] IncubatorArray
+        internal SimulationNode this[int i]
         {
             get
             {
-                return _incubatorArray;
+                return _incubatorArray[i];
             }
         }
         //set data
@@ -147,13 +147,14 @@ namespace ITI.TabledeTyr.Freyja
                 cursor++;
             }
         }
-        public IEnumerator<SimulationNode> GetEnumerator()//allow the child list to be enumerable
+        //allow the array to be enumerable by the interface of Incubator
+        public IEnumerator GetEnumerator()
         {
-            return this._childs.Values.GetEnumerator();
+            return GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
     }
