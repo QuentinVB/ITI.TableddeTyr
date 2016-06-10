@@ -14,7 +14,9 @@ namespace ITI.TabledeTyr.Freyja
         //Game _play;
 
         internal IReadOnlyTafl _plateau;
-        internal int _childScore = 0;
+        int _studiedPawnFree = 0;
+        int _studiedPawnBlock;
+        int totalScore = 0;
 
         Move _studiedPawn;
 
@@ -31,109 +33,254 @@ namespace ITI.TabledeTyr.Freyja
 
             _father = father;
             _child = child;
-
             _plateau = father.TaflStored;
-
             _isAtkPlaying = father._isAtkPlaying;
+            return child;
+        }
 
-            if(_isAtkPlaying == true)
+        private void setScore()
+        {
+            if (_isAtkPlaying == true)
             {
                 // checkCapture revoie le nb de capture
-                blockOtherPawn(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
-                PawnFreeScore(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
-                if (_childScore == -1)
+                _studiedPawnBlock = blockOtherPawn(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
+                _studiedPawnFree = isFreeoptimise(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
+
+
+                totalScore = _studiedPawnBlock + _studiedPawnFree;
+                if (totalScore <= 0)
                 {
                     // retourner à l'IA que le move est inutile / dangereux
                 }
             }
             else
             {
-                PawnFreeScore(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
-                if(_childScore == -1)
+                _studiedPawnFree = isFreeoptimise(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
+                if (_studiedPawnFree == -1)
                 {
                     // retourner à l'IA que le move est inutile / dangereux
                 }
-                // checkCapture
-                blockOtherPawn(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
-            }
+                else
+                {
+                    // checkCapture
+                    _studiedPawnBlock = blockOtherPawn(_father.ThisMove.sourceX, _father.ThisMove.sourceY);
+                }
 
-            return child;
-        }
-
-        internal bool blockOtherPawn(int x, int y)
-        {
-
-            return false;
-        }
-
-
-        //A faire : 
-        // ajouter la recherche derrière un allié
-        // grosso modo faire la check capture de ce pion exemple core
-        internal void PawnFreeScore(int x, int y)
-        {
-            if (isFree(x, y) == false && _isAtkPlaying == false)
-            {
-                _childScore = _childScore - 1;
-            }
-            if(isFree(x, y) == false && _isAtkPlaying == true /* && nombre d'attaquants < nb de défenseur*/ )
-            {
-                _childScore = _childScore -1;
+                totalScore = _studiedPawnBlock + _studiedPawnFree;
+                if (totalScore <= 0)
+                {
+                    // retourner à l'IA que le move est inutile / dangereux
+                }
             }
         }
 
-
-        // il faut implémenter la recherche de groupe 
-        // si a droite du pion il y a un allié, il faut check la liberté de cette allié aussi
-        internal bool isFree(int x, int y)
+        internal int blockOtherPawn(int x, int y)
         {
-            int studiedPawnIsfree = 4;
-            bool up, down, left, right;
+            int temp = 0;
+            int nbPawnBlock = 0;
 
-            if( up = CheckUp(x, y) == true)
+            temp = isFree(x - 1, y);
+            if(temp > 0 && temp <= 2)
             {
-                studiedPawnIsfree--;
+                nbPawnBlock++;
             }
-            if (down = CheckDown(x, y) == true)
+            temp = isFree(x + 1, y);
+            if (temp > 0 && temp <= 2)
             {
-                studiedPawnIsfree--;
+                nbPawnBlock++;
             }
-            if (left = CheckLeft(x, y) == true)
+            temp = isFree(x, y - 1);
+            if (temp > 0 && temp <= 2)
             {
-                studiedPawnIsfree--;
+                nbPawnBlock++;
             }
-            if (right = CheckRight(x, y) == true)
+            temp = isFree(x, y + 1);
+            if (temp > 0 && temp <= 2)
             {
-                studiedPawnIsfree--;
+                nbPawnBlock++;
             }
 
-            if((studiedPawnIsfree >= 2)
-                || (_plateau[x, y] == Pawn.King && studiedPawnIsfree > 1))
+            return nbPawnBlock;
+        }
+        
+        internal int isFreeoptimise(int x, int y)
+        {
+            int total = 0;
+            int temp;
+            Pawn studiedPawn = _plateau[x, y];
+            List<StudiedPawn> studiedListPawn = new List<StudiedPawn>();
+
+            // check up
+            if (!CheckWalls(x, y - 1))
             {
-                if(up == true && left && true)
+                if(_plateau[x, y - 1] != Pawn.None)
                 {
-                    return false;
-                }
-                if(left == true && down == true)
+                    if (IsFriendly(studiedPawn, x, y - 1))
+                    {
+                        studiedListPawn = new List<StudiedPawn>();
+                        GetGroup(x, y - 1, studiedListPawn);
+                        temp = GroupIsFree(studiedListPawn, total);
+                        total = total + temp;
+                    }
+                    else
+                    {
+                        total--;
+                    }
+                }else if(_plateau[x, y - 1] == Pawn.None)
                 {
-                    return false;
+                    total++;
                 }
-                if (down == true && right == true)
-                {
-                    return false;
-                }
-                if (right == true && up == true)
-                {
-                    return false;
-                }
-                return true;
+            }else
+            {
+                total--;
             }
-            return false;
+
+            // check down
+            if (!CheckWalls(x, y + 1))
+            {
+                if (_plateau[x, y + 1] != Pawn.None)
+                {
+                    if (IsFriendly(studiedPawn, x, y + 1))
+                    {
+                        studiedListPawn = new List<StudiedPawn>();
+                        GetGroup(x, y + 1, studiedListPawn);
+                        temp = GroupIsFree(studiedListPawn, total);
+                        total = temp + total;
+                    }
+                    else
+                    {
+                        total--;
+                    }
+                }
+                else if (_plateau[x, y + 1] == Pawn.None)
+                {
+                    total++;
+                }
+            }
+            else
+            {
+                total--;
+            }
+
+            // check left
+            if (!CheckWalls(x - 1, y))
+            {
+                if (_plateau[x - 1, y] != Pawn.None)
+                {
+                    if (IsFriendly(studiedPawn, x - 1, y))
+                    {
+                        studiedListPawn = new List<StudiedPawn>();
+                        GetGroup(x - 1, y, studiedListPawn);
+                        temp = GroupIsFree(studiedListPawn, total);
+                        total = temp + total;
+                    }
+                    else
+                    {
+                        total--;
+                    }
+                }
+                else if (_plateau[x - 1, y] == Pawn.None)
+                {
+                    total++;
+                }
+            }
+            else
+            {
+                total--;
+            }
+
+            // check right
+            if (!CheckWalls(x + 1, y))
+            {
+                if (_plateau[x + 1, y] != Pawn.None)
+                {
+                    if (IsFriendly(studiedPawn, x + 1, y))
+                    {
+                        studiedListPawn = new List<StudiedPawn>();
+                        GetGroup(x + 1, y, studiedListPawn);
+                        temp = GroupIsFree(studiedListPawn, total);
+                        total = total + temp;
+                    }
+                    else
+                    {
+                        total--;
+                    }
+                }
+                else if (_plateau[x + 1, y] == Pawn.None)
+                {
+                    total++;
+                }
+            }
+            else
+            {
+                total--;
+            }
+
+            return total;
         }
 
-        private void isFreePawnAroundStudiedPawn()
+        internal int GroupIsFree(List<StudiedPawn> pawnList, int total)
         {
+            foreach (StudiedPawn current in pawnList)
+            {
+                if (_plateau[current.X, current.Y - 1] != Pawn.None)
+                {
+                    total--;
+                }else
+                {
+                    total++;
+                }
+                if (_plateau[current.X, current.Y + 1] != Pawn.None)
+                {
+                    total--;
+                }
+                else
+                {
+                    total++;
+                }
+                if (_plateau[current.X - 1, current.Y] != Pawn.None)
+                {
+                    total--;
+                }
+                else
+                {
+                    total++;
+                }
+                if (_plateau[current.X + 1, current.Y] != Pawn.None)
+                {
+                    total--;
+                }
+                else
+                {
+                    total++;
+                }
+            }
 
+            return total;
+        }
+    
+        internal int isFree(int x, int y)
+        {
+            int pawnFree = 4;
+
+            if (_plateau[x - 1, y] != Pawn.None)
+            {
+                pawnFree--;
+            }
+            if (_plateau[x + 1, y] != Pawn.None)
+            {
+                pawnFree--;
+            }
+            if (_plateau[x, y - 1] != Pawn.None)
+            {
+                pawnFree--;
+            }
+            if (_plateau[x, y + 1] != Pawn.None)
+            {
+                pawnFree--;
+            }
+
+            return pawnFree;
         }
 
 
@@ -173,6 +320,24 @@ namespace ITI.TabledeTyr.Freyja
                 || (x == (_plateau.Width - 1) / 2 && y == (_plateau.Height - 1) / 2 && (_plateau[((_plateau.Width - 1) / 2), ((_plateau.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
                 ) return true;
             return false;
+        }
+        internal bool IsFriendly(Pawn target, int x, int y)
+        {
+            if (target == Pawn.Attacker && _plateau[x, y] == Pawn.Attacker) return true;
+            if ((target == Pawn.Defender || target == Pawn.King) && (_plateau[x, y] == Pawn.Defender || _plateau[x, y] == Pawn.King)) return true;
+            return false;
+        }
+        internal void GetGroup(int x, int y, List<StudiedPawn> pawnList)
+        {
+            StudiedPawn Current = new StudiedPawn(x, y);
+            if (!pawnList.Contains(Current))
+            {
+                pawnList.Add(Current);
+                if (IsFriendly(_plateau[x, y], x, y - 1)) GetGroup(x, y - 1, pawnList);
+                if (IsFriendly(_plateau[x, y], x, y + 1)) GetGroup(x, y + 1, pawnList);
+                if (IsFriendly(_plateau[x, y], x - 1, y)) GetGroup(x - 1, y, pawnList);
+                if (IsFriendly(_plateau[x, y], x + 1, y)) GetGroup(x + 1, y, pawnList);
+            }
         }
 
     }
