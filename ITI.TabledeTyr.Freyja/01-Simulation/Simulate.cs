@@ -11,9 +11,8 @@ namespace ITI.TabledeTyr.Freyja
         bool _isSimulatedFreyjaAtk;
         Game _simulatedGame;
         SimulationNode root;
-        string activeNode;
         //collection
-        Incubator Incubator;
+        Incubator incubator;
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class. 
         /// The simulate object will simulate each of pawn
@@ -22,7 +21,7 @@ namespace ITI.TabledeTyr.Freyja
         public Simulate(Freyja_Core ctx)
         {
             _ctx = ctx;
-            Incubator = new Incubator(_ctx.Monitor.maxIncubatedNode);
+            incubator = new Incubator(_ctx.Monitor.maxIncubatedNode);
             _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
             _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and and a copy of the tafl inside
         }
@@ -31,18 +30,17 @@ namespace ITI.TabledeTyr.Freyja
         /// </summary>
         internal void UpdateSimulation()
         {
-            //create the root of the tree (getting the current state of the system)
+            //i create the root of the tree (getting the current state of the system)
             root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,1,_simulatedGame.IsAtkPlaying);
             //turn 0 : initalisation
             //turn 1 : first turn (atk for ex)
             //turn 2 : etc...
-            Incubator.Add(root);//Add it to the incubator
-
+            incubator.Add(root);//Add it to the incubator
             //how many turn should i simulate ?
             for (int turn = 0; turn < _ctx.Monitor.MaxSim; turn++)
             {
                 //i get the nodes into the incubator
-                foreach (SimulationNode node in Incubator)
+                foreach (SimulationNode node in incubator)
                 {
                     //if the turn stored into the node into the incubator is the same as the turn simulted, then break (aka :  every pawn simulable are simulated for this turn)
                     if (node.Turn == turn) break;
@@ -76,17 +74,15 @@ namespace ITI.TabledeTyr.Freyja
 
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
-                            //generate the simulated node, then send it to the analyze and store it to the Incubator
-                            Incubator.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
+                            //generate the simulated nodes, then send it to the analyze and store it to the Incubator
+                            incubator.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
                         }                      
                     }
                 }
             }
         }
-
         private void PawnSimulatedSelector(List<StudiedPawn> PawnToSimulate)
         {
-
             throw new NotImplementedException();
             foreach (StudiedPawn p in PawnToSimulate)
             {
@@ -113,6 +109,13 @@ namespace ITI.TabledeTyr.Freyja
             _key = Guid.NewGuid().ToString();//generating new key
             //creating new node containing ALL the data
             return new SimulationNode(_key, _simulatedGame.Tafl, 0, father.OriginMove, !father.IsAtkPlay,father.Turn+1,thisMove );
-        }      
+        }
+        internal Incubator Incubator
+        {
+            get
+            {
+                return incubator;
+            }
+        }   
     }
 }

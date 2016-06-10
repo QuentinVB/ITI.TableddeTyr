@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="00-IO Function\IOToolbox.cs" />
+    <Compile Include="02-Analyze\AnalyzeToolbox.cs" />
     <Compile Include="02-Analyze\BlockMove.cs" />
     <Compile Include="02-Analyze\MoveKeeper.cs" />
     <Compile Include="02-Analyze\StupidMove.cs" />
