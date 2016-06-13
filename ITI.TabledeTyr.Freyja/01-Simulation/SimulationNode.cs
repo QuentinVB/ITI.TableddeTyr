@@ -150,7 +150,7 @@ namespace ITI.TabledeTyr.Freyja
         //allow the array to be enumerable by the interface of Incubator
         public IEnumerator GetEnumerator()
         {
-            return GetEnumerator();
+            return _incubatorArray.GetEnumerator();
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
