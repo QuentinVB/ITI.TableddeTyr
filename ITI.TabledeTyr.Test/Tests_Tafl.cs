@@ -225,7 +225,7 @@ namespace ITI.TabledeTyr.Test
         public void Tafl_Atk_Count(int amount)
         {
             TaflBasic sut = new TaflBasic(11,11);
-            for (int i = 0; i <= amount; i++)
+            for (int i = 0; i < amount; i++)
             {
                 sut[0, i] = Pawn.Attacker;
             }
@@ -239,7 +239,7 @@ namespace ITI.TabledeTyr.Test
         public void Tafl_def_Count(int amount)
         {
             TaflBasic sut = new TaflBasic(11, 11);
-            for (int i = 0; i <= amount; i++)
+            for (int i = 0; i < amount; i++)
             {
                 sut[0, i] = Pawn.Defender;
             }

@@ -39,9 +39,10 @@ namespace ITI.TabledeTyr.Test
             Assert.That(sut.Value, Is.EqualTo(value));
         }
         [TestCase(0, 0)]
-        public void PossibleMove_isFree(int x, int y, Pawn value)
+        public void PossibleMove_isFree(int x, int y)
         {
             //arrage
+            Pawn value = Pawn.King;
             List<StudiedPawn> pawnList = new List<StudiedPawn>();           
             //act
             PossibleMove sut = new PossibleMove(x, y, pawnList, value);

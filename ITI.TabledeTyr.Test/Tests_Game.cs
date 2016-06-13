@@ -35,7 +35,7 @@ namespace ITI.TabledeTyr.Test
         [TestCase(6, 4, 3, 0, 0, 3)]
         [TestCase(4, 10, 3, 0, 0, 0)]
         [TestCase(4, 0, 0, 3, 0, 0)]
-        [TestCase(0, 4, 0, 0, 0, 0)]
+        [TestCase(0, 4, 0, 0, 0, 3)]
         public void Game_03_turn_canMove_number(int x, int y, int up, int down, int left, int right)
         {
             Game sut = new Game();
