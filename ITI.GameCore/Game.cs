@@ -207,7 +207,7 @@ namespace ITI.GameCore
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns></returns>
-        internal bool CheckWalls(int x, int y)
+        public bool CheckWalls(int x, int y) //temp, send that to toolbox;
         {
             if ((_tafl[x, y] == Pawn.Wall)
                 || (x == 0 && y == 0)  //Top left corner
@@ -253,7 +253,7 @@ namespace ITI.GameCore
             if (_tafl[x, y + 1] == Pawn.None) return true;
             return false;
         }
-        internal bool CheckLeft(int x, int y)
+        internal bool CheckLeft (int x, int y)
         {
             if (x - 1 < 0 || _tafl[x - 1, y] != Pawn.None) return false;
             if (_tafl[x - 1, y] == Pawn.None) return true;
@@ -285,13 +285,13 @@ namespace ITI.GameCore
             m = y;
             while (CheckUp(x, m))
             {
-                if (CheckWalls(x, m) && _tafl[x, y] == Pawn.King)
+                if (CheckWalls(x, m-1) && _tafl[x, y] == Pawn.King)
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(x, m-1);
                     FreeSquares.Add(studiedPawn);
                     m--;
                 }
-                else if (!CheckWalls(x, m))
+                else if (!CheckWalls(x, m-1))
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(x, m-1);
                     FreeSquares.Add(studiedPawn);
@@ -304,13 +304,13 @@ namespace ITI.GameCore
             m = y;
             while (CheckDown(x, m))
             {
-                if (CheckWalls(x, m) && _tafl[x, y] == Pawn.King)
+                if (CheckWalls(x, m+1) && _tafl[x, y] == Pawn.King)
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(x, m+1);
                     FreeSquares.Add(studiedPawn);
                     m++;
                 }
-                else if (!CheckWalls(x, m))
+                else if (!CheckWalls(x, m+1))
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(x, m+1);
                     FreeSquares.Add(studiedPawn);
@@ -323,13 +323,13 @@ namespace ITI.GameCore
             m = x;
             while (CheckLeft(m, y))
             {
-                if (CheckWalls(m, y) && _tafl[x, y] == Pawn.King)
+                if (CheckWalls(m-1, y) && _tafl[x, y] == Pawn.King)
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(m-1, y);
                     FreeSquares.Add(studiedPawn);
                     m--;
                 }
-                else if (!CheckWalls(m, y))
+                else if (!CheckWalls(m-1, y))
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(m-1, y);
                     FreeSquares.Add(studiedPawn);
@@ -340,15 +340,15 @@ namespace ITI.GameCore
             }
             //Check right
             m = x;
-            while (CheckDown(m, y))
+            while (CheckRight(m, y))
             {
-                if (CheckWalls(m, y) && _tafl[x, y] == Pawn.King)
+                if (CheckWalls(m+1, y) && _tafl[x, y] == Pawn.King)
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(m+1, y);
                     FreeSquares.Add(studiedPawn);
                     m++;
                 }
-                else if (!CheckWalls(m, y))
+                else if (!CheckWalls(m+1, y))
                 {
                     StudiedPawn studiedPawn = new StudiedPawn(m+1, y);
                     FreeSquares.Add(studiedPawn);
