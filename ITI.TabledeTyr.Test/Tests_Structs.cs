@@ -43,7 +43,7 @@ namespace ITI.TabledeTyr.Test
         {
             //arrage
             Pawn value = Pawn.King;
-            List<StudiedPawn> pawnList = new List<StudiedPawn>();           
+            List<StudiedPawn> pawnList = new List<StudiedPawn>();                       
             //act
             PossibleMove sut = new PossibleMove(x, y, pawnList, value);
             //assert
