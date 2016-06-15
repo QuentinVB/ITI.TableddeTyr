@@ -207,7 +207,7 @@ namespace ITI.GameCore
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns></returns>
-        internal bool CheckWalls(int x, int y)
+        public bool CheckWalls(int x, int y)
         {
             if ((_tafl[x, y] == Pawn.Wall)
                 || (x == 0 && y == 0)  //Top left corner
