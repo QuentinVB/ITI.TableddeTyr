@@ -213,7 +213,34 @@ namespace ITI.TabledeTyr.Test
             
             Assert.That(sut.IsAtkPlaying, Is.EqualTo(false));
         }
-        
+        //Game test checkWall
+        [TestCase(-2, 0)]//out
+        [TestCase(0, -2)]//out
+        [TestCase(12, 0)]//out
+        [TestCase(0, 12)]//out
+        [TestCase(0, 0)] //up-left
+        [TestCase(10, 0)]//up-right
+        [TestCase(0, 10)]//down-left
+        [TestCase(10, 10)]//down-right
+        [TestCase(5, 5)]//throne
+        [TestCase(1, 1)]//else
+        public void Game_07_checkWall(int x, int y)
+        {
+            //arrange
+            Game sut = new Game();         
+            //Act            
+            
+            //assert
+             if (x == 1 && y == 1)
+            {
+                Assert.That(sut.CheckWalls(x, y), Is.EqualTo(false));
+            }
+            else
+            {
+                Assert.That(sut.CheckWalls(x, y), Is.EqualTo(true));
+            }
+        }
+
     }
 }
 
