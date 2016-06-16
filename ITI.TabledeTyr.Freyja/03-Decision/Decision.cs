@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ITI.TabledeTyr.Freyja
 {
@@ -29,9 +30,23 @@ namespace ITI.TabledeTyr.Freyja
                        topOfTheList.Add(_incubator[i]);
                         i++;
                     } while (_incubator.BestNode.Score == _incubator[i].Score);
+
                     //by random
-                    int rand = rnd.Next(0, i);
-                    return _incubator[rand].OriginMove;
+                    if (_ctx.Monitor.EqualResultMethod == SortBy.Random)
+                    {
+                        int rand = rnd.Next(0, i);
+                        return topOfTheList[rand].OriginMove;
+                    }
+                    //by turn value
+                    else if (_ctx.Monitor.EqualResultMethod == SortBy.Turn)
+                    {
+                        topOfTheList.Sort((x, y) => x.Turn.CompareTo(y.Turn)); //sort by highess turn
+                        return topOfTheList[0].OriginMove;
+                    }
+                    else
+                    {
+                        return _incubator.BestNode.OriginMove;
+                    }
                 }
                 else
                 {
