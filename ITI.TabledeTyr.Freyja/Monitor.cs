@@ -14,10 +14,8 @@ namespace ITI.TabledeTyr.Freyja
         {
             this.freyja_Core = freyja_Core;
         }
-
         public int maxIncubatedNode { get { return _maxIncubatedNode; } }
         public int MaxSim { get { return _maxSimTurn; } }
-
         public SortBy EqualResultMethod { get { return _equalResultMethod; } }
     }
 }

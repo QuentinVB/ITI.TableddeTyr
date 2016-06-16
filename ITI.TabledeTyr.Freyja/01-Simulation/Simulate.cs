@@ -31,36 +31,37 @@ namespace ITI.TabledeTyr.Freyja
         internal void UpdateSimulation()
         {
             //i create the root of the tree (getting the current state of the system)
-            root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,1,_simulatedGame.IsAtkPlaying);
+            root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,0,_simulatedGame.IsAtkPlaying);
             //turn 0 : initalisation
             //turn 1 : first turn (atk for ex)
             //turn 2 : etc...
             incubator.Add(root);//Add it to the incubator
             //how many turn should i simulate ?
-            for (int turn = 0; turn < _ctx.Monitor.MaxSim; turn++)
+            for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
-                //i get the nodes into the incubator
+                //i get the nodes from the incubator
                 foreach (SimulationNode node in incubator)
                 {
-                    //if the turn stored into the node into the incubator is the same as the turn simulted, then break (aka :  every pawn simulable are simulated for this turn)
-                    if (node.Turn == turn) break;
+                    //if the turn stored into the node into the incubator is n+1 from the turn, 
+                    //then break (aka :  every pawn simulable are simulated for this turn)
+                    if (node.Turn == turn+1) break;
                     //set up a Game for reference the possible move
                     Game controlGame = new Game(node.TaflStored, node.IsAtkPlay);
 
                     //which pawns should i simulate ?
-                    List<StudiedPawn> PawnToSimulate = new List<StudiedPawn>();
-                    //all the pawn that are on my team
+                    List<StudiedPawn> PawnsToSimulate = new List<StudiedPawn>();
+                    //get all the pawn that are on the team i simulate
                     for (int i = 0; i < node.TaflStored.Width; i++)
                     {
                         for (int j = 0; j < node.TaflStored.Height; j++)
                         {
-                            if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnToSimulate.Add(new StudiedPawn(i, j));
+                            if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
                         }
                     }
                     //purge the pawn list to 
-                    PawnSimulatedSelector(PawnToSimulate);
+                    PawnSimulatedSelector(PawnsToSimulate, controlGame);
                     //i simulate each of these pawns
-                    foreach (StudiedPawn p in PawnToSimulate)
+                    foreach (StudiedPawn p in PawnsToSimulate)
                     {
                         //where can i simulate them ?
                         int up = controlGame.CanMove(p.X,p.Y).Up;
@@ -70,7 +71,7 @@ namespace ITI.TabledeTyr.Freyja
                         List<StudiedPawn> PossibleSimulation = controlGame.CanMove(p.X, p.Y).FreeSquares;
                         //how should i simulate these pawns ?
                         //keep only a few studied pawn into possible simulation
-                        int xRatio = 0;
+                        //int xRatio = 0;
 
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
@@ -81,12 +82,17 @@ namespace ITI.TabledeTyr.Freyja
                 }
             }
         }
-        private void PawnSimulatedSelector(List<StudiedPawn> PawnToSimulate)
+        /// <summary>
+        /// Select the Pawn to simulate. Remove the useless pawns.
+        /// </summary>
+        /// <param name="PawnToSimulate">The pawns to simulate.</param>
+        /// <param name="controlGame">The control game.</param>
+        private void PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
         {
-            throw new NotImplementedException();
-            foreach (StudiedPawn p in PawnToSimulate)
+            foreach (StudiedPawn p in PawnsToSimulate)
             {
-                
+                //Remove useless pawn, aka : cannot move this turn
+                if (controlGame.CanMove(p.X, p.Y).IsFree == false) PawnsToSimulate.Remove(p);
             }
         }
 

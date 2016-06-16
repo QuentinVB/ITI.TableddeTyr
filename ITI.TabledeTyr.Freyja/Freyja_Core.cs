@@ -54,7 +54,7 @@ namespace ITI.TabledeTyr.Freyja
         //3 updates function in public, allowing to the outside world to communicate with Freyja
         public void UpdateFreyja()
         {
-            _Simulate.UpdateSimulation();
+            Simulate.UpdateSimulation();
             //insert update link, decision analyze and so.
         }
         public void UpdateSensor(Game newGameTurn)
