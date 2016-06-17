@@ -52,9 +52,10 @@ namespace ITI.TabledeTyr.Freyja
         internal Monitor Monitor { get { return _Monitor; } }
         //methodes
         //3 updates function in public, allowing to the outside world to communicate with Freyja
-        public void UpdateFreyja()
+        public bool UpdateFreyja()
         {
             Simulate.UpdateSimulation();
+            return true;
             //insert update link, decision analyze and so.
         }
         public void UpdateSensor(Game newGameTurn)
