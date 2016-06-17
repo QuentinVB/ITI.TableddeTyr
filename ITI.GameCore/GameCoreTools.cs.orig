@@ -29,18 +29,28 @@ namespace ITI.GameCore
         }
         public bool IsFree
         {
+<<<<<<< HEAD
+            get { 
+            if (FreeSquares.Count == 0) return false;
+            return true;
+=======
             get
             {
-            get { 
                 if (FreeSquares.Count == 0) return false;
                 return true;
+>>>>>>> GameCore.Test
             }
         }
         public int Up
         {
-            get
-            {
+<<<<<<< HEAD
             get { 
+            int up = 0;
+            foreach (StudiedPawn value in FreeSquares)
+=======
+            get
+>>>>>>> GameCore.Test
+            {
                 int up = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -48,12 +58,22 @@ namespace ITI.GameCore
                 }
                 return up;
             }
+<<<<<<< HEAD
+            return up;
+            }
+        }
+        public int Down
+        {
+            get { 
+            int down = 0;
+            foreach (StudiedPawn value in FreeSquares)
+=======
         }
         public int Down
         {
             get
+>>>>>>> GameCore.Test
             {
-            get { 
                 int down = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -61,12 +81,22 @@ namespace ITI.GameCore
                 }
                 return down;
             }
+<<<<<<< HEAD
+            return down;
+            }
+        }
+        public int Left
+        {
+            get { 
+            int left = 0;
+            foreach (StudiedPawn value in FreeSquares)
+=======
         }
         public int Left
         {
             get
+>>>>>>> GameCore.Test
             {
-            get { 
                 int left = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -74,12 +104,22 @@ namespace ITI.GameCore
                 }
                 return left;
             }
+<<<<<<< HEAD
+            return left;
+            }
+        }
+        public int Right
+        {
+            get { 
+            int right = 0;
+            foreach (StudiedPawn value in FreeSquares)
+=======
         }
         public int Right
         {
             get
+>>>>>>> GameCore.Test
             {
-            get { 
                 int right = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -87,7 +127,11 @@ namespace ITI.GameCore
                 }
                 return right;
             }
+<<<<<<< HEAD
+            return right;
             }
+=======
+>>>>>>> GameCore.Test
         }
     }
     public struct StudiedPawn
