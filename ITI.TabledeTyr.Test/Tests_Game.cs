@@ -29,13 +29,17 @@ namespace ITI.TabledeTyr.Test
         }
         //Game test canMove
         [TestCase(3, 0, 0, 4, 2, 0)]
+        [TestCase(0, 3, 2, 0, 0, 4)]
+        [TestCase(7, 0, 0, 4, 0, 2)]
+        [TestCase(10, 3, 2, 0, 4, 0)]
+        [TestCase(5, 1, 0, 1, 5, 5)]
         [TestCase(5, 5, 0, 0, 0, 0)]
         [TestCase(0, 5, 0, 0, 0, 0)]
         [TestCase(9, 5, 5, 5, 1, 0)]
         [TestCase(6, 4, 3, 0, 0, 3)]
         [TestCase(4, 10, 3, 0, 0, 0)]
         [TestCase(4, 0, 0, 3, 0, 0)]
-        [TestCase(0, 4, 0, 0, 0, 0)]
+        [TestCase(0, 4, 0, 0, 0, 3)]
         public void Game_03_turn_canMove_number(int x, int y, int up, int down, int left, int right)
         {
             Game sut = new Game();
