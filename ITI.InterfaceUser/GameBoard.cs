@@ -68,7 +68,8 @@ namespace ITI.InterfaceUser
 
 
             PseudoCoreCountAtkAndDef();             //////////////  pseudo Core
-            PseudoCoreAffichageMouvementPossible();
+            PseudoCoreAffichageTourJoueur();
+            PseudoCoreAffichageNbAtkDef();
             showPlayerTurn();
             _atkTurn = _partie.IsAtkPlaying;
 
@@ -140,158 +141,6 @@ namespace ITI.InterfaceUser
 
             }
             #endregion
-
-            
-                
-            #region hard Code plateau (test)
-                /*
-                plateau[2, 0] = atk;
-                plateau[3, 0] = atk;
-                plateau[4, 0] = atk;
-                plateau[3, 1] = atk;
-                plateau[0, 2] = atk;
-                plateau[0, 3] = atk;
-                plateau[0, 4] = atk;
-                plateau[1, 3] = atk;
-                plateau[6, 2] = atk;
-                plateau[6, 3] = atk;
-                plateau[6, 4] = atk;
-                plateau[5, 3] = atk;
-                plateau[2, 6] = atk;
-                plateau[3, 6] = atk;
-                plateau[4, 6] = atk;
-                plateau[3, 5] = atk;
-
-                plateau[2, 2] = def;
-                plateau[2, 3] = def;
-                plateau[2, 4] = def;
-                plateau[3, 2] = def;
-                plateau[3, 4] = def;
-                plateau[4, 2] = def;
-                plateau[4, 3] = def;
-                plateau[4, 4] = def;
-
-                plateau[3, 3] = roi;
-                #endregion
-                
-                
-                #region hard Code plateau9x9 (test)
-                plateau[3, 0] = atk;
-                plateau[4, 0] = atk;
-                plateau[5, 0] = atk;
-                plateau[4, 1] = atk;
-                plateau[0, 3] = atk;
-                plateau[0, 4] = atk;
-                plateau[0, 5] = atk;
-                plateau[1, 4] = atk;
-                plateau[8, 3] = atk;
-                plateau[8, 4] = atk;
-                plateau[8, 5] = atk;
-                plateau[7, 4] = atk;
-                plateau[3, 8] = atk;
-                plateau[4, 8] = atk;
-                plateau[5, 8] = atk;
-                plateau[4, 7] = atk;
-
-                plateau[2, 4] = def;
-                plateau[3, 4] = def;
-                plateau[4, 2] = def;
-                plateau[4, 3] = def;
-                plateau[5, 4] = def;
-                plateau[6, 4] = def;
-                plateau[4, 5] = def;
-                plateau[4, 6] = def;
-
-                plateau[4, 4] = roi;
-                #endregion
-                
-                #region hard Code plateau11x11 (test)
-                plateau[3, 0] = atk;
-                plateau[4, 0] = atk;
-                plateau[5, 0] = atk;
-                plateau[6, 0] = atk;
-                plateau[7, 0] = atk;
-                plateau[0, 3] = atk;
-                plateau[0, 4] = atk;
-                plateau[0, 5] = atk;
-                plateau[0, 6] = atk;
-                plateau[0, 7] = atk;
-                plateau[10, 3] = atk;
-                plateau[10, 4] = atk;
-                plateau[10, 5] = atk;
-                plateau[10, 6] = atk;
-                plateau[10, 7] = atk;
-                plateau[3, 10] = atk;
-                plateau[4, 10] = atk;
-                plateau[5, 10] = atk;
-                plateau[6, 10] = atk;
-                plateau[7, 10] = atk;
-                plateau[5, 1] = atk;
-                plateau[5, 9] = atk;
-                plateau[1, 5] = atk;
-                plateau[9, 5] = atk;
-
-                plateau[5, 4] = def;
-                plateau[5, 6] = def;
-                plateau[5, 3] = def;
-                plateau[5, 7] = def;
-                plateau[4, 4] = def;
-                plateau[4, 5] = def;
-                plateau[4, 6] = def;
-                plateau[6, 4] = def;
-                plateau[6, 5] = def;
-                plateau[6, 6] = def;
-                plateau[3, 5] = def;
-                plateau[7, 5] = def;
-
-                plateau[5, 5] = roi;
-                #endregion
-            
-            
-                
-                #region hard Code plateau13x13 (test)
-                plateau[4, 0] = atk;
-                plateau[5, 0] = atk;
-                plateau[6, 0] = atk;
-                plateau[7, 0] = atk;
-                plateau[8, 0] = atk;
-                plateau[0, 4] = atk;
-                plateau[0, 5] = atk;
-                plateau[0, 6] = atk;
-                plateau[0, 7] = atk;
-                plateau[0, 8] = atk;
-                plateau[12, 4] = atk;
-                plateau[12, 5] = atk;
-                plateau[12, 6] = atk;
-                plateau[12, 7] = atk;
-                plateau[12, 8] = atk;
-                plateau[4, 12] = atk;
-                plateau[5, 12] = atk;
-                plateau[6, 12] = atk;
-                plateau[7, 12] = atk;
-                plateau[8, 12] = atk;
-                plateau[6, 1] = atk;
-                plateau[6, 11] = atk;
-                plateau[1, 6] = atk;
-                plateau[11, 6] = atk;
-
-                plateau[6, 3] = def;
-                plateau[6, 4] = def;
-                plateau[6, 5] = def;
-                plateau[6, 7] = def;
-                plateau[6, 8] = def;
-                plateau[6, 9] = def;
-                plateau[3, 6] = def;
-                plateau[4, 6] = def;
-                plateau[5, 6] = def;
-                plateau[7, 6] = def;
-                plateau[8, 6] = def;
-                plateau[9, 6] = def;
-
-                plateau[6, 6] = roi;
-                */
-                #endregion
-
 
         }
 
@@ -484,7 +333,6 @@ namespace ITI.InterfaceUser
                 }
                 y = y + _valeurYBoardNextCase;
             }
-            
         }
 
         private void showPlayerTurn()
@@ -572,10 +420,13 @@ namespace ITI.InterfaceUser
                 }
             }
 
-            _mvtPossible[(_width - 1) / 2, (_height - 1) / 2] = 0;
+            if (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)
+            {
+                _mvtPossible[(_width - 1) / 2, (_height - 1) / 2] = 0;
+            }
         }
 
-        private void PseudoCoreAffichageMouvementPossible()
+        private void PseudoCoreAffichageTourJoueur()
         {
             _atqTurn = new PictureBox();
             Image atqTurn;
@@ -592,7 +443,9 @@ namespace ITI.InterfaceUser
             _defTurn.Image = (Image)defTurn;
             _defTurn.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Controls.Add(_defTurn);
-
+        }
+        private void PseudoCoreAffichageNbAtkDef()
+        {
             _nbAtk = new Button();
             _nbAtk.Text = "Nombre d'atk est de " + _AtkCount;
             _nbAtk.Location = new Point(this.Location.X + 550, this.Location.Y + 200);

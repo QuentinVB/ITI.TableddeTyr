@@ -271,6 +271,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Tutoriel {
+            get {
+                object obj = ResourceManager.GetObject("Tutoriel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Victoire {
             get {
                 object obj = ResourceManager.GetObject("Victoire", resourceCulture);
