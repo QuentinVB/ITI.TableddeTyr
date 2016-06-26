@@ -31,6 +31,7 @@ namespace ITI.GameCore
         {
             get
             {
+            get { 
                 if (FreeSquares.Count == 0) return false;
                 return true;
             }
@@ -39,6 +40,7 @@ namespace ITI.GameCore
         {
             get
             {
+            get { 
                 int up = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -51,6 +53,7 @@ namespace ITI.GameCore
         {
             get
             {
+            get { 
                 int down = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -63,6 +66,7 @@ namespace ITI.GameCore
         {
             get
             {
+            get { 
                 int left = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
@@ -75,12 +79,14 @@ namespace ITI.GameCore
         {
             get
             {
+            get { 
                 int right = 0;
                 foreach (StudiedPawn value in FreeSquares)
                 {
                     if (value.X > X && value.Y == Y) right++;
                 }
                 return right;
+            }
             }
         }
     }

@@ -233,7 +233,8 @@ namespace ITI.TabledeTyr.Test
             bool atkPlaying;
             bool pawnMoved;
             atkPlaying = sut.IsAtkPlaying;
-            Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(x, y, x2, y2));
+            pawnMoved = sut.MovePawn(x, y, x2, y2);
+            Assert.That(pawnMoved, Is.EqualTo(false));
         }
         /*
         [TestCase(3, 0, 0, 4, 2, 0)]
@@ -293,7 +294,9 @@ namespace ITI.TabledeTyr.Test
                 bool pawnMoved;
                 if (i == 10 && x==5)
                 {
-                      Assert.Throws<ArgumentException>(() => pawnMoved = sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY));
+                    
+                    pawnMoved = sut.MovePawn(pawnMovedX, pawnMovedY, pawnDestinationX, pawnDestinationY);
+                    Assert.That(pawnMoved, Is.EqualTo(false));
                 }
                 else if (i == 10 && x == 3)
                 {

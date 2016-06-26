@@ -11,9 +11,8 @@ namespace ITI.TabledeTyr.Freyja
         bool _isSimulatedFreyjaAtk;
         Game _simulatedGame;
         SimulationNode root;
-        string activeNode;
         //collection
-        readonly Dictionary<string, SimulationNode> _simulationTree = new Dictionary<string, SimulationNode>();//dictionnary containing the tree
+        Incubator incubator;
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class. 
         /// The simulate object will simulate each of pawn
@@ -22,6 +21,7 @@ namespace ITI.TabledeTyr.Freyja
         public Simulate(Freyja_Core ctx)
         {
             _ctx = ctx;
+            incubator = new Incubator(_ctx.Monitor.maxIncubatedNode);
             _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
             _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and and a copy of the tafl inside
         }
@@ -30,103 +30,98 @@ namespace ITI.TabledeTyr.Freyja
         /// </summary>
         internal void UpdateSimulation()
         {
-            //create the root of the tree (getting the current state of the system)
-            root = new SimulationNode(Guid.NewGuid().ToString(),_ctx.Sensor.ActiveTafl ,0,_simulatedGame.IsAtkPlaying);
-            _simulationTree.Add(root.ID,root);//Add it to the tree
-            simulateBranchs(root);//simulate the branchs of the root to populate the dictionnary
-            foreach (SimulationNode node in _simulationTree.Values)
+            //i create the root of the tree (getting the current state of the system)
+            root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,0,_simulatedGame.IsAtkPlaying);
+            //turn 0 : initalisation
+            //turn 1 : first turn (atk for ex)
+            //turn 2 : etc...
+            incubator.Add(root);//Add it to the incubator
+            //how many turn should i simulate ?
+            for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
-                if (node.Turn == _ctx.Monitor.MaxSim) break;
-                 simulateBranchs(node);
-            }
-        }
-        void simulateBranchs(SimulationNode node)
-        {
-            Game controlGame = new Game(node.TaflStored, node.IsAtkPlay); //serve as reference for possible move
-            //explore each pawn
-            for (int i = 0; i < node.TaflStored.Width; i++)
-            {
-                for (int j = 0; j < node.TaflStored.Height; j++)
+                //i get the nodes from the incubator
+                foreach (SimulationNode node in incubator)
                 {
-                    if (node.TaflStored[i,j]==Pawn.None)
-                    { }//if pawn none : avoid
-                    else
+                    //if the turn stored into the node into the incubator is n+1 from the turn, 
+                    //then break (aka :  every pawn simulable are simulated for this turn)
+                    if (node.Turn == turn+1) break;
+                    //set up a Game for reference the possible move
+                    Game controlGame = new Game(node.TaflStored, node.IsAtkPlay);
+
+                    //which pawns should i simulate ?
+                    List<StudiedPawn> PawnsToSimulate = new List<StudiedPawn>();
+                    //get all the pawn that are on the team i simulate
+                    for (int i = 0; i < node.TaflStored.Width; i++)
                     {
-                     //start simulate the moves of this pawn                      
-                    PossibleMove possibleMove = controlGame.CanMove(i, j);
-                    if (possibleMove.IsFree == true)//if the pawn cannot move, leave
+                        for (int j = 0; j < node.TaflStored.Height; j++)
                         {
-                        if (controlGame.IsAtkPlaying == true && controlGame.Tafl[i, j] == Pawn.Attacker)
+                            if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
+                        }
+                    }
+                    //purge the pawn list to 
+                    PawnSimulatedSelector(PawnsToSimulate, controlGame);
+                    //i simulate each of these pawns
+                    foreach (StudiedPawn p in PawnsToSimulate)
+                    {
+                        //where can i simulate them ?
+                        int up = controlGame.CanMove(p.X,p.Y).Up;
+                        int down = controlGame.CanMove(p.X,p.Y).Down;
+                        int left = controlGame.CanMove(p.X,p.Y).Left;
+                        int right = controlGame.CanMove(p.X,p.Y).Right;
+                        List<StudiedPawn> PossibleSimulation = controlGame.CanMove(p.X, p.Y).FreeSquares;
+                        //how should i simulate these pawns ?
+                        //keep only a few studied pawn into possible simulation
+                        //int xRatio = 0;
+
+                        foreach (StudiedPawn d in PossibleSimulation)
                         {
-                           GenerateEachDirection(i, j, possibleMove, node);
-                        }
-                        else if (controlGame.IsAtkPlaying == false && ( controlGame.Tafl[i, j] == Pawn.Defender || controlGame.Tafl[i, j] == Pawn.King))
-                        {                            
-                           GenerateEachDirection(i, j, possibleMove, node);
-                        }
-                     }                    
+                            //generate the simulated nodes, then send it to the analyze and store it to the Incubator
+                            incubator.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
+                        }                      
+                    }
                 }
             }
-         }
         }
         /// <summary>
-        /// Generates node for eachs directions possible for this pawn .
+        /// Select the Pawn to simulate. Remove the useless pawns.
         /// </summary>
-        /// <param name="i">The i.</param>
-        /// <param name="j">The j.</param>
-        /// <param name="possibleMove">The possible move datas.</param>
-        /// <param name="node">The current node.</param>
-        void GenerateEachDirection(int i, int j, PossibleMove possibleMove, SimulationNode node)
+        /// <param name="PawnToSimulate">The pawns to simulate.</param>
+        /// <param name="controlGame">The control game.</param>
+        private void PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
         {
-            //by using possible move up/down/left/right 
-            if (possibleMove.Up > 0)
+            foreach (StudiedPawn p in PawnsToSimulate)
             {
-                for (int up = 0; up < possibleMove.Up; up++)
-                {
-                    //linking node just created, designating the new created node as one of childs of the active node
-                    node.AddChild(GenerateNode(i, j, i, up, node));
-                }
-            }
-            if (possibleMove.Down > 0)
-            {
-                for (int down = 0; down < possibleMove.Down; down++)
-                {
-                    node.AddChild(GenerateNode(i, j, i, down, node));
-                }
-            }
-            if (possibleMove.Left > 0)
-            {
-                for (int left = 0; left < possibleMove.Left; left++)
-                {
-                    node.AddChild(GenerateNode(i, j, left, j, node));
-                }
-            }
-            if (possibleMove.Right > 0)
-            {
-                for (int right = 0; right < possibleMove.Right; right++)
-                {
-                    node.AddChild(GenerateNode(i, j, right, j, node));
-                }
+                //Remove useless pawn, aka : cannot move this turn
+                if (controlGame.CanMove(p.X, p.Y).IsFree == false) PawnsToSimulate.Remove(p);
             }
         }
+
         /// <summary>
-        /// Simulate nodes.
+        /// Simulate nodes by using data send.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <param name="x2">The x2.</param>
         /// <param name="y2">The y2.</param>
-        SimulationNode GenerateNode(int x, int y, int x2, int y2, SimulationNode node)
+        SimulationNode GenerateNode(int x, int y, int x2, int y2, SimulationNode father)
         {
-            _simulatedGame = new Game(node.TaflStored, node.IsAtkPlay); //create a Game for this pawn move, at this tafl state and turn state.
-            _simulatedGame.MovePawn(x, y, x2, y2);//move the pawn (finally !)
-            bool stillPlayable = _simulatedGame.UpdateTurn();
-            Move move = new Move(x, y, x2, y2);
+            //create a Game for this pawn move, at this tafl state and turn state.
+            _simulatedGame = new Game(father.TaflStored, father.IsAtkPlay);
+            //move the pawn (finally !)
+            _simulatedGame.MovePawn(x, y, x2, y2);
+            _simulatedGame.UpdateTurn();
+            //store the move
+            Move thisMove = new Move(x, y, x2, y2);
             _key = Guid.NewGuid().ToString();//generating new key
             //creating new node containing ALL the data
-            return new SimulationNode(_key, _simulatedGame.Tafl, 0, move, stillPlayable, node.Turn + 1, _simulatedGame.IsAtkPlaying);               
+            return new SimulationNode(_key, _simulatedGame.Tafl, 0, father.OriginMove, !father.IsAtkPlay,father.Turn+1,thisMove );
         }
-        
-        internal Dictionary<string, SimulationNode> GetSimulationTree { get { return _simulationTree; } }
+        internal Incubator Incubator
+        {
+            get
+            {
+                return incubator;
+            }
+        }   
     }
 }
