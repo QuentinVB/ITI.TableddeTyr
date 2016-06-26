@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.GameCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,8 +30,6 @@ namespace ITI.GameCore
         }
         public bool IsFree
         {
-            get
-            {
             get { 
                 if (FreeSquares.Count == 0) return false;
                 return true;
@@ -38,8 +37,6 @@ namespace ITI.GameCore
         }
         public int Up
         {
-            get
-            {
             get { 
                 int up = 0;
                 foreach (StudiedPawn value in FreeSquares)
@@ -51,8 +48,6 @@ namespace ITI.GameCore
         }
         public int Down
         {
-            get
-            {
             get { 
                 int down = 0;
                 foreach (StudiedPawn value in FreeSquares)
@@ -63,9 +58,7 @@ namespace ITI.GameCore
             }
         }
         public int Left
-        {
-            get
-            {
+        { 
             get { 
                 int left = 0;
                 foreach (StudiedPawn value in FreeSquares)
@@ -77,8 +70,6 @@ namespace ITI.GameCore
         }
         public int Right
         {
-            get
-            {
             get { 
                 int right = 0;
                 foreach (StudiedPawn value in FreeSquares)
@@ -89,7 +80,7 @@ namespace ITI.GameCore
             }
             }
         }
-    }
+
     public struct StudiedPawn
     {
         public readonly int X;
