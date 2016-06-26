@@ -27,46 +27,61 @@ namespace ITI.GameCore
             FreeSquares = freeSquares;
             Value = value;
         }
-        public bool IsFree()
+        public bool IsFree
         {
-            if (FreeSquares.Count == 0) return false;
-            return true;
-        }
-        public int Up()
-        {
-            int up = 0;
-            foreach (StudiedPawn value in FreeSquares)
+            get
             {
-                if (value.X == X && value.Y < Y) up++;
+                if (FreeSquares.Count == 0) return false;
+                return true;
             }
-            return up;
         }
-        public int Down()
+        public int Up
         {
-            int down = 0;
-            foreach (StudiedPawn value in FreeSquares)
+            get
             {
-                if (value.X == X && value.Y > Y) down++;
+                int up = 0;
+                foreach (StudiedPawn value in FreeSquares)
+                {
+                    if (value.X == X && value.Y < Y) up++;
+                }
+                return up;
             }
-            return down;
         }
-        public int Left()
+        public int Down
         {
-            int left = 0;
-            foreach (StudiedPawn value in FreeSquares)
+            get
             {
-                if (value.X < X && value.Y == Y) left++;
+                int down = 0;
+                foreach (StudiedPawn value in FreeSquares)
+                {
+                    if (value.X == X && value.Y > Y) down++;
+                }
+                return down;
             }
-            return left;
         }
-        public int Right()
+        public int Left
         {
-            int right = 0;
-            foreach (StudiedPawn value in FreeSquares)
+            get
             {
-                if (value.X > X && value.Y == Y) right++;
+                int left = 0;
+                foreach (StudiedPawn value in FreeSquares)
+                {
+                    if (value.X < X && value.Y == Y) left++;
+                }
+                return left;
             }
-            return right;
+        }
+        public int Right
+        {
+            get
+            {
+                int right = 0;
+                foreach (StudiedPawn value in FreeSquares)
+                {
+                    if (value.X > X && value.Y == Y) right++;
+                }
+                return right;
+            }
         }
     }
     public struct StudiedPawn
@@ -78,6 +93,65 @@ namespace ITI.GameCore
         {
             X = x;
             Y = y;
+        }
+    }
+    static public class Helper
+    {
+        static internal void CheckRange(int width, int height, int x, int y)
+        {
+            if (x < 0 || x > width) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(x));
+            if (y < 0 || y > height) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(y));
+
+        }
+
+        #region Checkers for emptyness
+        /// <summary>
+        /// Checks if the pawn above/down/left/right is empty, if so, return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        static public bool CheckUp(int x, int y, IReadOnlyTafl _tafl)
+        {
+            if (y - 1 < 0 || _tafl[x, y - 1] != Pawn.None) return false;
+            if (_tafl[x, y - 1] == Pawn.None) return true;
+            return false;
+        }
+        static public bool CheckDown(int x, int y, IReadOnlyTafl _tafl)
+        {
+            if (y + 1 >= _tafl.Height || _tafl[x, y + 1] != Pawn.None) return false;
+            if (_tafl[x, y + 1] == Pawn.None) return true;
+            return false;
+        }
+        static public bool CheckLeft(int x, int y, IReadOnlyTafl _tafl)
+        {
+            if (x - 1 < 0 || _tafl[x - 1, y] != Pawn.None) return false;
+            if (_tafl[x - 1, y] == Pawn.None) return true;
+            return false;
+        }
+        static public bool CheckRight(int x, int y, IReadOnlyTafl _tafl)
+        {
+            if (x + 1 >= _tafl.Width || _tafl[x + 1, y] != Pawn.None) return false;
+            if (_tafl[x + 1, y] == Pawn.None) return true;
+            return false;
+        }
+        #endregion
+        /// <summary>
+        /// Checks the walls pawn, forteress corner and throne If detected return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        static public bool CheckWalls(int x, int y, IReadOnlyTafl _tafl) //temp, send that to toolbox;
+        {
+            if ((_tafl[x, y] == Pawn.Wall)
+                || (x == 0 && y == 0)  //Top left corner
+                || (x == 0 && y == _tafl.Height - 1) //Bot left corner
+                || (x == _tafl.Width - 1 && y == 0)  //top right corner
+                || (x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
+                || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2 && (_tafl[((_tafl.Width - 1) / 2), ((_tafl.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
+                ) return true;
+            return false;
         }
     }
 }

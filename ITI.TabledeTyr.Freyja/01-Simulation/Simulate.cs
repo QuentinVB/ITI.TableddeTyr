@@ -54,7 +54,7 @@ namespace ITI.TabledeTyr.Freyja
                     {
                      //start simulate the moves of this pawn                      
                     PossibleMove possibleMove = controlGame.CanMove(i, j);
-                    if (possibleMove.IsFree() == true)//if the pawn cannot move, leave
+                    if (possibleMove.IsFree == true)//if the pawn cannot move, leave
                         {
                         if (controlGame.IsAtkPlaying == true && controlGame.Tafl[i, j] == Pawn.Attacker)
                         {
@@ -79,31 +79,31 @@ namespace ITI.TabledeTyr.Freyja
         void GenerateEachDirection(int i, int j, PossibleMove possibleMove, SimulationNode node)
         {
             //by using possible move up/down/left/right 
-            if (possibleMove.Up() > 0)
+            if (possibleMove.Up > 0)
             {
-                for (int up = 0; up < possibleMove.Up(); up++)
+                for (int up = 0; up < possibleMove.Up; up++)
                 {
                     //linking node just created, designating the new created node as one of childs of the active node
                     node.AddChild(GenerateNode(i, j, i, up, node));
                 }
             }
-            if (possibleMove.Down() > 0)
+            if (possibleMove.Down > 0)
             {
-                for (int down = 0; down < possibleMove.Down(); down++)
+                for (int down = 0; down < possibleMove.Down; down++)
                 {
                     node.AddChild(GenerateNode(i, j, i, down, node));
                 }
             }
-            if (possibleMove.Left() > 0)
+            if (possibleMove.Left > 0)
             {
-                for (int left = 0; left < possibleMove.Left(); left++)
+                for (int left = 0; left < possibleMove.Left; left++)
                 {
                     node.AddChild(GenerateNode(i, j, left, j, node));
                 }
             }
-            if (possibleMove.Right() > 0)
+            if (possibleMove.Right > 0)
             {
-                for (int right = 0; right < possibleMove.Right(); right++)
+                for (int right = 0; right < possibleMove.Right; right++)
                 {
                     node.AddChild(GenerateNode(i, j, right, j, node));
                 }

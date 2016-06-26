@@ -26,7 +26,7 @@ namespace ITI.GameCore
         public TaflBasic(int width, int height)
         {
             //Tests for "Exceptions dans ta gueule"
-            if (width % 2 == 0) throw new ArgumentException("Width of the tafl must be odd", nameof (width));
+            if (width % 2 == 0) throw new ArgumentException("Width of the tafl must be odd", nameof(width));
             if (height % 2 == 0) throw new ArgumentException("Height of the tafl must be odd", nameof(height));
             if (width < 7 || width > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(width));
             if (height < 7 || height > 15) throw new ArgumentOutOfRangeException("Width of the tafl must be between 5 and 15", nameof(height));
@@ -72,9 +72,12 @@ namespace ITI.GameCore
             get
             {
                 int count = 0;
-                foreach (Pawn Attacker in _tafl)
+                foreach (Pawn studied in _tafl)
                 {
-                    count++;
+                    if (studied == Pawn.Attacker)
+                    {
+                        count++;
+                    }
                 }
                 return count;
             }
@@ -85,9 +88,12 @@ namespace ITI.GameCore
             get
             {
                 int count = 0;
-                foreach (Pawn Defender in _tafl)
+                foreach (Pawn studied in _tafl)
                 {
-                    count++;
+                    if (studied == Pawn.Defender)
+                    {
+                        count++;
+                    }
                 }
                 return count;
             }
@@ -97,9 +103,12 @@ namespace ITI.GameCore
         {
             get
             {
-                foreach (Pawn King in _tafl)
+                foreach (Pawn studied in _tafl)
                 {
-                    return true;
+                    if (studied == Pawn.King)
+                    {
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -107,10 +116,13 @@ namespace ITI.GameCore
 
         public Pawn this[int x, int y]
         {
-            get {
-                if (x < 0 || x > _width-1 || y < 0 || y > _height-1) return Pawn.Wall;
-                return _tafl[x,y]; }
-            set {
+            get
+            {
+                if (x < 0 || x > _width - 1 || y < 0 || y > _height - 1) return Pawn.Wall;
+                return _tafl[x, y];
+            }
+            set
+            {
                 Helper.CheckRange(_width, _height, x, y);
                 _tafl[x, y] = value;
             }
@@ -165,15 +177,7 @@ namespace ITI.GameCore
 
     }
 
-    static internal class Helper
-    {
-        static internal void CheckRange (int width, int height, int x, int y)
-        {
-            if (x < 0 || x > width) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(x));
-            if (y < 0 || y > height) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(y));
 
-        }
-    }
     /*
     int[] _tafl = new int[height - 1];
     /// <summary>
