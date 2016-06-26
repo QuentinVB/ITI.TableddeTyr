@@ -39,7 +39,11 @@ namespace ITI.TabledeTyr.Test
         [TestCase(6, 4, 3, 0, 0, 3)]
         [TestCase(4, 10, 3, 0, 0, 0)]
         [TestCase(4, 0, 0, 3, 0, 0)]
+<<<<<<< HEAD
         [TestCase(0, 4, 0, 0, 0, 0)]
+=======
+        [TestCase(0, 4, 0, 0, 0, 3)]
+>>>>>>> GameCore.Test
         public void Game_03_turn_canMove_number(int x, int y, int up, int down, int left, int right)
         {
             Game sut = new Game();
@@ -59,6 +63,7 @@ namespace ITI.TabledeTyr.Test
             var testTafl = sut.Tafl;
             List<StudiedPawn> pawnList = new List<StudiedPawn>();
             if (x == 7 && y == 5) { 
+<<<<<<< HEAD
                 StudiedPawn sp1 = new StudiedPawn(7,4); pawnList.Add(sp1);
                 StudiedPawn sp2 = new StudiedPawn(7,3); pawnList.Add(sp2);
                 StudiedPawn sp3 = new StudiedPawn(7,2); pawnList.Add(sp3);
@@ -75,6 +80,24 @@ namespace ITI.TabledeTyr.Test
                 StudiedPawn sp2 = new StudiedPawn(4, 2); pawnList.Add(sp2);
                 StudiedPawn sp3 = new StudiedPawn(4, 1); pawnList.Add(sp3);
                 StudiedPawn sp4 = new StudiedPawn(3, 4); pawnList.Add(sp4);
+=======
+                StudiedPawn sp1 = new StudiedPawn(7,4); pawnList.Add(sp1);//up
+                StudiedPawn sp2 = new StudiedPawn(7,3); pawnList.Add(sp2);
+                StudiedPawn sp3 = new StudiedPawn(7,2); pawnList.Add(sp3);
+                StudiedPawn sp4 = new StudiedPawn(7,1); pawnList.Add(sp4);
+                StudiedPawn sp5 = new StudiedPawn(7,6); pawnList.Add(sp5);//down
+                StudiedPawn sp6 = new StudiedPawn(7,7); pawnList.Add(sp6);
+                StudiedPawn sp7 = new StudiedPawn(7,8); pawnList.Add(sp7);
+                StudiedPawn sp8 = new StudiedPawn(7,9); pawnList.Add(sp8);
+                StudiedPawn sp9 = new StudiedPawn(8,5); pawnList.Add(sp9);//right
+            }
+            else if (x == 4 && y == 4)
+            {
+                StudiedPawn sp1 = new StudiedPawn(4, 3); pawnList.Add(sp1);//up
+                StudiedPawn sp2 = new StudiedPawn(4, 2); pawnList.Add(sp2);
+                StudiedPawn sp3 = new StudiedPawn(4, 1); pawnList.Add(sp3);
+                StudiedPawn sp4 = new StudiedPawn(3, 4); pawnList.Add(sp4);//left
+>>>>>>> GameCore.Test
                 StudiedPawn sp5 = new StudiedPawn(2, 4); pawnList.Add(sp5);
                 StudiedPawn sp6 = new StudiedPawn(1, 4); pawnList.Add(sp6);
             }
@@ -125,6 +148,8 @@ namespace ITI.TabledeTyr.Test
 
 
         }
+<<<<<<< HEAD
+=======
         [TestCase(8, 3)]
         public void Game_03_turn_canMove_ListDetail_elements(int x, int y)
         {
@@ -181,6 +206,7 @@ namespace ITI.TabledeTyr.Test
             Assert.That(lut.FreeSquares.ElementAt(18), Is.EqualTo(sp19));
             Assert.That(lut.FreeSquares.ElementAt(19), Is.EqualTo(sp20));
         }
+>>>>>>> GameCore.Test
         [Test]
         public void Game_03_turn_canMove_throne()
         {
@@ -192,36 +218,61 @@ namespace ITI.TabledeTyr.Test
             Game sut = new Game(tut, true);
             //setting pawnlist
             List<StudiedPawn> pawnList = new List<StudiedPawn>();
+<<<<<<< HEAD
+            StudiedPawn sp1 = new StudiedPawn(7, 4); pawnList.Add(sp1);
+=======
             StudiedPawn sp1 = new StudiedPawn(7, 4); pawnList.Add(sp1);//up
+>>>>>>> GameCore.Test
             StudiedPawn sp2 = new StudiedPawn(7, 3); pawnList.Add(sp2);
             StudiedPawn sp3 = new StudiedPawn(7, 2); pawnList.Add(sp3);
             StudiedPawn sp4 = new StudiedPawn(7, 1); pawnList.Add(sp4);
             StudiedPawn sp5 = new StudiedPawn(7, 0); pawnList.Add(sp5);
+<<<<<<< HEAD
+            StudiedPawn sp6 = new StudiedPawn(7, 6); pawnList.Add(sp6);
+=======
             StudiedPawn sp6 = new StudiedPawn(7, 6); pawnList.Add(sp6);//down
+>>>>>>> GameCore.Test
             StudiedPawn sp7 = new StudiedPawn(7, 7); pawnList.Add(sp7);
             StudiedPawn sp8 = new StudiedPawn(7, 8); pawnList.Add(sp8);
             StudiedPawn sp9 = new StudiedPawn(7, 9); pawnList.Add(sp9);
             StudiedPawn sp10 = new StudiedPawn(7, 10); pawnList.Add(sp10);
+<<<<<<< HEAD
+            StudiedPawn sp11 = new StudiedPawn(8, 5); pawnList.Add(sp11);
+            StudiedPawn sp12 = new StudiedPawn(9, 5); pawnList.Add(sp12);
+            StudiedPawn sp13 = new StudiedPawn(10, 5); pawnList.Add(sp13);
+            StudiedPawn sp14 = new StudiedPawn(6, 5); pawnList.Add(sp14);
+            //NO 5:5 !
+=======
             StudiedPawn sp14 = new StudiedPawn(6, 5); pawnList.Add(sp14);//left
             StudiedPawn sp20 = new StudiedPawn(5, 5); //NO 5:5 !
+>>>>>>> GameCore.Test
             StudiedPawn sp15 = new StudiedPawn(4, 5); pawnList.Add(sp15);
             StudiedPawn sp16 = new StudiedPawn(3, 5); pawnList.Add(sp16);
             StudiedPawn sp17 = new StudiedPawn(2, 5); pawnList.Add(sp17);
             StudiedPawn sp18 = new StudiedPawn(1, 5); pawnList.Add(sp18);
             StudiedPawn sp19 = new StudiedPawn(0, 5); pawnList.Add(sp19);
+<<<<<<< HEAD
+
+            PossibleMove match = new PossibleMove(7, 5, pawnList, tut[7, 5]);
+=======
             StudiedPawn sp11 = new StudiedPawn(8, 5); pawnList.Add(sp11);//right
             StudiedPawn sp12 = new StudiedPawn(9, 5); pawnList.Add(sp12);
             StudiedPawn sp13 = new StudiedPawn(10, 5); pawnList.Add(sp13);
 
             PossibleMove lut = new PossibleMove(7, 5, pawnList, tut[7, 5]);
+>>>>>>> GameCore.Test
 
             //Act
             PossibleMove testedMove = sut.CanMove(7,5);
 
             //assert
+<<<<<<< HEAD
+            Assert.That(testedMove.Up, Is.EqualTo(match));
+=======
             
             Assert.That(lut.FreeSquares.Contains(sp20), Is.EqualTo(false));
 
+>>>>>>> GameCore.Test
         }
         //Game test MovePawn
         [TestCase(3, 3)]

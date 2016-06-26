@@ -53,7 +53,15 @@ namespace ITI.TabledeTyr.Freyja
                     //get all the pawn that are on the team i simulate
                     for (int i = 0; i < node.TaflStored.Width; i++)
                     {
+<<<<<<< HEAD
                         for (int j = 0; j < node.TaflStored.Height; j++)
+=======
+                     //start simulate the moves of this pawn                      
+                    PossibleMove possibleMove = controlGame.CanMove(i, j);
+                    if (possibleMove.IsFree == true)//if the pawn cannot move, leave
+                        {
+                        if (controlGame.IsAtkPlaying == true && controlGame.Tafl[i, j] == Pawn.Attacker)
+>>>>>>> GameCore.Test
                         {
                             if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
                         }
@@ -89,10 +97,42 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="controlGame">The control game.</param>
         private void PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
         {
+<<<<<<< HEAD
             foreach (StudiedPawn p in PawnsToSimulate)
             {
                 //Remove useless pawn, aka : cannot move this turn
                 if (controlGame.CanMove(p.X, p.Y).IsFree == false) PawnsToSimulate.Remove(p);
+=======
+            //by using possible move up/down/left/right 
+            if (possibleMove.Up > 0)
+            {
+                for (int up = 0; up < possibleMove.Up; up++)
+                {
+                    //linking node just created, designating the new created node as one of childs of the active node
+                    node.AddChild(GenerateNode(i, j, i, up, node));
+                }
+            }
+            if (possibleMove.Down > 0)
+            {
+                for (int down = 0; down < possibleMove.Down; down++)
+                {
+                    node.AddChild(GenerateNode(i, j, i, down, node));
+                }
+            }
+            if (possibleMove.Left > 0)
+            {
+                for (int left = 0; left < possibleMove.Left; left++)
+                {
+                    node.AddChild(GenerateNode(i, j, left, j, node));
+                }
+            }
+            if (possibleMove.Right > 0)
+            {
+                for (int right = 0; right < possibleMove.Right; right++)
+                {
+                    node.AddChild(GenerateNode(i, j, right, j, node));
+                }
+>>>>>>> GameCore.Test
             }
         }
 
