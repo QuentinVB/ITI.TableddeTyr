@@ -195,6 +195,30 @@
   <ItemGroup>
     <None Include="Image\Autre\Sans titre.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board11x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board13x131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board7x71.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Jouer.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Nefataffel_1097.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Quitter.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Règles du jeu.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Tutoriel.php.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

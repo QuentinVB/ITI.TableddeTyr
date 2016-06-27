@@ -12,12 +12,6 @@ namespace ITI.InterfaceUser
 {
     public partial class PlayInterface : Form
     {
-        
-        PictureBox _plateau7x7; 
-        PictureBox _plateau9x9;
-        PictureBox _plateau11x11;
-        PictureBox _plateau13x13;
-        PictureBox _plateauPerso;
 
         Button _button7x7;
         Button _button9x9;
@@ -57,7 +51,7 @@ namespace ITI.InterfaceUser
 
             if (x == 7 && y == 7)
             {
-                
+
                 #region hard Code plateau7x7 (test)
 
                 _plateau[2, 0] = 1;
@@ -92,6 +86,7 @@ namespace ITI.InterfaceUser
 
             if(x == 9 && y == 9)
             {
+
                 #region hard Code plateau9x9 (test)
                 _plateau[3, 0] = 1;
                 _plateau[4, 0] = 1;
@@ -125,6 +120,7 @@ namespace ITI.InterfaceUser
 
             if(x == 11 && y == 11)
             {
+
                 #region hard Code plateau11x11 (test)
                 _plateau[3, 0] = 1;
                 _plateau[4, 0] = 1;
@@ -170,6 +166,7 @@ namespace ITI.InterfaceUser
 
             if(x == 13 && y == 13)
             {
+
                 #region hard Code plateau13x13 (test)
                 _plateau[4, 0] = 1;
                 _plateau[5, 0] = 1;
@@ -323,6 +320,8 @@ namespace ITI.InterfaceUser
                 _button9x9.Hide();
                 _button11x11.Hide();
                 m_PictureBoxInterfaceBoard.Hide();
+                _play.Hide();
+                button1.Hide();
                 createButtonChoixAdversaire();
             };
             this.Controls.Add(_play);
@@ -355,6 +354,8 @@ namespace ITI.InterfaceUser
                 _button7x7.Show();
                 _button9x9.Show();
                 _button11x11.Show();
+                _play.Show();
+                button1.Show();
                 m_PictureBoxInterfaceBoard.Show();
             };
             this.Controls.Add(_JoueurVsJoueur);
@@ -384,14 +385,15 @@ namespace ITI.InterfaceUser
                 _RetourChoixPlateau.Hide();
                 _JoueurVsFreyja.Hide();
                 _JoueurVsJoueur.Hide();
-                _plateau7x7.Show();
-                _plateau9x9.Show();
-                _plateau11x11.Show();
-                _plateau13x13.Show();
+                _play.Show();
+                button1.Show();
                 _button7x7.Show();
                 _button9x9.Show();
                 _button11x11.Show();
                 _button13x13.Show();
+                m_PictureBoxInterfaceBoard.Show();
+                _CreateBoard.Show();
+                _loadBoard.Show();
             };
             this.Controls.Add(_RetourChoixPlateau);
             _RetourChoixPlateau.BringToFront();
@@ -430,6 +432,8 @@ namespace ITI.InterfaceUser
                 _button7x7.Show();
                 _button9x9.Show();
                 _button11x11.Show();
+                _play.Show();
+                button1.Show();
                 m_PictureBoxInterfaceBoard.Show();
             };
             this.Controls.Add(_Atk);
@@ -464,6 +468,8 @@ namespace ITI.InterfaceUser
                 _button7x7.Show();
                 _button9x9.Show();
                 _button11x11.Show();
+                _play.Show();
+                button1.Show();
                 m_PictureBoxInterfaceBoard.Show();
             };
             this.Controls.Add(_Def);
@@ -481,6 +487,8 @@ namespace ITI.InterfaceUser
                 _RetourChoixPlateau.Show();
                 _JoueurVsFreyja.Show();
                 _JoueurVsJoueur.Show();
+                _play.Show();
+                button1.Show();
             };
             this.Controls.Add(_RetourChoixAdversaire);
             _RetourChoixAdversaire.BringToFront();
@@ -497,14 +505,13 @@ namespace ITI.InterfaceUser
             Graphics Board = e.Graphics;
 
 
-            //////
-            _valeurXBoard = 3;
-            _valeurYBoard = 3;
+            _valeurXBoard = 4;
+            _valeurYBoard = 4;
             _widthBoard = (m_PictureBoxInterfaceBoard.Width - (_valeurXBoard * _width + 1)) / _width;
             _heightBoard = (m_PictureBoxInterfaceBoard.Height - (_valeurYBoard * _height + 1)) / _height;
             _valeurXBoardNextCase = _widthBoard + _valeurXBoard; ;
             _valeurYBoardNextCase = _heightBoard + _valeurYBoard;
-            ///////
+            
 
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
