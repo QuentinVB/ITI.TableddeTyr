@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ITI.GameCore
 {
@@ -149,6 +150,158 @@ namespace ITI.GameCore
                 || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2 && (_tafl[((_tafl.Width - 1) / 2), ((_tafl.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
                 ) return true;
             return false;
+        }
+    }
+    public class XML_Tafl
+    {
+        IReadOnlyTafl _TaflRead;
+        TaflBasic _TaflWrite;
+        List<XElement> xElements = new List<XElement>();
+
+        internal IReadOnlyTafl TaflToRead { get { return _TaflRead; } private set { _TaflRead = value; } }
+        internal TaflBasic TaflToWrite { get { return _TaflWrite; } private set { _TaflWrite = value; } }
+
+        public XML_Tafl()
+        { }
+        public void CreateBook(IReadOnlyTafl TaflRead)
+        {
+            _TaflRead = TaflRead;
+            //file = new XmlTextReader(Book.title + ".xml");
+            XElement map = new XElement("Map",
+                new XElement("Title", book.title),
+                new XElement("Width", book.height),
+                new XElement("Height", book.width),
+                Translate()
+                );
+            map.Save("./" + Book.title + ".xml");
+        }
+        public List<XElement> Translate()
+        {
+            for (int i = 0; i < Book.height; i++)
+            {
+                for (int j = 0; j < Book.width; j++)
+                {
+                    if (Book.array[i, j] == true)
+                    {
+                        xElements.Add(new XElement("Tile", "true"));
+                    }
+                    else if (Book.array[i, j] == false)
+                    {
+                        xElements.Add(new XElement("Tile", "false"));
+                    }
+                }
+            }
+            return xElements;
+        }
+        public Book ReadBook(string title)
+        {
+            XmlTextReader reader = new XmlTextReader("./" + title + ".xml");
+            Book outbook = new Book();
+            outbook.title = Title(reader);
+            outbook.width = ArrayWidth(reader);
+            outbook.height = ArrayHeight(reader);
+            outbook.array = ReadBookArray(reader, outbook.width, outbook.height);
+            return outbook;
+        }
+        public string Title(XmlTextReader xml)
+        {
+            string title;
+
+            while (xml.Read())
+            {
+                if (xml.Name == "Title")
+                {
+                    xml.Read();
+                    title = (xml.Value);
+                    return title;
+                }
+            }
+
+            throw new ArgumentException("The XML dosn't contains a title information");
+        }
+        public int ArrayWidth(XmlTextReader xml)
+        {
+            int arrayWidth = 0;
+            while (xml.Read())
+            {
+                if (xml.Name == "Width")
+                {
+                    xml.Read();
+                    arrayWidth = Convert.ToInt32(xml.Value);
+                    return arrayWidth;
+                }
+            }
+
+            throw new ArgumentException("The XML dosn't contains a width information");
+        }
+        public int ArrayHeight(XmlTextReader xml)
+        {
+            int arrayHeight = 0;
+            while (xml.Read())
+            {
+                if (xml.Name == "Height")
+                {
+                    xml.Read();
+                    arrayHeight = Convert.ToInt32(xml.Value);
+                    return arrayHeight;
+                }
+            }
+
+            throw new ArgumentException("The XML dosn't contains a height information");
+        }
+        public bool[,] ReadBookArray(XmlTextReader xml, int width, int height)
+        {
+            int x = 0;
+            int y = 0;
+            bool[,] tileArray = new bool[width, height];
+            if (tileArray == null)
+            {
+                throw new ArgumentException("The tileArray must not be empty");
+            }
+            if (xml == null)
+            {
+                throw new ArgumentException("The XML must not be empty");
+            }
+
+            while (xml.Read())
+            {
+                {
+                    if (xml.Name == "Tile")
+                    {
+                        xml.Read();
+                        if (xml.Value == "true")
+                        {
+                            if (x == width - 1)
+                            {
+                                tileArray[x, y] = true;
+                                x = 0;
+                                y++;
+                            }
+                            else
+                            {
+                                tileArray[x, y] = true;
+                                x++;
+                            }
+                        }
+                        else if (xml.Value == "false")
+                        {
+                            if (x == width - 1)
+                            {
+                                tileArray[x, y] = false;
+                                x = 0;
+                                y++;
+                            }
+                            else
+                            {
+                                tileArray[x, y] = false;
+                                x++;
+                            }
+                        }
+
+                    }
+                }
+            }
+            return tileArray;
         }
     }
 }
