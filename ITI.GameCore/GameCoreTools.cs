@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace ITI.GameCore
@@ -157,69 +158,58 @@ namespace ITI.GameCore
         IReadOnlyTafl _TaflRead;
         TaflBasic _TaflWrite;
         List<XElement> xElements = new List<XElement>();
-
         internal IReadOnlyTafl TaflToRead { get { return _TaflRead; } private set { _TaflRead = value; } }
         internal TaflBasic TaflToWrite { get { return _TaflWrite; } private set { _TaflWrite = value; } }
-
         public XML_Tafl()
         { }
-        public void CreateBook(IReadOnlyTafl TaflRead)
+        public void WriteXmlTafl(IReadOnlyTafl TaflRead)
         {
             _TaflRead = TaflRead;
             //file = new XmlTextReader(Book.title + ".xml");
-            XElement map = new XElement("Map",
-                new XElement("Title", book.title),
-                new XElement("Width", book.height),
-                new XElement("Height", book.width),
+            XElement taflXml = new XElement("Tafl",
+                new XElement("Width", _TaflRead.Width),
+                new XElement("Height", _TaflRead.Height),
                 Translate()
                 );
-            map.Save("./" + Book.title + ".xml");
+            taflXml.Save("./" + _TaflRead.Width + ".xml");
         }
-        public List<XElement> Translate()
+        internal List<XElement> Translate()
         {
-            for (int i = 0; i < Book.height; i++)
+            for (int i = 0; i < _TaflRead.Width; i++)
             {
-                for (int j = 0; j < Book.width; j++)
+                for (int j = 0; j < _TaflRead.Height; j++)
                 {
-                    if (Book.array[i, j] == true)
+                    if (_TaflRead[i,j] == Pawn.None)
                     {
-                        xElements.Add(new XElement("Tile", "true"));
+                        xElements.Add(new XElement("Pawn", "None"));
                     }
-                    else if (Book.array[i, j] == false)
+                    else if (_TaflRead[i, j] == Pawn.King)
                     {
-                        xElements.Add(new XElement("Tile", "false"));
+                        xElements.Add(new XElement("Pawn", "King"));
                     }
+                    else if (_TaflRead[i, j] == Pawn.Attacker)
+                    {
+                        xElements.Add(new XElement("Pawn", "Attacker"));
+                    }
+                    else if (_TaflRead[i, j] == Pawn.Defender)
+                    {
+                        xElements.Add(new XElement("Pawn", "Defender"));
+                    }
+                    else if (_TaflRead[i, j] == Pawn.Wall)
+                    {}
                 }
             }
             return xElements;
         }
-        public Book ReadBook(string title)
+        public TaflBasic ReadXmlTafl(int width)
         {
+            string title = Convert.ToString(width);
             XmlTextReader reader = new XmlTextReader("./" + title + ".xml");
-            Book outbook = new Book();
-            outbook.title = Title(reader);
-            outbook.width = ArrayWidth(reader);
-            outbook.height = ArrayHeight(reader);
-            outbook.array = ReadBookArray(reader, outbook.width, outbook.height);
-            return outbook;
-        }
-        public string Title(XmlTextReader xml)
-        {
-            string title;
-
-            while (xml.Read())
-            {
-                if (xml.Name == "Title")
-                {
-                    xml.Read();
-                    title = (xml.Value);
-                    return title;
-                }
-            }
-
-            throw new ArgumentException("The XML dosn't contains a title information");
-        }
-        public int ArrayWidth(XmlTextReader xml)
+            TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
+            outTafl = ReadTaflArray(reader, outTafl);
+            return outTafl;
+        }       
+        internal int ArrayWidth(XmlTextReader xml)
         {
             int arrayWidth = 0;
             while (xml.Read())
@@ -231,10 +221,9 @@ namespace ITI.GameCore
                     return arrayWidth;
                 }
             }
-
             throw new ArgumentException("The XML dosn't contains a width information");
         }
-        public int ArrayHeight(XmlTextReader xml)
+        internal int ArrayHeight(XmlTextReader xml)
         {
             int arrayHeight = 0;
             while (xml.Read())
@@ -246,62 +235,82 @@ namespace ITI.GameCore
                     return arrayHeight;
                 }
             }
-
             throw new ArgumentException("The XML dosn't contains a height information");
         }
-        public bool[,] ReadBookArray(XmlTextReader xml, int width, int height)
+        internal TaflBasic ReadTaflArray(XmlTextReader xml, TaflBasic tafl)
         {
             int x = 0;
             int y = 0;
-            bool[,] tileArray = new bool[width, height];
-            if (tileArray == null)
-            {
-                throw new ArgumentException("The tileArray must not be empty");
-            }
+            int width = tafl.Width;
+            int height = tafl.Height;
             if (xml == null)
             {
                 throw new ArgumentException("The XML must not be empty");
             }
-
             while (xml.Read())
-            {
+            {   
+                if (xml.Name == "Pawn")
                 {
-                    if (xml.Name == "Tile")
+                    xml.Read();
+                    if (xml.Value == "None")
                     {
-                        xml.Read();
-                        if (xml.Value == "true")
+                        if (x == width - 1)
                         {
-                            if (x == width - 1)
-                            {
-                                tileArray[x, y] = true;
-                                x = 0;
-                                y++;
-                            }
-                            else
-                            {
-                                tileArray[x, y] = true;
-                                x++;
-                            }
+                            tafl[x,y] = Pawn.None;
+                            x = 0;
+                            y++;
                         }
-                        else if (xml.Value == "false")
+                        else
                         {
-                            if (x == width - 1)
-                            {
-                                tileArray[x, y] = false;
-                                x = 0;
-                                y++;
-                            }
-                            else
-                            {
-                                tileArray[x, y] = false;
-                                x++;
-                            }
+                            tafl[x, y] = Pawn.None;
+                            x++;
                         }
-
                     }
-                }
+                    else if (xml.Value == "King")
+                    {
+                        if (x == width - 1)
+                        {
+                            tafl[x, y] = Pawn.King;
+                            x = 0;
+                            y++;
+                        }
+                        else
+                        {
+                            tafl[x, y] = Pawn.King;
+                            x++;
+                        }
+                    }
+                    else if (xml.Value == "Attacker")
+                    {
+                        if (x == width - 1)
+                        {
+                            tafl[x, y] = Pawn.Attacker;
+                            x = 0;
+                            y++;
+                        }
+                        else
+                        {
+                            tafl[x, y] = Pawn.Attacker;
+                            x++;
+                        }
+                    }
+                    else if (xml.Value == "Defender")
+                    {
+                        if (x == width - 1)
+                        {
+                            tafl[x, y] = Pawn.Defender;
+                            x = 0;
+                            y++;
+                        }
+                        else
+                        {
+                            tafl[x, y] = Pawn.Defender;
+                            x++;
+                        }
+                    }
+                }                
             }
-            return tileArray;
+            return tafl;
         }
     }
 }
