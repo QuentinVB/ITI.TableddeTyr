@@ -354,7 +354,7 @@ namespace ITI.TabledeTyr.Test
             IReadOnlyTafl tafl = jeu.Tafl;
             //Act            
             sut.WriteXmlTafl(tafl);
-            TaflBasic readtafl = sut.ReadXmlTafl(tafl.Width);
+            TaflBasic readtafl = sut.ReadXmlTafl(tafl.Width, tafl.Height);
             //assert        
             Assert.That(tafl[5,5], Is.EqualTo(readtafl[5, 5]));
         }

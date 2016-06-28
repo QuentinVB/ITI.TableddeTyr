@@ -152,6 +152,76 @@ namespace ITI.GameCore
                 ) return true;
             return false;
         }
+        /// <summary>
+        /// Gets the default tafl.
+        /// </summary>
+        /// <returns>A IReadOnlyTafl with default 11*11</returns>
+        static public IReadOnlyTafl GetDefaultTafl()
+        {
+            //if no tafl send, create a new default tafl
+            TaflBasic tafl = new TaflBasic(11, 11);
+            //Sets board for a standard 11*11 game [Hardcoded for IT1]
+            /*
+             x 00 01 02 03 04 05 06 07 08 09 10 x
+            00 -- -- -- 01 01 01 01 01 -- -- --
+            01 -- -- -- -- -- 01 -- -- -- -- --
+            02 -- -- -- -- -- -- -- -- -- -- --
+            03 01 -- -- -- -- 10 -- -- -- -- 01
+            04 01 -- -- -- 10 10 10 -- -- -- 01
+            05 01 01 -- 10 10 11 10 10 -- 01 01
+            06 01 -- -- -- 10 10 10 -- -- -- 01
+            07 01 -- -- -- -- 10 -- -- -- -- 01
+            08 -- -- -- -- -- -- -- -- -- -- --
+            09 -- -- -- -- -- 01 -- -- -- -- --
+            10 -- -- -- 01 01 01 01 01 -- -- --
+            y
+
+            */
+
+            //Set the king and defenders
+            tafl[5, 5] = Pawn.King;
+
+            tafl[3, 5] = Pawn.Defender;
+            tafl[4, 4] = Pawn.Defender;
+            tafl[4, 5] = Pawn.Defender;
+            tafl[4, 6] = Pawn.Defender;
+            tafl[5, 3] = Pawn.Defender;
+            tafl[5, 4] = Pawn.Defender;
+            tafl[5, 6] = Pawn.Defender;
+            tafl[5, 7] = Pawn.Defender;
+            tafl[6, 4] = Pawn.Defender;
+            tafl[6, 5] = Pawn.Defender;
+            tafl[6, 6] = Pawn.Defender;
+            tafl[7, 5] = Pawn.Defender;
+
+            //Set the attackers
+            tafl[0, 3] = Pawn.Attacker;
+            tafl[0, 4] = Pawn.Attacker;
+            tafl[0, 5] = Pawn.Attacker;
+            tafl[0, 6] = Pawn.Attacker;
+            tafl[0, 7] = Pawn.Attacker;
+            tafl[1, 5] = Pawn.Attacker;
+            tafl[3, 0] = Pawn.Attacker;
+            tafl[3, 10] = Pawn.Attacker;
+            tafl[4, 0] = Pawn.Attacker;
+            tafl[4, 10] = Pawn.Attacker;
+            tafl[5, 0] = Pawn.Attacker;
+            tafl[5, 1] = Pawn.Attacker;
+            tafl[5, 9] = Pawn.Attacker;
+            tafl[5, 10] = Pawn.Attacker;
+            tafl[6, 0] = Pawn.Attacker;
+            tafl[6, 10] = Pawn.Attacker;
+            tafl[7, 0] = Pawn.Attacker;
+            tafl[7, 10] = Pawn.Attacker;
+            tafl[9, 5] = Pawn.Attacker;
+            tafl[10, 3] = Pawn.Attacker;
+            tafl[10, 4] = Pawn.Attacker;
+            tafl[10, 5] = Pawn.Attacker;
+            tafl[10, 6] = Pawn.Attacker;
+            tafl[10, 7] = Pawn.Attacker;
+
+            return tafl;
+        }
     }
     public class XML_Tafl
     {
@@ -201,9 +271,15 @@ namespace ITI.GameCore
             }
             return xElements;
         }
-        public TaflBasic ReadXmlTafl(int width)
+        /*
+        public override TaflBasic ReadXmlTafl()
         {
-            string title = Convert.ToString(width);
+
+        }
+        */
+        public TaflBasic ReadXmlTafl(int width, int height)
+        {
+            string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;
             XmlTextReader reader = new XmlTextReader("./" + title + ".xml");
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
