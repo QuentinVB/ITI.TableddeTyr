@@ -345,6 +345,19 @@ namespace ITI.TabledeTyr.Test
                 Assert.That(Helper.CheckWalls(x, y, sut.Tafl), Is.EqualTo(true));
             }
         }
+        [Test]//else
+        public void Game_08_saveXml()
+        {
+            //arrange
+            Game jeu = new Game();
+            XML_Tafl sut = new XML_Tafl();
+            IReadOnlyTafl tafl = jeu.Tafl;
+            //Act            
+            sut.WriteXmlTafl(tafl);
+            TaflBasic readtafl = sut.ReadXmlTafl(tafl.Width, tafl.Height);
+            //assert        
+            Assert.That(tafl[5,5], Is.EqualTo(readtafl[5, 5]));
+        }
 
     }
 }

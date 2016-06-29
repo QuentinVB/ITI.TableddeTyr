@@ -22,5 +22,6 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.That(true, Is.EqualTo(true));
         }
+
     }
 }
