@@ -20,7 +20,7 @@ namespace ITI.TabledeTyr.Freyja
         internal Move UpdateEffector
         {
             get {
-                Move control = _ctx.Decision.Result();
+                Move control = _ctx.Decision.Result;
                 Helper.CheckRange(_ctx.Sensor.ActiveTafl.Width, _ctx.Sensor.ActiveTafl.Height, control.sourceX, control.sourceY); 
                 Helper.CheckRange(_ctx.Sensor.ActiveTafl.Width, _ctx.Sensor.ActiveTafl.Height, control.sourceY, control.destinationY);
                 return control;
