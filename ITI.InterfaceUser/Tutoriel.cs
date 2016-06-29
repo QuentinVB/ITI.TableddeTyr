@@ -45,7 +45,6 @@ namespace ITI.InterfaceUser
         int _pawnDestinationX = 9;
         int _pawnDestinationY = 9;
         bool _firstClick = false;
-        bool _endTurn = false;
 
 
 
