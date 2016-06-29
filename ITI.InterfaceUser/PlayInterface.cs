@@ -36,6 +36,8 @@ namespace ITI.InterfaceUser
         int _valeurXBoardNextCase;
         int _valeurYBoardNextCase;
         int[,] _plateau;
+        bool _IAAtk = false;
+        bool _IADef = false;
 
 
         public PlayInterface()
@@ -341,7 +343,7 @@ namespace ITI.InterfaceUser
                 _JoueurVsJoueur.Hide();
                 _RetourChoixPlateau.Hide(); 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_width, _height);
+                m_GameBoard GameBoard = new m_GameBoard(_width, _height, false, false);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -419,7 +421,7 @@ namespace ITI.InterfaceUser
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_width, _height);
+                m_GameBoard GameBoard = new m_GameBoard(_width, _height, false, true);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -455,7 +457,7 @@ namespace ITI.InterfaceUser
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_width, _height);
+                m_GameBoard GameBoard = new m_GameBoard(_width, _height, true, false);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
