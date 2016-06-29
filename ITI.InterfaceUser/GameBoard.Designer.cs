@@ -28,20 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.m_PlayerTurn = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.m_buttonRetourMenu = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // m_PlayerTurn
-            // 
-            this.m_PlayerTurn.Location = new System.Drawing.Point(743, 30);
-            this.m_PlayerTurn.Name = "m_PlayerTurn";
-            this.m_PlayerTurn.Size = new System.Drawing.Size(195, 22);
-            this.m_PlayerTurn.TabIndex = 2;
-            this.m_PlayerTurn.TabStop = false;
-            this.m_PlayerTurn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pictureBox1
             // 
@@ -70,21 +60,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 673);
             this.Controls.Add(this.m_buttonRetourMenu);
-            this.Controls.Add(this.m_PlayerTurn);
             this.Controls.Add(this.pictureBox1);
             this.Name = "m_GameBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "La Table de Tyr";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox m_PlayerTurn;
         private System.Windows.Forms.Button m_buttonRetourMenu;
     }
 }

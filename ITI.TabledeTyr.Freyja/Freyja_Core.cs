@@ -30,14 +30,15 @@ namespace ITI.TabledeTyr.Freyja
         {
             _originGame = game;
             //Input
-            _Sensor = new Sensor(this, isFreyjaAtk);          
+            _Sensor = new Sensor(this, isFreyjaAtk);
+            _Monitor = new Monitor(this);
             //Core
             _Simulate = new Simulate(this);
             _Analyze = new Analyze(this);
             _Decision = new Decision(this);
             //output
             _Effector = new Effector(this);
-            _Monitor = new Monitor(this);
+            
         }
         //properties allowing a secured acces to the Freyja's module
         //IO
