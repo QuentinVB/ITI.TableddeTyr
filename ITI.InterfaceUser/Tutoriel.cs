@@ -13,7 +13,6 @@ namespace ITI.InterfaceUser
     public partial class Tutoriel : Form
     {
         
-        Button _nextExplanation;
         Button _lastExplanation;
         Button _showGameRules;
         Button _help;

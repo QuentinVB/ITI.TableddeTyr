@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.GameCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +13,7 @@ namespace ITI.InterfaceUser
 {
     public partial class PlayInterface : Form
     {
+        XML_Tafl _xml;
 
         Button _button7x7;
         Button _button9x9;
@@ -29,15 +31,15 @@ namespace ITI.InterfaceUser
 
         int _width = 7;
         int _height = 7;
-        int _valeurXBoard;
-        int _valeurYBoard;
-        int _widthBoard;
-        int _heightBoard;
-        int _valeurXBoardNextCase;
-        int _valeurYBoardNextCase;
+
+        int _rectanglePositionX;
+        int _rectanglePositionY;
+        int _rectangleWidth;
+        int _rectangleHeight;
+        int _nextRectanglePositionX;
+        int _nextRectanglePositionY;
+
         int[,] _plateau;
-        bool _IAAtk = false;
-        bool _IADef = false;
 
 
         public PlayInterface()
@@ -53,6 +55,12 @@ namespace ITI.InterfaceUser
 
             if (x == 7 && y == 7)
             {
+                _rectanglePositionX = 3;
+                _rectanglePositionY = 4;
+                _rectangleWidth = 61;
+                _rectangleHeight = 60;
+                _nextRectanglePositionX = 64;
+                _nextRectanglePositionY = 63;
 
                 #region hard Code plateau7x7 (test)
 
@@ -88,6 +96,12 @@ namespace ITI.InterfaceUser
 
             if(x == 9 && y == 9)
             {
+                _rectanglePositionX = 2;
+                _rectanglePositionY = 4;
+                _rectangleWidth = 47;
+                _rectangleHeight = 46;
+                _nextRectanglePositionX = 50;
+                _nextRectanglePositionY = 49;
 
                 #region hard Code plateau9x9 (test)
                 _plateau[3, 0] = 1;
@@ -122,6 +136,12 @@ namespace ITI.InterfaceUser
 
             if(x == 11 && y == 11)
             {
+                _rectanglePositionX = 2;
+                _rectanglePositionY = 3;
+                _rectangleWidth = 38;
+                _rectangleHeight = 33;
+                _nextRectanglePositionX = 41;
+                _nextRectanglePositionY = 36;
 
                 #region hard Code plateau11x11 (test)
                 _plateau[3, 0] = 1;
@@ -168,6 +188,12 @@ namespace ITI.InterfaceUser
 
             if(x == 13 && y == 13)
             {
+                _rectanglePositionX = 3;
+                _rectanglePositionY = 3;
+                _rectangleWidth = 31;
+                _rectangleHeight = 50;
+                _nextRectanglePositionX = 34;
+                _nextRectanglePositionY = 50;
 
                 #region hard Code plateau13x13 (test)
                 _plateau[4, 0] = 1;
@@ -304,7 +330,7 @@ namespace ITI.InterfaceUser
             _loadBoard.Size = new System.Drawing.Size(150, 75);
             _loadBoard.Click += delegate (object sender, EventArgs e)
             {
-               
+                _xml.ReadXmlTafl(_width, _height);
             };
             this.Controls.Add(_loadBoard);
             _loadBoard.BringToFront();
@@ -498,34 +524,28 @@ namespace ITI.InterfaceUser
 
         private void m_PictureBoxInterfaceBoard_Paint(object sender, PaintEventArgs e)
         {
+
+            Graphics Pawn = e.Graphics;
+            Graphics Board = e.Graphics;
+            m_PictureBoxInterfaceBoard.BackColor = Color.Black;
+            
             Image Piece;
             Image Case;
             Image caseInterdite;
             Image mvtPiecePossible;
             Rectangle Rect;
-            Graphics Pawn = e.Graphics;
-            Graphics Board = e.Graphics;
-
-
-            _valeurXBoard = 4;
-            _valeurYBoard = 4;
-            _widthBoard = (m_PictureBoxInterfaceBoard.Width - (_valeurXBoard * _width + 1)) / _width;
-            _heightBoard = (m_PictureBoxInterfaceBoard.Height - (_valeurYBoard * _height + 1)) / _height;
-            _valeurXBoardNextCase = _widthBoard + _valeurXBoard; ;
-            _valeurYBoardNextCase = _heightBoard + _valeurYBoard;
             
 
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
             mvtPiecePossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
-            m_PictureBoxInterfaceBoard.BackColor = Color.Black;
 
 
-            int x = 0, y = _valeurYBoard;
+            int x = 0, y = _rectanglePositionY;
 
             for (int j = 0; j < _height; j++)
             {
-                x = _valeurXBoard;
+                x = _rectanglePositionX;
                 for (int i = 0; i < _width; i++)
                 {
                     if (((i == 0) && (j == 0))
@@ -534,15 +554,14 @@ namespace ITI.InterfaceUser
                             || ((i == 0) && (j == _height - 1))
                             || ((i == ((_width - 1) / 2)) && (j == ((_height - 1) / 2))))
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
+                        Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);
                         Board.DrawImage(caseInterdite, Rect);
                     }
                     else
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
+                        Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);
                         Board.DrawImage(Case, Rect);
                     }
-                    
 
                     if (_plateau[i, j] == 1)
                     {
@@ -559,9 +578,9 @@ namespace ITI.InterfaceUser
                         Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    x = x + _valeurXBoardNextCase;
+                    x = x + _nextRectanglePositionX;
                 }
-                y = y + _valeurYBoardNextCase;
+                y = y + _nextRectanglePositionY;
             }
         }
     }

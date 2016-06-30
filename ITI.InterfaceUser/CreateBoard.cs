@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.GameCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,7 +25,8 @@ namespace ITI.InterfaceUser
         Button _cancelSave;
         Button _save;
 
-        TextBox _textBoxName;
+        TaflBasic _tafl;
+        XML_Tafl _xml;
 
         int _valeurXBoard;
         int _valeurYBoard;
@@ -45,12 +47,13 @@ namespace ITI.InterfaceUser
             CreateControlNewBoard();
             _confirmSave.Hide();
             _cancelSave.Hide();
+            _tafl = new TaflBasic(_width, _height);
+
             plateau = new int[_width, _height];
         }
 
         private void m_PictureBoxCreateBoard_Paint(object sender, PaintEventArgs e)
         {
-            int x = 0, y = 0;
             Rectangle Rect;
 
             Graphics Board = e.Graphics;
@@ -59,8 +62,6 @@ namespace ITI.InterfaceUser
             Image Case;
             Image Piece;
             Image caseInterdite;
-
-            
 
             #region variable création plateau
             if(_width == 7)
@@ -133,7 +134,8 @@ namespace ITI.InterfaceUser
 
             plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
 
-            y = _valeurYBoard;
+            int x = 0;
+            int y = _valeurYBoard;
 
             for (int j = 0; j < _height; j++)
             {
@@ -199,6 +201,14 @@ namespace ITI.InterfaceUser
                         else
                         {
                             plateau[i, j] = _pawn;
+                            if(_pawn == 1)
+                            {
+                                _tafl[i, j] = Pawn.Attacker;
+                            }
+                            if(_pawn == 2)
+                            {
+                                _tafl[i, j] = Pawn.Defender;
+                            }
                             m_PictureBoxCreateBoard.Refresh();
                         }
                         
@@ -261,6 +271,7 @@ namespace ITI.InterfaceUser
             _choixLongueurPlateau.Click += delegate (object sender, EventArgs e)
             {
                 _width = Longueur;
+                _tafl = new TaflBasic(_width, _height);
                 plateau = new int[_width, _height];
                 m_PictureBoxCreateBoard.Refresh();
             };
@@ -279,6 +290,7 @@ namespace ITI.InterfaceUser
             _choixHauteurPlateau.Click += delegate (object sender, EventArgs e)
             {
                 _height = Hauteur;
+                _tafl = new TaflBasic(_width, _height);
                 plateau = new int[_width, _height];
                 m_PictureBoxCreateBoard.Refresh();
             };
@@ -313,15 +325,7 @@ namespace ITI.InterfaceUser
             _confirmSave.Size = new System.Drawing.Size(150, 75);
             _confirmSave.Click += delegate (object sender, EventArgs e)
             {
-                /*
-                _textBoxName = new TextBox();
-                _textBoxName.Location = new Point(this.Location.X + 500, this.Location.Y + 300);
-                _textBoxName.Text = saveName;
-                _textBoxName.Size = new System.Drawing.Size(150, 75);
-                this.Controls.Add(_textBoxName);
-                _textBoxName.BringToFront();
-                WriteXML();
-                */
+                _xml.WriteXmlTafl(_tafl);
             };
             this.Controls.Add(_confirmSave);
             _confirmSave.BringToFront();
@@ -357,40 +361,7 @@ namespace ITI.InterfaceUser
         /// ---------------
         /// testez en sauvegardant un ficher XML contenant des pions et charger ce fichier et comparer.
         /// </summary>
-        public void WriteXML()
-        {
-            XDocument _saveBoard = new XDocument();
-            new XElement("plateau",
-                new XAttribute("width", _width),
-                new XAttribute("height", _height)
-                );
-
-            for (int i = 0; i < _height; i++)
-            {
-                for (int j = 0; j < _width; j++)
-                {
-                    if (plateau[i, j] != 0)
-                    {
-                        if (plateau[i, j] == 1)
-                        {
-                            new XElement("ATK",
-                                new XAttribute("positionX", i),
-                                new XAttribute("positionY", j)
-                            );
-                        }
-                        if (plateau[i, j] == 2)
-                        {
-                            new XElement("DEF",
-                                new XAttribute("positionX", i),
-                                new XAttribute("positionY", j)
-                            );
-                        }
-                    }
-                }
-            }
-            _saveBoard.Save(_textBoxName.Text);
-        }
-
+        
         public int Longueur
         {
             get
@@ -404,14 +375,6 @@ namespace ITI.InterfaceUser
             get
             {
                 return (Convert.ToInt32(_choixHauteurPlateau.Value));
-            }
-        }
-
-        public string saveName
-        {
-            get
-            {
-                return _textBoxName.Text;
             }
         }
     }
