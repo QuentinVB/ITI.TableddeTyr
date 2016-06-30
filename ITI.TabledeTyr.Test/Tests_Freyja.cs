@@ -22,6 +22,20 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.That(true, Is.EqualTo(true));
         }
+        [Test]
+        public void Freyja_updateSensor()
+        {
+            //arrange
+            Game sut = new Game();
+            Freyja_Core aiut = new Freyja_Core(sut, true);
+            //Act
+            aiut.UpdateSensor(sut);
+            //Assert
+            Assert.That(aiut.Monitor.Sensor_ActiveGame, Is.SameAs(sut));
+            Assert.That(aiut.Monitor.Sensor_IsFreyjaAtk, Is.EqualTo(true));
+            Assert.That(aiut.Monitor.Sensor_IsAtkPlaying, Is.EqualTo(true));
+            Assert.That(aiut.Monitor.Sensor_ActiveTafl[5,5], Is.EqualTo(Pawn.King));
+        }
 
     }
 }

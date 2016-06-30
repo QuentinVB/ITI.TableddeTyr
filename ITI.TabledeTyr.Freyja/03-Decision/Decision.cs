@@ -20,6 +20,10 @@ namespace ITI.TabledeTyr.Freyja
         {
             get
             {
+                if(_incubator.Count == 0)
+                {
+                    return new Move(0, 0, 0, 0);
+                }
                 //if the firsts node of the incubator are the same, choose it (by random, by their turn value...)             
                 if (_incubator.BestNode.Score == _incubator[1].Score)
                 {

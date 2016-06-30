@@ -35,7 +35,6 @@ namespace ITI.GameCore
             _height = height;
             _tafl = new Pawn[width, height];
         }
-
         public TaflBasic(IReadOnlyTafl source)
             : this(source.Width, source.Height)
         {

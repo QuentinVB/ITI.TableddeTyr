@@ -21,6 +21,11 @@ namespace ITI.TabledeTyr.Freyja
         {
             get {
                 Move control = _ctx.Decision.Result;
+
+                if (control.destinationX == 0
+                    && control.destinationY == 0
+                    && control.sourceX == 0
+                    && control.sourceY == 0) throw new ArgumentException("There is no move stored, try updating freyja BEFORE asking any movement");
                 Helper.CheckRange(_ctx.Sensor.ActiveTafl.Width, _ctx.Sensor.ActiveTafl.Height, control.sourceX, control.sourceY); 
                 Helper.CheckRange(_ctx.Sensor.ActiveTafl.Width, _ctx.Sensor.ActiveTafl.Height, control.sourceY, control.destinationY);
                 return control;

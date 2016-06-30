@@ -358,7 +358,6 @@ namespace ITI.TabledeTyr.Test
             //assert        
             Assert.That(tafl[5,5], Is.EqualTo(readtafl[5, 5]));
         }
-
     }
 }
 

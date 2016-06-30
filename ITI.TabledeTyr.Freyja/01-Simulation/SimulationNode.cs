@@ -9,7 +9,7 @@ namespace ITI.TabledeTyr.Freyja
     /// <summary>
     /// A simulation Node contain many element to analyze
     /// </summary>
-     class SimulationNode
+    class SimulationNode
     {
         //attributes
         readonly string id; //UUID of the node
