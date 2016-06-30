@@ -66,19 +66,25 @@ namespace ITI.InterfaceUser
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public m_GameBoard(int width, int height, bool iAATK, bool IADef)
+        public m_GameBoard(InterfaceOptions interfaceOptions, bool iAATK, bool IADef)
         {
             InitializeComponent();
+            _interfaceOptions = interfaceOptions;
 
-            Game partie = new Game();
-            _interfaceOptions = new InterfaceOptions(_width, _height);
+            _interfaceOptions.FormTitle();
+            this.Text = _interfaceOptions.Title;
+            this.Refresh();
 
-            _partie = partie;
-            _plateau = partie.Tafl;
-            _height = height;
-            _width = width;
+            _height = _interfaceOptions.Height;
+            _width = _interfaceOptions.Width;
+
             _IAAtk = iAATK;
             _IADef = IADef;
+
+
+            Game partie = new Game();
+            _partie = partie;
+            _plateau = partie.Tafl;
 
 
             setGameBoardTools();

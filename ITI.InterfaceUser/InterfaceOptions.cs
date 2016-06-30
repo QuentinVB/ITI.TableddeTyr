@@ -13,7 +13,6 @@ namespace ITI.InterfaceUser
 {
     public partial class InterfaceOptions : Form
     {
-        int[,] _plateau;
 
         public int _rectanglePositionX;
         public int _rectanglePositionY;
@@ -21,17 +20,15 @@ namespace ITI.InterfaceUser
         public int _rectangleHeight;
         public int _nextRectanglePositionX;
         public int _nextRectanglePositionY;
-        int _width;
-        int _height;
-        
+        int _width = 7;
+        int _height = 7;
 
+        public bool _frenchLanguages = true;
 
-        public InterfaceOptions(int width, int height)
+        public string _formTitle;
+
+        public InterfaceOptions()
         {
-            _width = width;
-            _height = height;
-            _plateau = new int[_width, _height];
-            InitializeComponent();
 
         }
 
@@ -104,9 +101,34 @@ namespace ITI.InterfaceUser
             #endregion
         }
 
-        public void showPictureBox(object sender, PaintEventArgs e)
+        public void FormTitle()
         {
-            
+            if (_frenchLanguages == true)
+            {
+                _formTitle = ("LA TABLE DE TYR");
+                
+            }
+            else
+            {
+                _formTitle = ("TYR'S TABLE");
+            }
+        }
+
+        public string Title
+        {
+            get { return _formTitle; }
+        }
+
+        public int Width
+        {
+            get { return _width; }
+            set { _width = value; }
+        }
+
+        public int Height
+        {
+            get { return _height; }
+            set { _height = value; }
         }
 
         public int RectanglePositionX
@@ -137,6 +159,13 @@ namespace ITI.InterfaceUser
         public int NextRectanglePositionY
         {
             get { return _nextRectanglePositionY; }
+        }
+
+        public bool Languages
+        {
+            get { return _frenchLanguages; }
+            set { _frenchLanguages = value; }
+
         }
     }
 }

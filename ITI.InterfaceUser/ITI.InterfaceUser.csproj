@@ -232,6 +232,192 @@
   <ItemGroup>
     <None Include="Image\Autre\Tutoriel.php.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Jouer.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Leave.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Play.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Quitter.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Règles du jeu.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutorial.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Languages\Drapeau Anglais.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Languages\Drapeau Français.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board7x7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board9x9.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board11x11.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board13x13.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau7x7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau9x9.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau11x11.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau13x13.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board11x111.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board13x131.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board7x71.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau11x111.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau13x131.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau7x71.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\ChargerPlateau.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Créer un plateau.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Jouer attaquant.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\JouerDefenseur.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\JoueurVSIa.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\JoueurVSJoueur.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\LoadBoard.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayAttacker.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayDefender.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayerVSIA.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayerVSPlayer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Retour.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Return.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Board.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\CapturesPawns.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Conditionsdevictoires.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Leplateau.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Lescaptures.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\LesPions.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Pawns.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\VictoryCondition.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\annulersauvegarde.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\cancelsave.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\confirmersauvegarde.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\confirmsave.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insererattaquant.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insererdefenseur.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insertattacker.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insertdefender.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\removepawn.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\retirerpion.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\sauvegarder.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\saveboard.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Aide.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Continue.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Continuer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Help.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

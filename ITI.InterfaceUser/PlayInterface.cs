@@ -15,22 +15,34 @@ namespace ITI.InterfaceUser
     {
         XML_Tafl _xml;
 
+        InterfaceOptions _interfaceOptions;
+
         Button _button7x7;
         Button _button9x9;
         Button _button11x11;
         Button _button13x13;
         Button _JoueurVsJoueur;
         Button _JoueurVsFreyja;
-        Button _Atk;
-        Button _Def;
+        Button _jouerAttaquant;
+        Button _jouerDefenseur;
         Button _RetourChoixPlateau;
         Button _RetourChoixAdversaire;
         Button _CreateBoard;
         Button _loadBoard;
         Button _play;
 
-        int _width = 7;
-        int _height = 7;
+        Image button7x7;
+        Image button9x9;
+        Image button11x11;
+        Image button13x13;
+        Image CreateBoard;
+        Image LoadBoard;
+        Image Play;
+        Image JoueurVsJoueur;
+        Image JoueurVsFreyja;
+        Image jouerAttaquant;
+        Image jouerDefenseur;
+        Image retour;
 
         int _rectanglePositionX;
         int _rectanglePositionY;
@@ -38,22 +50,34 @@ namespace ITI.InterfaceUser
         int _rectangleHeight;
         int _nextRectanglePositionX;
         int _nextRectanglePositionY;
-
+        int _width;
+        int _height;
         int[,] _plateau;
 
 
-        public PlayInterface()
+        public PlayInterface(InterfaceOptions interfaceoptions)
         {
             InitializeComponent();
+            _interfaceOptions = interfaceoptions;
+
+            _interfaceOptions.FormTitle();
+            this.Text = _interfaceOptions.Title;
+            this.Refresh();
+
             setInterfaceBoard();
+            _width = _interfaceOptions.Width;
+            _height = _interfaceOptions.Height;
             setPlateau(_width, _height);
         }
 
-        private void setPlateau(int x, int y)
+        private void setPlateau(int width, int height)
         {
+            _width = _interfaceOptions.Width;
+            _height = _interfaceOptions.Height;
+
             _plateau = new int[_width, _height];
 
-            if (x == 7 && y == 7)
+            if (width == 7 && height == 7)
             {
                 _rectanglePositionX = 3;
                 _rectanglePositionY = 4;
@@ -94,7 +118,7 @@ namespace ITI.InterfaceUser
                 #endregion
             }
 
-            if(x == 9 && y == 9)
+            if(width == 9 && height == 9)
             {
                 _rectanglePositionX = 2;
                 _rectanglePositionY = 4;
@@ -134,14 +158,14 @@ namespace ITI.InterfaceUser
                 #endregion
             }
 
-            if(x == 11 && y == 11)
+            if(width == 11 && height == 11)
             {
-                _rectanglePositionX = 2;
-                _rectanglePositionY = 3;
-                _rectangleWidth = 38;
-                _rectangleHeight = 33;
-                _nextRectanglePositionX = 41;
-                _nextRectanglePositionY = 36;
+                _rectanglePositionX = 6;
+                _rectanglePositionY = 5;
+                _rectangleWidth = 37;
+                _rectangleHeight = 37;
+                _nextRectanglePositionX = 40;
+                _nextRectanglePositionY = 40;
 
                 #region hard Code plateau11x11 (test)
                 _plateau[3, 0] = 1;
@@ -186,14 +210,14 @@ namespace ITI.InterfaceUser
                 #endregion
             }
 
-            if(x == 13 && y == 13)
+            if(width == 13 && height == 13)
             {
-                _rectanglePositionX = 3;
-                _rectanglePositionY = 3;
+                _rectanglePositionX = 5;
+                _rectanglePositionY = 4;
                 _rectangleWidth = 31;
-                _rectangleHeight = 50;
+                _rectangleHeight = 31;
                 _nextRectanglePositionX = 34;
-                _nextRectanglePositionY = 50;
+                _nextRectanglePositionY = 34;
 
                 #region hard Code plateau13x13 (test)
                 _plateau[4, 0] = 1;
@@ -243,18 +267,55 @@ namespace ITI.InterfaceUser
 
         }
 
+        private void setLanguages()
+        {
+            if(_interfaceOptions.Languages == true)
+            {
+                button7x7 = ITI.InterfaceUser.Properties.Resources.plateau7x7;
+                button9x9 = ITI.InterfaceUser.Properties.Resources.plateau9x9;
+                button11x11 = ITI.InterfaceUser.Properties.Resources.plateau11x11;
+                button13x13 = ITI.InterfaceUser.Properties.Resources.plateau13x13;
+                CreateBoard = ITI.InterfaceUser.Properties.Resources.Créer_un_plateau;
+                LoadBoard = ITI.InterfaceUser.Properties.Resources.ChargerPlateau;
+                Play = ITI.InterfaceUser.Properties.Resources.Jouer_php;
+                JoueurVsJoueur = ITI.InterfaceUser.Properties.Resources.JoueurVSJoueur;
+                JoueurVsFreyja = ITI.InterfaceUser.Properties.Resources.JoueurVSIa;
+                jouerAttaquant = ITI.InterfaceUser.Properties.Resources.Jouer_attaquant;
+                jouerDefenseur = ITI.InterfaceUser.Properties.Resources.JouerDefenseur;
+                retour = ITI.InterfaceUser.Properties.Resources.Retour;
+            }
+            else
+            {
+                button7x7 = ITI.InterfaceUser.Properties.Resources.Board7x7;
+                button9x9 = ITI.InterfaceUser.Properties.Resources.Board9x9;
+                button11x11 = ITI.InterfaceUser.Properties.Resources.Board11x11;
+                button13x13 = ITI.InterfaceUser.Properties.Resources.Board13x13;
+                CreateBoard = ITI.InterfaceUser.Properties.Resources.CreateBoard;
+                LoadBoard = ITI.InterfaceUser.Properties.Resources.LoadBoard;
+                Play = ITI.InterfaceUser.Properties.Resources.Play;
+                JoueurVsJoueur = ITI.InterfaceUser.Properties.Resources.PlayerVSPlayer;
+                JoueurVsFreyja = ITI.InterfaceUser.Properties.Resources.PlayerVSIA;
+                jouerAttaquant = ITI.InterfaceUser.Properties.Resources.PlayAttacker;
+                jouerDefenseur = ITI.InterfaceUser.Properties.Resources.PlayDefender;
+                retour = ITI.InterfaceUser.Properties.Resources.Return;
+            }
+            
+        }
+
         private void setInterfaceBoard()
         {
-           
+            setLanguages();
+
             _button7x7 = new Button();
-            _button7x7.Text = "Plateau 7x7";
             _button7x7.Location = new Point(this.Location.X + 25, this.Location.Y + 5);
             _button7x7.Size = new System.Drawing.Size(150, 75);
+            _button7x7.BackgroundImage = (Image)button7x7;
+            _button7x7.BackgroundImageLayout = ImageLayout.Stretch;
             _button7x7.Click += delegate (object sender, EventArgs e)
             {
-                _width = 7;
-                _height = 7;
-                setPlateau(_width, _height);
+                _interfaceOptions.Width = 7;
+                _interfaceOptions.Height = 7;
+                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
                 
             };
@@ -263,14 +324,15 @@ namespace ITI.InterfaceUser
             
 
             _button9x9 = new Button();
-            _button9x9.Text = "Plateau 9x9";
             _button9x9.Location = new Point(_button7x7.Location.X + 180, _button7x7.Location.Y);
             _button9x9.Size = new System.Drawing.Size(150, 75);
+            _button9x9.BackgroundImage = (Image)button9x9;
+            _button9x9.BackgroundImageLayout = ImageLayout.Stretch;
             _button9x9.Click += delegate (object sender, EventArgs e)
             {
-                _width = 9;
-                _height = 9;
-                setPlateau(_width, _height);
+                _interfaceOptions.Width = 9;
+                _interfaceOptions.Height = 9;
+                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button9x9);
@@ -278,14 +340,15 @@ namespace ITI.InterfaceUser
             
             
             _button11x11 = new Button();
-            _button11x11.Text = "Plateau 11x11";
             _button11x11.Location = new Point(_button9x9.Location.X + 180, _button9x9.Location.Y);
             _button11x11.Size = new System.Drawing.Size(150, 75);
+            _button11x11.BackgroundImage = (Image)button11x11;
+            _button11x11.BackgroundImageLayout = ImageLayout.Stretch;
             _button11x11.Click += delegate (object sender, EventArgs e)
             {
-                _width = 11;
-                _height = 11;
-                setPlateau(_width, _height);
+                _interfaceOptions.Width = 11;
+                _interfaceOptions.Height = 11;
+                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button11x11);
@@ -293,27 +356,29 @@ namespace ITI.InterfaceUser
 
 
             _button13x13 = new Button();
-            _button13x13.Text = "Plateau 13x13";
             _button13x13.Location = new Point(_button11x11.Location.X + 180, _button11x11.Location.Y);
             _button13x13.Size = new System.Drawing.Size(150, 75);
+            _button13x13.BackgroundImage = (Image)button13x13;
+            _button13x13.BackgroundImageLayout = ImageLayout.Stretch;
             _button13x13.Click += delegate (object sender, EventArgs e)
             {
-                _width = 13;
-                _height = 13;
-                setPlateau(_width, _height);
+                _interfaceOptions.Width = 13;
+                _interfaceOptions.Height = 13;
+                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button13x13);
             _button13x13.BringToFront();
 
             _CreateBoard = new Button();
-            _CreateBoard.Text = "Créer un plateau personnalisé";
-            _CreateBoard.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
-            _CreateBoard.Size = new System.Drawing.Size(150, 75);
+            _CreateBoard.Location = new Point(this.Location.X + 480, this.Location.Y + 200);
+            _CreateBoard.Size = new System.Drawing.Size(250, 75);
+            _CreateBoard.BackgroundImage = (Image)CreateBoard;
+            _CreateBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _CreateBoard.Click += delegate (object sender, EventArgs e)
             {
                 this.Hide();
-                CreateBoard createBoard = new CreateBoard();
+                CreateBoard createBoard = new CreateBoard(_interfaceOptions);
                 if (createBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     createBoard.Dispose();
@@ -325,9 +390,10 @@ namespace ITI.InterfaceUser
 
 
             _loadBoard = new Button();
-            _loadBoard.Text = "Charger un plateau personnalisé";
-            _loadBoard.Location = new Point(this.Location.X + 550, this.Location.Y + 300);
-            _loadBoard.Size = new System.Drawing.Size(150, 75);
+            _loadBoard.Location = new Point(this.Location.X + 480, this.Location.Y + 300);
+            _loadBoard.Size = new System.Drawing.Size(250, 75);
+            _loadBoard.BackgroundImage = (Image)LoadBoard;
+            _loadBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _loadBoard.Click += delegate (object sender, EventArgs e)
             {
                 _xml.ReadXmlTafl(_width, _height);
@@ -336,9 +402,10 @@ namespace ITI.InterfaceUser
             _loadBoard.BringToFront();
 
             _play = new Button();
-            _play.Text = "Jouez";
             _play.Location = new Point(this.Location.X + 465, this.Location.Y + 465);
             _play.Size = new System.Drawing.Size(150, 75);
+            _play.BackgroundImage = (Image)Play;
+            _play.BackgroundImageLayout = ImageLayout.Stretch;
             _play.Click += delegate (object sender, EventArgs e)
             {
                 _loadBoard.Hide();
@@ -349,27 +416,33 @@ namespace ITI.InterfaceUser
                 _button11x11.Hide();
                 m_PictureBoxInterfaceBoard.Hide();
                 _play.Hide();
-                button1.Hide();
+                m_buttonReturn.Hide();
                 createButtonChoixAdversaire();
             };
             this.Controls.Add(_play);
             _play.BringToFront();
+
+            
+            m_buttonReturn.BackgroundImage = (Image)retour;
+            m_buttonReturn.BackgroundImageLayout = ImageLayout.Stretch;
+            m_buttonReturn.BringToFront();
         }
 
         private void createButtonChoixAdversaire()
         {
             
             _JoueurVsJoueur = new Button();
-            _JoueurVsJoueur.Text = "Joueur Contre Joueur";
             _JoueurVsJoueur.Location = new Point((this.Width / 10), (this.Height / 10));
             _JoueurVsJoueur.Size = new System.Drawing.Size(175, 175);
+            _JoueurVsJoueur.BackgroundImage = (Image)JoueurVsJoueur;
+            _JoueurVsJoueur.BackgroundImageLayout = ImageLayout.Stretch;
             _JoueurVsJoueur.Click += delegate (object sender, EventArgs e)
             {
                 _JoueurVsFreyja.Hide();
                 _JoueurVsJoueur.Hide();
                 _RetourChoixPlateau.Hide(); 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_width, _height, false, false);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, false);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -383,7 +456,7 @@ namespace ITI.InterfaceUser
                 _button9x9.Show();
                 _button11x11.Show();
                 _play.Show();
-                button1.Show();
+                m_buttonReturn.Show();
                 m_PictureBoxInterfaceBoard.Show();
             };
             this.Controls.Add(_JoueurVsJoueur);
@@ -391,9 +464,10 @@ namespace ITI.InterfaceUser
 
             
             _JoueurVsFreyja = new Button();
-            _JoueurVsFreyja.Text = "Jouer Contre Freyja";
             _JoueurVsFreyja.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
             _JoueurVsFreyja.Size = new System.Drawing.Size(175, 175);
+            _JoueurVsFreyja.BackgroundImage = (Image)JoueurVsFreyja;
+            _JoueurVsFreyja.BackgroundImageLayout = ImageLayout.Stretch;
             _JoueurVsFreyja.Click += delegate (object sender, EventArgs e)
             {
                 _JoueurVsFreyja.Hide();
@@ -405,16 +479,17 @@ namespace ITI.InterfaceUser
             _JoueurVsFreyja.BringToFront();
 
             _RetourChoixPlateau = new Button();
-            _RetourChoixPlateau.Text = "Retour au choix du plateau";
             _RetourChoixPlateau.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 2);
             _RetourChoixPlateau.Size = new System.Drawing.Size(150, 75);
+            _RetourChoixPlateau.BackgroundImage = (Image)retour;
+            _RetourChoixPlateau.BackgroundImageLayout = ImageLayout.Stretch;
             _RetourChoixPlateau.Click += delegate (object sender, EventArgs e)
             {
                 _RetourChoixPlateau.Hide();
                 _JoueurVsFreyja.Hide();
                 _JoueurVsJoueur.Hide();
                 _play.Show();
-                button1.Show();
+                m_buttonReturn.Show();
                 _button7x7.Show();
                 _button9x9.Show();
                 _button11x11.Show();
@@ -431,23 +506,19 @@ namespace ITI.InterfaceUser
         private void createButtonChoixRole()
         {
             
-            _Atk = new Button();
-            Image Attaquant;
-            Attaquant = ITI.InterfaceUser.Properties.Resources.attaquant;
-            _Atk.Text = "Jouer le rôle d'attaquant";
-            _Atk.Location = new Point((this.Width / 10), (this.Height / 10));
-            _Atk.Size = new System.Drawing.Size(175, 175);
-            _Atk.Image = (Image)Attaquant;
-            _Atk.Click += delegate (object sender, EventArgs e)
+            _jouerAttaquant = new Button();
+            _jouerAttaquant.Location = new Point((this.Width / 10), (this.Height / 10));
+            _jouerAttaquant.Size = new System.Drawing.Size(175, 175);
+            _jouerAttaquant.BackgroundImage = (Image)jouerAttaquant;
+            _jouerAttaquant.BackgroundImageLayout = ImageLayout.Stretch;
+            _jouerAttaquant.Click += delegate (object sender, EventArgs e)
             {
-                // IA Def = true;
-
-                _Atk.Hide();
-                _Def.Hide();
+                _jouerAttaquant.Hide();
+                _jouerDefenseur.Hide();
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_width, _height, false, true);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, true);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -461,29 +532,25 @@ namespace ITI.InterfaceUser
                 _button9x9.Show();
                 _button11x11.Show();
                 _play.Show();
-                button1.Show();
+                m_buttonReturn.Show();
                 m_PictureBoxInterfaceBoard.Show();
             };
-            this.Controls.Add(_Atk);
-            _Atk.BringToFront();
+            this.Controls.Add(_jouerAttaquant);
+            _jouerAttaquant.BringToFront();
 
-            _Def = new Button();
-            Image Defenseur;
-            Defenseur = ITI.InterfaceUser.Properties.Resources.défenseur;
-            _Def.Text = "Jouer le rôle de défenseur";
-            _Def.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
-            _Def.Size = new System.Drawing.Size(175, 175);
-            _Def.Image = (Image)Defenseur;
-            _Def.Click += delegate (object sender, EventArgs e)
+            _jouerDefenseur = new Button();
+            _jouerDefenseur.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
+            _jouerDefenseur.Size = new System.Drawing.Size(175, 175);
+            _jouerDefenseur.BackgroundImage = (Image)jouerDefenseur;
+            _jouerDefenseur.BackgroundImageLayout = ImageLayout.Stretch;
+            _jouerDefenseur.Click += delegate (object sender, EventArgs e)
             {
-                // IA Atk = true;
-
-                _Atk.Hide();
-                _Def.Hide();
+                _jouerAttaquant.Hide();
+                _jouerDefenseur.Hide();
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_width, _height, true, false);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, true, false);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -497,26 +564,27 @@ namespace ITI.InterfaceUser
                 _button9x9.Show();
                 _button11x11.Show();
                 _play.Show();
-                button1.Show();
+                m_buttonReturn.Show();
                 m_PictureBoxInterfaceBoard.Show();
             };
-            this.Controls.Add(_Def);
-            _Def.BringToFront();
+            this.Controls.Add(_jouerDefenseur);
+            _jouerDefenseur.BringToFront();
 
             _RetourChoixAdversaire = new Button();
-            _RetourChoixAdversaire.Text = "Retour au choix du rôle à jouer";
             _RetourChoixAdversaire.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 2);
             _RetourChoixAdversaire.Size = new System.Drawing.Size(150, 75);
+            _RetourChoixAdversaire.BackgroundImage = (Image)retour;
+            _RetourChoixAdversaire.BackgroundImageLayout = ImageLayout.Stretch;
             _RetourChoixAdversaire.Click += delegate (object sender, EventArgs e)
             {
-                _Atk.Hide();
-                _Def.Hide();
+                _jouerAttaquant.Hide();
+                _jouerDefenseur.Hide();
                 _RetourChoixAdversaire.Hide();
                 _RetourChoixPlateau.Show();
                 _JoueurVsFreyja.Show();
                 _JoueurVsJoueur.Show();
                 _play.Show();
-                button1.Show();
+                m_buttonReturn.Show();
             };
             this.Controls.Add(_RetourChoixAdversaire);
             _RetourChoixAdversaire.BringToFront();
