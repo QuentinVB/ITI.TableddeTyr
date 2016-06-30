@@ -4,14 +4,16 @@ using System.Collections.Generic;
 
 namespace ITI.TabledeTyr.Freyja
 {
+    /// <summary>
+    /// Return the result of the IA's work : 
+    /// a Move struct containing the coordinate of the pawn moved and the destination.
+    /// </summary>
     class Effector
     {
         Freyja_Core _ctx;
         /// <summary>
         /// Initializes a new instance of the <see cref="Effector"/> class.
-        /// Return the result of the IA's work : 
-        /// a Move struct containing the coordinate of the pawn moved and the destination.
-        /// </summary>
+       /// </summary>
         /// <param name="ctx">The context, Freyja's Core.</param>
         internal Effector(Freyja_Core ctx)
         {

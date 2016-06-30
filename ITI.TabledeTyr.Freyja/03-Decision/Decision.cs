@@ -20,7 +20,7 @@ namespace ITI.TabledeTyr.Freyja
         {
             get
             {
-                if(_incubator.Count == 0)
+                if(_incubator.Count == 0 || _incubator == null || _incubator[1] == null)
                 {
                     return new Move(0, 0, 0, 0);
                 }

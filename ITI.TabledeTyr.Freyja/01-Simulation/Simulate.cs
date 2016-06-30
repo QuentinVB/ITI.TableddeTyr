@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace ITI.TabledeTyr.Freyja
 {
+    /// <summary>
+    /// The simulate object will simulate each of pawn 
+    /// </summary>
     class Simulate
     {
         private Freyja_Core _ctx;
@@ -14,8 +17,7 @@ namespace ITI.TabledeTyr.Freyja
         //collection
         Incubator incubator;
         /// <summary>
-        /// Initializes a new instance of the <see cref="Simulate"/> class. 
-        /// The simulate object will simulate each of pawn
+        /// Initializes a new instance of the <see cref="Simulate"/> class.         
         /// </summary>
         /// <param name="ctx">The contexte.</param>
         public Simulate(Freyja_Core ctx)
