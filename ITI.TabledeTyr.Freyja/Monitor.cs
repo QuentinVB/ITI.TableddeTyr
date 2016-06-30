@@ -11,7 +11,7 @@ namespace ITI.TabledeTyr.Freyja
     public class Monitor
     {
         private Freyja_Core ctx;
-        readonly int _maxSimTurn = 2;
+        readonly int _maxSimTurn = 100;
         readonly int _maxIncubatedNode = 180;
         readonly SortBy _equalResultMethod = SortBy.Turn;
 

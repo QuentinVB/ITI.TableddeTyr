@@ -58,5 +58,30 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.Throws<ArgumentException>(() => result = aiut.Monitor.Effector_MoveResult);
         }
+        [Test]
+        public void Freyja_updateSimulation()
+        {
+            //arrange
+            Game sut = new Game();
+            Freyja_Core aiut = new Freyja_Core(sut, true);
+            //Act
+            aiut.UpdateFreyja();
+            //Assert
+            Assert.That(true, Is.EqualTo(true));
+        }
+        [TestCase(3,0,true)]
+        [TestCase(9,5,true)]
+        [TestCase(5,5,false)]
+        [TestCase(3,5,false)]
+        public void Freyja_IsfriendlyTool(int x, int y, bool match)
+        {
+            //arrange
+            Game sut = new Game();
+            Freyja_Core aiut = new Freyja_Core(sut, true);
+            //Act
+            bool result = AnalyzeToolbox.IsFriendly(sut.Tafl[x, y], aiut.Monitor.Sensor_IsFreyjaAtk);
+            //Assert
+            Assert.That(result, Is.EqualTo(match));
+        }
     }
 }

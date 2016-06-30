@@ -82,17 +82,37 @@ namespace ITI.TabledeTyr.Freyja
         //attributes
         readonly int _maxIncubatedNode;
         readonly SimulationNode[] _incubatorArray;
-        //constructor
+        //CONSTRUCTORS
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Incubator"/> class.
         /// </summary>
-        /// <param name="maxIncubatedNode">The maximum incubated nodes.</param>
+        /// <param name="source">The source.</param>
+        internal Incubator(Incubator source)
+           : this(source.GetMaxIncubatedNode, source._incubatorArray)
+        {
+            //_incubatorArray 
+         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Incubator"/> class.
+        /// </summary>
+        /// <param name="maxIncubatedNode">The maximum incubated node.</param>
         internal Incubator(int maxIncubatedNode)
+            : this(maxIncubatedNode, new SimulationNode[maxIncubatedNode])
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Incubator"/> class.
+        /// </summary>
+        /// <param name="maxIncubatedNode">The maximum incubated node.</param>
+        /// <param name="sourcearray">The sourcearray.</param>
+        internal Incubator(int maxIncubatedNode, SimulationNode[] sourcearray)
         {
             _maxIncubatedNode = maxIncubatedNode;
-            _incubatorArray = new SimulationNode[_maxIncubatedNode];
+            _incubatorArray = sourcearray;
         }
-        //get data       
+        //get data  
+        internal int GetMaxIncubatedNode { get { return _incubatorArray.Length; } }
         /// <summary>
         /// Gets the best node.
         /// </summary>

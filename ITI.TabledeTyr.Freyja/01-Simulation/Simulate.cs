@@ -16,6 +16,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode root;
         //collection
         Incubator incubator;
+        Incubator incubatorTemp;
         /// <summary>
         /// Initializes a new instance of the <see cref="Simulate"/> class.         
         /// </summary>
@@ -41,12 +42,14 @@ namespace ITI.TabledeTyr.Freyja
             //how many turn should i simulate ?
             for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
+                //i send the incubator for this turn into the temp version, allowing to edit while exploring the collection
+                incubatorTemp = new Incubator(incubator);
                 //i get the nodes from the incubator
                 foreach (SimulationNode node in incubator)
                 {
                     //if the turn stored into the node into the incubator is n+1 from the turn, 
                     //then break (aka :  every pawn simulable are simulated for this turn)
-                    if (node.Turn == turn+1) break;
+                    if (node ==null) break;
                     //set up a Game for reference the possible move
                     Game controlGame = new Game(node.TaflStored, node.IsAtkPlay);
 
@@ -57,11 +60,14 @@ namespace ITI.TabledeTyr.Freyja
                     {
                         for (int j = 0; j < node.TaflStored.Height; j++)
                         {
-                            if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
+                            if(node.TaflStored[i, j] != Pawn.None)
+                            { 
+                              if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
+                            }
                         }
                     }
                     //purge the pawn list to 
-                    PawnSimulatedSelector(PawnsToSimulate, controlGame);
+                    PawnsToSimulate = PawnSimulatedSelector(PawnsToSimulate, controlGame);
                     //i simulate each of these pawns
                     foreach (StudiedPawn p in PawnsToSimulate)
                     {
@@ -78,11 +84,11 @@ namespace ITI.TabledeTyr.Freyja
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
-                            incubator.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
+                            incubatorTemp.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
                         }                      
                     }
                 }
-
+                incubator= new Incubator(incubatorTemp);
             }
         }
         /// <summary>
@@ -90,13 +96,16 @@ namespace ITI.TabledeTyr.Freyja
         /// </summary>
         /// <param name="PawnToSimulate">The pawns to simulate.</param>
         /// <param name="controlGame">The control game.</param>
-        private void PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
+        private List<StudiedPawn> PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
         {
+            List<StudiedPawn> outPawnsToSimulate =  new List<StudiedPawn>(PawnsToSimulate);
+
             foreach (StudiedPawn p in PawnsToSimulate)
             {
                 //Remove useless pawn, aka : cannot move this turn
-                if (controlGame.CanMove(p.X, p.Y).IsFree == false) PawnsToSimulate.Remove(p);
+                if (controlGame.CanMove(p.X, p.Y).IsFree == false) outPawnsToSimulate.Remove(p);
             }
+            return outPawnsToSimulate;
         }
 
         /// <summary>

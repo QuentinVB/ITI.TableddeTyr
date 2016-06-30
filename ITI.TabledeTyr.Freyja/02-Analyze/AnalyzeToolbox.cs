@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
-    class AnalyzeToolbox
+    static public class AnalyzeToolbox
     {
-        static internal bool IsFriendly(Pawn target,bool isAtkTeam)
+        static public bool IsFriendly(Pawn target,bool isAtkTeam)
         {
             if (target == Pawn.Attacker && isAtkTeam == true) return true;
+            if ((target == Pawn.Defender || target == Pawn.King) && (isAtkTeam == true)) return false;
+            if (target == Pawn.Attacker && isAtkTeam == false) return false;
             if ((target == Pawn.Defender || target == Pawn.King) && (isAtkTeam == true)) return true;
             return false;
         }
