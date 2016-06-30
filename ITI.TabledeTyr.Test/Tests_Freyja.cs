@@ -36,6 +36,27 @@ namespace ITI.TabledeTyr.Test
             Assert.That(aiut.Monitor.Sensor_IsAtkPlaying, Is.EqualTo(true));
             Assert.That(aiut.Monitor.Sensor_ActiveTafl[5,5], Is.EqualTo(Pawn.King));
         }
-
+        [Test]
+        public void Freyja_Decision()
+        {
+            //arrange
+            Game sut = new Game();         
+            Move tested = new Move(0,0,0,0);
+            //Act
+            Freyja_Core aiut = new Freyja_Core(sut, true);
+            //Assert
+            Assert.That(aiut.Monitor.Decision, Is.EqualTo(tested));
+        }
+        [Test]
+        public void Freyja_updateEffector()
+        {
+            //arrange
+            Game sut = new Game();           
+            Move result;
+            //Act
+            Freyja_Core aiut = new Freyja_Core(sut, true);
+            //Assert
+            Assert.Throws<ArgumentException>(() => result = aiut.Monitor.Effector_MoveResult);
+        }
     }
 }
