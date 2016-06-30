@@ -31,4 +31,9 @@ namespace ITI.TabledeTyr.Freyja
             if (y < 0 || y > height) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(y));
         }
     }
+    public enum SortBy
+    {
+        Random,
+        Turn
+    }
 }

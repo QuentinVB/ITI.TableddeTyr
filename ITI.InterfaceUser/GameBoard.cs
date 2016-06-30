@@ -1,4 +1,5 @@
 ﻿using ITI.GameCore;
+using ITI.TabledeTyr.Freyja;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace ITI.InterfaceUser
     public partial class m_GameBoard : Form
     {
         public IReadOnlyTafl _plateau;
+        public Freyja_Core Freyja;
         bool _firstClick = false;
         bool _endTurn = false;
         public Game _partie;
@@ -79,12 +81,12 @@ namespace ITI.InterfaceUser
 
             if (_IAAtk == true)
             {
-                // créer l'IA
+                Freyja = new Freyja_Core(partie, _IAAtk);
                 IATurn();
             }
             if(_IADef == true)
             {
-                // créer l'IA
+                Freyja = new Freyja_Core(partie, !_IADef);
             }
 
             
@@ -332,11 +334,25 @@ namespace ITI.InterfaceUser
         private void IATurn()
         {
             if ((_IAAtk == true && _atkTurn == true) || (_IADef == true && _atkTurn == false))
-            { 
+            {
                 // envoyer l'état du tafl à l'IA
+                Freyja.UpdateSensor(_partie);
+                Freyja.UpdateFreyja();
                 // récupérer le mouvement effectuer par L'IA
+                Move iaMove = Freyja.UpdateEffector();
                 // appeler move pawn avec les corrodnnées données par l'iA
+                _pawnMoveX = iaMove.sourceX;
+                _pawnMoveY = iaMove.sourceY;
+                _pawnDestinationX = iaMove.destinationX;
+                _pawnDestinationY = iaMove.destinationY;
                 //vérifiez si la parie est fini.
+                _partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
+                if ((_partie.UpdateTurn() == false)
+                || (PseudoCorecheckCaptureKing() == false))       //////////////  pseudo Core
+                {
+                    showVictory();
+
+                }
             }
         }
 

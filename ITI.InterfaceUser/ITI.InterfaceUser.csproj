@@ -140,6 +140,10 @@
       <Project>{5edee01d-f675-4051-97ca-b0d3d7ebc1c9}</Project>
       <Name>ITI.GameCore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ITI.TabledeTyr.Freyja\ITI.TabledeTyr.Freyja.csproj">
+      <Project>{4b88dc40-ed60-4d33-96bd-08fe098c57a3}</Project>
+      <Name>ITI.TabledeTyr.Freyja</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Image\Pion\PionBlanc.jpg" />

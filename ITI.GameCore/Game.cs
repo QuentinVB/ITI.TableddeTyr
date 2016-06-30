@@ -5,101 +5,68 @@ namespace ITI.GameCore
 {
     public class Game : IGame
     {
-        //attributes        
+        //ATTRIBUTES        
         bool _atkTurn; //true if it is the turn of attacker, else false if the turn of defender
-        //collection
+        //COLLECTION
         ITafl _tafl;
-        //constructor(s)        
+        //CONSTRUCTOR(s)        
         /// <summary>
         /// Initializes a new instance of the <see cref="Game" /> class. If nothing recieved, create a default game and initalize the game
         /// </summary>
+        //if nothing is send : create a default game 11*11, atk start.
         public Game()
-            : this(GetDefaultTafl(), true)
+            : this(Helper.GetDefaultTafl(), true)
         {
         }
-        //if wanted to create a game based on a specific tafl :
+        //if w,h recieved, try to find a saved xml version with those size, if failed... open a blank game with those size
+        public Game(int width, int height)
+            : this(GetWHTafl(width,height), true)
+        {}
+        static IReadOnlyTafl GetWHTafl(int width, int height)
+        {
+            XML_Tafl XmlIO = new XML_Tafl();
+            TaflBasic tafl;
+            try
+            {
+                tafl = XmlIO.ReadXmlTafl(width, height);
+            }
+            catch
+            {
+                tafl = new TaflBasic(width, height);
+            }
+            
+            return tafl;
+        }
+        //if an xml string is recieved, try to load the game from it
+        /*
+        public Game(string xmlPath)
+            : this(GetXMLTafl(xmlPath), true)
+        {
+        }
+        static IReadOnlyTafl GetXMLTafl(string path)
+        {
+            XML_Tafl XmlIO = new XML_Tafl();
+            TaflBasic tafl;
+            try
+            {
+                tafl = XmlIO.ReadXmlTafl(width, height);
+            }
+            catch
+            {
+                tafl = new TaflBasic(width, height);
+            }
+            return tafl;
+        }*/
+        //Base, a game need a description of a tafl and wich player start to begin
         public Game(IReadOnlyTafl tafl, bool atkTurn)
         {
             _tafl = new TaflBasic(tafl);
             _atkTurn = atkTurn;
         }
-
-        /// <summary>
-        /// Gets the default tafl.
-        /// </summary>
-        /// <returns>A IReadOnlyTafl with default 11*11</returns>
-        static IReadOnlyTafl GetDefaultTafl()
-        {
-            //if no tafl send, create a new default tafl
-            TaflBasic tafl = new TaflBasic(11, 11);
-            //Sets board for a standard 11*11 game [Hardcoded for IT1]
-            /*
-             x 00 01 02 03 04 05 06 07 08 09 10 x
-            00 -- -- -- 01 01 01 01 01 -- -- --
-            01 -- -- -- -- -- 01 -- -- -- -- --
-            02 -- -- -- -- -- -- -- -- -- -- --
-            03 01 -- -- -- -- 10 -- -- -- -- 01
-            04 01 -- -- -- 10 10 10 -- -- -- 01
-            05 01 01 -- 10 10 11 10 10 -- 01 01
-            06 01 -- -- -- 10 10 10 -- -- -- 01
-            07 01 -- -- -- -- 10 -- -- -- -- 01
-            08 -- -- -- -- -- -- -- -- -- -- --
-            09 -- -- -- -- -- 01 -- -- -- -- --
-            10 -- -- -- 01 01 01 01 01 -- -- --
-            y
-
-            */
-
-            //Set the king and defenders
-            tafl[5, 5] = Pawn.King;
-            
-            tafl[3, 5] = Pawn.Defender;
-            tafl[4, 4] = Pawn.Defender;
-            tafl[4, 5] = Pawn.Defender;
-            tafl[4, 6] = Pawn.Defender;
-            tafl[5, 3] = Pawn.Defender;
-            tafl[5, 4] = Pawn.Defender;
-            tafl[5, 6] = Pawn.Defender;
-            tafl[5, 7] = Pawn.Defender;
-            tafl[6, 4] = Pawn.Defender;
-            tafl[6, 5] = Pawn.Defender;
-            tafl[6, 6] = Pawn.Defender;
-            tafl[7, 5] = Pawn.Defender;
-
-            //Set the attackers
-            tafl[0, 3] = Pawn.Attacker;
-            tafl[0, 4] = Pawn.Attacker;
-            tafl[0, 5] = Pawn.Attacker;
-            tafl[0, 6] = Pawn.Attacker;
-            tafl[0, 7] = Pawn.Attacker;
-            tafl[1, 5] = Pawn.Attacker;
-            tafl[3, 0] = Pawn.Attacker;
-            tafl[3, 10] = Pawn.Attacker;
-            tafl[4, 0] = Pawn.Attacker;
-            tafl[4, 10] = Pawn.Attacker;
-            tafl[5, 0] = Pawn.Attacker;
-            tafl[5, 1] = Pawn.Attacker;
-            tafl[5, 9] = Pawn.Attacker;
-            tafl[5, 10] = Pawn.Attacker;
-            tafl[6, 0] = Pawn.Attacker;
-            tafl[6, 10] = Pawn.Attacker;
-            tafl[7, 0] = Pawn.Attacker;
-            tafl[7, 10] = Pawn.Attacker;
-            tafl[9, 5] = Pawn.Attacker;
-            tafl[10, 3] = Pawn.Attacker;
-            tafl[10, 4] = Pawn.Attacker;
-            tafl[10, 5] = Pawn.Attacker;
-            tafl[10, 6] = Pawn.Attacker;
-            tafl[10, 7] = Pawn.Attacker;
-
-            return tafl;
-        }
-
-        //properties
+        //PROPERTIES
         public bool IsAtkPlaying => _atkTurn;//get the current player turn, true if it is the the attacker     
         public IReadOnlyTafl Tafl => _tafl;
-
-        //Methods - internal                
+        //METHODS - INTERNAL                
         /// <summary>
         /// check the capture around this piece then remove the piece(s).
         /// </summary>
@@ -110,11 +77,11 @@ namespace ITI.GameCore
             Pawn movedPawn = _tafl[x, y];
             List<StudiedPawn> targetedGroup = new List<StudiedPawn>(); // List defined for GetGroup to use
             //Test basic capture, then if there is a group
-            if (!CheckWalls(x, y - 1)) //up
+            if (!Helper.CheckWalls(x, y - 1, _tafl)) //up
             {
                 if (!IsFriendly(movedPawn, x, y - 1))
                 {
-                    if (_tafl[x, y - 1] != Pawn.King && (IsFriendly(movedPawn, x, y - 2) || CheckWalls(x, y - 2))) _tafl[x, y - 1] = Pawn.None;
+                    if (_tafl[x, y - 1] != Pawn.King && (IsFriendly(movedPawn, x, y - 2) || Helper.CheckWalls(x, y - 2, _tafl))) _tafl[x, y - 1] = Pawn.None;
                     if (_tafl[x, y - 1] != Pawn.None)
                     {
                         targetedGroup = new List<StudiedPawn>();
@@ -125,11 +92,11 @@ namespace ITI.GameCore
                 }
             }
 
-            if (!CheckWalls(x, y + 1)) //down
+            if (!Helper.CheckWalls(x, y + 1, _tafl)) //down
             {
                 if (!IsFriendly(movedPawn, x, y + 1))
                 {
-                    if (_tafl[x, y + 1] != Pawn.King && (IsFriendly(movedPawn, x, y + 2) || CheckWalls(x, y + 2))) _tafl[x, y + 1] = Pawn.None;
+                    if (_tafl[x, y + 1] != Pawn.King && (IsFriendly(movedPawn, x, y + 2) || Helper.CheckWalls(x, y + 2, _tafl))) _tafl[x, y + 1] = Pawn.None;
                     if (_tafl[x, y + 1] != Pawn.None)
                     {
                         targetedGroup = new List<StudiedPawn>();
@@ -138,11 +105,11 @@ namespace ITI.GameCore
                     }
                 }
             }
-            if (!CheckWalls(x - 1, y)) //left
+            if (!Helper.CheckWalls(x - 1, y, _tafl)) //left
             {
                 if (!IsFriendly(movedPawn, x - 1, y))
                 {
-                    if (_tafl[x - 1, y] != Pawn.King && (IsFriendly(movedPawn, x - 2, y) || CheckWalls(x - 2, y))) _tafl[x - 1, y] = Pawn.None;
+                    if (_tafl[x - 1, y] != Pawn.King && (IsFriendly(movedPawn, x - 2, y) || Helper.CheckWalls(x - 2, y, _tafl))) _tafl[x - 1, y] = Pawn.None;
                     if (_tafl[x - 1, y] != Pawn.None)
                     {
                         targetedGroup = new List<StudiedPawn>();
@@ -151,11 +118,11 @@ namespace ITI.GameCore
                     }
                 }
             }
-            if (!CheckWalls(x + 1, y)) //right
+            if (!Helper.CheckWalls(x + 1, y, _tafl)) //right
             {
                 if (!IsFriendly(movedPawn, x + 1, y))
                 {
-                    if (_tafl[x + 1, y] != Pawn.King && (IsFriendly(movedPawn, x + 2, y) || CheckWalls(x + 2, y))) _tafl[x + 1, y] = Pawn.None;
+                    if (_tafl[x + 1, y] != Pawn.King && (IsFriendly(movedPawn, x + 2, y) || Helper.CheckWalls(x + 2, y, _tafl))) _tafl[x + 1, y] = Pawn.None;
                     if (_tafl[x + 1, y] != Pawn.None)
                     {
                         targetedGroup = new List<StudiedPawn>();
@@ -184,7 +151,7 @@ namespace ITI.GameCore
         {
             foreach (StudiedPawn current in pawnList)
             {
-                if (CanMove(current.X, current.Y).IsFree()) return false;
+                if (CanMove(current.X, current.Y).IsFree) return false;
             }
             return true;
         }
@@ -200,24 +167,7 @@ namespace ITI.GameCore
             if ((target == Pawn.Defender || target == Pawn.King) && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) return true;
             return false;
         }
-        //Checkers for walls & fortresses
-        /// <summary>
-        /// Checks the walls pawn, forteress corner and throne If detected return true.
-        /// </summary>
-        /// <param name="x">The x.</param>
-        /// <param name="y">The y.</param>
-        /// <returns></returns>
-        internal bool CheckWalls(int x, int y)
-        {
-            if ((_tafl[x, y] == Pawn.Wall)
-                || (x == 0 && y == 0)  //Top left corner
-                || (x == 0 && y == _tafl.Height - 1) //Bot left corner
-                || (x == _tafl.Width - 1 && y == 0)  //top right corner
-                || (x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
-                || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2 && (_tafl[((_tafl.Width - 1) / 2),((_tafl.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
-                ) return true;
-            return false;
-        }
+
         /// <summary>
         ///check if victory condition for the defensor are met (aka the king reach the forteress)
         ///or stop while recieving true from <see cref="CheckCapture"/> the king is alredy dead. Long live the king !
@@ -234,39 +184,8 @@ namespace ITI.GameCore
                 ) return true;
             return false;
         }
-        #region Checkers for emptyness
-        /// <summary>
-        /// Checks if the pawn above/down/left/right is empty, if so, return true.
-        /// </summary>
-        /// <param name="x">The x.</param>
-        /// <param name="y">The y.</param>
-        /// <returns></returns>
-        internal bool CheckUp(int x, int y)
-        {
-            if (y - 1 < 0 || _tafl[x, y - 1] != Pawn.None) return false;
-            if (_tafl[x, y - 1] == Pawn.None) return true;
-            return false;
-        }
-        internal bool CheckDown(int x, int y)
-        {
-            if (y + 1 >= _tafl.Height || _tafl[x, y + 1] != Pawn.None) return false;
-            if (_tafl[x, y + 1] == Pawn.None) return true;
-            return false;
-        }
-        internal bool CheckLeft(int x, int y)
-        {
-            if (x - 1 < 0 || _tafl[x - 1, y] != Pawn.None) return false;
-            if (_tafl[x - 1, y] == Pawn.None) return true;
-            return false;
-        }
-        internal bool CheckRight(int x, int y)
-        {
-            if (x + 1 >= _tafl.Width || _tafl[x + 1, y] != Pawn.None) return false;
-            if (_tafl[x + 1, y] == Pawn.None) return true;
-            return false;
-        }
-        #endregion
-        //methodes - public        
+
+        //METHODES - PUBLIC        
         /// <summary>
         /// Determines if the pawn designated by x and y can move and how many step in each direction. 
         /// Store it inside a Struct <see cref="PossibleMove"/>.
@@ -283,17 +202,17 @@ namespace ITI.GameCore
             int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
             //Checks above
             m = y;
-            while (CheckUp(x, m))
+            while (Helper.CheckUp(x, m, _tafl))
             {
-                if (CheckWalls(x, m) && _tafl[x, y] == Pawn.King)
+                if (Helper.CheckWalls(x, m - 1, _tafl) && _tafl[x, y] == Pawn.King)
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m - 1);
                     FreeSquares.Add(studiedPawn);
                     m--;
                 }
-                else if (!CheckWalls(x, m))
+                else if (!Helper.CheckWalls(x, m - 1, _tafl))
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m - 1);
                     FreeSquares.Add(studiedPawn);
                     m--;
                 }
@@ -302,17 +221,17 @@ namespace ITI.GameCore
             }
             //Check below
             m = y;
-            while (CheckDown(x, m))
+            while (Helper.CheckDown(x, m, _tafl))
             {
-                if (CheckWalls(x, m) && _tafl[x, y] == Pawn.King)
+                if (Helper.CheckWalls(x, m + 1, _tafl) && _tafl[x, y] == Pawn.King)
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m + 1);
                     FreeSquares.Add(studiedPawn);
                     m++;
                 }
-                else if (!CheckWalls(x, m))
+                else if (!Helper.CheckWalls(x, m + 1, _tafl))
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m);
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m + 1);
                     FreeSquares.Add(studiedPawn);
                     m++;
                 }
@@ -321,17 +240,17 @@ namespace ITI.GameCore
             }
             //Check left
             m = x;
-            while (CheckLeft(m, y))
+            while (Helper.CheckLeft(m, y, _tafl))
             {
-                if (CheckWalls(m, y) && _tafl[x, y] == Pawn.King)
+                if (Helper.CheckWalls(m - 1, y, _tafl) && _tafl[x, y] == Pawn.King)
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                    StudiedPawn studiedPawn = new StudiedPawn(m - 1, y);
                     FreeSquares.Add(studiedPawn);
                     m--;
                 }
-                else if (!CheckWalls(m, y))
+                else if (!Helper.CheckWalls(m - 1, y, _tafl))
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                    StudiedPawn studiedPawn = new StudiedPawn(m - 1, y);
                     FreeSquares.Add(studiedPawn);
                     m--;
                 }
@@ -340,17 +259,17 @@ namespace ITI.GameCore
             }
             //Check right
             m = x;
-            while (CheckDown(m, y))
+            while (Helper.CheckRight(m, y, _tafl))
             {
-                if (CheckWalls(m, y) && _tafl[x, y] == Pawn.King)
+                if (Helper.CheckWalls(m + 1, y, _tafl) && _tafl[x, y] == Pawn.King)
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                    StudiedPawn studiedPawn = new StudiedPawn(m + 1, y);
                     FreeSquares.Add(studiedPawn);
                     m++;
                 }
-                else if (!CheckWalls(m, y))
+                else if (!Helper.CheckWalls(m + 1, y, _tafl))
                 {
-                    StudiedPawn studiedPawn = new StudiedPawn(m, y);
+                    StudiedPawn studiedPawn = new StudiedPawn(m + 1, y);
                     FreeSquares.Add(studiedPawn);
                     m++;
                 }
@@ -376,60 +295,21 @@ namespace ITI.GameCore
         /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
         public bool MovePawn(int x, int y, int x2, int y2)
         {
+            //Exceptions and tests goes here
             if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
             if (x == x2 && y == y2) return false;
-            if (_tafl[x, y] != Pawn.King)
+            //Core
+            foreach (StudiedPawn current in CanMove(x, y).FreeSquares)
             {
-                if (CheckWalls(x2, y2)) throw new ArgumentException("Cannot enter the throne or a forteress, you punny pawn  !");
-            }
-
-            //Verifying that the move is leggit (TryMove might've been bypassed)
-            if (x > x2)
-            {
-                for (int i = x; i > x2; i--)
+                if (current.X == x2 && current.Y == y2)
                 {
-                    if (!CheckLeft(i, y)) return false;
+                    _tafl[x2, y2] = _tafl[x, y];
+                    _tafl[x, y] = Pawn.None;
+                    return true;
                 }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
-            }
-            if (x < x2)
-            {
-                for (int i = x; i < x2; i++)
-                {
-                    if (!CheckRight(i, y)) return false;
-                }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
-            }
-            if (y > y2)
-            {
-                for (int i = y; i > y2; i--)
-                {
-                    if (!CheckUp(x, i)) return false;
-                }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
-            }
-            if (y < y2)
-            {
-                for (int i = y; i < y2; i++)
-                {
-                    if (!CheckDown(x, i)) return false;
-                }
-                _tafl[x2, y2] = _tafl[x, y];
-                _tafl[x, y] = Pawn.None;
-                CheckCapture(x2, y2);
-                return true;
             }
             return false;
 
@@ -451,8 +331,8 @@ namespace ITI.GameCore
                 return true;
             }
         }
-        //tools for freyja :p
 
+        //tools for freyja :p
         /// <summary>
         /// Copy in deep the game and the tafl.
         /// </summary>
