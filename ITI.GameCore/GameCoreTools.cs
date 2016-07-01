@@ -16,6 +16,7 @@ namespace ITI.GameCore
         public readonly int Y;
         public readonly List<StudiedPawn> FreeSquares;
         public readonly Pawn Value;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
         /// </summary>
@@ -241,7 +242,8 @@ namespace ITI.GameCore
                 new XElement("Height", _TaflRead.Height),
                 Translate()
                 );
-            taflXml.Save("./" + _TaflRead.Width + ".xml");
+            string title = string.Format("{0}_{1}", Convert.ToString(_TaflRead.Width), Convert.ToString(_TaflRead.Height)); ;
+            taflXml.Save("./" + title + ".xml");
         }
         internal List<XElement> Translate()
         {
