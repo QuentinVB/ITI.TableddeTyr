@@ -47,6 +47,7 @@ namespace ITI.TabledeTyr.Freyja
             _tafl = father.TaflStored;
             _isAtkPlaying = father._isAtkPlaying;
             _friendListGroup = new List<StudiedPawn>();
+
             checkIfMovedPawnIsStillFree(_father._originalMove.destinationX, _father._originalMove.destinationY);
             if(_score == -1)
             {
@@ -54,7 +55,7 @@ namespace ITI.TabledeTyr.Freyja
                 return _child;
             }
             setNumberOfPawn();
-            // _game.CheckCapture(_father._originalMove.destinationX, _father._originalMove.destinationY);
+            // _game.CheckCapture(_father._originalMove.destinationX, _father._originalMove.destinationY);      // move pawn
             NumberPawnCapture();
             setScoreChild();
             return _child;
