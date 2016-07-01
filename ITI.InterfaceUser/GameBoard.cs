@@ -1,4 +1,5 @@
 ﻿using ITI.GameCore;
+using ITI.TabledeTyr.Freyja;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,7 @@ namespace ITI.InterfaceUser
     public partial class m_GameBoard : Form
     {
         public IReadOnlyTafl _plateau;
+        public Freyja_Core Freyja;
         bool _firstClick = false;
         bool _endTurn = false;
         public Game _partie;
@@ -25,6 +27,8 @@ namespace ITI.InterfaceUser
         public int _pawnDestinationY;
         int _height;
         int _width;
+        bool _IAAtk = false;
+        bool _IADef = false;
 
         //Variable pour création de plateau
         int _valeurXBoard;
@@ -57,7 +61,7 @@ namespace ITI.InterfaceUser
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public m_GameBoard(int width, int height)
+        public m_GameBoard(int width, int height, bool iAATK, bool IADef)
         {
             InitializeComponent();
             Game partie = new Game();
@@ -65,15 +69,27 @@ namespace ITI.InterfaceUser
             _plateau = partie.Tafl;
             _height = height;
             _width = width;
-
+            _IAAtk = iAATK;
+            _IADef = IADef;
 
             PseudoCoreCountAtkAndDef();             //////////////  pseudo Core
             PseudoCoreAffichageTourJoueur();
             PseudoCoreAffichageNbAtkDef();
             showPlayerTurn();
             _atkTurn = _partie.IsAtkPlaying;
-
             _mvtPossible = new int[_width, _height];
+
+            if (_IAAtk == true)
+            {
+                Freyja = new Freyja_Core(partie, _IAAtk);
+                IATurn();
+            }
+            if(_IADef == true)
+            {
+                Freyja = new Freyja_Core(partie, !_IADef);
+            }
+
+            
 
             ////a utilisez lorsque les plateaux 7x7 9x9 11x11 13x13 mis en XML
             #region variable création plateau
@@ -233,16 +249,6 @@ namespace ITI.InterfaceUser
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             int x = 0, y = 0;
-            int pawnplay;
-
-            if(_atkTurn == true)
-            {
-                pawnplay = 1;
-            }
-            else
-            {
-                pawnplay = 2;
-            }
 
             for (int j = 0; j < _height; j++)
             {
@@ -257,9 +263,9 @@ namespace ITI.InterfaceUser
                             _pawnMoveX = i;
                             _pawnMoveY = j;
                             if ((_plateau[_pawnMoveX, _pawnMoveY] != 0) &&
-                                    ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.Attacker) && (pawnplay == 1))
-                                    || ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.Defender) && (pawnplay == 2))
-                                    || ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.King) && (pawnplay == 2))
+                                    ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.Attacker) && (_atkTurn == true))
+                                    || ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.Defender) && (_atkTurn == false))
+                                    || ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.King) && (_atkTurn == false))
                                     )
                             {
                                 _firstClick = true;
@@ -304,20 +310,8 @@ namespace ITI.InterfaceUser
                             if((_partie.UpdateTurn() == false)
                                 || (PseudoCorecheckCaptureKing() == false))       //////////////  pseudo Core
                             {
-                                PictureBox finDelaPartie = new PictureBox();
-                                Image endGame;
-                                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
-                                finDelaPartie.Location = new Point(0, 0);
-                                finDelaPartie.Size = new System.Drawing.Size(750, 400);
-                                finDelaPartie.Image = (Image)endGame;
-                                finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
-                                pictureBox1.Hide();
-                                _atqTurn.Hide();
-                                _defTurn.Hide();
-                                _nbAtk.Hide();
-                                _nbDef.Hide();
-                                finDelaPartie.BringToFront();
-                                this.Controls.Add(finDelaPartie);
+                                showVictory();
+
                             }else
                             {
                                 _endTurn = false;
@@ -332,6 +326,70 @@ namespace ITI.InterfaceUser
                     x = x + _valeurXBoardNextCase;
                 }
                 y = y + _valeurYBoardNextCase;
+            }
+
+            IATurn();
+        }
+
+        private void IATurn()
+        {
+            if ((_IAAtk == true && _atkTurn == true) || (_IADef == true && _atkTurn == false))
+            {
+                // envoyer l'état du tafl à l'IA
+                Freyja.UpdateSensor(_partie);
+                Freyja.UpdateFreyja();
+                // récupérer le mouvement effectuer par L'IA
+                Move iaMove = Freyja.UpdateEffector();
+                // appeler move pawn avec les corrodnnées données par l'iA
+                _pawnMoveX = iaMove.sourceX;
+                _pawnMoveY = iaMove.sourceY;
+                _pawnDestinationX = iaMove.destinationX;
+                _pawnDestinationY = iaMove.destinationY;
+                //vérifiez si la parie est fini.
+                _partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
+                if ((_partie.UpdateTurn() == false)
+                || (PseudoCorecheckCaptureKing() == false))       //////////////  pseudo Core
+                {
+                    showVictory();
+
+                }
+            }
+        }
+
+        private void showVictory()
+        {
+            if((_IAAtk == true && _atkTurn == true) || (_IADef == true && _atkTurn == false))
+            {
+                PictureBox finDelaPartie = new PictureBox();
+                Image endGame;
+                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
+                finDelaPartie.Location = new Point(0, 0);
+                finDelaPartie.Size = new System.Drawing.Size(750, 400);
+                finDelaPartie.Image = (Image)endGame;
+                finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox1.Hide();
+                _atqTurn.Hide();
+                _defTurn.Hide();
+                _nbAtk.Hide();
+                _nbDef.Hide();
+                finDelaPartie.BringToFront();
+                this.Controls.Add(finDelaPartie);
+            }else
+            {
+                PictureBox finDelaPartie = new PictureBox();
+                Image endGame;
+                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
+                finDelaPartie.Location = new Point(0, 0);
+                finDelaPartie.Size = new System.Drawing.Size(750, 400);
+                finDelaPartie.Image = (Image)endGame;
+                finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox1.Hide();
+                _atqTurn.Hide();
+                _defTurn.Hide();
+                _nbAtk.Hide();
+                _nbDef.Hide();
+                finDelaPartie.BringToFront();
+                this.Controls.Add(finDelaPartie);
             }
         }
 
@@ -446,6 +504,7 @@ namespace ITI.InterfaceUser
         }
         private void PseudoCoreAffichageNbAtkDef()
         {
+
             _nbAtk = new Button();
             _nbAtk.Text = "Nombre d'atk est de " + _AtkCount;
             _nbAtk.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
@@ -463,20 +522,26 @@ namespace ITI.InterfaceUser
 
         private void PseudoCoreCountAtkAndDef()
         {
-            for(int y = 0; y < _height; y++)
+            int def = 0;
+            int atk = 0;
+
+            for (int y = 0; y < _height; y++)
             {
                 for(int x = 0; x < _width; x++)
                 {
                     if(_plateau[x, y] == Pawn.Defender)
                     {
-                        _DefCount = _DefCount + 1;
+                        def = def + 1;
                     }
                     if(_plateau[x, y] == Pawn.Attacker)
                     {
-                        _AtkCount = _AtkCount + 1;
+                        atk = atk + 1;
                     }
                 }
             }
+
+            _AtkCount = atk;
+            _DefCount = def;
         }
 
         private bool PseudoCorecheckCaptureKing()
