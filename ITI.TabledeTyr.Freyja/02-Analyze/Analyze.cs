@@ -12,6 +12,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode _father;
         SimulationNode _child;
 
+        Game _game;
         List<StudiedPawn> _friendListGroup;
         StudiedPawn _studiedPawn;
         internal IReadOnlyTafl _tafl;
@@ -20,16 +21,17 @@ namespace ITI.TabledeTyr.Freyja
         int _destinationOriginePawnY = 0;
         int _GroupLiberty = 0;
         int _score = 0;
+        int _nbPawn;
+        int _nbPawnCapture;
 
 
         int _studiedPawnFree = 0;
         int _studiedPawnBlock;
         int totalScore = 0;
-        
-
         Move studiedPawn;
-
         bool _isAtkPlaying;
+
+
         Freyja_Core _ctx;
 
         public Analyze(Freyja_Core freyja_Core)
@@ -39,16 +41,22 @@ namespace ITI.TabledeTyr.Freyja
         
         internal SimulationNode UpdateAnalyze(SimulationNode father, SimulationNode child)
         {
-
+            _game = new Game();
             _father = father;
             _child = child;
             _tafl = father.TaflStored;
             _isAtkPlaying = father._isAtkPlaying;
             _friendListGroup = new List<StudiedPawn>();
             checkIfMovedPawnIsStillFree(_father._originalMove.destinationX, _father._originalMove.destinationY);
-            // check capture
-
-            _child.Score = _score;
+            if(_score == -1)
+            {
+                _child.Score = _score;
+                return _child;
+            }
+            setNumberOfPawn();
+            // _game.CheckCapture(_father._originalMove.destinationX, _father._originalMove.destinationY);
+            NumberPawnCapture();
+            setScoreChild();
             return _child;
         }
 
@@ -476,9 +484,37 @@ namespace ITI.TabledeTyr.Freyja
             }
         }   
 
+        private void NumberPawnCapture()
+        {
+            if (_tafl[_father._originalMove.destinationX, _father._originalMove.destinationY] == Pawn.Attacker)
+            {
+                _nbPawnCapture = _nbPawn - _tafl.AttackerCount;
+            }
+            if ((_tafl[_father._originalMove.destinationX, _father._originalMove.destinationY] == Pawn.Defender)
+                || (_tafl[_father._originalMove.destinationX, _father._originalMove.destinationY] == Pawn.King))
+            {
+                _nbPawnCapture = _nbPawn - _tafl.DefenderCount + 1 ;
+            }
 
+        }
 
+        private void setNumberOfPawn()
+        {
+            if(_tafl[_father._originalMove.destinationX, _father._originalMove.destinationY] == Pawn.Attacker)
+            {
+                _nbPawn = _tafl.AttackerCount;
+            }
+            if((_tafl[_father._originalMove.destinationX, _father._originalMove.destinationY] == Pawn.Defender)
+                || (_tafl[_father._originalMove.destinationX, _father._originalMove.destinationY] == Pawn.King))
+            {
+                _nbPawn = _tafl.DefenderCount + 1;
+            }
+        }
 
+        private void setScoreChild()
+        {
+            _child.Score = _score + _nbPawnCapture;
+        }
 
 
         /////////////////////////////////////////////
