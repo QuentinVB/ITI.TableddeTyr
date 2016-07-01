@@ -107,7 +107,7 @@ namespace ITI.InterfaceUser
             m_ButtonLanguages = new Button();
             m_ButtonLanguages.Location = new Point(725, 5);
             m_ButtonLanguages.Size = new System.Drawing.Size(25, 25);
-            _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Français;
+            _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Anglais;
             m_ButtonLanguages.BackgroundImage = (Image)_flag;
             m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
             m_ButtonLanguages.Click += delegate (object sender, EventArgs e)
@@ -115,7 +115,7 @@ namespace ITI.InterfaceUser
                 if (_interfaceOptions.Languages == true)
                 {
                     _interfaceOptions.Languages = false;
-                    _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Anglais;
+                    _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Français;
                     m_ButtonLanguages.BackgroundImage = (Image)_flag;
                     m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
                     m_ButtonLanguages.Refresh();
@@ -129,7 +129,7 @@ namespace ITI.InterfaceUser
                 else
                 {
                     _interfaceOptions.Languages = true;
-                    _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Français;
+                    _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Anglais;
                     m_ButtonLanguages.BackgroundImage = (Image)_flag;
                     m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
                     m_ButtonLanguages.Refresh();

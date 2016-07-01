@@ -12,6 +12,8 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode _father;
         SimulationNode _child;
 
+        List<StudiedPawn> _friendListGroup;
+        StudiedPawn _studiedPawn;
         internal IReadOnlyTafl _tafl;
         bool _pawnIsFree = true;
         int _destinationOriginePawnX = 0;
@@ -25,7 +27,7 @@ namespace ITI.TabledeTyr.Freyja
         int totalScore = 0;
         
 
-        Move _studiedPawn;
+        Move studiedPawn;
 
         bool _isAtkPlaying;
         Freyja_Core _ctx;
@@ -42,6 +44,7 @@ namespace ITI.TabledeTyr.Freyja
             _child = child;
             _tafl = father.TaflStored;
             _isAtkPlaying = father._isAtkPlaying;
+            _friendListGroup = new List<StudiedPawn>();
             checkIfMovedPawnIsStillFree(_father._originalMove.destinationX, _father._originalMove.destinationY);
             // check capture
 
@@ -398,8 +401,11 @@ namespace ITI.TabledeTyr.Freyja
 
         private bool checkCaptureGroup()        // vérifier si un groupe se fait capturer
         {
-            // parcours la liste
-            // appeler checkPawnInGroupLiberty(x, y)
+            foreach (StudiedPawn _studiedPawn in _friendListGroup)
+            {
+                checkPawnInGroupLiberty(_studiedPawn);
+            }
+
             if (_GroupLiberty >= 2)
             {
                 return false;
@@ -408,9 +414,12 @@ namespace ITI.TabledeTyr.Freyja
             return true;
         }
 
-        private void checkPawnInGroupLiberty(int StudiedPawnPositionX, int StudiedPawnPositionY)    // vérifier la libérté d'un pion dans un groupe
+        private void checkPawnInGroupLiberty(StudiedPawn Current)    // vérifier la libérté d'un pion dans un groupe
         {
-            if(_tafl[StudiedPawnPositionX, StudiedPawnPositionY - 1] == Pawn.None)
+            int StudiedPawnPositionX = Current.X;
+            int StudiedPawnPositionY = Current.Y;
+
+            if (_tafl[StudiedPawnPositionX, StudiedPawnPositionY - 1] == Pawn.None)
             {
                 _GroupLiberty++;
             }
@@ -430,8 +439,11 @@ namespace ITI.TabledeTyr.Freyja
 
         private void createListePawn(int studiedPawnPositionX, int studiedPawnPositionY)        // Creer la liste de pions à étudiés
         {
+            _studiedPawn = new StudiedPawn(studiedPawnPositionX, studiedPawnPositionY);
+            _friendListGroup.Add(_studiedPawn);
+
             // Check Up
-            if(_tafl[studiedPawnPositionX, studiedPawnPositionY] == _tafl[studiedPawnPositionX, studiedPawnPositionY - 1])
+            if (_tafl[studiedPawnPositionX, studiedPawnPositionY] == _tafl[studiedPawnPositionX, studiedPawnPositionY - 1])
             {
                 checkListPawnStocked(studiedPawnPositionX, studiedPawnPositionY - 1);
             }
@@ -455,12 +467,14 @@ namespace ITI.TabledeTyr.Freyja
             }
         }       
 
-        private void checkListPawnStocked(int studiedPawnPositionX, int studiedPawnPositionY)
+        private void checkListPawnStocked(int studiedPawnPositionX, int studiedPawnPositionY)       // vérifier si pion fait déja partie de la liste
         {
-            // vérifier si le pion de coordonnées [studiedPawnPositionX, studiedPawnPositionY] se trouve dans la liste.
-            // Si oui, ne rien faire
-            // Si non, l'ajouter à la liste et appeler createListPawn avec en paramètres les coordonnées du pion étudiés
-        }   // vérifier si pion fait déja partie de la liste
+            _studiedPawn = new StudiedPawn(studiedPawnPositionX, studiedPawnPositionY);
+            if(!_friendListGroup.Contains(_studiedPawn))
+            {
+                _friendListGroup.Add(_studiedPawn);
+            }
+        }   
 
 
 

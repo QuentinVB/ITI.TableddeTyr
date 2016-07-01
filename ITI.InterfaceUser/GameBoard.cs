@@ -19,6 +19,8 @@ namespace ITI.InterfaceUser
         Game _partie;
         PossibleMove _possibleMove;
         InterfaceOptions _interfaceOptions;
+        List<StudiedPawn> _studiedPossibleMove;
+        StudiedPawn _studiedPawn;
 
 
         bool _firstClick = false;
@@ -247,21 +249,18 @@ namespace ITI.InterfaceUser
                                 else
                                 {
                                     _firstClick = false;
-                                    resetHelpPlayer();
                                     pictureBox1.Refresh();
                                 }
                             }else
                             {
                                 _firstClick = false;
-                                resetHelpPlayer();
                                 pictureBox1.Refresh();
                             }
                         }
 
                         if (_endTurn == true)
                         {
-                            _plateau = _partie.Tafl;    
-                            resetHelpPlayer();
+                            _plateau = _partie.Tafl;  
                             if((_partie.UpdateTurn() == false)
                                 || (_plateau.HasKing == false))
                             {
@@ -366,83 +365,20 @@ namespace ITI.InterfaceUser
             }
         }
 
-        private void resetHelpPlayer()
-        {
-            for (int y = 0; y < _height; y++)
-            {
-                for (int x = 0; x < _width; x++)
-                {
-                    _mvtPossible[x, y] = 0;
-                }
-            }
-        }
-
         private void showHelpPlayer(int pawnLocationX, int pawnLocationY)
         {
             int x = 0, y = 0;
+            _studiedPossibleMove = new List<StudiedPawn>();
+            _studiedPawn = new StudiedPawn();
 
-            for (x = pawnLocationX - 1; x >= 0; x--)
+            _studiedPossibleMove = _possibleMove.FreeSquares;
+
+            foreach (StudiedPawn _studiedPawn in _studiedPossibleMove)
             {
-
-                if ((_plateau[x, pawnLocationY] != 0)
-                    || ((x == 0) && (pawnLocationY == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((x == 0) && (pawnLocationY == _height - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[x, pawnLocationY] = 1;
-                }
+                x = _studiedPawn.X;
+                y = _studiedPawn.Y;
+                _mvtPossible[x, y] = 1;
             }
-
-            for (x = pawnLocationX + 1; x < _width; x++)
-            {
-                if ((_plateau[x, pawnLocationY] != 0)
-                    || ((x == _width - 1) && (pawnLocationY == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((x == _width - 1) && (pawnLocationY == _height - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[x, pawnLocationY] = 1;
-                }
-            }
-
-            for (y = pawnLocationY - 1; y >= 0; y--)
-            {
-                if ((_plateau[pawnLocationX, y] != 0)
-                    || ((pawnLocationX == 0) && (y == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((pawnLocationX == _width - 1) && (y == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[pawnLocationX, y] = 1;
-                }
-            }
-
-            for (y = pawnLocationY + 1; y < _height; y++)
-            {
-                if ((_plateau[pawnLocationX, y] != 0)
-                    || ((pawnLocationX == 0) && (y == _width - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((pawnLocationX == _width - 1) && (y == _width - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[pawnLocationX, y] = 1;
-                }
-            }
-
-            if (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)
-            {
-                _mvtPossible[(_width - 1) / 2, (_height - 1) / 2] = 0;
-            }
-
         }
 
         
