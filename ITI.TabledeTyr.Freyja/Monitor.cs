@@ -12,8 +12,8 @@ namespace ITI.TabledeTyr.Freyja
     {
         private Freyja_Core ctx;
         readonly int _maxSimTurn = 2;
-        readonly int _maxIncubatedNode = 180;
-        readonly int _maxComparaison = 10;
+        readonly int _maxIncubatedNode = 5;
+        readonly int _maxComparaison = 5;
         readonly SortBy _equalResultMethod = SortBy.Turn;
 
         /// <summary>
@@ -40,7 +40,6 @@ namespace ITI.TabledeTyr.Freyja
 
         //exposure of : DECISON
         public Move Decision { get { return ctx.Decision.Result; } }
-
 
         //exposure fof : SIMULATE
 

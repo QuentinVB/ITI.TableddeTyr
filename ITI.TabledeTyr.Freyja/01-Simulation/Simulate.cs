@@ -27,19 +27,21 @@ namespace ITI.TabledeTyr.Freyja
             incubator = new Incubator(_ctx.Monitor.maxIncubatedNode);
             _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
             _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and and a copy of the tafl inside
+            if(_isSimulatedFreyjaAtk == true) root = new SimulationNode(Guid.NewGuid().ToString(), _simulatedGame.Tafl, 0,true);
         }
         /// <summary>
         /// Updates the simulation. aka : CPU and RAM now suffers !!
         /// </summary>
         internal void UpdateSimulation()
         {
-            //i create the root of the tree (getting the current state of the system)
-            root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,0,_simulatedGame.IsAtkPlaying);
+            //depend of the poeple who started : define the root state
+            //if(_ctx.Sensor.ActiveGame.IsAtkPlaying == _ctx.Sensor.IsFreyjaAtk)
+            root = new SimulationNode(Guid.NewGuid().ToString(), _simulatedGame.Tafl, 0, _simulatedGame.IsAtkPlaying);
+            //i create the root of the tree (getting the current state of the system)                       
             //turn 0 : initalisation
             //turn 1 : first turn (atk for ex)
             //turn 2 : etc...
             incubator.Add(root);//Add it to the incubator
-
             //how many turn should i simulate ?
             for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
@@ -85,7 +87,7 @@ namespace ITI.TabledeTyr.Freyja
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
                             SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
-                            data = _ctx.Analyze.UpdateAnalyze(node, data);
+                            //data = _ctx.Analyze.UpdateAnalyze(node, data);
                             incubatorTemp.Add(data);
                         }                      
                     }
@@ -120,7 +122,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode GenerateNode(int x, int y, int x2, int y2, SimulationNode father)
         {
             //create a Game for this pawn move, at this tafl state and turn state.
-            _simulatedGame = new Game(father.TaflStored, father.IsAtkPlay);
+            _simulatedGame = new Game(father.TaflStored, !father.IsAtkPlay);
             //move the pawn (finally !)
             _simulatedGame.MovePawn(x, y, x2, y2);
             _simulatedGame.UpdateTurn();
