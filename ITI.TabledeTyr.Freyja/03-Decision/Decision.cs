@@ -33,7 +33,8 @@ namespace ITI.TabledeTyr.Freyja
                     {
                        topOfTheList.Add(_incubator[i]);
                         i++;
-                    } while (_incubator.BestNode.Score == _incubator[i].Score);
+                        if (_incubator[i] == null) break;
+                    } while (_incubator.BestNode.Score == _incubator[i].Score || i == _ctx.Monitor.MaxComparaison);
 
                     //by random
                     if (_ctx.Monitor.EqualResultMethod == SortBy.Random)

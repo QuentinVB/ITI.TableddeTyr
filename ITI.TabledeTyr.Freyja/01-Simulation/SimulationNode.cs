@@ -147,25 +147,27 @@ namespace ITI.TabledeTyr.Freyja
         internal void Add(SimulationNode node)
         {
             int cursor = 0;
+            SimulationNode nodePointed = null;
             foreach (SimulationNode n in _incubatorArray)
             {
-                if (n == null)
-                {
-                    _incubatorArray[cursor] = node;
-                    break;
-                }
-                if (n.Score < node.Score)
-                {                                                
-                    for (int i = _incubatorArray.Length - 1; i >= cursor; i--)
-                    {
-                        _incubatorArray[i+1] = _incubatorArray[i];                           
-                    }
-                    _incubatorArray[cursor] = node;
-                    break;
-                }
-               
+                if (n == null) break;
+                if (n.Score <= node.Score) break;
+                nodePointed = n;             
                 cursor++;
             }
+            if (nodePointed == null)
+            {
+                _incubatorArray[cursor] = node;
+            }
+            else if (nodePointed.Score <= node.Score)
+            {                                                
+                for (int i = _incubatorArray.Length - 2; (i >= cursor && i > 0); i--)
+                {
+                    _incubatorArray[i + 1] = _incubatorArray[i];                       
+                }
+                _incubatorArray[cursor] = node;
+            }
+
         }
         //allow the array to be enumerable by the interface of Incubator
         public IEnumerator GetEnumerator()

@@ -49,7 +49,7 @@ namespace ITI.TabledeTyr.Freyja
                 {
                     //if the turn stored into the node into the incubator is n+1 from the turn, 
                     //then break (aka :  every pawn simulable are simulated for this turn)
-                    if (node ==null) break;
+                    if (node == null) break;
                     //set up a Game for reference the possible move
                     Game controlGame = new Game(node.TaflStored, node.IsAtkPlay);
 

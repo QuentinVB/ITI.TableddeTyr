@@ -35,6 +35,10 @@ namespace ITI.TabledeTyr.Freyja
             _child = child;
             _plateau = father.TaflStored;
             _isAtkPlaying = father._isAtkPlaying;
+
+            //BYPASS FOR TESTING REMOVE QUICKLY !
+            child.Score += 1;
+            //ENDBYPASS 
             return child;
         }
 

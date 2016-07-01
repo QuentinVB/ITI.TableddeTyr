@@ -83,5 +83,18 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.That(result, Is.EqualTo(match));
         }
+        [Test]
+        public void Freyja_Simulation()
+        {
+            //arrange
+            Game sut = new Game();
+            Freyja_Core aiut = new Freyja_Core(sut, true);
+            Move tested = new Move(0, 0, 0, 0);
+            //Act
+            aiut.UpdateFreyja();
+            Move retour = aiut.Monitor.Decision;
+            //Assert
+            Assert.That(retour, Is.Not.EqualTo(tested));
+        }
     }
 }
