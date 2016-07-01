@@ -63,7 +63,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "m_GameBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "La Table de Tyr";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
