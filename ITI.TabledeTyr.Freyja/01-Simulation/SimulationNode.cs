@@ -127,7 +127,7 @@ namespace ITI.TabledeTyr.Freyja
         /// <summary>
         /// Gets the count of the stored simulation in the incubator.
         /// </summary>
-        internal int Count
+        internal int Length
         { 
             get{ return _incubatorArray.Length; }
         }
@@ -151,8 +151,8 @@ namespace ITI.TabledeTyr.Freyja
             foreach (SimulationNode n in _incubatorArray)
             {
                 if (n == null) break;
-                if (n.Score <= node.Score) break;
-                nodePointed = n;             
+                if (n.Score <= node.Score) { nodePointed = n; break; }
+                nodePointed = n;
                 cursor++;
             }
             if (nodePointed == null)
@@ -161,7 +161,7 @@ namespace ITI.TabledeTyr.Freyja
             }
             else if (nodePointed.Score <= node.Score)
             {                                                
-                for (int i = _incubatorArray.Length - 2; (i >= cursor && i > 0); i--)
+                for (int i = _incubatorArray.Length - 2; (i >= cursor && i >= 0); i--)
                 {
                     _incubatorArray[i + 1] = _incubatorArray[i];                       
                 }

@@ -39,6 +39,7 @@ namespace ITI.TabledeTyr.Freyja
             //turn 1 : first turn (atk for ex)
             //turn 2 : etc...
             incubator.Add(root);//Add it to the incubator
+
             //how many turn should i simulate ?
             for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
@@ -52,7 +53,6 @@ namespace ITI.TabledeTyr.Freyja
                     if (node == null) break;
                     //set up a Game for reference the possible move
                     Game controlGame = new Game(node.TaflStored, node.IsAtkPlay);
-
                     //which pawns should i simulate ?
                     List<StudiedPawn> PawnsToSimulate = new List<StudiedPawn>();
                     //get all the pawn that are on the team i simulate
@@ -84,7 +84,9 @@ namespace ITI.TabledeTyr.Freyja
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
-                            incubatorTemp.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
+                            SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
+                            data = _ctx.Analyze.UpdateAnalyze(node, data);
+                            incubatorTemp.Add(data);
                         }                      
                     }
                 }
@@ -126,7 +128,14 @@ namespace ITI.TabledeTyr.Freyja
             Move thisMove = new Move(x, y, x2, y2);
             _key = Guid.NewGuid().ToString();//generating new key
             //creating new node containing ALL the data
-            return new SimulationNode(_key, _simulatedGame.Tafl, 0, father.OriginMove, !father.IsAtkPlay,father.Turn+1,thisMove );
+            //if the origin move is on, replace to create the root of the tree
+            Move origin;
+            if (father.OriginMove.sourceX == 0
+                && father.OriginMove.sourceY == 0
+                && father.OriginMove.destinationX == 0
+                && father.OriginMove.destinationY == 0) origin = thisMove;
+            else { origin = father.OriginMove; }               
+            return new SimulationNode(_key, _simulatedGame.Tafl, 0, origin, !father.IsAtkPlay,father.Turn+1,thisMove );
         }
         internal Incubator Incubator
         {

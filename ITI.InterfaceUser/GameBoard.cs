@@ -250,11 +250,15 @@ namespace ITI.InterfaceUser
                                 {
                                     _firstClick = false;
                                     pictureBox1.Refresh();
+                                    j = _height - 1;
+                                    break;
                                 }
                             }else
                             {
                                 _firstClick = false;
                                 pictureBox1.Refresh();
+                                j = _height - 1;
+                                break;
                             }
                         }
 
@@ -271,6 +275,8 @@ namespace ITI.InterfaceUser
                                 _endTurn = false;
                                 _firstClick = false;
                                 pictureBox1.Refresh();
+                                j = _height - 1;
+                                break;
                             }
                             
                         }

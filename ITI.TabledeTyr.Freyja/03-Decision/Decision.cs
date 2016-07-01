@@ -15,12 +15,11 @@ namespace ITI.TabledeTyr.Freyja
             _ctx = freyja_Core;
             _incubator = _ctx.Simulate.Incubator;
         }
-
         internal Move Result
         {
             get
             {
-                if(_incubator.Count == 0 || _incubator == null || _incubator[1] == null)
+                if(_incubator.Length == 0 || _incubator == null || _incubator[1] == null)
                 {
                     return new Move(0, 0, 0, 0);
                 }
@@ -29,13 +28,13 @@ namespace ITI.TabledeTyr.Freyja
                 {
                     List<SimulationNode> topOfTheList = new List<SimulationNode>();
                     int i=0;
-                    do
+                    while (_incubator.BestNode.Score == _incubator[i].Score)
                     {
-                       topOfTheList.Add(_incubator[i]);
+                        if ( _incubator[i] == null) break;
+                        topOfTheList.Add(_incubator[i]);
                         i++;
-                        if (_incubator[i] == null) break;
-                    } while (_incubator.BestNode.Score == _incubator[i].Score || i == _ctx.Monitor.MaxComparaison);
-
+                        if (i == _ctx.Monitor.MaxComparaison || i >= _incubator.Length - 1) break;
+                    } 
                     //by random
                     if (_ctx.Monitor.EqualResultMethod == SortBy.Random)
                     {
