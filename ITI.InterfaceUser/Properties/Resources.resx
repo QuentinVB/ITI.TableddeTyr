@@ -160,19 +160,175 @@
   <data name="Victoire" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\Autre\Victoire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Jouer_php" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Autre\Jouer.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Nefataffel_1097" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Image\Autre\Nefataffel_1097.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Board11x11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Board11x11.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Board13x13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Board13x13.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Board7x7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Board7x7.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Board9x9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Board9x9.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ChargerPlateau" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\ChargerPlateau.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CreateBoard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Créer_un_plateau" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Créer un plateau.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Drapeau_Anglais" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Languages\Drapeau Anglais.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Drapeau_Français" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Languages\Drapeau Français.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="JouerDefenseur" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\JouerDefenseur.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Jouer_attaquant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Jouer attaquant.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Jouer_php" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Jouer.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="JoueurVSIa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\JoueurVSIa.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="JoueurVSJoueur" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\JoueurVSJoueur.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Leave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Leave.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LoadBoard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\LoadBoard.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plateau11x11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\plateau11x11.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plateau13x13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\plateau13x13.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plateau7x7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\plateau7x7.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="plateau9x9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\plateau9x9.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Play" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Play.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayAttacker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\PlayAttacker.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayDefender" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\PlayDefender.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerVSIA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\PlayerVSIA.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PlayerVSPlayer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\PlayerVSPlayer.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Quitter_php" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Autre\Quitter.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Image\Bouton\Quitter.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Retour" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Retour.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Return" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Return.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rules" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Règles_du_jeu_php" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Autre\Règles du jeu.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Image\Bouton\Règles du jeu.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tutorial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Tutorial.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tutoriel_php" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Image\Autre\Tutoriel.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Image\Bouton\Tutoriel.php.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="annulersauvegarde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\annulersauvegarde.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Board" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\Board.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="cancelsave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\cancelsave.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CapturesPawns" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\CapturesPawns.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Conditionsdevictoires" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\Conditionsdevictoires.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="confirmersauvegarde" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\confirmersauvegarde.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="confirmsave" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\confirmsave.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="insererattaquant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\insererattaquant.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="insererdefenseur" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\insererdefenseur.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="insertattacker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\insertattacker.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="insertdefender" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\insertdefender.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Leplateau" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\Leplateau.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Lescaptures" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\Lescaptures.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LesPions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\LesPions.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pawns" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\Pawns.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="removepawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\removepawn.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="retirerpion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\retirerpion.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sauvegarder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\sauvegarder.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="saveboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\CreateBoard\saveboard.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VictoryCondition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Rules\VictoryCondition.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Aide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Tutoriel\Aide.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Continue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Tutoriel\Continue.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Continuer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Tutoriel\Continuer.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Image\Bouton\Tutoriel\Help.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
