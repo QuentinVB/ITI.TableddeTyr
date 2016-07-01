@@ -64,7 +64,7 @@ namespace ITI.InterfaceUser
             _confirmSave.Hide();
             _cancelSave.Hide();
             _tafl = new TaflBasic(_width, _height);
-
+            _xml = new XML_Tafl();
             plateau = new int[_width, _height];
         }
 

@@ -68,6 +68,7 @@ namespace ITI.InterfaceUser
             _width = _interfaceOptions.Width;
             _height = _interfaceOptions.Height;
             setPlateau(_width, _height);
+            _xml = new XML_Tafl();
         }
 
         private void setPlateau(int width, int height)
@@ -396,7 +397,8 @@ namespace ITI.InterfaceUser
             _loadBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _loadBoard.Click += delegate (object sender, EventArgs e)
             {
-                _xml.ReadXmlTafl(_width, _height);
+                
+                _plateau = _xml.ReadXmlTafl(7, 7);
             };
             this.Controls.Add(_loadBoard);
             _loadBoard.BringToFront();

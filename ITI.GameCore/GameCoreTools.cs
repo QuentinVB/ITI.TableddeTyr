@@ -233,7 +233,7 @@ namespace ITI.GameCore
         internal TaflBasic TaflToWrite { get { return _TaflWrite; } private set { _TaflWrite = value; } }
         public XML_Tafl()
         { }
-        public void WriteXmlTafl(IReadOnlyTafl TaflRead)
+        public void WriteXmlTafl(TaflBasic TaflRead)
         {
             _TaflRead = TaflRead;
             //file = new XmlTextReader(Book.title + ".xml");
@@ -244,6 +244,12 @@ namespace ITI.GameCore
                 );
             string title = string.Format("{0}_{1}", Convert.ToString(_TaflRead.Width), Convert.ToString(_TaflRead.Height)); ;
             taflXml.Save("./" + title + ".xml");
+        }
+        //surcharge
+        public void WriteXmlTafl(IReadOnlyTafl TaflRead)
+        {
+            TaflBasic send = new TaflBasic(TaflRead);
+            WriteXmlTafl(send);
         }
         internal List<XElement> Translate()
         {
