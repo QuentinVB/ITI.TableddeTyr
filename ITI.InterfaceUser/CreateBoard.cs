@@ -24,8 +24,8 @@ namespace ITI.InterfaceUser
         Image putAtkOnBoard;
         Button _putDefOnBoard;
         Image putDefOnBoard;
-        Button _putCase;
-        Image putCase;
+        Button _putEmptyCase;
+        Image putEmptyCase;
         Button _confirmSave;
         Image confirmSave;
         Button _cancelSave;
@@ -46,8 +46,6 @@ namespace ITI.InterfaceUser
 
         int _width = 7;
         int _height = 7;
-
-        int[,] plateau;
         int _pawn = 0;
 
         public CreateBoard(InterfaceOptions interfaceOptions)
@@ -65,7 +63,6 @@ namespace ITI.InterfaceUser
             _cancelSave.Hide();
             _tafl = new TaflBasic(_width, _height);
             _xml = new XML_Tafl();
-            plateau = new int[_width, _height];
         }
 
         private void setLanguages()
@@ -75,7 +72,7 @@ namespace ITI.InterfaceUser
                 
                 putAtkOnBoard = ITI.InterfaceUser.Properties.Resources.insererattaquant;
                 putDefOnBoard = ITI.InterfaceUser.Properties.Resources.insererdefenseur;
-                putCase = ITI.InterfaceUser.Properties.Resources.retirerpion;
+                putEmptyCase = ITI.InterfaceUser.Properties.Resources.retirerpion;
                 confirmSave = ITI.InterfaceUser.Properties.Resources.confirmersauvegarde;
                 cancelSave = ITI.InterfaceUser.Properties.Resources.annulersauvegarde;
                 save = ITI.InterfaceUser.Properties.Resources.sauvegarder;
@@ -85,7 +82,7 @@ namespace ITI.InterfaceUser
             {
                 putAtkOnBoard = ITI.InterfaceUser.Properties.Resources.insertattacker;
                 putDefOnBoard = ITI.InterfaceUser.Properties.Resources.insertdefender;
-                putCase = ITI.InterfaceUser.Properties.Resources.removepawn;
+                putEmptyCase = ITI.InterfaceUser.Properties.Resources.removepawn;
                 confirmSave = ITI.InterfaceUser.Properties.Resources.confirmsave;
                 cancelSave = ITI.InterfaceUser.Properties.Resources.cancelsave;
                 save = ITI.InterfaceUser.Properties.Resources.saveboard;
@@ -122,7 +119,7 @@ namespace ITI.InterfaceUser
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
 
-            plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
+            _tafl[(_width - 1) / 2, (_height - 1) / 2] = GameCore.Pawn.King; ;
 
             int x = 0;
             int y = _rectanglePositionY;
@@ -147,17 +144,17 @@ namespace ITI.InterfaceUser
                         Board.DrawImage(Case, Rect);
                     }
                     
-                    if (plateau[i, j] == 1) 
+                    if (_tafl[i, j] == GameCore.Pawn.Attacker) 
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (plateau[i, j] == 2) 
+                    if (_tafl[i, j] == GameCore.Pawn.Defender) 
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (plateau[i, j] == 3)   
+                    if (_tafl[i, j] == GameCore.Pawn.King)   
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
                         Pawn.DrawImage(Piece, Rect);
@@ -190,7 +187,10 @@ namespace ITI.InterfaceUser
                         }
                         else
                         {
-                            plateau[i, j] = _pawn;
+                            if(_pawn == 0)
+                            {
+                                _tafl[i, j] = Pawn.None;
+                            }
                             if(_pawn == 1)
                             {
                                 _tafl[i, j] = Pawn.Attacker;
@@ -240,18 +240,18 @@ namespace ITI.InterfaceUser
             _putDefOnBoard.BringToFront();
             #endregion
 
-            #region Button générer plateau 
-            _putCase = new Button();
-            _putCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
-            _putCase.Size = new System.Drawing.Size(200, 75);
-            _putCase.BackgroundImage = (Image)putCase;
-            _putCase.BackgroundImageLayout = ImageLayout.Stretch;
-            _putCase.Click += delegate (object sender, EventArgs e)
+            #region Button
+            _putEmptyCase = new Button();
+            _putEmptyCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _putEmptyCase.Size = new System.Drawing.Size(200, 75);
+            _putEmptyCase.BackgroundImage = (Image)putEmptyCase;
+            _putEmptyCase.BackgroundImageLayout = ImageLayout.Stretch;
+            _putEmptyCase.Click += delegate (object sender, EventArgs e)
             {
                 _pawn = 0;
             };
-            this.Controls.Add(_putCase);
-            _putCase.BringToFront();
+            this.Controls.Add(_putEmptyCase);
+            _putEmptyCase.BringToFront();
             #endregion
 
             #region numericUpDown longueur plateau
@@ -266,7 +266,6 @@ namespace ITI.InterfaceUser
             {
                 _width = Longueur;
                 _tafl = new TaflBasic(_width, _height);
-                plateau = new int[_width, _height];
                 m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixLongueurPlateau);
@@ -285,7 +284,6 @@ namespace ITI.InterfaceUser
             {
                 _height = Hauteur;
                 _tafl = new TaflBasic(_width, _height);
-                plateau = new int[_width, _height];
                 m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixHauteurPlateau);
@@ -304,7 +302,7 @@ namespace ITI.InterfaceUser
                 _putDefOnBoard.Hide();
                 _choixHauteurPlateau.Hide();
                 _choixLongueurPlateau.Hide();
-                _putCase.Hide();
+                _putEmptyCase.Hide();
                 _save.Hide();
                 _confirmSave.Show();
                 _cancelSave.Show();
@@ -322,6 +320,18 @@ namespace ITI.InterfaceUser
             _confirmSave.Click += delegate (object sender, EventArgs e)
             {
                 _xml.WriteXmlTafl(_tafl);
+                if(_interfaceOptions.Languages == true)
+                {
+                    MessageBox.Show("Votre plateau a été sauvergardé !",
+                    "Sauvegarde du plateau",
+                    MessageBoxButtons.OK);
+                }else
+                {
+                    MessageBox.Show("Your board has been save !",
+                    "Save Board",
+                    MessageBoxButtons.OK);
+                }
+                
             };
             this.Controls.Add(_confirmSave);
             _confirmSave.BringToFront();
@@ -342,12 +352,14 @@ namespace ITI.InterfaceUser
                 _choixHauteurPlateau.Show();
                 _putAtkOnBoard.Show();
                 _putDefOnBoard.Show();
-                _putCase.Show();
+                _putEmptyCase.Show();
                 _save.Show();
             };
             this.Controls.Add(_cancelSave);
             _cancelSave.BringToFront();
             #endregion
+
+           
 
             m_buttonReturn.BackgroundImage = (Image)retour;
             m_buttonReturn.BackgroundImageLayout = ImageLayout.Stretch;

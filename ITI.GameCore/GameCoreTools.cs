@@ -253,9 +253,9 @@ namespace ITI.GameCore
         }
         internal List<XElement> Translate()
         {
-            for (int i = 0; i < _TaflRead.Width; i++)
+            for (int j = 0; j < _TaflRead.Width; j++)
             {
-                for (int j = 0; j < _TaflRead.Height; j++)
+                for (int i = 0; i < _TaflRead.Height; i++)
                 {
                     if (_TaflRead[i,j] == Pawn.None)
                     {

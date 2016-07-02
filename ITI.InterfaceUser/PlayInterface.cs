@@ -14,6 +14,7 @@ namespace ITI.InterfaceUser
     public partial class PlayInterface : Form
     {
         XML_Tafl _xml;
+        TaflBasic _tafl;
 
         InterfaceOptions _interfaceOptions;
 
@@ -52,7 +53,6 @@ namespace ITI.InterfaceUser
         int _nextRectanglePositionY;
         int _width;
         int _height;
-        int[,] _plateau;
 
 
         public PlayInterface(InterfaceOptions interfaceoptions)
@@ -68,7 +68,10 @@ namespace ITI.InterfaceUser
             _width = _interfaceOptions.Width;
             _height = _interfaceOptions.Height;
             setPlateau(_width, _height);
+            
             _xml = new XML_Tafl();
+
+            _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
         }
 
         private void setPlateau(int width, int height)
@@ -76,7 +79,7 @@ namespace ITI.InterfaceUser
             _width = _interfaceOptions.Width;
             _height = _interfaceOptions.Height;
 
-            _plateau = new int[_width, _height];
+            _tafl = new TaflBasic(_width, _height);
 
             if (width == 7 && height == 7)
             {
@@ -86,37 +89,6 @@ namespace ITI.InterfaceUser
                 _rectangleHeight = 60;
                 _nextRectanglePositionX = 64;
                 _nextRectanglePositionY = 63;
-
-                #region hard Code plateau7x7 (test)
-
-                _plateau[2, 0] = 1;
-                _plateau[3, 0] = 1;
-                _plateau[4, 0] = 1;
-                _plateau[3, 1] = 1;
-                _plateau[0, 2] = 1;
-                _plateau[0, 3] = 1;
-                _plateau[0, 4] = 1;
-                _plateau[1, 3] = 1;
-                _plateau[6, 2] = 1;
-                _plateau[6, 3] = 1;
-                _plateau[6, 4] = 1;
-                _plateau[5, 3] = 1;
-                _plateau[2, 6] = 1;
-                _plateau[3, 6] = 1;
-                _plateau[4, 6] = 1;
-                _plateau[3, 5] = 1;
-
-                _plateau[2, 2] = 2;
-                _plateau[2, 3] = 2;
-                _plateau[2, 4] = 2;
-                _plateau[3, 2] = 2;
-                _plateau[3, 4] = 2;
-                _plateau[4, 2] = 2;
-                _plateau[4, 3] = 2;
-                _plateau[4, 4] = 2;
-
-                _plateau[3, 3] = 3;
-                #endregion
             }
 
             if(width == 9 && height == 9)
@@ -127,36 +99,6 @@ namespace ITI.InterfaceUser
                 _rectangleHeight = 46;
                 _nextRectanglePositionX = 50;
                 _nextRectanglePositionY = 49;
-
-                #region hard Code plateau9x9 (test)
-                _plateau[3, 0] = 1;
-                _plateau[4, 0] = 1;
-                _plateau[5, 0] = 1;
-                _plateau[4, 1] = 1;
-                _plateau[0, 3] = 1;
-                _plateau[0, 4] = 1;
-                _plateau[0, 5] = 1;
-                _plateau[1, 4] = 1;
-                _plateau[8, 3] = 1;
-                _plateau[8, 4] = 1;
-                _plateau[8, 5] = 1;
-                _plateau[7, 4] = 1;
-                _plateau[3, 8] = 1;
-                _plateau[4, 8] = 1;
-                _plateau[5, 8] = 1;
-                _plateau[4, 7] = 1;
-
-                _plateau[2, 4] = 2;
-                _plateau[3, 4] = 2;
-                _plateau[4, 2] = 2;
-                _plateau[4, 3] = 2;
-                _plateau[5, 4] = 2;
-                _plateau[6, 4] = 2;
-                _plateau[4, 5] = 2;
-                _plateau[4, 6] = 2;
-
-                _plateau[4, 4] = 3;
-                #endregion
             }
 
             if(width == 11 && height == 11)
@@ -167,48 +109,6 @@ namespace ITI.InterfaceUser
                 _rectangleHeight = 37;
                 _nextRectanglePositionX = 40;
                 _nextRectanglePositionY = 40;
-
-                #region hard Code plateau11x11 (test)
-                _plateau[3, 0] = 1;
-                _plateau[4, 0] = 1;
-                _plateau[5, 0] = 1;
-                _plateau[6, 0] = 1;
-                _plateau[7, 0] = 1;
-                _plateau[0, 3] = 1;
-                _plateau[0, 4] = 1;
-                _plateau[0, 5] = 1;
-                _plateau[0, 6] = 1;
-                _plateau[0, 7] = 1;
-                _plateau[10, 3] = 1;
-                _plateau[10, 4] = 1;
-                _plateau[10, 5] = 1;
-                _plateau[10, 6] = 1;
-                _plateau[10, 7] = 1;
-                _plateau[3, 10] = 1;
-                _plateau[4, 10] = 1;
-                _plateau[5, 10] = 1;
-                _plateau[6, 10] = 1;
-                _plateau[7, 10] = 1;
-                _plateau[5, 1] = 1;
-                _plateau[5, 9] = 1;
-                _plateau[1, 5] = 1;
-                _plateau[9, 5] = 1;
-
-                _plateau[5, 4] = 2;
-                _plateau[5, 6] = 2;
-                _plateau[5, 3] = 2;
-                _plateau[5, 7] = 2;
-                _plateau[4, 4] = 2;
-                _plateau[4, 5] = 2;
-                _plateau[4, 6] = 2;
-                _plateau[6, 4] = 2;
-                _plateau[6, 5] = 2;
-                _plateau[6, 6] = 2;
-                _plateau[3, 5] = 2;
-                _plateau[7, 5] = 2;
-
-                _plateau[5, 5] = 3;
-                #endregion
             }
 
             if(width == 13 && height == 13)
@@ -219,53 +119,7 @@ namespace ITI.InterfaceUser
                 _rectangleHeight = 31;
                 _nextRectanglePositionX = 34;
                 _nextRectanglePositionY = 34;
-
-                #region hard Code plateau13x13 (test)
-                _plateau[4, 0] = 1;
-                _plateau[5, 0] = 1;
-                _plateau[6, 0] = 1;
-                _plateau[7, 0] = 1;
-                _plateau[8, 0] = 1;
-                _plateau[0, 4] = 1;
-                _plateau[0, 5] = 1;
-                _plateau[0, 6] = 1;
-                _plateau[0, 7] = 1;
-                _plateau[0, 8] = 1;
-                _plateau[12, 4] = 1;
-                _plateau[12, 5] = 1;
-                _plateau[12, 6] = 1;
-                _plateau[12, 7] = 1;
-                _plateau[12, 8] = 1;
-                _plateau[4, 12] = 1;
-                _plateau[5, 12] = 1;
-                _plateau[6, 12] = 1;
-                _plateau[7, 12] = 1;
-                _plateau[8, 12] = 1;
-                _plateau[6, 1] = 1;
-                _plateau[6, 11] = 1;
-                _plateau[1, 6] = 1;
-                _plateau[11, 6] = 1;
-
-                _plateau[6, 3] = 2;
-                _plateau[6, 4] = 2;
-                _plateau[6, 5] = 2;
-                _plateau[6, 7] = 2;
-                _plateau[6, 8] = 2;
-                _plateau[6, 9] = 2;
-                _plateau[3, 6] = 2;
-                _plateau[4, 6] = 2;
-                _plateau[5, 6] = 2;
-                _plateau[7, 6] = 2;
-                _plateau[8, 6] = 2;
-                _plateau[9, 6] = 2;
-
-                _plateau[6, 6] = 3;
-
-                #endregion
             }
-
-
-
         }
 
         private void setLanguages()
@@ -317,6 +171,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.Width = 7;
                 _interfaceOptions.Height = 7;
                 setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
                 
             };
@@ -334,6 +189,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.Width = 9;
                 _interfaceOptions.Height = 9;
                 setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button9x9);
@@ -350,6 +206,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.Width = 11;
                 _interfaceOptions.Height = 11;
                 setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button11x11);
@@ -366,6 +223,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.Width = 13;
                 _interfaceOptions.Height = 13;
                 setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button13x13);
@@ -398,7 +256,10 @@ namespace ITI.InterfaceUser
             _loadBoard.Click += delegate (object sender, EventArgs e)
             {
                 
-                _plateau = _xml.ReadXmlTafl(7, 7);
+                _tafl = _xml.ReadXmlTafl(7, 7);
+                _width = 7;
+                _height = 7;
+                m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_loadBoard);
             _loadBoard.BringToFront();
@@ -633,17 +494,17 @@ namespace ITI.InterfaceUser
                         Board.DrawImage(Case, Rect);
                     }
 
-                    if (_plateau[i, j] == 1)
+                    if (_tafl[i, j] == GameCore.Pawn.Attacker)
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (_plateau[i, j] == 2)
+                    if (_tafl[i, j] == GameCore.Pawn.Defender)
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (_plateau[i, j] == 3)
+                    if (_tafl[i, j] == GameCore.Pawn.King)
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
                         Pawn.DrawImage(Piece, Rect);

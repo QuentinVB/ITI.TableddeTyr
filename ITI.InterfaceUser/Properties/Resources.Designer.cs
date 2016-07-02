@@ -751,6 +751,26 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap sauvegardeterminé {
+            get {
+                object obj = ResourceManager.GetObject("sauvegardeterminé", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save_complete {
+            get {
+                object obj = ResourceManager.GetObject("save_complete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap saveboard {
             get {
                 object obj = ResourceManager.GetObject("saveboard", resourceCulture);

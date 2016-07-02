@@ -169,11 +169,11 @@ namespace ITI.InterfaceUser
                         Board.DrawImage(Case, Rect);
                     }
                     
-                    if(_mvtPossible[i, j] == 1)     //////////////  pseudo Core
+                    if(_mvtPossible[i, j] == 1) 
                     {
-                        Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);      //////////////  pseudo Core
-                        Board.DrawImage(mvtPiecePossible, Rect);        //////////////  pseudo Core
-                    }       //////////////  pseudo Core
+                        Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight); 
+                        Board.DrawImage(mvtPiecePossible, Rect);  
+                    } 
 
                     if (_plateau[i, j] == GameCore.Pawn.Attacker)
                     {
@@ -227,7 +227,7 @@ namespace ITI.InterfaceUser
                             {
                                 _firstClick = true;
                                 _possibleMove = _partie.CanMove(_pawnMoveX, _pawnMoveY);
-                                
+                                resetHelpPlayer();
                                 showHelpPlayer(_pawnMoveX, _pawnMoveY);
                                 pictureBox1.Refresh();
                                 
@@ -249,6 +249,7 @@ namespace ITI.InterfaceUser
                                 else
                                 {
                                     _firstClick = false;
+                                    resetHelpPlayer();
                                     pictureBox1.Refresh();
                                     j = _height - 1;
                                     break;
@@ -256,6 +257,7 @@ namespace ITI.InterfaceUser
                             }else
                             {
                                 _firstClick = false;
+                                resetHelpPlayer();
                                 pictureBox1.Refresh();
                                 j = _height - 1;
                                 break;
@@ -274,6 +276,7 @@ namespace ITI.InterfaceUser
                             {
                                 _endTurn = false;
                                 _firstClick = false;
+                                resetHelpPlayer();
                                 pictureBox1.Refresh();
                                 j = _height - 1;
                                 break;
@@ -368,6 +371,17 @@ namespace ITI.InterfaceUser
                 _nbDef.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
+            }
+        }
+
+        private void resetHelpPlayer()
+        {
+            for(int j = 0; j < _height; j++)
+            {
+                for(int i = 0; i < _width; i++)
+                {
+                    _mvtPossible[i, j] = 0;
+                }
             }
         }
 
