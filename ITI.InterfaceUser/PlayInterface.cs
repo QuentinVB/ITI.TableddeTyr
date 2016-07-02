@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ITI.InterfaceUser
 {
@@ -32,27 +33,14 @@ namespace ITI.InterfaceUser
         Button _loadBoard;
         Button _play;
 
-        Image button7x7;
-        Image button9x9;
-        Image button11x11;
-        Image button13x13;
-        Image CreateBoard;
-        Image LoadBoard;
-        Image Play;
-        Image JoueurVsJoueur;
-        Image JoueurVsFreyja;
-        Image jouerAttaquant;
-        Image jouerDefenseur;
-        Image retour;
-
         int _rectanglePositionX;
         int _rectanglePositionY;
         int _rectangleWidth;
         int _rectangleHeight;
         int _nextRectanglePositionX;
         int _nextRectanglePositionY;
-        int _width;
-        int _height;
+
+        string _nameTaflLoad;
 
 
         public PlayInterface(InterfaceOptions interfaceoptions)
@@ -60,26 +48,25 @@ namespace ITI.InterfaceUser
             InitializeComponent();
             _interfaceOptions = interfaceoptions;
 
-            _interfaceOptions.FormTitle();
             this.Text = _interfaceOptions.Title;
             this.Refresh();
 
             setInterfaceBoard();
-            _width = _interfaceOptions.Width;
-            _height = _interfaceOptions.Height;
-            setPlateau(_width, _height);
             
+            setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+
+            listboxtest.Hide();
+            listboxtest.ScrollAlwaysVisible = true;
+
             _xml = new XML_Tafl();
 
-            _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
+            _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
         }
 
         private void setPlateau(int width, int height)
         {
-            _width = _interfaceOptions.Width;
-            _height = _interfaceOptions.Height;
 
-            _tafl = new TaflBasic(_width, _height);
+            _tafl = new TaflBasic(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
 
             if (width == 7 && height == 7)
             {
@@ -122,56 +109,22 @@ namespace ITI.InterfaceUser
             }
         }
 
-        private void setLanguages()
-        {
-            if(_interfaceOptions.Languages == true)
-            {
-                button7x7 = ITI.InterfaceUser.Properties.Resources.plateau7x7;
-                button9x9 = ITI.InterfaceUser.Properties.Resources.plateau9x9;
-                button11x11 = ITI.InterfaceUser.Properties.Resources.plateau11x11;
-                button13x13 = ITI.InterfaceUser.Properties.Resources.plateau13x13;
-                CreateBoard = ITI.InterfaceUser.Properties.Resources.Créer_un_plateau;
-                LoadBoard = ITI.InterfaceUser.Properties.Resources.ChargerPlateau;
-                Play = ITI.InterfaceUser.Properties.Resources.Jouer_php;
-                JoueurVsJoueur = ITI.InterfaceUser.Properties.Resources.JoueurVSJoueur;
-                JoueurVsFreyja = ITI.InterfaceUser.Properties.Resources.JoueurVSIa;
-                jouerAttaquant = ITI.InterfaceUser.Properties.Resources.Jouer_attaquant;
-                jouerDefenseur = ITI.InterfaceUser.Properties.Resources.JouerDefenseur;
-                retour = ITI.InterfaceUser.Properties.Resources.Retour;
-            }
-            else
-            {
-                button7x7 = ITI.InterfaceUser.Properties.Resources.Board7x7;
-                button9x9 = ITI.InterfaceUser.Properties.Resources.Board9x9;
-                button11x11 = ITI.InterfaceUser.Properties.Resources.Board11x11;
-                button13x13 = ITI.InterfaceUser.Properties.Resources.Board13x13;
-                CreateBoard = ITI.InterfaceUser.Properties.Resources.CreateBoard;
-                LoadBoard = ITI.InterfaceUser.Properties.Resources.LoadBoard;
-                Play = ITI.InterfaceUser.Properties.Resources.Play;
-                JoueurVsJoueur = ITI.InterfaceUser.Properties.Resources.PlayerVSPlayer;
-                JoueurVsFreyja = ITI.InterfaceUser.Properties.Resources.PlayerVSIA;
-                jouerAttaquant = ITI.InterfaceUser.Properties.Resources.PlayAttacker;
-                jouerDefenseur = ITI.InterfaceUser.Properties.Resources.PlayDefender;
-                retour = ITI.InterfaceUser.Properties.Resources.Return;
-            }
-            
-        }
+        
 
         private void setInterfaceBoard()
         {
-            setLanguages();
 
             _button7x7 = new Button();
             _button7x7.Location = new Point(this.Location.X + 25, this.Location.Y + 5);
             _button7x7.Size = new System.Drawing.Size(150, 75);
-            _button7x7.BackgroundImage = (Image)button7x7;
+            _button7x7.BackgroundImage = (Image)_interfaceOptions.ImageBoard7x7;
             _button7x7.BackgroundImageLayout = ImageLayout.Stretch;
             _button7x7.Click += delegate (object sender, EventArgs e)
             {
-                _interfaceOptions.Width = 7;
-                _interfaceOptions.Height = 7;
-                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
-                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
+                _interfaceOptions.BoardWidth = 7;
+                _interfaceOptions.BoardHeight = 7;
+                setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
                 
             };
@@ -182,14 +135,14 @@ namespace ITI.InterfaceUser
             _button9x9 = new Button();
             _button9x9.Location = new Point(_button7x7.Location.X + 180, _button7x7.Location.Y);
             _button9x9.Size = new System.Drawing.Size(150, 75);
-            _button9x9.BackgroundImage = (Image)button9x9;
+            _button9x9.BackgroundImage = (Image)_interfaceOptions.ImageBoard9x9;
             _button9x9.BackgroundImageLayout = ImageLayout.Stretch;
             _button9x9.Click += delegate (object sender, EventArgs e)
             {
-                _interfaceOptions.Width = 9;
-                _interfaceOptions.Height = 9;
-                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
-                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
+                _interfaceOptions.BoardWidth = 9;
+                _interfaceOptions.BoardHeight = 9;
+                setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button9x9);
@@ -199,14 +152,14 @@ namespace ITI.InterfaceUser
             _button11x11 = new Button();
             _button11x11.Location = new Point(_button9x9.Location.X + 180, _button9x9.Location.Y);
             _button11x11.Size = new System.Drawing.Size(150, 75);
-            _button11x11.BackgroundImage = (Image)button11x11;
+            _button11x11.BackgroundImage = (Image)_interfaceOptions.ImageBoard11x11;
             _button11x11.BackgroundImageLayout = ImageLayout.Stretch;
             _button11x11.Click += delegate (object sender, EventArgs e)
             {
-                _interfaceOptions.Width = 11;
-                _interfaceOptions.Height = 11;
-                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
-                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
+                _interfaceOptions.BoardWidth = 11;
+                _interfaceOptions.BoardHeight = 11;
+                setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button11x11);
@@ -216,14 +169,14 @@ namespace ITI.InterfaceUser
             _button13x13 = new Button();
             _button13x13.Location = new Point(_button11x11.Location.X + 180, _button11x11.Location.Y);
             _button13x13.Size = new System.Drawing.Size(150, 75);
-            _button13x13.BackgroundImage = (Image)button13x13;
+            _button13x13.BackgroundImage = (Image)_interfaceOptions.ImageBoard13x13;
             _button13x13.BackgroundImageLayout = ImageLayout.Stretch;
             _button13x13.Click += delegate (object sender, EventArgs e)
             {
-                _interfaceOptions.Width = 13;
-                _interfaceOptions.Height = 13;
-                setPlateau(_interfaceOptions.Width, _interfaceOptions.Height);
-                _tafl = _xml.ReadXmlTafl(_interfaceOptions.Width, _interfaceOptions.Height);
+                _interfaceOptions.BoardWidth = 13;
+                _interfaceOptions.BoardHeight = 13;
+                setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_button13x13);
@@ -232,7 +185,7 @@ namespace ITI.InterfaceUser
             _CreateBoard = new Button();
             _CreateBoard.Location = new Point(this.Location.X + 480, this.Location.Y + 200);
             _CreateBoard.Size = new System.Drawing.Size(250, 75);
-            _CreateBoard.BackgroundImage = (Image)CreateBoard;
+            _CreateBoard.BackgroundImage = (Image)_interfaceOptions.ImageCreateBoard;
             _CreateBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _CreateBoard.Click += delegate (object sender, EventArgs e)
             {
@@ -251,23 +204,32 @@ namespace ITI.InterfaceUser
             _loadBoard = new Button();
             _loadBoard.Location = new Point(this.Location.X + 480, this.Location.Y + 300);
             _loadBoard.Size = new System.Drawing.Size(250, 75);
-            _loadBoard.BackgroundImage = (Image)LoadBoard;
+            _loadBoard.BackgroundImage = (Image)_interfaceOptions.ImageLoadBoard;
             _loadBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _loadBoard.Click += delegate (object sender, EventArgs e)
             {
-                
-                _tafl = _xml.ReadXmlTafl(7, 7);
-                _width = 7;
-                _height = 7;
-                m_PictureBoxInterfaceBoard.Refresh();
+                listboxtest.Items.Clear();
+                string[] fileName;
+                string road = _interfaceOptions.RoadTaflSave;
+                fileName = Directory.GetFileSystemEntries(road);
+                string test;
+                foreach (string current in fileName)
+                {
+                    test = Path.GetFileNameWithoutExtension(current);
+                    listboxtest.Items.Add(test);
+                    listboxtest.Show();
+                    m_PictureBoxInterfaceBoard.Hide();
+                }
             };
             this.Controls.Add(_loadBoard);
             _loadBoard.BringToFront();
 
+
+
             _play = new Button();
             _play.Location = new Point(this.Location.X + 465, this.Location.Y + 465);
             _play.Size = new System.Drawing.Size(150, 75);
-            _play.BackgroundImage = (Image)Play;
+            _play.BackgroundImage = (Image)_interfaceOptions.ImagePlay;
             _play.BackgroundImageLayout = ImageLayout.Stretch;
             _play.Click += delegate (object sender, EventArgs e)
             {
@@ -286,7 +248,7 @@ namespace ITI.InterfaceUser
             _play.BringToFront();
 
             
-            m_buttonReturn.BackgroundImage = (Image)retour;
+            m_buttonReturn.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
             m_buttonReturn.BackgroundImageLayout = ImageLayout.Stretch;
             m_buttonReturn.BringToFront();
         }
@@ -297,7 +259,7 @@ namespace ITI.InterfaceUser
             _JoueurVsJoueur = new Button();
             _JoueurVsJoueur.Location = new Point((this.Width / 10), (this.Height / 10));
             _JoueurVsJoueur.Size = new System.Drawing.Size(175, 175);
-            _JoueurVsJoueur.BackgroundImage = (Image)JoueurVsJoueur;
+            _JoueurVsJoueur.BackgroundImage = (Image)_interfaceOptions.ImagePlayerVsPlayer;
             _JoueurVsJoueur.BackgroundImageLayout = ImageLayout.Stretch;
             _JoueurVsJoueur.Click += delegate (object sender, EventArgs e)
             {
@@ -329,7 +291,7 @@ namespace ITI.InterfaceUser
             _JoueurVsFreyja = new Button();
             _JoueurVsFreyja.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
             _JoueurVsFreyja.Size = new System.Drawing.Size(175, 175);
-            _JoueurVsFreyja.BackgroundImage = (Image)JoueurVsFreyja;
+            _JoueurVsFreyja.BackgroundImage = (Image)_interfaceOptions.ImagePlayerVsIa;
             _JoueurVsFreyja.BackgroundImageLayout = ImageLayout.Stretch;
             _JoueurVsFreyja.Click += delegate (object sender, EventArgs e)
             {
@@ -344,7 +306,7 @@ namespace ITI.InterfaceUser
             _RetourChoixPlateau = new Button();
             _RetourChoixPlateau.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 2);
             _RetourChoixPlateau.Size = new System.Drawing.Size(150, 75);
-            _RetourChoixPlateau.BackgroundImage = (Image)retour;
+            _RetourChoixPlateau.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
             _RetourChoixPlateau.BackgroundImageLayout = ImageLayout.Stretch;
             _RetourChoixPlateau.Click += delegate (object sender, EventArgs e)
             {
@@ -372,7 +334,7 @@ namespace ITI.InterfaceUser
             _jouerAttaquant = new Button();
             _jouerAttaquant.Location = new Point((this.Width / 10), (this.Height / 10));
             _jouerAttaquant.Size = new System.Drawing.Size(175, 175);
-            _jouerAttaquant.BackgroundImage = (Image)jouerAttaquant;
+            _jouerAttaquant.BackgroundImage = (Image)_interfaceOptions.ImagePlayAttacker;
             _jouerAttaquant.BackgroundImageLayout = ImageLayout.Stretch;
             _jouerAttaquant.Click += delegate (object sender, EventArgs e)
             {
@@ -404,7 +366,7 @@ namespace ITI.InterfaceUser
             _jouerDefenseur = new Button();
             _jouerDefenseur.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
             _jouerDefenseur.Size = new System.Drawing.Size(175, 175);
-            _jouerDefenseur.BackgroundImage = (Image)jouerDefenseur;
+            _jouerDefenseur.BackgroundImage = (Image)_interfaceOptions.ImagePlayDefender;
             _jouerDefenseur.BackgroundImageLayout = ImageLayout.Stretch;
             _jouerDefenseur.Click += delegate (object sender, EventArgs e)
             {
@@ -436,7 +398,7 @@ namespace ITI.InterfaceUser
             _RetourChoixAdversaire = new Button();
             _RetourChoixAdversaire.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 2);
             _RetourChoixAdversaire.Size = new System.Drawing.Size(150, 75);
-            _RetourChoixAdversaire.BackgroundImage = (Image)retour;
+            _RetourChoixAdversaire.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
             _RetourChoixAdversaire.BackgroundImageLayout = ImageLayout.Stretch;
             _RetourChoixAdversaire.Click += delegate (object sender, EventArgs e)
             {
@@ -474,16 +436,16 @@ namespace ITI.InterfaceUser
 
             int x = 0, y = _rectanglePositionY;
 
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
                 x = _rectanglePositionX;
-                for (int i = 0; i < _width; i++)
+                for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
                     if (((i == 0) && (j == 0))
-                            || ((i == _width - 1) && (j == _height - 1))
-                            || ((i == _width - 1) && (j == 0))
-                            || ((i == 0) && (j == _height - 1))
-                            || ((i == ((_width - 1) / 2)) && (j == ((_height - 1) / 2))))
+                            || ((i == _interfaceOptions.BoardWidth - 1) && (j == _interfaceOptions.BoardHeight - 1))
+                            || ((i == _interfaceOptions.BoardWidth - 1) && (j == 0))
+                            || ((i == 0) && (j == _interfaceOptions.BoardHeight - 1))
+                            || ((i == ((_interfaceOptions.BoardWidth - 1) / 2)) && (j == ((_interfaceOptions.BoardHeight - 1) / 2))))
                     {
                         Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);
                         Board.DrawImage(caseInterdite, Rect);
@@ -513,6 +475,50 @@ namespace ITI.InterfaceUser
                 }
                 y = y + _nextRectanglePositionY;
             }
+        }
+
+        private void plateau_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _nameTaflLoad = listboxtest.SelectedItem.ToString();
+            
+
+            if(_interfaceOptions.Languages == true)
+            {
+                if (MessageBox.Show("Chargement du plateau !",
+                   "Voulez vous charger ce plateau ?",
+                   MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    _tafl = _xml.ReadXmlTafl(7, 7);
+                    //_tafl = _xml.ReadXmlTafl(_nameTaflLoad);
+                    listboxtest.Hide();
+                    m_PictureBoxInterfaceBoard.Show();
+                    m_PictureBoxInterfaceBoard.Refresh();
+                }
+                else
+                {
+                    listboxtest.Hide();
+                    m_PictureBoxInterfaceBoard.Show();
+                }
+            }else
+            {
+                if (MessageBox.Show("Loading Board !",
+                "Do you want to load this board ?",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    _tafl = _xml.ReadXmlTafl(7, 7);
+                    //_tafl = _xml.ReadXmlTafl(_nameTaflLoad);
+                    listboxtest.Hide();
+                    m_PictureBoxInterfaceBoard.Show();
+                    m_PictureBoxInterfaceBoard.Refresh();
+                }
+                else
+                {
+                    listboxtest.Hide();
+                    m_PictureBoxInterfaceBoard.Show();
+                }
+                
+            }
+            
         }
     }
 }

@@ -15,15 +15,18 @@ namespace ITI.InterfaceUser
         InterfaceOptions _interfaceOptions;
 
         Button _continue;
-        Image Continue;
         Button _showGameRules;
-        Image showGameRules;
         Button _help;
-        Image help;
-        Image retour;
+
         TextBox _showTutorielExplanation;
 
-        
+
+        Image retour;
+        Image help;
+        Image showGameRules;
+        Image Continue;
+
+
         bool _atkTurn = true;
         int _width = 7;
         int _height = 7;
@@ -62,8 +65,7 @@ namespace ITI.InterfaceUser
             InitializeComponent();
             _interfaceOptions = interfaceOptions;
             setLanguages();
-
-            _interfaceOptions.FormTitle();
+            
             this.Text = _interfaceOptions.Title;
             this.Refresh();
 

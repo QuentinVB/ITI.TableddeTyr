@@ -20,24 +20,15 @@ namespace ITI.InterfaceUser
         Button m_ButtonLeaveGame;
         Button m_ButtonLanguages;
 
-        Image _flag;
-        Image _Play;
-        Image _Rules;
-        Image _Tutorial;
-        Image _Leave;
-
-
         public Menu()
         {
             InitializeComponent();
             _interfaceOptions = new InterfaceOptions();
 
-            _interfaceOptions.FormTitle();
             this.Text = _interfaceOptions.Title;
             this.Refresh();
-
+            
             setMenuBoard();
-            setMenuButtonLanguages();
         }
 
         private void setMenuBoard()
@@ -107,91 +98,62 @@ namespace ITI.InterfaceUser
             m_ButtonLanguages = new Button();
             m_ButtonLanguages.Location = new Point(725, 5);
             m_ButtonLanguages.Size = new System.Drawing.Size(25, 25);
-            _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Anglais;
-            m_ButtonLanguages.BackgroundImage = (Image)_flag;
+            m_ButtonLanguages.BackgroundImage = (Image)_interfaceOptions.ImageLanguagesGame;
             m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
             m_ButtonLanguages.Click += delegate (object sender, EventArgs e)
             {
                 if (_interfaceOptions.Languages == true)
                 {
                     _interfaceOptions.Languages = false;
-                    _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Français;
-                    m_ButtonLanguages.BackgroundImage = (Image)_flag;
-                    m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
+                    m_ButtonLanguages.BackgroundImage = (Image)_interfaceOptions.ImageLanguagesGame;
                     m_ButtonLanguages.Refresh();
-
-                    _interfaceOptions.FormTitle();
+                    
                     this.Text = _interfaceOptions.Title;
                     this.Refresh();
-
-                    setMenuButtonLanguages();
+                    _interfaceOptions.setEverythingInCorrectLanguages();
+                    setLanguagesButton();
                 }
                 else
                 {
                     _interfaceOptions.Languages = true;
-                    _flag = ITI.InterfaceUser.Properties.Resources.Drapeau_Anglais;
-                    m_ButtonLanguages.BackgroundImage = (Image)_flag;
-                    m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
+                    m_ButtonLanguages.BackgroundImage = (Image)_interfaceOptions.ImageLanguagesGame;
                     m_ButtonLanguages.Refresh();
-
-                    _interfaceOptions.FormTitle();
+                    
                     this.Text = _interfaceOptions.Title;
                     this.Refresh();
-
-                    setMenuButtonLanguages();
+                    _interfaceOptions.setEverythingInCorrectLanguages();
+                    setLanguagesButton();
                 }
             };
             this.Controls.Add(m_ButtonLanguages);
             m_ButtonLanguages.BringToFront();
+
+            setLanguagesButton();
         }
 
-        private void setMenuButtonLanguages()
+        private void setLanguagesButton()
         {
-            if (_interfaceOptions.Languages == true)
-            {
-                _Play = ITI.InterfaceUser.Properties.Resources.Jouer_php;
-                m_ButtonPlay.BackgroundImage = (Image)_Play;
-                m_ButtonPlay.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonPlay.Refresh();
+            m_ButtonLanguages.BackgroundImage = (Image)_interfaceOptions.ImageLanguagesGame;
+            m_ButtonLanguages.BackgroundImageLayout = ImageLayout.Stretch;
 
-                _Rules = ITI.InterfaceUser.Properties.Resources.Règles_du_jeu_php;
-                m_ButtonRules.BackgroundImage = (Image)_Rules;
-                m_ButtonRules.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonRules.Refresh();
+            m_ButtonLeaveGame.BackgroundImage = (Image)_interfaceOptions.ImageLeave;
+            m_ButtonLeaveGame.BackgroundImageLayout = ImageLayout.Stretch;
 
-                _Tutorial = ITI.InterfaceUser.Properties.Resources.Tutoriel_php;
-                m_ButtonTutorial.BackgroundImage = (Image)_Tutorial;
-                m_ButtonTutorial.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonTutorial.Refresh();
+            m_ButtonTutorial.BackgroundImage = (Image)_interfaceOptions.ImageTutorial;
+            m_ButtonTutorial.BackgroundImageLayout = ImageLayout.Stretch;
 
-                _Leave = ITI.InterfaceUser.Properties.Resources.Quitter_php;
-                m_ButtonLeaveGame.BackgroundImage = (Image)_Leave;
-                m_ButtonLeaveGame.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonLeaveGame.Refresh();
-            }
+            m_ButtonRules.BackgroundImage = (Image)_interfaceOptions.ImageRules;
+            m_ButtonRules.BackgroundImageLayout = ImageLayout.Stretch;
 
-            if (_interfaceOptions.Languages == false)
-            {
-                _Play = ITI.InterfaceUser.Properties.Resources.Play;
-                m_ButtonPlay.BackgroundImage = (Image)_Play;
-                m_ButtonPlay.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonPlay.Refresh();
+            m_ButtonPlay.BackgroundImage = (Image)_interfaceOptions.ImagePlay;
+            m_ButtonPlay.BackgroundImageLayout = ImageLayout.Stretch;
 
-                _Rules = ITI.InterfaceUser.Properties.Resources.Rules;
-                m_ButtonRules.BackgroundImage = (Image)_Rules;
-                m_ButtonRules.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonRules.Refresh();
 
-                _Tutorial = ITI.InterfaceUser.Properties.Resources.Tutorial;
-                m_ButtonTutorial.BackgroundImage = (Image)_Tutorial;
-                m_ButtonTutorial.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonTutorial.Refresh();
-
-                _Leave = ITI.InterfaceUser.Properties.Resources.Leave;
-                m_ButtonLeaveGame.BackgroundImage = (Image)_Leave;
-                m_ButtonLeaveGame.BackgroundImageLayout = ImageLayout.Stretch;
-                m_ButtonLeaveGame.Refresh();
-            }
+            m_ButtonLanguages.Refresh();
+            m_ButtonLeaveGame.Refresh();
+            m_ButtonTutorial.Refresh();
+            m_ButtonPlay.Refresh();
+            m_ButtonRules.Refresh();
         }
     }
 }
