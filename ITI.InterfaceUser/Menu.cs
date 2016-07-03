@@ -19,6 +19,7 @@ namespace ITI.InterfaceUser
         Button m_ButtonTutorial;
         Button m_ButtonLeaveGame;
         Button m_ButtonLanguages;
+        Button m_ButtonSetInterfaceOptions;
 
         public Menu()
         {
@@ -33,6 +34,22 @@ namespace ITI.InterfaceUser
 
         private void setMenuBoard()
         {
+            m_ButtonSetInterfaceOptions = new Button();
+            m_ButtonSetInterfaceOptions.Location = new Point(this.Location.X + 5, this.Location.Y + 5);
+            m_ButtonSetInterfaceOptions.Size = new System.Drawing.Size(25, 25);
+            m_ButtonSetInterfaceOptions.Click += delegate (object sender, EventArgs r)
+            {
+                this.Enabled = false;
+                RessourcesPack ressources = new RessourcesPack(_interfaceOptions);
+                if (ressources.ShowDialog() == DialogResult.Cancel)
+                {
+                    ressources.Dispose();
+                }
+                this.Enabled = true;
+            };
+            this.Controls.Add(m_ButtonSetInterfaceOptions);
+            m_ButtonSetInterfaceOptions.BringToFront();
+
             m_ButtonPlay = new Button();
             m_ButtonPlay.Location = new Point(300, 100);
             m_ButtonPlay.Size = new System.Drawing.Size(150, 75);
@@ -147,6 +164,9 @@ namespace ITI.InterfaceUser
 
             m_ButtonPlay.BackgroundImage = (Image)_interfaceOptions.ImagePlay;
             m_ButtonPlay.BackgroundImageLayout = ImageLayout.Stretch;
+
+            m_ButtonSetInterfaceOptions.BackgroundImage = (Image)_interfaceOptions.ImageRessourcesPack;
+            m_ButtonSetInterfaceOptions.BackgroundImageLayout = ImageLayout.Stretch;
 
 
             m_ButtonLanguages.Refresh();

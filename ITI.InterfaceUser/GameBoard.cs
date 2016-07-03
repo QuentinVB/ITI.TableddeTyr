@@ -104,11 +104,11 @@ namespace ITI.InterfaceUser
 
                     if (_tafl[i, j] == GameCore.Pawn.Attacker)
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageAtkPawn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.Defender)
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageDefPawn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.King)
                     {
@@ -245,14 +245,31 @@ namespace ITI.InterfaceUser
             // Update playerTurn
             if(_partie.IsAtkPlaying == true)
             {
-                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawn;
+                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawnDesignUse;
                 _playerTurn.Refresh();
             }else
             {
-                _playerTurn.Image = (Image)_interfaceOptions.ImageDefPawn;
+                _playerTurn.Image = (Image)_interfaceOptions.ImageDefPawnDesignUse;
                 _playerTurn.Refresh();
             }
             
+        }
+
+        private void newGame()
+        {
+            _endTurn = false;
+            _firstClick = false;
+            Game partie = new Game();
+            _endTurn = false;
+            _firstClick = false;
+            _partie = partie;
+            _tafl = partie.Tafl;
+            resetHelpPlayer();
+            m_GameBoardPictureBoxTafl.Refresh();
+            m_GameBoardPictureBoxTafl.Show();
+            _nbAtk.Show();
+            _nbDef.Show();
+            _playerTurn.Show();
         }
 
         private void showVictory()
@@ -270,6 +287,29 @@ namespace ITI.InterfaceUser
                 _playerTurn.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
+                if(_interfaceOptions.Languages == true)
+                {
+                    if(MessageBox.Show("Vous avez perdu une bataille mais pas la guerre! Se battre de nouveau ?", "Defaite", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        newGame();
+                        finDelaPartie.Hide();
+                    }
+                    else
+                    {
+                        this.DialogResult = DialogResult.Cancel;
+                    }
+                }else
+                {
+                    if(MessageBox.Show("You have lost a battle but not the war! Do you want to fight again ? ", "Game Over", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        newGame();
+                        finDelaPartie.Hide();
+                    }
+                    else
+                    {
+                        this.DialogResult = DialogResult.Cancel;
+                    }
+                }
             }else
             {
                 PictureBox finDelaPartie = new PictureBox();
@@ -277,12 +317,67 @@ namespace ITI.InterfaceUser
                 finDelaPartie.Size = new System.Drawing.Size(750, 400);
                 finDelaPartie.Image = (Image)_interfaceOptions.ImagePlayerVictory;
                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
+                finDelaPartie.Show();
                 m_GameBoardPictureBoxTafl.Hide();
                 _nbAtk.Hide();
                 _nbDef.Hide();
                 _playerTurn.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
+                if (_interfaceOptions.Languages == true)
+                {
+                    if (_partie.IsAtkPlaying == true)
+                    {
+                        if (MessageBox.Show("L'assaillant à gagner la partie. Bien joué ! Voulez-vous rejouez une partie ?", "Victoire", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            newGame();
+                            finDelaPartie.Hide();
+                        }
+                        else
+                        {
+                            this.DialogResult = DialogResult.Cancel;
+                        }
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Le Roi s'est échappé! Le defenseur à gagner la partie. Bien joué ! Voulez-vous rejouez une partie ?", "Victoire", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            newGame();
+                            finDelaPartie.Hide();
+                        }
+                        else
+                        {
+                            this.DialogResult = DialogResult.Cancel;
+                        }
+                    }
+
+                }else
+                {
+                    if (_partie.IsAtkPlaying == true)
+                    {
+                        if (MessageBox.Show("The attacker has won the game. Well played ! Do you want to play again ?", "Victory", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            newGame();
+                            finDelaPartie.Hide();
+                        }
+                        else
+                        {
+                            this.DialogResult = DialogResult.Cancel;
+                        }
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("The king has escaped. The defender has won the game. Well played ! Do you want to play again ?", "Victory", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            newGame();
+                            finDelaPartie.Hide();
+                        }
+                        else
+                        {
+                            this.DialogResult = DialogResult.Cancel;
+                        }
+                    }
+                }
             }
         }
 
@@ -322,7 +417,7 @@ namespace ITI.InterfaceUser
 
             _playerTurn = new PictureBox();
             _playerTurn.Location = new Point(this.Location.X + 550, this.Location.Y + 25);
-            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawn;
+            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawnDesignUse;
             _playerTurn.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Controls.Add(_playerTurn);
 

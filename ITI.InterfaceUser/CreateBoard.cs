@@ -83,11 +83,11 @@ namespace ITI.InterfaceUser
                     
                     if (_tafl[i, j] == GameCore.Pawn.Attacker) 
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageAtkPawn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.Defender) 
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageDefPawn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.King)   
                     {

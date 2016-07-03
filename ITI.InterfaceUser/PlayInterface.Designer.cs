@@ -70,10 +70,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::ITI.InterfaceUser.Properties.Resources.mjolnir;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1006, 673);
             this.Controls.Add(this.listboxtest);
             this.Controls.Add(this.m_PictureBoxInterfaceBoard);
             this.Controls.Add(this.m_buttonReturn);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PlayInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

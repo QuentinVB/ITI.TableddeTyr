@@ -83,9 +83,29 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap attaquant {
+        internal static System.Drawing.Bitmap AttackerChessPawn {
             get {
-                object obj = ResourceManager.GetObject("attaquant", resourceCulture);
+                object obj = ResourceManager.GetObject("AttackerChessPawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap AttackerDamePawn {
+            get {
+                object obj = ResourceManager.GetObject("AttackerDamePawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Attaquant {
+            get {
+                object obj = ResourceManager.GetObject("Attaquant", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,6 +223,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ChessPawn {
+            get {
+                object obj = ResourceManager.GetObject("ChessPawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Conditionsdevictoires {
             get {
                 object obj = ResourceManager.GetObject("Conditionsdevictoires", resourceCulture);
@@ -273,9 +303,39 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap défenseur {
+        internal static System.Drawing.Bitmap DamePawn {
             get {
-                object obj = ResourceManager.GetObject("défenseur", resourceCulture);
+                object obj = ResourceManager.GetObject("DamePawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DefenderChessPawn {
+            get {
+                object obj = ResourceManager.GetObject("DefenderChessPawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DefenderDamePawn {
+            get {
+                object obj = ResourceManager.GetObject("DefenderDamePawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Défenseur {
+            get {
+                object obj = ResourceManager.GetObject("Défenseur", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -376,16 +436,6 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Jouer_attaquant {
-            get {
-                object obj = ResourceManager.GetObject("Jouer_attaquant", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Jouer_php {
             get {
                 object obj = ResourceManager.GetObject("Jouer_php", resourceCulture);
@@ -396,19 +446,9 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap JouerDefenseur {
+        internal static System.Drawing.Bitmap JoueurVsIA {
             get {
-                object obj = ResourceManager.GetObject("JouerDefenseur", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap JoueurVSIa {
-            get {
-                object obj = ResourceManager.GetObject("JoueurVSIa", resourceCulture);
+                object obj = ResourceManager.GetObject("JoueurVsIA", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -419,6 +459,16 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap JoueurVSJoueur {
             get {
                 object obj = ResourceManager.GetObject("JoueurVSJoueur", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap King {
+            get {
+                object obj = ResourceManager.GetObject("King", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -531,9 +581,19 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Nefataffel_1097 {
+        internal static System.Drawing.Bitmap mjolnir {
             get {
-                object obj = ResourceManager.GetObject("Nefataffel_1097", resourceCulture);
+                object obj = ResourceManager.GetObject("mjolnir", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap paramètres {
+            get {
+                object obj = ResourceManager.GetObject("paramètres", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -544,36 +604,6 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap Pawns {
             get {
                 object obj = ResourceManager.GetObject("Pawns", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PionBlanc {
-            get {
-                object obj = ResourceManager.GetObject("PionBlanc", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PionNoir {
-            get {
-                object obj = ResourceManager.GetObject("PionNoir", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PionRoi {
-            get {
-                object obj = ResourceManager.GetObject("PionRoi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -624,46 +654,6 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap Play {
             get {
                 object obj = ResourceManager.GetObject("Play", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PlayAttacker {
-            get {
-                object obj = ResourceManager.GetObject("PlayAttacker", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PlayDefender {
-            get {
-                object obj = ResourceManager.GetObject("PlayDefender", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PlayerVSIA {
-            get {
-                object obj = ResourceManager.GetObject("PlayerVSIA", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PlayerVSPlayer {
-            get {
-                object obj = ResourceManager.GetObject("PlayerVSPlayer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -781,16 +771,6 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap TableDeTyr1 {
-            get {
-                object obj = ResourceManager.GetObject("TableDeTyr1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Tutorial {
             get {
                 object obj = ResourceManager.GetObject("Tutorial", resourceCulture);
@@ -811,6 +791,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap unspecified {
+            get {
+                object obj = ResourceManager.GetObject("unspecified", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Victoire {
             get {
                 object obj = ResourceManager.GetObject("Victoire", resourceCulture);
@@ -824,6 +814,36 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap VictoryCondition {
             get {
                 object obj = ResourceManager.GetObject("VictoryCondition", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WhiteForbiddenSquareGameBoard {
+            get {
+                object obj = ResourceManager.GetObject("WhiteForbiddenSquareGameBoard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WhiteSquareGameBoard {
+            get {
+                object obj = ResourceManager.GetObject("WhiteSquareGameBoard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WhiteSquarepossibleGameBoard {
+            get {
+                object obj = ResourceManager.GetObject("WhiteSquarepossibleGameBoard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
