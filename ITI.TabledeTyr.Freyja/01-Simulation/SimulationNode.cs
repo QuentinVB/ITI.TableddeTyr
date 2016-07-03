@@ -9,7 +9,7 @@ namespace ITI.TabledeTyr.Freyja
     /// <summary>
     /// A simulation Node contain many element to analyze
     /// </summary>
-     class SimulationNode
+    class SimulationNode
     {
         //attributes
         readonly string id; //UUID of the node
@@ -82,17 +82,37 @@ namespace ITI.TabledeTyr.Freyja
         //attributes
         readonly int _maxIncubatedNode;
         readonly SimulationNode[] _incubatorArray;
-        //constructor
+        //CONSTRUCTORS
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Incubator"/> class.
         /// </summary>
-        /// <param name="maxIncubatedNode">The maximum incubated nodes.</param>
+        /// <param name="source">The source.</param>
+        internal Incubator(Incubator source)
+           : this(source.GetMaxIncubatedNode, source._incubatorArray)
+        {
+            //_incubatorArray 
+         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Incubator"/> class.
+        /// </summary>
+        /// <param name="maxIncubatedNode">The maximum incubated node.</param>
         internal Incubator(int maxIncubatedNode)
+            : this(maxIncubatedNode, new SimulationNode[maxIncubatedNode])
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Incubator"/> class.
+        /// </summary>
+        /// <param name="maxIncubatedNode">The maximum incubated node.</param>
+        /// <param name="sourcearray">The sourcearray.</param>
+        internal Incubator(int maxIncubatedNode, SimulationNode[] sourcearray)
         {
             _maxIncubatedNode = maxIncubatedNode;
-            _incubatorArray = new SimulationNode[_maxIncubatedNode];
+            _incubatorArray = sourcearray;
         }
-        //get data       
+        //get data  
+        internal int GetMaxIncubatedNode { get { return _incubatorArray.Length; } }
         /// <summary>
         /// Gets the best node.
         /// </summary>
@@ -107,7 +127,7 @@ namespace ITI.TabledeTyr.Freyja
         /// <summary>
         /// Gets the count of the stored simulation in the incubator.
         /// </summary>
-        internal int Count
+        internal int Length
         { 
             get{ return _incubatorArray.Length; }
         }
@@ -127,25 +147,27 @@ namespace ITI.TabledeTyr.Freyja
         internal void Add(SimulationNode node)
         {
             int cursor = 0;
+            SimulationNode nodePointed = null;
             foreach (SimulationNode n in _incubatorArray)
             {
-                if (n == null)
-                {
-                    _incubatorArray[cursor] = node;
-                    break;
-                }
-                if (n.Score < node.Score)
-                {                                                
-                    for (int i = _incubatorArray.Length - 1; i >= cursor; i--)
-                    {
-                        _incubatorArray[i+1] = _incubatorArray[i];                           
-                    }
-                    _incubatorArray[cursor] = node;
-                    break;
-                }
-               
+                if (n == null) break;
+                if (n.Score <= node.Score) { nodePointed = n; break; }
+                nodePointed = n;
                 cursor++;
             }
+            if (nodePointed == null)
+            {
+                _incubatorArray[cursor] = node;
+            }
+            else if (nodePointed.Score <= node.Score)
+            {                                                
+                for (int i = _incubatorArray.Length - 2; (i >= cursor && i >= 0); i--)
+                {
+                    _incubatorArray[i + 1] = _incubatorArray[i];                       
+                }
+                _incubatorArray[cursor] = node;
+            }
+
         }
         //allow the array to be enumerable by the interface of Incubator
         public IEnumerator GetEnumerator()

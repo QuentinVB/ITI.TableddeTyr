@@ -15,20 +15,15 @@ namespace ITI.InterfaceUser
         InterfaceOptions _interfaceOptions;
 
         Button _board;
-        Image board;
         Button _pawn;
-        Image pawn;
         Button _capturePawn;
-        Image capturePawn;
         Button _victoryCondition;
-        Image victoryCondition;
 
         public HnefataflRules(InterfaceOptions interfaceOptions)
         {
             InitializeComponent();
             _interfaceOptions = interfaceOptions;
-
-            _interfaceOptions.FormTitle();
+            
             this.Text = _interfaceOptions.Title;
             this.Refresh();
 
@@ -38,12 +33,11 @@ namespace ITI.InterfaceUser
 
         private void setRulesBoard()
         {
-            setLanguages();
 
             _board = new Button();
             _board.Location = new Point(this.Location.X, this.Location.Y + 25);
             _board.Size = new System.Drawing.Size(200, 75);
-            _board.BackgroundImage = (Image)board;
+            _board.BackgroundImage = (Image)_interfaceOptions.ImageRulesBoard;
             _board.BackgroundImageLayout = ImageLayout.Stretch;
             _board.Click += delegate (object sender, EventArgs e)
             {
@@ -58,7 +52,7 @@ namespace ITI.InterfaceUser
             _pawn = new Button();
             _pawn.Location = new Point(this.Location.X, this.Location.Y + 125);
             _pawn.Size = new System.Drawing.Size(200, 75);
-            _pawn.BackgroundImage = (Image)pawn;
+            _pawn.BackgroundImage = (Image)_interfaceOptions.ImageRulesPawn;
             _pawn.BackgroundImageLayout = ImageLayout.Stretch;
             _pawn.Click += delegate (object sender, EventArgs e)
             {
@@ -73,7 +67,7 @@ namespace ITI.InterfaceUser
             _capturePawn = new Button();
             _capturePawn.Location = new Point(this.Location.X, this.Location.Y + 225);
             _capturePawn.Size = new System.Drawing.Size(200, 75);
-            _capturePawn.BackgroundImage = (Image)capturePawn;
+            _capturePawn.BackgroundImage = (Image)_interfaceOptions.ImageRulesPawn;
             _capturePawn.BackgroundImageLayout = ImageLayout.Stretch;
             _capturePawn.Click += delegate (object sender, EventArgs e)
             {
@@ -87,7 +81,7 @@ namespace ITI.InterfaceUser
             _victoryCondition = new Button();
             _victoryCondition.Location = new Point(this.Location.X, this.Location.Y + 325);
             _victoryCondition.Size = new System.Drawing.Size(200, 75);
-            _victoryCondition.BackgroundImage = (Image)victoryCondition;
+            _victoryCondition.BackgroundImage = (Image)_interfaceOptions.ImageRulesVictory;
             _victoryCondition.BackgroundImageLayout = ImageLayout.Stretch;
             _victoryCondition.Click += delegate (object sender, EventArgs e)
             {
@@ -95,26 +89,13 @@ namespace ITI.InterfaceUser
             };
             this.Controls.Add(_victoryCondition);
             _victoryCondition.BringToFront();
+
+
+            m_ButtonReturn.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
+            m_ButtonReturn.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        private void setLanguages()
-        {
-            if (_interfaceOptions.Languages == true)
-            {
-                board = ITI.InterfaceUser.Properties.Resources.Leplateau;
-                pawn = ITI.InterfaceUser.Properties.Resources.LesPions;
-                capturePawn = ITI.InterfaceUser.Properties.Resources.Lescaptures;
-                victoryCondition = ITI.InterfaceUser.Properties.Resources.Conditionsdevictoires;
-            }
-            else
-            {
-                board = ITI.InterfaceUser.Properties.Resources.Board;
-                pawn = ITI.InterfaceUser.Properties.Resources.Pawns;
-                capturePawn = ITI.InterfaceUser.Properties.Resources.CapturesPawns;
-                victoryCondition = ITI.InterfaceUser.Properties.Resources.VictoryCondition;
-            }
-
-        }
+        
         
     }
 }

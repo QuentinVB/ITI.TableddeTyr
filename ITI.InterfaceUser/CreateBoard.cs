@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 using System.Xml.Linq;
 
 namespace ITI.InterfaceUser
@@ -16,27 +16,28 @@ namespace ITI.InterfaceUser
     public partial class CreateBoard : Form
     {
         InterfaceOptions _interfaceOptions;
+        TaflBasic _tafl;
+        XML_Tafl _xml;
 
         NumericUpDown _choixLongueurPlateau;
         NumericUpDown _choixHauteurPlateau;
 
+        TextBox _createTaflName;
+
         Button _putAtkOnBoard;
-        Image putAtkOnBoard;
         Button _putDefOnBoard;
-        Image putDefOnBoard;
-        Button _putCase;
-        Image putCase;
+        Button _putEmptyCase;
         Button _confirmSave;
-        Image confirmSave;
         Button _cancelSave;
-        Image cancelSave;
         Button _save;
+
         Image save;
         Image retour;
-
-        TaflBasic _tafl;
-        XML_Tafl _xml;
-
+        Image cancelSave;
+        Image confirmSave;
+        Image putDefOnBoard;
+        Image putAtkOnBoard;
+        Image putEmptyCase;
         int _rectanglePositionX;
         int _rectanglePositionY;
         int _rectangleWidth;
@@ -46,16 +47,13 @@ namespace ITI.InterfaceUser
 
         int _width = 7;
         int _height = 7;
-
-        int[,] plateau;
         int _pawn = 0;
 
         public CreateBoard(InterfaceOptions interfaceOptions)
         {
             InitializeComponent();
             _interfaceOptions = interfaceOptions;
-
-            _interfaceOptions.FormTitle();
+            
             this.Text = _interfaceOptions.Title;
             this.Refresh();
 
@@ -64,18 +62,16 @@ namespace ITI.InterfaceUser
             _confirmSave.Hide();
             _cancelSave.Hide();
             _tafl = new TaflBasic(_width, _height);
-
-            plateau = new int[_width, _height];
+            _xml = new XML_Tafl();
         }
 
         private void setLanguages()
         {
             if (_interfaceOptions.Languages == true)
             {
-                
                 putAtkOnBoard = ITI.InterfaceUser.Properties.Resources.insererattaquant;
                 putDefOnBoard = ITI.InterfaceUser.Properties.Resources.insererdefenseur;
-                putCase = ITI.InterfaceUser.Properties.Resources.retirerpion;
+                putEmptyCase = ITI.InterfaceUser.Properties.Resources.retirerpion;
                 confirmSave = ITI.InterfaceUser.Properties.Resources.confirmersauvegarde;
                 cancelSave = ITI.InterfaceUser.Properties.Resources.annulersauvegarde;
                 save = ITI.InterfaceUser.Properties.Resources.sauvegarder;
@@ -85,13 +81,12 @@ namespace ITI.InterfaceUser
             {
                 putAtkOnBoard = ITI.InterfaceUser.Properties.Resources.insertattacker;
                 putDefOnBoard = ITI.InterfaceUser.Properties.Resources.insertdefender;
-                putCase = ITI.InterfaceUser.Properties.Resources.removepawn;
+                putEmptyCase = ITI.InterfaceUser.Properties.Resources.removepawn;
                 confirmSave = ITI.InterfaceUser.Properties.Resources.confirmsave;
                 cancelSave = ITI.InterfaceUser.Properties.Resources.cancelsave;
                 save = ITI.InterfaceUser.Properties.Resources.saveboard;
                 retour = ITI.InterfaceUser.Properties.Resources.Return;
             }
-
         }
 
         private void setGameBoardInformation()
@@ -122,7 +117,7 @@ namespace ITI.InterfaceUser
             Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
 
-            plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
+            _tafl[(_width - 1) / 2, (_height - 1) / 2] = GameCore.Pawn.King; ;
 
             int x = 0;
             int y = _rectanglePositionY;
@@ -147,17 +142,17 @@ namespace ITI.InterfaceUser
                         Board.DrawImage(Case, Rect);
                     }
                     
-                    if (plateau[i, j] == 1) 
+                    if (_tafl[i, j] == GameCore.Pawn.Attacker) 
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (plateau[i, j] == 2) 
+                    if (_tafl[i, j] == GameCore.Pawn.Defender) 
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
                         Pawn.DrawImage(Piece, Rect);
                     }
-                    if (plateau[i, j] == 3)   
+                    if (_tafl[i, j] == GameCore.Pawn.King)   
                     {
                         Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
                         Pawn.DrawImage(Piece, Rect);
@@ -190,7 +185,10 @@ namespace ITI.InterfaceUser
                         }
                         else
                         {
-                            plateau[i, j] = _pawn;
+                            if(_pawn == 0)
+                            {
+                                _tafl[i, j] = Pawn.None;
+                            }
                             if(_pawn == 1)
                             {
                                 _tafl[i, j] = Pawn.Attacker;
@@ -240,18 +238,18 @@ namespace ITI.InterfaceUser
             _putDefOnBoard.BringToFront();
             #endregion
 
-            #region Button générer plateau 
-            _putCase = new Button();
-            _putCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
-            _putCase.Size = new System.Drawing.Size(200, 75);
-            _putCase.BackgroundImage = (Image)putCase;
-            _putCase.BackgroundImageLayout = ImageLayout.Stretch;
-            _putCase.Click += delegate (object sender, EventArgs e)
+            #region Button
+            _putEmptyCase = new Button();
+            _putEmptyCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _putEmptyCase.Size = new System.Drawing.Size(200, 75);
+            _putEmptyCase.BackgroundImage = (Image)putEmptyCase;
+            _putEmptyCase.BackgroundImageLayout = ImageLayout.Stretch;
+            _putEmptyCase.Click += delegate (object sender, EventArgs e)
             {
                 _pawn = 0;
             };
-            this.Controls.Add(_putCase);
-            _putCase.BringToFront();
+            this.Controls.Add(_putEmptyCase);
+            _putEmptyCase.BringToFront();
             #endregion
 
             #region numericUpDown longueur plateau
@@ -266,7 +264,6 @@ namespace ITI.InterfaceUser
             {
                 _width = Longueur;
                 _tafl = new TaflBasic(_width, _height);
-                plateau = new int[_width, _height];
                 m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixLongueurPlateau);
@@ -285,7 +282,6 @@ namespace ITI.InterfaceUser
             {
                 _height = Hauteur;
                 _tafl = new TaflBasic(_width, _height);
-                plateau = new int[_width, _height];
                 m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixHauteurPlateau);
@@ -304,10 +300,17 @@ namespace ITI.InterfaceUser
                 _putDefOnBoard.Hide();
                 _choixHauteurPlateau.Hide();
                 _choixLongueurPlateau.Hide();
-                _putCase.Hide();
+                _putEmptyCase.Hide();
                 _save.Hide();
                 _confirmSave.Show();
                 _cancelSave.Show();
+
+                _createTaflName = new TextBox();
+                _createTaflName.Location = new Point(this.Width - 235, this.Location.Y + 50);
+                _createTaflName.Size = new System.Drawing.Size(200, 75);
+                _createTaflName.Text = "";
+                this.Controls.Add(_createTaflName);
+                _createTaflName.BringToFront();
             };
             this.Controls.Add(_save);
             _save.BringToFront();
@@ -315,13 +318,13 @@ namespace ITI.InterfaceUser
 
             #region Button confirm save
             _confirmSave = new Button();
-            _confirmSave.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _confirmSave.Location = new Point(this.Location.X + 550, this.Location.Y + 250);
             _confirmSave.Size = new System.Drawing.Size(200, 75);
             _confirmSave.BackgroundImage = (Image)confirmSave;
             _confirmSave.BackgroundImageLayout = ImageLayout.Stretch;
             _confirmSave.Click += delegate (object sender, EventArgs e)
             {
-                _xml.WriteXmlTafl(_tafl);
+                SaveBoard();
             };
             this.Controls.Add(_confirmSave);
             _confirmSave.BringToFront();
@@ -329,7 +332,7 @@ namespace ITI.InterfaceUser
 
             #region Button Cancel save
             _cancelSave = new Button();
-            _cancelSave.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
+            _cancelSave.Location = new Point(this.Location.X + 550, this.Location.Y + 350);
             _cancelSave.Size = new System.Drawing.Size(200, 75);
             _cancelSave.BackgroundImage = (Image)cancelSave;
             _cancelSave.BackgroundImageLayout = ImageLayout.Stretch;
@@ -337,31 +340,26 @@ namespace ITI.InterfaceUser
             {
 
                 _confirmSave.Hide();
+                _createTaflName.Hide();
                 _cancelSave.Hide();
                 _choixLongueurPlateau.Show();
                 _choixHauteurPlateau.Show();
                 _putAtkOnBoard.Show();
                 _putDefOnBoard.Show();
-                _putCase.Show();
+                _putEmptyCase.Show();
                 _save.Show();
             };
             this.Controls.Add(_cancelSave);
             _cancelSave.BringToFront();
             #endregion
 
+           
+
             m_buttonReturn.BackgroundImage = (Image)retour;
             m_buttonReturn.BackgroundImageLayout = ImageLayout.Stretch;
             m_buttonReturn.BringToFront();
         }
-
-
-        /// <summary>
-        /// sauvegarder le nouveau plateau sur un fichier XML dans un dossier externe.
-        /// -----------
-        /// implémentez un objet pour ouvrir le dossier, affichez et ouvrir les fichier XML présent
-        /// ---------------
-        /// testez en sauvegardant un ficher XML contenant des pions et charger ce fichier et comparer.
-        /// </summary>
+        
         
         public int Longueur
         {
@@ -378,5 +376,129 @@ namespace ITI.InterfaceUser
                 return (Convert.ToInt32(_choixHauteurPlateau.Value));
             }
         }
+
+        private void SaveBoard()
+        {
+            if(CheckEmptyName() == true)
+            {
+                NoSaveBoard();
+            }
+            else if(CheckSameName() == true)
+            {
+                NoSaveBoard();
+            }
+            else
+            {
+                ConfirmSaveBoard();
+            }
+            
+        }
+
+        private void NoSaveBoard()
+        {
+            if (_interfaceOptions.Languages == true)
+            {
+                MessageBox.Show("Votre plateau n'a pas été sauvergardé ! ",
+                "Sauvegarde du plateau échoué",
+                MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Your board has not been saved !",
+                "Save Board failed",
+                MessageBoxButtons.OK);
+            }
+        }
+
+        private void ConfirmSaveBoard()
+        {
+
+            //_xml.WriteXmlTafl(_tafl);
+            //_xml.WriteXmlTafl(_tafl,_createTaflName.Text);
+            if (_interfaceOptions.Languages == true)
+            {
+                MessageBox.Show("Votre plateau a été sauvergardé sous le nom de " + _createTaflName.Text,
+                "Sauvegarde du plateau",
+                MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Your board has been saved !",
+                "Save Board",
+                MessageBoxButtons.OK);
+            }
+        }
+
+        private bool CheckEmptyName()
+        {
+            if(_createTaflName.Text == (""))
+            {
+                if (_interfaceOptions.Languages == true)
+                {
+                    MessageBox.Show("Vous devez choisir un nom de sauvegarde",
+                    "Attention sauvegarde sans nom",
+                    MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("You have to give a name to your save !",
+                    "Warning save without name",
+                    MessageBoxButtons.OK);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckSameName()
+        {
+            int _countSameName = 0;
+
+            ListBox listboxBoardSave = new ListBox();
+            listboxBoardSave.Items.Clear();
+            string[] fileName;
+            string road = _interfaceOptions.RoadTaflSave;
+            fileName = Directory.GetFileSystemEntries(road);
+            string fileBoardName;
+            foreach (string current in fileName)
+            {
+                fileBoardName = Path.GetFileNameWithoutExtension(current);
+                listboxBoardSave.Items.Add(fileBoardName);
+            }
+            foreach (string current in listboxBoardSave.Items)
+            {
+                _countSameName++;
+                if (current == _createTaflName.Text)
+                {
+                    if (_interfaceOptions.Languages == true)
+                    {
+                        if(MessageBox.Show("Voulez vous sauvegarder avec ce nom et supprimez l'ancien plateau",
+                        "Attention deux sauvegardes avec le meme nom",
+                        MessageBoxButtons.YesNo) == DialogResult.No)
+                        {
+                            return true;
+                        }else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if(MessageBox.Show("Do you want to save with this name and delete the last board !",
+                        "Warning two boards with the same name",
+                        MessageBoxButtons.YesNo) == DialogResult.No)
+                        {
+                            return true;
+                        }else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
     }
 }
