@@ -74,6 +74,7 @@
             this.Controls.Add(this.listboxtest);
             this.Controls.Add(this.m_PictureBoxInterfaceBoard);
             this.Controls.Add(this.m_buttonReturn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PlayInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxInterfaceBoard)).EndInit();

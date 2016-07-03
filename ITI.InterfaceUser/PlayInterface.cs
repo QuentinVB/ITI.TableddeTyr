@@ -51,15 +51,13 @@ namespace ITI.InterfaceUser
             this.Text = _interfaceOptions.Title;
             this.Refresh();
 
-            setInterfaceBoard();
-            
             setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+            setInterfaceBoard();
 
             listboxtest.Hide();
             listboxtest.ScrollAlwaysVisible = true;
 
             _xml = new XML_Tafl();
-
             _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
         }
 

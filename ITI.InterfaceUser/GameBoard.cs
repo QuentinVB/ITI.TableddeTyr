@@ -104,11 +104,11 @@ namespace ITI.InterfaceUser
 
                     if (_tafl[i, j] == GameCore.Pawn.Attacker)
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageAtkTurn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawn, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.Defender)
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageDefTurn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawn, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.King)
                     {
@@ -245,11 +245,11 @@ namespace ITI.InterfaceUser
             // Update playerTurn
             if(_partie.IsAtkPlaying == true)
             {
-                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkTurn;
+                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawn;
                 _playerTurn.Refresh();
             }else
             {
-                _playerTurn.Image = (Image)_interfaceOptions.ImageDefTurn;
+                _playerTurn.Image = (Image)_interfaceOptions.ImageDefPawn;
                 _playerTurn.Refresh();
             }
             
@@ -322,7 +322,7 @@ namespace ITI.InterfaceUser
 
             _playerTurn = new PictureBox();
             _playerTurn.Location = new Point(this.Location.X + 550, this.Location.Y + 25);
-            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkTurn;
+            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawn;
             _playerTurn.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Controls.Add(_playerTurn);
 

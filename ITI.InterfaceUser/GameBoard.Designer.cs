@@ -61,6 +61,7 @@
             this.ClientSize = new System.Drawing.Size(983, 673);
             this.Controls.Add(this.m_buttonRetourMenu);
             this.Controls.Add(this.m_GameBoardPictureBoxTafl);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "m_GameBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             ((System.ComponentModel.ISupportInitialize)(this.m_GameBoardPictureBoxTafl)).EndInit();

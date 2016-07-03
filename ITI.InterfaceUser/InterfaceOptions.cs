@@ -13,24 +13,34 @@ namespace ITI.InterfaceUser
 {
     public partial class InterfaceOptions : Form
     {
-        Image AtkTurn;
-        Image DefTurn;
+        Image AtkPawn;
+        Image DefPawn;
         Image KingPawn;
-        Image IaVictory;
-        Image PlayerVictory;
+
         Image Square;
         Image ForbiddenSquare;
         Image SquareMvtPossible;
+
+        Image Return;
+
+        //GameBoard Form
+        Image IaVictory;
+        Image PlayerVictory;
+        
+        //HnefataflRules Form
         Image RulesBoard;
         Image RulesPawn;
         Image RulesCheckCaptures;
         Image RulesVictory;
-        Image Return;
+
+        //Menu Form
         Image Play;
         Image Rules;
         Image Tutorial;
         Image LeaveGame;
         Image LanguagesGame;
+
+        //PlayInterface Form
         Image Board7x7;
         Image Board9x9;
         Image Board11x11;
@@ -42,6 +52,13 @@ namespace ITI.InterfaceUser
         Image PlayAttacker;
         Image PlayDefender;
 
+        //CreateBoard Form
+        Image save;
+        Image cancelSave;
+        Image confirmSave;
+        Image insertAtkPawn;
+        Image insertDefPawn;
+        Image removePawn;
 
 
         public int _rectanglePositionX;
@@ -63,8 +80,8 @@ namespace ITI.InterfaceUser
 
         public void setEverythingInCorrectLanguages()
         {
-            AtkTurn = ITI.InterfaceUser.Properties.Resources.PionNoir;
-            DefTurn = ITI.InterfaceUser.Properties.Resources.PionBlanc;
+            AtkPawn = ITI.InterfaceUser.Properties.Resources.PionNoir;
+            DefPawn = ITI.InterfaceUser.Properties.Resources.PionBlanc;
             IaVictory = ITI.InterfaceUser.Properties.Resources.Victoire;
             PlayerVictory = ITI.InterfaceUser.Properties.Resources.Victoire;
             Square = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
@@ -96,6 +113,12 @@ namespace ITI.InterfaceUser
                 PlayerVsIa = ITI.InterfaceUser.Properties.Resources.JoueurVSIa;
                 PlayAttacker = ITI.InterfaceUser.Properties.Resources.Jouer_attaquant;
                 PlayDefender = ITI.InterfaceUser.Properties.Resources.JouerDefenseur;
+                save = ITI.InterfaceUser.Properties.Resources.sauvegarder;
+                cancelSave = ITI.InterfaceUser.Properties.Resources.annulersauvegarde;
+                confirmSave = ITI.InterfaceUser.Properties.Resources.confirmersauvegarde;
+                insertAtkPawn = ITI.InterfaceUser.Properties.Resources.insererattaquant;
+                insertDefPawn = ITI.InterfaceUser.Properties.Resources.insererdefenseur;
+                removePawn = ITI.InterfaceUser.Properties.Resources.retirerpion;
 
             }
             else
@@ -120,13 +143,44 @@ namespace ITI.InterfaceUser
                 PlayerVsIa = ITI.InterfaceUser.Properties.Resources.PlayerVSIA;
                 PlayAttacker = ITI.InterfaceUser.Properties.Resources.PlayAttacker;
                 PlayDefender = ITI.InterfaceUser.Properties.Resources.PlayDefender;
+                save = ITI.InterfaceUser.Properties.Resources.saveboard;
+                cancelSave = ITI.InterfaceUser.Properties.Resources.cancelsave;
+                confirmSave = ITI.InterfaceUser.Properties.Resources.confirmsave;
+                insertAtkPawn = ITI.InterfaceUser.Properties.Resources.insertattacker;
+                insertDefPawn = ITI.InterfaceUser.Properties.Resources.insertdefender;
+                removePawn = ITI.InterfaceUser.Properties.Resources.removepawn;
             }
         }
-        /*
-        public Image Image
+        
+        public Image ImageInsertAtkPawn
         {
-            get { return; }
-        }*/
+            get { return insertAtkPawn; }
+        }
+
+        public Image ImageInsertDefPawn
+        {
+            get { return insertDefPawn; }
+        }
+
+        public Image ImageRemovePawn
+        {
+            get { return removePawn; }
+        }
+
+        public Image ImageSave
+        {
+            get { return save; }
+        }
+
+        public Image ImageCancelSave
+        {
+            get { return cancelSave; }
+        }
+
+        public Image ImageConfirmSave
+        {
+            get { return confirmSave; }
+        }
 
         public Image ImageBoard7x7
         {
@@ -203,14 +257,14 @@ namespace ITI.InterfaceUser
             get { return Play; }
         }
 
-        public Image ImageAtkTurn
+        public Image ImageAtkPawn
         {
-            get { return AtkTurn; }
+            get { return AtkPawn; }
         }
 
-        public Image ImageDefTurn
+        public Image ImageDefPawn
         {
-            get { return DefTurn; }
+            get { return DefPawn; }
         }
 
         public Image ImageIaVictory
