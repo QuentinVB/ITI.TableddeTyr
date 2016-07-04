@@ -27,11 +27,19 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="tafl">The tafl to store.</param>
         /// <param name="score">The score.</param>
         /// <param name="isAtkPlaying">if set to <c>true</c> the atk is playing.</param>
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, bool isAtkPlaying)//if the node is the first node : no move
+        internal SimulationNode(string id, 
+                                IReadOnlyTafl tafl, 
+                                int score, 
+                                bool isAtkPlaying)//if the node is the first node : no move
             :this(id, tafl, 0, new Move(), isAtkPlaying, 0, new Move())
-            {
-            }
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move, bool isAtkPlaying, int turn, Move thismove)//constructor
+            {}
+        internal SimulationNode(string id, 
+                                IReadOnlyTafl tafl, 
+                                int score, 
+                                Move move, 
+                                bool isAtkPlaying, 
+                                int turn, 
+                                Move thismove)//constructor
         {
             this.id = id;
             _taflstored = tafl;

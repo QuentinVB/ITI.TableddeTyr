@@ -23,6 +23,20 @@ namespace ITI.TabledeTyr.Freyja
         public Monitor(Freyja_Core freyja_Core)
         {
             ctx = freyja_Core;
+            //try loading xml config
+            XML_IO_Monitor io = new XML_IO_Monitor();
+            try
+            {
+                Freyjas_options options = io.ReadXmlOptions();
+                _maxSimTurn = options._maxSimTurn;
+                _maxIncubatedNode = options._maxIncubatedNode;
+                _maxComparaison = options._maxComparaison;
+                _equalResultMethod= options._equalResultMethod;
+            }
+            catch (Exception)
+            {
+
+            }
         }
         public int maxIncubatedNode { get { return _maxIncubatedNode; } }
         public int MaxSim { get { return _maxSimTurn; } }

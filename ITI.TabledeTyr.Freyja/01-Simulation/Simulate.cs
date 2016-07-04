@@ -111,7 +111,6 @@ namespace ITI.TabledeTyr.Freyja
             }
             return outPawnsToSimulate;
         }
-
         /// <summary>
         /// Simulate nodes by using data send.
         /// </summary>
