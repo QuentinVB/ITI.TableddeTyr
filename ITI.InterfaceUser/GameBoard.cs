@@ -286,7 +286,6 @@ namespace ITI.InterfaceUser
                 }
                 y = y + _nextRectanglePositionY;
             }
-
             IATurn();
         }
 
@@ -387,6 +386,16 @@ namespace ITI.InterfaceUser
             }
         }
 
+        private void resethelpplayer()
+        {
+            for(int j = 0; j < _interfaceOptions.Height; j++)
+            {
+                for(int i = 0; i < _interfaceOptions.Width; i++)
+                {
+                    _mvtPossible[i, j] = 0;
+                }
+            }
+        }
         
         private void setGameBoardTools()
         {
