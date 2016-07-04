@@ -35,6 +35,7 @@ namespace ITI.TabledeTyr.Freyja
         internal void UpdateSimulation()
         {
             //depend of the poeple who started : define the root state
+            _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();
             //if(_ctx.Sensor.ActiveGame.IsAtkPlaying == _ctx.Sensor.IsFreyjaAtk)
             root = new SimulationNode(Guid.NewGuid().ToString(), _simulatedGame.Tafl, 0, _simulatedGame.IsAtkPlaying);
             //i create the root of the tree (getting the current state of the system)                       
@@ -82,7 +83,6 @@ namespace ITI.TabledeTyr.Freyja
                         //how should i simulate these pawns ?
                         //keep only a few studied pawn into possible simulation
                         //int xRatio = 0;
-
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
@@ -91,7 +91,9 @@ namespace ITI.TabledeTyr.Freyja
                             incubatorTemp.Add(data);
                         }                      
                     }
+                
                 }
+                if (turn == 1) { incubatorTemp.RemovebyId(root.ID); }
                 incubator= new Incubator(incubatorTemp);
             }
         }
@@ -121,7 +123,7 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode GenerateNode(int x, int y, int x2, int y2, SimulationNode father)
         {
             //create a Game for this pawn move, at this tafl state and turn state.
-            _simulatedGame = new Game(father.TaflStored, !father.IsAtkPlay);
+            _simulatedGame = new Game(father.TaflStored, father.IsAtkPlay);
             //move the pawn (finally !)
             _simulatedGame.MovePawn(x, y, x2, y2);
             _simulatedGame.UpdateTurn();

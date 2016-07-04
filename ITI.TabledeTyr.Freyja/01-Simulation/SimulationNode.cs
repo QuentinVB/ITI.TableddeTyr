@@ -121,6 +121,33 @@ namespace ITI.TabledeTyr.Freyja
         }
         //get data  
         internal int GetMaxIncubatedNode { get { return _incubatorArray.Length; } }
+
+        internal bool RemovebyId(string ID)
+        {
+            bool ctrl = false;
+            int cursor = 0;
+            foreach (SimulationNode n in _incubatorArray)
+            {
+                if (n == null) break;
+                if (n.ID == ID)
+                {
+                    ctrl = true;
+                    break;
+                }
+                cursor++;
+            }
+
+            if(ctrl == true)
+            {
+                for (int i = cursor + 1; (i <= Length - 1); i++)
+                {
+                    _incubatorArray[i] = _incubatorArray[i + 1];
+                }
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Gets the best node.
         /// </summary>
