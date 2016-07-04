@@ -44,6 +44,7 @@ namespace ITI.TabledeTyr.Test
             Move tested = new Move(0,0,0,0);
             //Act
             Freyja_Core aiut = new Freyja_Core(sut, true);
+            aiut.UpdateSensor(sut);
             //Assert
             Assert.That(aiut.Monitor.Decision, Is.EqualTo(tested));
         }
@@ -58,7 +59,7 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.Throws<ArgumentException>(() => result = aiut.Monitor.Effector_MoveResult);
         }
-        [Test]
+       /* [Test]
         public void Freyja_updateSimulation()
         {
             //arrange
@@ -68,7 +69,7 @@ namespace ITI.TabledeTyr.Test
             aiut.UpdateFreyja();
             //Assert
             Assert.That(true, Is.EqualTo(true));
-        }
+        }*/
         [TestCase(3,0,true)]
         [TestCase(9,5,true)]
         [TestCase(5,5,false)]
@@ -83,6 +84,7 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.That(result, Is.EqualTo(match));
         }
+        /*
         [Test]
         public void Freyja_Simulation()
         {
@@ -96,7 +98,7 @@ namespace ITI.TabledeTyr.Test
             Move retour = aiut.Monitor.Decision;
             //Assert
             Assert.That(retour, Is.Not.EqualTo(tested));
-        }
+        }*/
         [Test]
         public void Freyja_Dialog_D()
         {
@@ -142,6 +144,42 @@ namespace ITI.TabledeTyr.Test
                 sut.UpdateTurn();
             //Assert
             Assert.That(sut.Tafl[3, 4], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut.Tafl[1, 2], Is.EqualTo(Pawn.None));
+        }
+        [Test]
+        public void Freyja_Dialog_Extended()
+        {
+            //arrange
+            ITafl tafl = new TaflBasic(7, 7);
+            tafl[2, 2] = Pawn.King;
+            tafl[1, 2] = Pawn.Attacker;
+            tafl[3, 2] = Pawn.Defender;
+            Game sut = new Game(tafl, true);
+            Freyja_Core aiut = new Freyja_Core(sut, false);
+            //Act
+                //freyja
+                aiut.UpdateSensor(sut);
+                aiut.UpdateFreyja();
+                Move retour = aiut.UpdateEffector();
+                sut.MovePawn(retour.sourceX, retour.sourceY, retour.destinationX, retour.destinationY);
+                sut.UpdateTurn();
+
+                //player
+                sut.MovePawn(3, 2, 3, 4);
+                sut.UpdateTurn();
+
+                //freyja
+                aiut.UpdateSensor(sut);
+                aiut.UpdateFreyja();
+                retour = aiut.UpdateEffector();
+                sut.MovePawn(retour.sourceX, retour.sourceY, retour.destinationX, retour.destinationY);
+                sut.UpdateTurn();
+
+                //player
+                sut.MovePawn(3, 4, 0, 4);
+                sut.UpdateTurn();
+            //Assert
+            Assert.That(sut.Tafl[0, 4], Is.EqualTo(Pawn.Defender));
             Assert.That(sut.Tafl[1, 2], Is.EqualTo(Pawn.None));
         }
     }
