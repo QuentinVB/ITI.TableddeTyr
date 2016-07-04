@@ -24,6 +24,7 @@ namespace ITI.TabledeTyr.Freyja
         int _nbPawn = 0;
         int _nbPawnCaptureScore = 0;
         int _nbNextTurnCapture = 0;
+        bool _isIaATk;
 
 
         Freyja_Core _ctx;
@@ -36,6 +37,7 @@ namespace ITI.TabledeTyr.Freyja
         internal SimulationNode UpdateAnalyze(SimulationNode father, SimulationNode child)
         {
             _game = new Game();
+            _isIaATk = _ctx.Sensor.IsFreyjaAtk;
             _father = father;
             _child = child;
             _tafl = father.TaflStored;
@@ -586,7 +588,14 @@ namespace ITI.TabledeTyr.Freyja
 
         private void setScoreChild()        // set le score de l'analyse au child
         {
-            _child.Score = _score + _nbPawnCaptureScore + _nbNextTurnCapture + _father.Score;
+            if(_father.IsAtkPlay == _isIaATk)
+            {
+                _child.Score = _score + _nbPawnCaptureScore + _nbNextTurnCapture + _father.Score;
+            }else
+            {
+                _child.Score = _father.Score - _nbPawnCaptureScore - _nbNextTurnCapture - _score;
+            }
+                
         }       
 
 
