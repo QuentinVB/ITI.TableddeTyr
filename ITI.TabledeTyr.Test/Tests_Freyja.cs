@@ -96,5 +96,28 @@ namespace ITI.TabledeTyr.Test
             //Assert
             Assert.That(retour, Is.Not.EqualTo(tested));
         }
+        [Test]
+        public void Freyja_Dialog()
+        {
+            //arrange
+            ITafl tafl = new TaflBasic(7, 7);
+            tafl[2, 2] = Pawn.King;
+            tafl[1, 2] = Pawn.Attacker;
+            tafl[3, 2] = Pawn.Defender;
+            Game sut = new Game(tafl,true);
+            Freyja_Core aiut = new Freyja_Core(sut, false);
+            //Act
+                //player
+                sut.MovePawn(1, 2, 1, 4);
+                sut.UpdateTurn();
+                //freyja
+                aiut.UpdateSensor(sut);
+                aiut.UpdateFreyja();
+                Move retour = aiut.UpdateEffector();
+                sut.MovePawn(retour.sourceX, retour.sourceY, retour.destinationX, retour.destinationY);
+                sut.UpdateTurn();
+            //Assert
+            Assert.That(sut.Tafl[1,4], Is.EqualTo(Pawn.Attacker));
+        }
     }
 }
