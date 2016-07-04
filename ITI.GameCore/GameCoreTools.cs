@@ -232,7 +232,8 @@ namespace ITI.GameCore
         internal IReadOnlyTafl TaflToRead { get { return _TaflRead; } private set { _TaflRead = value; } }
         internal TaflBasic TaflToWrite { get { return _TaflWrite; } private set { _TaflWrite = value; } }
         public XML_Tafl()
-        { }
+        {
+        }
         public void WriteXmlTafl(TaflBasic TaflRead)
         {
             _TaflRead = TaflRead;
@@ -245,7 +246,19 @@ namespace ITI.GameCore
             string title = string.Format("{0}_{1}", Convert.ToString(_TaflRead.Width), Convert.ToString(_TaflRead.Height)); ;
             taflXml.Save("./" + title + ".xml");
         }
+
         //surcharge
+        public void WriteXmlTafl(TaflBasic TaflRead, string name)
+        {
+            _TaflRead = TaflRead;
+            //file = new XmlTextReader(Book.title + ".xml");
+            XElement taflXml = new XElement("Tafl",
+                new XElement("Width", _TaflRead.Width),
+                new XElement("Height", _TaflRead.Height),
+                Translate()
+                );
+            taflXml.Save("./" + name + ".xml");
+        }
         public void WriteXmlTafl(IReadOnlyTafl TaflRead)
         {
             TaflBasic send = new TaflBasic(TaflRead);
@@ -292,7 +305,15 @@ namespace ITI.GameCore
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
             return outTafl;
-        }       
+        }
+        //surcharge
+        public TaflBasic ReadXmlTafl(string name)
+        {
+            XmlTextReader reader = new XmlTextReader("./" + name + ".xml");
+            TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
+            outTafl = ReadTaflArray(reader, outTafl);
+            return outTafl;
+        }
         internal int ArrayWidth(XmlTextReader xml)
         {
             int arrayWidth = 0;
