@@ -83,11 +83,12 @@ namespace ITI.TabledeTyr.Freyja
                         //how should i simulate these pawns ?
                         //keep only a few studied pawn into possible simulation
                         //int xRatio = 0;
+
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
                             SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
-                            //data = _ctx.Analyze.UpdateAnalyze(node, data);
+                            data = _ctx.Analyze.UpdateAnalyze(node, data);
                             incubatorTemp.Add(data);
                         }                      
                     }
