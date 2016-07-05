@@ -13,24 +13,35 @@ namespace ITI.InterfaceUser
 {
     public partial class InterfaceOptions : Form
     {
-        Image AtkTurn;
-        Image DefTurn;
-        Image KingPawn;
-        Image IaVictory;
-        Image PlayerVictory;
+        Image AtkPawnDesignUse;
+        Image DefPawnDesignUse;
+        Image KingPawnDesignUse;
+
         Image Square;
         Image ForbiddenSquare;
         Image SquareMvtPossible;
+
+        Image Return;
+
+        //GameBoard Form
+        Image IaVictory;
+        Image PlayerVictory;
+        
+        //HnefataflRules Form
         Image RulesBoard;
         Image RulesPawn;
         Image RulesCheckCaptures;
         Image RulesVictory;
-        Image Return;
+
+        //Menu Form
+        Image RessourcesPack;
         Image Play;
         Image Rules;
         Image Tutorial;
         Image LeaveGame;
         Image LanguagesGame;
+
+        //PlayInterface Form
         Image Board7x7;
         Image Board9x9;
         Image Board11x11;
@@ -42,6 +53,19 @@ namespace ITI.InterfaceUser
         Image PlayAttacker;
         Image PlayDefender;
 
+        //CreateBoard Form
+        Image save;
+        Image cancelSave;
+        Image confirmSave;
+        Image insertAtkPawn;
+        Image insertDefPawn;
+        Image removePawn;
+
+        //RessourcesPack Form
+        Image DesignPawn01;
+        Image DesignPawn02;
+        Image DesignGameBoard01;
+        Image DesignGameBoard02;
 
 
         public int _rectanglePositionX;
@@ -63,15 +87,19 @@ namespace ITI.InterfaceUser
 
         public void setEverythingInCorrectLanguages()
         {
-            AtkTurn = ITI.InterfaceUser.Properties.Resources.PionNoir;
-            DefTurn = ITI.InterfaceUser.Properties.Resources.PionBlanc;
+            AtkPawnDesignUse = ITI.InterfaceUser.Properties.Resources.AttackerChessPawn;
+            DefPawnDesignUse = ITI.InterfaceUser.Properties.Resources.DefenderChessPawn;
             IaVictory = ITI.InterfaceUser.Properties.Resources.Victoire;
             PlayerVictory = ITI.InterfaceUser.Properties.Resources.Victoire;
             Square = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             ForbiddenSquare = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
             SquareMvtPossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
-            KingPawn = ITI.InterfaceUser.Properties.Resources.PionRoi;
-            
+            KingPawnDesignUse = ITI.InterfaceUser.Properties.Resources.King;
+            RessourcesPack = ITI.InterfaceUser.Properties.Resources.paramètres;
+            DesignPawn01 = ITI.InterfaceUser.Properties.Resources.ChessPawn;
+            DesignPawn02 = ITI.InterfaceUser.Properties.Resources.DamePawn;
+            DesignGameBoard01 = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
+            DesignGameBoard02 = ITI.InterfaceUser.Properties.Resources.WhiteSquareGameBoard;
 
 
             if (_frenchLanguages == true)
@@ -93,9 +121,15 @@ namespace ITI.InterfaceUser
                 CreateBoard = ITI.InterfaceUser.Properties.Resources.Créer_un_plateau;
                 LoadBoard = ITI.InterfaceUser.Properties.Resources.ChargerPlateau;
                 PlayerVsPlayer = ITI.InterfaceUser.Properties.Resources.JoueurVSJoueur;
-                PlayerVsIa = ITI.InterfaceUser.Properties.Resources.JoueurVSIa;
-                PlayAttacker = ITI.InterfaceUser.Properties.Resources.Jouer_attaquant;
-                PlayDefender = ITI.InterfaceUser.Properties.Resources.JouerDefenseur;
+                PlayerVsIa = ITI.InterfaceUser.Properties.Resources.JoueurVsIA;
+                PlayAttacker = ITI.InterfaceUser.Properties.Resources.Attaquant;
+                PlayDefender = ITI.InterfaceUser.Properties.Resources.Défenseur;
+                save = ITI.InterfaceUser.Properties.Resources.sauvegarder;
+                cancelSave = ITI.InterfaceUser.Properties.Resources.annulersauvegarde;
+                confirmSave = ITI.InterfaceUser.Properties.Resources.confirmersauvegarde;
+                insertAtkPawn = ITI.InterfaceUser.Properties.Resources.insererattaquant;
+                insertDefPawn = ITI.InterfaceUser.Properties.Resources.insererdefenseur;
+                removePawn = ITI.InterfaceUser.Properties.Resources.retirerpion;
 
             }
             else
@@ -116,17 +150,73 @@ namespace ITI.InterfaceUser
                 Board13x13 = ITI.InterfaceUser.Properties.Resources.Board13x13;
                 CreateBoard = ITI.InterfaceUser.Properties.Resources.CreateBoard;
                 LoadBoard = ITI.InterfaceUser.Properties.Resources.LoadBoard;
-                PlayerVsPlayer = ITI.InterfaceUser.Properties.Resources.PlayerVSPlayer;
-                PlayerVsIa = ITI.InterfaceUser.Properties.Resources.PlayerVSIA;
-                PlayAttacker = ITI.InterfaceUser.Properties.Resources.PlayAttacker;
-                PlayDefender = ITI.InterfaceUser.Properties.Resources.PlayDefender;
+                PlayerVsPlayer = ITI.InterfaceUser.Properties.Resources.JoueurVSJoueur;
+                PlayerVsIa = ITI.InterfaceUser.Properties.Resources.JoueurVsIA;
+                PlayAttacker = ITI.InterfaceUser.Properties.Resources.Attaquant;
+                PlayDefender = ITI.InterfaceUser.Properties.Resources.Défenseur;
+                save = ITI.InterfaceUser.Properties.Resources.saveboard;
+                cancelSave = ITI.InterfaceUser.Properties.Resources.cancelsave;
+                confirmSave = ITI.InterfaceUser.Properties.Resources.confirmsave;
+                insertAtkPawn = ITI.InterfaceUser.Properties.Resources.insertattacker;
+                insertDefPawn = ITI.InterfaceUser.Properties.Resources.insertdefender;
+                removePawn = ITI.InterfaceUser.Properties.Resources.removepawn;
             }
         }
-        /*
-        public Image Image
+
+        public Image ImageDesignPawn01
         {
-            get { return; }
-        }*/
+            get { return DesignPawn01; }
+        }
+
+        public Image ImageDesignPawn02
+        {
+            get { return DesignPawn02; }
+        }
+        
+        public Image ImageDesignGameBoard01
+        {
+            get { return DesignGameBoard01; }
+        }
+
+        public Image ImageDesignGameBoard02
+        {
+            get { return DesignGameBoard02; }
+        }
+
+        public Image ImageRessourcesPack
+        {
+            get { return RessourcesPack; }
+        }
+        
+        public Image ImageInsertAtkPawn
+        {
+            get { return insertAtkPawn; }
+        }
+
+        public Image ImageInsertDefPawn
+        {
+            get { return insertDefPawn; }
+        }
+
+        public Image ImageRemovePawn
+        {
+            get { return removePawn; }
+        }
+
+        public Image ImageSave
+        {
+            get { return save; }
+        }
+
+        public Image ImageCancelSave
+        {
+            get { return cancelSave; }
+        }
+
+        public Image ImageConfirmSave
+        {
+            get { return confirmSave; }
+        }
 
         public Image ImageBoard7x7
         {
@@ -203,14 +293,16 @@ namespace ITI.InterfaceUser
             get { return Play; }
         }
 
-        public Image ImageAtkTurn
+        public Image ImageAtkPawnDesignUse
         {
-            get { return AtkTurn; }
+            get { return AtkPawnDesignUse; }
+            set { AtkPawnDesignUse = value; }
         }
 
-        public Image ImageDefTurn
+        public Image ImageDefPawnDesignUse
         {
-            get { return DefTurn; }
+            get { return DefPawnDesignUse; }
+            set { DefPawnDesignUse = value; }
         }
 
         public Image ImageIaVictory
@@ -226,21 +318,24 @@ namespace ITI.InterfaceUser
         public Image ImageSquare
         {
             get { return Square; }
+            set { Square = value; }
         }
 
         public Image ImageForbiddenSquare
         {
             get { return ForbiddenSquare; }
+            set { ForbiddenSquare = value; }
         }
 
         public Image ImageSquareMvtPossible
         {
             get { return SquareMvtPossible;}
+            set { SquareMvtPossible = value; }
         }
 
         public Image ImageKingPawn
         {
-            get { return KingPawn; }
+            get { return KingPawnDesignUse; }
         }
 
         public Image ImageRulesBoard
@@ -269,6 +364,8 @@ namespace ITI.InterfaceUser
         }
 
 
+
+        // Fonctions qui permettent d'implémenter un plateau dans chaque form de l'interface où ces informations sont nécéssaires.
         public void setPictureBox(int width, int height)
         {
             #region variable création plateau

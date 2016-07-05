@@ -57,6 +57,7 @@
             this.ClientSize = new System.Drawing.Size(1006, 673);
             this.Controls.Add(this.m_ButtonReturn);
             this.Controls.Add(this.m_RichTextBoxRules);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "HnefataflRules";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);

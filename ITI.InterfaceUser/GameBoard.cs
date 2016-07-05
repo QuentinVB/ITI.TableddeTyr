@@ -20,54 +20,82 @@ namespace ITI.InterfaceUser
         PossibleMove _possibleMove;
         InterfaceOptions _interfaceOptions;
         List<StudiedPawn> _studiedPossibleMove;
+        StudiedPawn _studiedPawn;
 
-        PictureBox _playerTurn;
 
-        TextBox _nbAtk;
-        TextBox _nbDef;
-
-        bool _IAAtk = false;
-        bool _IADef = false;
         bool _firstClick = false;
         bool _endTurn = false;
         public int _pawnMoveX;
         public int _pawnMoveY;
         public int _pawnDestinationX;
         public int _pawnDestinationY;
+
+        // Bool pour l'utilisation de l'IA
+        bool _IAAtk = false;
+        bool _IADef = false;
+        
         int[,] _mvtPossible;
 
+        //lié au pseudoCore
+        int _AtkCount = 0;
+        int _DefCount = 0;
+        //
 
+        // Outil implémenter
+        PictureBox _playerTurn;
+
+        TextBox _nbAtk;
+        TextBox _nbDef;
+
+
+        /// <summary>
+        /// Call the form m_GameBoard
+        /// test : I hard put the position of the pawn 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public m_GameBoard(InterfaceOptions interfaceOptions, bool iAATK, bool IADef)
         {
             InitializeComponent();
-            _interfaceOptions = interfaceOptions;
-            _IAAtk = iAATK;
-            _IADef = IADef;
-            
             Game partie = new Game();
             _partie = partie;
             _tafl = partie.Tafl;
-            setIa();
-            
-            setGameBoardTools();
-        }
 
-        private void setIa()
-        {
+            _interfaceOptions = interfaceOptions;
+            _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+
+            _mvtPossible = new int[_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight];
+
+            this.Text = _interfaceOptions.Title;
+            this.Refresh();
+
+            _IAAtk = iAATK;
+            _IADef = IADef;
+
+            setGameBoardTools();
+
+            // Appel et création de l'IA
             if (_IAAtk == true)
             {
-                Freyja = new Freyja_Core(_partie, _IAAtk);
+                Freyja = new Freyja_Core(partie, _IAAtk);
                 IATurn();
             }
-            if (_IADef == true)
+            if(_IADef == true)
             {
-                Freyja = new Freyja_Core(_partie, !_IADef);
+                Freyja = new Freyja_Core(partie, !_IADef);
             }
+
         }
-        
+
+        /// <summary>
+        /// This function look the Itafl states and show the position of the pawn on the board.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            m_GameBoardPictureBoxTafl.BackColor = Color.Black;
+            pictureBox1.BackColor = Color.Black;
+
             Rectangle Rect;
             Graphics Draw = e.Graphics;
 
@@ -81,34 +109,33 @@ namespace ITI.InterfaceUser
 
                 for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
+                    Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
+
                     if (((i == 0) && (j == 0))
                             || ((i == _interfaceOptions.BoardWidth - 1) && (j == _interfaceOptions.BoardHeight - 1))
                             || ((i == _interfaceOptions.BoardWidth - 1) && (j == 0))
                             || ((i == 0) && (j == _interfaceOptions.BoardHeight - 1))
                             || ((i == ((_interfaceOptions.BoardWidth - 1) / 2)) && (j == ((_interfaceOptions.BoardHeight - 1) / 2))))
                     {
-                        Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
                         Draw.DrawImage(_interfaceOptions.ImageForbiddenSquare, Rect);
                     }
                     else
                     {
-                        Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
                         Draw.DrawImage(_interfaceOptions.ImageSquare, Rect);
                     }
                     
-                    if(_mvtPossible[i, j] == 1) 
-                    {
-                        Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
-                        Draw.DrawImage(_interfaceOptions.ImageSquareMvtPossible, Rect);  
+                    if(_mvtPossible[i, j] == 1)     
+                    {   
+                        Draw.DrawImage(_interfaceOptions.ImageSquareMvtPossible, Rect);   
                     } 
 
                     if (_tafl[i, j] == GameCore.Pawn.Attacker)
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageAtkTurn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.Defender)
                     {
-                        Draw.DrawImage(_interfaceOptions.ImageDefTurn, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.King)
                     {
@@ -119,7 +146,14 @@ namespace ITI.InterfaceUser
                 y = y + _interfaceOptions.NextRectanglePositionY;
             }
         }
-        
+
+        /// <summary>
+        /// For the moment, This function give the x, y of the board.
+        /// After, it will give x, y to the gamecore to communicate the pawn's position the user
+        /// wants to move.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
             int y = _interfaceOptions.RectanglePositionY;
@@ -136,7 +170,6 @@ namespace ITI.InterfaceUser
                         {
                             _pawnMoveX = i;
                             _pawnMoveY = j;
-
                             if ((_tafl[_pawnMoveX, _pawnMoveY] != 0) &&
                                     ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.Attacker) && (_partie.IsAtkPlaying == true))
                                     || ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.Defender) && (_partie.IsAtkPlaying == false))
@@ -145,9 +178,9 @@ namespace ITI.InterfaceUser
                             {
                                 _firstClick = true;
                                 _possibleMove = _partie.CanMove(_pawnMoveX, _pawnMoveY);
-                                resetHelpPlayer();
+                                
                                 showHelpPlayer(_pawnMoveX, _pawnMoveY);
-                                m_GameBoardPictureBoxTafl.Refresh();
+                                pictureBox1.Refresh();
                                 
                             }
                         }
@@ -167,16 +200,16 @@ namespace ITI.InterfaceUser
                                 else
                                 {
                                     _firstClick = false;
-                                    resetHelpPlayer();
-                                    m_GameBoardPictureBoxTafl.Refresh();
+                                    resethelpplayer();
+                                    pictureBox1.Refresh();
                                     j = _interfaceOptions.BoardHeight - 1;
                                     break;
                                 }
                             }else
                             {
                                 _firstClick = false;
-                                resetHelpPlayer();
-                                m_GameBoardPictureBoxTafl.Refresh();
+                                resethelpplayer();
+                                pictureBox1.Refresh();
                                 j = _interfaceOptions.BoardHeight - 1;
                                 break;
                             }
@@ -194,8 +227,8 @@ namespace ITI.InterfaceUser
                             {
                                 _endTurn = false;
                                 _firstClick = false;
-                                resetHelpPlayer();
-                                m_GameBoardPictureBoxTafl.Refresh();
+                                resethelpplayer();
+                                pictureBox1.Refresh();
                                 j = _interfaceOptions.BoardHeight - 1;
                                 break;
                             }
@@ -234,22 +267,25 @@ namespace ITI.InterfaceUser
 
                 }
             }
+            pictureBox1.Refresh();
         }
 
         private void updateInfomations()
         {
             // Update number of pawn on the board show to the player
-            _nbAtk.Text = ("Le nombre d'attaquant est de :  " + _tafl.AttackerCount);
-            _nbDef.Text = ("Le nombre de défenseur est de : " + _tafl.DefenderCount);
+            _AtkCount = _tafl.AttackerCount;
+            _DefCount = _tafl.DefenderCount;
+            _nbAtk.Text = ("Le nombre d'attaquant est de :  " + _AtkCount);
+            _nbDef.Text = ("Le nombre de défenseur est de : " + _DefCount);
 
             // Update playerTurn
             if(_partie.IsAtkPlaying == true)
             {
-                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkTurn;
+                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawnDesignUse;
                 _playerTurn.Refresh();
             }else
             {
-                _playerTurn.Image = (Image)_interfaceOptions.ImageDefTurn;
+                _playerTurn.Image = (Image)_interfaceOptions.ImageDefPawnDesignUse;
                 _playerTurn.Refresh();
             }
             
@@ -260,40 +296,31 @@ namespace ITI.InterfaceUser
             if((_IAAtk == true && _partie.IsAtkPlaying == true) || (_IADef == true && _partie.IsAtkPlaying == false))
             {
                 PictureBox finDelaPartie = new PictureBox();
+                Image endGame;
+                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
                 finDelaPartie.Location = new Point(0, 0);
                 finDelaPartie.Size = new System.Drawing.Size(750, 400);
-                finDelaPartie.Image = (Image)_interfaceOptions.ImageIaVictory;
+                finDelaPartie.Image = (Image)endGame;
                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
-                m_GameBoardPictureBoxTafl.Hide();
+                pictureBox1.Hide();
                 _nbAtk.Hide();
                 _nbDef.Hide();
-                _playerTurn.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
             }else
             {
                 PictureBox finDelaPartie = new PictureBox();
+                Image endGame;
+                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
                 finDelaPartie.Location = new Point(0, 0);
                 finDelaPartie.Size = new System.Drawing.Size(750, 400);
-                finDelaPartie.Image = (Image)_interfaceOptions.ImagePlayerVictory;
+                finDelaPartie.Image = (Image)endGame;
                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
-                m_GameBoardPictureBoxTafl.Hide();
+                pictureBox1.Hide();
                 _nbAtk.Hide();
                 _nbDef.Hide();
-                _playerTurn.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
-            }
-        }
-
-        private void resetHelpPlayer()
-        {
-            for(int j = 0; j < _interfaceOptions.BoardHeight; j++)
-            {
-                for(int i = 0; i < _interfaceOptions.BoardWidth; i++)
-                {
-                    _mvtPossible[i, j] = 0;
-                }
             }
         }
 
@@ -301,6 +328,7 @@ namespace ITI.InterfaceUser
         {
             int x = 0, y = 0;
             _studiedPossibleMove = new List<StudiedPawn>();
+            _studiedPawn = new StudiedPawn();
 
             _studiedPossibleMove = _possibleMove.FreeSquares;
 
@@ -311,35 +339,41 @@ namespace ITI.InterfaceUser
                 _mvtPossible[x, y] = 1;
             }
         }
+
+        private void resethelpplayer()
+        {
+            for(int j = 0; j < _interfaceOptions.BoardHeight; j++)
+            {
+                for(int i = 0; i < _interfaceOptions.BoardWidth; i++)
+                {
+                    _mvtPossible[i, j] = 0;
+                }
+            }
+        }
         
         private void setGameBoardTools()
         {
-            this.Text = _interfaceOptions.Title;
-            this.Refresh();
-
-            _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
-            _mvtPossible = new int[_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight];
-
             _playerTurn = new PictureBox();
             _playerTurn.Location = new Point(this.Location.X + 550, this.Location.Y + 25);
-            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkTurn;
+            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawnDesignUse;
             _playerTurn.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Controls.Add(_playerTurn);
 
 
             _nbAtk = new TextBox();
-            _nbAtk.Text = "Nombre d'atk est de " + _tafl.AttackerCount;
+            _nbAtk.Text = "Nombre d'atk est de " + _AtkCount;
             _nbAtk.Location = new Point(this.Location.X + 530, this.Location.Y + 200);
             _nbAtk.Size = new System.Drawing.Size(200, 75);
             this.Controls.Add(_nbAtk);
             _nbAtk.BringToFront();
 
             _nbDef = new TextBox();
-            _nbDef.Text = "Nombre de def est de " + _tafl.DefenderCount;
+            _nbDef.Text = "Nombre de def est de " + _DefCount;
             _nbDef.Location = new Point(this.Location.X + 530, this.Location.Y + 100);
             _nbDef.Size = new System.Drawing.Size(200, 75);
             this.Controls.Add(_nbDef);
             _nbDef.BringToFront();
+
         }
 
     }

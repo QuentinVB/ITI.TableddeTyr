@@ -27,11 +27,19 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="tafl">The tafl to store.</param>
         /// <param name="score">The score.</param>
         /// <param name="isAtkPlaying">if set to <c>true</c> the atk is playing.</param>
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, bool isAtkPlaying)//if the node is the first node : no move
+        internal SimulationNode(string id, 
+                                IReadOnlyTafl tafl, 
+                                int score, 
+                                bool isAtkPlaying)//if the node is the first node : no move
             :this(id, tafl, 0, new Move(), isAtkPlaying, 0, new Move())
-            {
-            }
-        internal SimulationNode(string id, IReadOnlyTafl tafl, int score, Move move, bool isAtkPlaying, int turn, Move thismove)//constructor
+            {}
+        internal SimulationNode(string id, 
+                                IReadOnlyTafl tafl, 
+                                int score, 
+                                Move move, 
+                                bool isAtkPlaying, 
+                                int turn, 
+                                Move thismove)//constructor
         {
             this.id = id;
             _taflstored = tafl;
@@ -113,6 +121,33 @@ namespace ITI.TabledeTyr.Freyja
         }
         //get data  
         internal int GetMaxIncubatedNode { get { return _incubatorArray.Length; } }
+
+        internal bool RemovebyId(string ID)
+        {
+            bool ctrl = false;
+            int cursor = 0;
+            foreach (SimulationNode n in _incubatorArray)
+            {
+                if (n == null) break;
+                if (n.ID == ID)
+                {
+                    ctrl = true;
+                    break;
+                }
+                cursor++;
+            }
+
+            if(ctrl == true)
+            {
+                for (int i = cursor + 1; (i <= Length - 1); i++)
+                {
+                    _incubatorArray[i] = _incubatorArray[i + 1];
+                }
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Gets the best node.
         /// </summary>

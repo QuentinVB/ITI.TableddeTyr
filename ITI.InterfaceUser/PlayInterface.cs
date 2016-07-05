@@ -46,21 +46,19 @@ namespace ITI.InterfaceUser
         public PlayInterface(InterfaceOptions interfaceoptions)
         {
             InitializeComponent();
+            _xml = new XML_Tafl();
             _interfaceOptions = interfaceoptions;
 
             this.Text = _interfaceOptions.Title;
             this.Refresh();
-
             setInterfaceBoard();
-            
+
             setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+            _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+            m_PictureBoxInterfaceBoard.Refresh();
 
             listboxtest.Hide();
             listboxtest.ScrollAlwaysVisible = true;
-
-            _xml = new XML_Tafl();
-
-            _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
         }
 
         private void setPlateau(int width, int height)
@@ -196,6 +194,11 @@ namespace ITI.InterfaceUser
                     createBoard.Dispose();
                 }
                 this.Show();
+                _interfaceOptions.BoardWidth = 7;
+                _interfaceOptions.BoardHeight = 7;
+                setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                m_PictureBoxInterfaceBoard.Refresh();
             };
             this.Controls.Add(_CreateBoard);
             _CreateBoard.BringToFront();
@@ -257,8 +260,8 @@ namespace ITI.InterfaceUser
         {
             
             _JoueurVsJoueur = new Button();
-            _JoueurVsJoueur.Location = new Point((this.Width / 10), (this.Height / 10));
-            _JoueurVsJoueur.Size = new System.Drawing.Size(175, 175);
+            _JoueurVsJoueur.Location = new Point((this.Width /20), (this.Height / 10));
+            _JoueurVsJoueur.Size = new System.Drawing.Size(250, 300);
             _JoueurVsJoueur.BackgroundImage = (Image)_interfaceOptions.ImagePlayerVsPlayer;
             _JoueurVsJoueur.BackgroundImageLayout = ImageLayout.Stretch;
             _JoueurVsJoueur.Click += delegate (object sender, EventArgs e)
@@ -289,8 +292,8 @@ namespace ITI.InterfaceUser
 
             
             _JoueurVsFreyja = new Button();
-            _JoueurVsFreyja.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
-            _JoueurVsFreyja.Size = new System.Drawing.Size(175, 175);
+            _JoueurVsFreyja.Location = new Point((this.Width / 20) * 12, (this.Height / 10));
+            _JoueurVsFreyja.Size = new System.Drawing.Size(250, 300);
             _JoueurVsFreyja.BackgroundImage = (Image)_interfaceOptions.ImagePlayerVsIa;
             _JoueurVsFreyja.BackgroundImageLayout = ImageLayout.Stretch;
             _JoueurVsFreyja.Click += delegate (object sender, EventArgs e)
@@ -304,7 +307,7 @@ namespace ITI.InterfaceUser
             _JoueurVsFreyja.BringToFront();
 
             _RetourChoixPlateau = new Button();
-            _RetourChoixPlateau.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 2);
+            _RetourChoixPlateau.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 8);
             _RetourChoixPlateau.Size = new System.Drawing.Size(150, 75);
             _RetourChoixPlateau.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
             _RetourChoixPlateau.BackgroundImageLayout = ImageLayout.Stretch;
@@ -332,8 +335,8 @@ namespace ITI.InterfaceUser
         {
             
             _jouerAttaquant = new Button();
-            _jouerAttaquant.Location = new Point((this.Width / 10), (this.Height / 10));
-            _jouerAttaquant.Size = new System.Drawing.Size(175, 175);
+            _jouerAttaquant.Location = new Point((this.Width / 20), (this.Height / 10));
+            _jouerAttaquant.Size = new System.Drawing.Size(250, 300);
             _jouerAttaquant.BackgroundImage = (Image)_interfaceOptions.ImagePlayAttacker;
             _jouerAttaquant.BackgroundImageLayout = ImageLayout.Stretch;
             _jouerAttaquant.Click += delegate (object sender, EventArgs e)
@@ -364,8 +367,8 @@ namespace ITI.InterfaceUser
             _jouerAttaquant.BringToFront();
 
             _jouerDefenseur = new Button();
-            _jouerDefenseur.Location = new Point((this.Width / 10) * 7, (this.Height / 10));
-            _jouerDefenseur.Size = new System.Drawing.Size(175, 175);
+            _jouerDefenseur.Location = new Point((this.Width / 20) * 12, (this.Height / 10));
+            _jouerDefenseur.Size = new System.Drawing.Size(250, 300);
             _jouerDefenseur.BackgroundImage = (Image)_interfaceOptions.ImagePlayDefender;
             _jouerDefenseur.BackgroundImageLayout = ImageLayout.Stretch;
             _jouerDefenseur.Click += delegate (object sender, EventArgs e)
@@ -396,7 +399,7 @@ namespace ITI.InterfaceUser
             _jouerDefenseur.BringToFront();
 
             _RetourChoixAdversaire = new Button();
-            _RetourChoixAdversaire.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 2);
+            _RetourChoixAdversaire.Location = new Point((this.Width / 10) * 4, (this.Height / 10) * 8);
             _RetourChoixAdversaire.Size = new System.Drawing.Size(150, 75);
             _RetourChoixAdversaire.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
             _RetourChoixAdversaire.BackgroundImageLayout = ImageLayout.Stretch;
@@ -417,59 +420,43 @@ namespace ITI.InterfaceUser
 
         private void m_PictureBoxInterfaceBoard_Paint(object sender, PaintEventArgs e)
         {
-
-            Graphics Pawn = e.Graphics;
-            Graphics Board = e.Graphics;
+            Rectangle Rect;
+            Graphics Draw = e.Graphics;
             m_PictureBoxInterfaceBoard.BackColor = Color.Black;
             
-            Image Piece;
-            Image Case;
-            Image caseInterdite;
-            Image mvtPiecePossible;
-            Rectangle Rect;
-            
 
-            Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
-            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
-            mvtPiecePossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
-
-
-            int x = 0, y = _rectanglePositionY;
+            int y = _rectanglePositionY;
 
             for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
-                x = _rectanglePositionX;
+                int x = _rectanglePositionX;
                 for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
+                    Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);
                     if (((i == 0) && (j == 0))
                             || ((i == _interfaceOptions.BoardWidth - 1) && (j == _interfaceOptions.BoardHeight - 1))
                             || ((i == _interfaceOptions.BoardWidth - 1) && (j == 0))
                             || ((i == 0) && (j == _interfaceOptions.BoardHeight - 1))
                             || ((i == ((_interfaceOptions.BoardWidth - 1) / 2)) && (j == ((_interfaceOptions.BoardHeight - 1) / 2))))
                     {
-                        Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);
-                        Board.DrawImage(caseInterdite, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageForbiddenSquare, Rect);
                     }
                     else
                     {
-                        Rect = new Rectangle(x, y, _rectangleWidth, _rectangleHeight);
-                        Board.DrawImage(Case, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageSquare, Rect);
                     }
 
                     if (_tafl[i, j] == GameCore.Pawn.Attacker)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.Defender)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
                     if (_tafl[i, j] == GameCore.Pawn.King)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageKingPawn, Rect);
                     }
                     x = x + _nextRectanglePositionX;
                 }
