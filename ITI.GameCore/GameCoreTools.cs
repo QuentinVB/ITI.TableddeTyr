@@ -292,7 +292,6 @@ namespace ITI.GameCore
             }
             return xElements;
         }
-
         public TaflBasic ReadXmlTafl(int width, int height)
         {
             string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;
