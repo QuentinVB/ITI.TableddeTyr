@@ -87,15 +87,16 @@ namespace ITI.TabledeTyr.Freyja
                             //how should i simulate these pawns ?
 
                             //keep only a few studied pawn into possible simulation
+                            /*
                             int targetDistance = Math.Max(node.TaflStored.Height, node.TaflStored.Width) /( _ctx.Monitor.TargetRatio*2);
                             int distance = AnalyzeToolbox.Distance(p.X, p.Y, d.X, d.Y);
                             if(distance < targetDistance)
-                            {
+                            {*/
                                 //generate the simulated nodes, then send it to the analyze and store it to the Incubator
                                 SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
-                                data = _ctx.Analyze.UpdateAnalyze(node, data);
+                                data = _ctx.Analyze.UpdateAnalyze(node, data); // THING GET MESSY HERE !
                                 incubatorTemp.Add(data);
-                            }        
+                            //}        
                         }                      
                     }
                 
