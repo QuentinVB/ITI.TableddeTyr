@@ -39,6 +39,7 @@ namespace ITI.InterfaceUser
         int _rectangleHeight;
         int _nextRectanglePositionX;
         int _nextRectanglePositionY;
+        bool _BoardChooseLoad;
 
         string _nameTaflLoad;
 
@@ -270,7 +271,7 @@ namespace ITI.InterfaceUser
                 _JoueurVsJoueur.Hide();
                 _RetourChoixPlateau.Hide(); 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, false);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, false, _BoardChooseLoad, _nameTaflLoad);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -346,7 +347,7 @@ namespace ITI.InterfaceUser
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, true);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, true, _BoardChooseLoad, _nameTaflLoad);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -378,7 +379,7 @@ namespace ITI.InterfaceUser
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, true, false);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, true, false, _BoardChooseLoad, _nameTaflLoad);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
