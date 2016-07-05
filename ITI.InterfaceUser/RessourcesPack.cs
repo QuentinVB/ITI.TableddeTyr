@@ -17,8 +17,10 @@ namespace ITI.InterfaceUser
 
         PictureBox _NewPawnPicture01;
         PictureBox _NewPawnPicture02;
+        PictureBox _NewPawnPicture03;
         PictureBox _NewSquarePicture01;
         PictureBox _NewSquarePicture02;
+        
 
         InterfaceOptions _interfaceOptions;
         public RessourcesPack(InterfaceOptions interfaceOptions)
@@ -35,7 +37,7 @@ namespace ITI.InterfaceUser
 
             _loadNewPawnPicture = new TextBox();
             _loadNewPawnPicture.Enabled = false;
-            _loadNewPawnPicture.Location = new Point(this.Location.X + 25, this.Location.Y + 25);
+            _loadNewPawnPicture.Location = new Point(this.Location.X + 200, this.Location.Y + 5);
             _loadNewPawnPicture.Size = new System.Drawing.Size(150, 50);
             if(_interfaceOptions.Languages == true)
             {
@@ -73,6 +75,7 @@ namespace ITI.InterfaceUser
             {
                 _interfaceOptions.ImageAtkPawnDesignUse = ITI.InterfaceUser.Properties.Resources.AttackerChessPawn;
                 _interfaceOptions.ImageDefPawnDesignUse = ITI.InterfaceUser.Properties.Resources.DefenderChessPawn;
+                _interfaceOptions.ImageKingPawn = ITI.InterfaceUser.Properties.Resources.King;
                 if (_interfaceOptions.Languages == true)
                 {
                     MessageBox.Show("Le design des pions a été modifié !", "Information", MessageBoxButtons.OK);
@@ -95,6 +98,7 @@ namespace ITI.InterfaceUser
             {
                 _interfaceOptions.ImageAtkPawnDesignUse = ITI.InterfaceUser.Properties.Resources.AttackerDamePawn;
                 _interfaceOptions.ImageDefPawnDesignUse = ITI.InterfaceUser.Properties.Resources.DefenderDamePawn;
+                _interfaceOptions.ImageKingPawn = ITI.InterfaceUser.Properties.Resources.King;
                 if (_interfaceOptions.Languages == true)
                 {
                     MessageBox.Show("Le design des pions a été modifié !", "Information", MessageBoxButtons.OK);
@@ -106,6 +110,28 @@ namespace ITI.InterfaceUser
             };
             this.Controls.Add(_NewPawnPicture02);
             _NewPawnPicture02.BringToFront();
+
+            _NewPawnPicture03 = new PictureBox();
+            _NewPawnPicture03.Location = new Point(this.Location.X + 15, this.Location.Y + 25);
+            _NewPawnPicture03.Size = new System.Drawing.Size(150, 150);
+            _NewPawnPicture03.BackgroundImage = (Image)_interfaceOptions.ImageDesignPawn03;
+            _NewPawnPicture03.BackgroundImageLayout = ImageLayout.Stretch;
+            _NewPawnPicture03.Click += delegate (object sender, EventArgs r)
+            {
+                _interfaceOptions.ImageAtkPawnDesignUse = ITI.InterfaceUser.Properties.Resources.atk;
+                _interfaceOptions.ImageDefPawnDesignUse = ITI.InterfaceUser.Properties.Resources.def;
+                _interfaceOptions.ImageKingPawn = ITI.InterfaceUser.Properties.Resources.Pawnking;
+                if (_interfaceOptions.Languages == true)
+                {
+                    MessageBox.Show("Le design des pions a été modifié !", "Information", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Pawns' design has been changed !", "Information", MessageBoxButtons.OK);
+                }
+            };
+            this.Controls.Add(_NewPawnPicture03);
+            _NewPawnPicture03.BringToFront();
 
 
             _NewSquarePicture01 = new PictureBox();

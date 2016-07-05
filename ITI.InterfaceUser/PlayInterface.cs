@@ -60,6 +60,7 @@ namespace ITI.InterfaceUser
 
             listboxtest.Hide();
             listboxtest.ScrollAlwaysVisible = true;
+            
         }
 
         private void setPlateau(int width, int height)

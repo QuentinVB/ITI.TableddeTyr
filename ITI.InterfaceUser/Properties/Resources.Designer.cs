@@ -83,6 +83,16 @@ namespace ITI.InterfaceUser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap atk {
+            get {
+                object obj = ResourceManager.GetObject("atk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap AttackerChessPawn {
             get {
                 object obj = ResourceManager.GetObject("AttackerChessPawn", resourceCulture);
@@ -306,6 +316,16 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap DamePawn {
             get {
                 object obj = ResourceManager.GetObject("DamePawn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap def {
+            get {
+                object obj = ResourceManager.GetObject("def", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -594,6 +614,16 @@ namespace ITI.InterfaceUser.Properties {
         internal static System.Drawing.Bitmap paramètres {
             get {
                 object obj = ResourceManager.GetObject("paramètres", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pawnking {
+            get {
+                object obj = ResourceManager.GetObject("Pawnking", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

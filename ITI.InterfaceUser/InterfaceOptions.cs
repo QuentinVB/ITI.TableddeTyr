@@ -64,8 +64,15 @@ namespace ITI.InterfaceUser
         //RessourcesPack Form
         Image DesignPawn01;
         Image DesignPawn02;
+        Image DesignPawn03;
         Image DesignGameBoard01;
         Image DesignGameBoard02;
+        Image DesignPawnAtk01;
+        Image DesignPawnDef01;
+        Image DesignPawnKing01;
+        Image DesignPawnAtk02;
+        Image DesignPawnDef02;
+        Image DesignPawnKing02;
 
 
         public int _rectanglePositionX;
@@ -87,17 +94,18 @@ namespace ITI.InterfaceUser
 
         public void setEverythingInCorrectLanguages()
         {
-            AtkPawnDesignUse = ITI.InterfaceUser.Properties.Resources.AttackerChessPawn;
-            DefPawnDesignUse = ITI.InterfaceUser.Properties.Resources.DefenderChessPawn;
+            AtkPawnDesignUse = ITI.InterfaceUser.Properties.Resources.atk;
+            DefPawnDesignUse = ITI.InterfaceUser.Properties.Resources.def;
+            KingPawnDesignUse = ITI.InterfaceUser.Properties.Resources.Pawnking;
             IaVictory = ITI.InterfaceUser.Properties.Resources.Victoire;
             PlayerVictory = ITI.InterfaceUser.Properties.Resources.Victoire;
             Square = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             ForbiddenSquare = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
             SquareMvtPossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
-            KingPawnDesignUse = ITI.InterfaceUser.Properties.Resources.King;
             RessourcesPack = ITI.InterfaceUser.Properties.Resources.paramètres;
             DesignPawn01 = ITI.InterfaceUser.Properties.Resources.ChessPawn;
             DesignPawn02 = ITI.InterfaceUser.Properties.Resources.DamePawn;
+            DesignPawn03 = ITI.InterfaceUser.Properties.Resources.WhiteForbiddenSquareGameBoard;    /// //////////////////
             DesignGameBoard01 = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             DesignGameBoard02 = ITI.InterfaceUser.Properties.Resources.WhiteSquareGameBoard;
 
@@ -166,13 +174,21 @@ namespace ITI.InterfaceUser
         public Image ImageDesignPawn01
         {
             get { return DesignPawn01; }
+            set { DesignPawn01 = value; }
         }
 
         public Image ImageDesignPawn02
         {
             get { return DesignPawn02; }
+            set { DesignPawn02 = value; }
         }
-        
+
+        public Image ImageDesignPawn03
+        {
+            get { return DesignPawn03; }
+            set { DesignPawn03 = value; }
+        }
+
         public Image ImageDesignGameBoard01
         {
             get { return DesignGameBoard01; }
@@ -336,6 +352,7 @@ namespace ITI.InterfaceUser
         public Image ImageKingPawn
         {
             get { return KingPawnDesignUse; }
+            set { KingPawnDesignUse = value; }
         }
 
         public Image ImageRulesBoard
