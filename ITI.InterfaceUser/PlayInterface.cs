@@ -39,6 +39,7 @@ namespace ITI.InterfaceUser
         int _rectangleHeight;
         int _nextRectanglePositionX;
         int _nextRectanglePositionY;
+        bool _BoardChooseLoad;
 
         string _nameTaflLoad;
 
@@ -59,6 +60,7 @@ namespace ITI.InterfaceUser
 
             listboxtest.Hide();
             listboxtest.ScrollAlwaysVisible = true;
+            
         }
 
         private void setPlateau(int width, int height)
@@ -66,43 +68,61 @@ namespace ITI.InterfaceUser
 
             _tafl = new TaflBasic(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
 
-            if (width == 7 && height == 7)
+            if (width == 7)
             {
                 _rectanglePositionX = 3;
-                _rectanglePositionY = 4;
                 _rectangleWidth = 61;
-                _rectangleHeight = 60;
                 _nextRectanglePositionX = 64;
+                
+            }
+            if(height == 7)
+            {
+                _rectanglePositionY = 4;
+                _rectangleHeight = 60;
                 _nextRectanglePositionY = 63;
             }
 
-            if(width == 9 && height == 9)
+            if(width == 9)
             {
                 _rectanglePositionX = 2;
-                _rectanglePositionY = 4;
                 _rectangleWidth = 47;
-                _rectangleHeight = 46;
                 _nextRectanglePositionX = 50;
+                
+            }
+
+            if(height == 9)
+            {
+                _rectanglePositionY = 4;
+                _rectangleHeight = 46;
                 _nextRectanglePositionY = 49;
             }
 
-            if(width == 11 && height == 11)
+            if(width == 11)
             {
                 _rectanglePositionX = 6;
-                _rectanglePositionY = 5;
                 _rectangleWidth = 37;
-                _rectangleHeight = 37;
                 _nextRectanglePositionX = 40;
+            }
+
+            if(height == 11)
+            {
+                _rectanglePositionY = 5;
+                _rectangleHeight = 37;
                 _nextRectanglePositionY = 40;
             }
 
-            if(width == 13 && height == 13)
+            if(width == 13)
             {
                 _rectanglePositionX = 5;
-                _rectanglePositionY = 4;
                 _rectangleWidth = 31;
-                _rectangleHeight = 31;
                 _nextRectanglePositionX = 34;
+                
+            }
+
+            if(height == 13)
+            {
+                _rectanglePositionY = 4;
+                _rectangleHeight = 31;
                 _nextRectanglePositionY = 34;
             }
         }
@@ -121,6 +141,8 @@ namespace ITI.InterfaceUser
             {
                 _interfaceOptions.BoardWidth = 7;
                 _interfaceOptions.BoardHeight = 7;
+                m_PictureBoxInterfaceBoard.Show();
+                listboxtest.Hide();
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -139,6 +161,8 @@ namespace ITI.InterfaceUser
             {
                 _interfaceOptions.BoardWidth = 9;
                 _interfaceOptions.BoardHeight = 9;
+                m_PictureBoxInterfaceBoard.Show();
+                listboxtest.Hide();
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -156,6 +180,8 @@ namespace ITI.InterfaceUser
             {
                 _interfaceOptions.BoardWidth = 11;
                 _interfaceOptions.BoardHeight = 11;
+                m_PictureBoxInterfaceBoard.Show();
+                listboxtest.Hide();
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -173,6 +199,8 @@ namespace ITI.InterfaceUser
             {
                 _interfaceOptions.BoardWidth = 13;
                 _interfaceOptions.BoardHeight = 13;
+                m_PictureBoxInterfaceBoard.Show();
+                listboxtest.Hide();
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -270,7 +298,7 @@ namespace ITI.InterfaceUser
                 _JoueurVsJoueur.Hide();
                 _RetourChoixPlateau.Hide(); 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, false);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, false, _BoardChooseLoad, _nameTaflLoad);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -346,7 +374,7 @@ namespace ITI.InterfaceUser
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, true);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, false, true, _BoardChooseLoad, _nameTaflLoad);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();
@@ -378,7 +406,7 @@ namespace ITI.InterfaceUser
                 _RetourChoixAdversaire.Hide();
 
                 this.Hide();
-                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, true, false);
+                m_GameBoard GameBoard = new m_GameBoard(_interfaceOptions, true, false, _BoardChooseLoad, _nameTaflLoad);
                 if (GameBoard.ShowDialog() == DialogResult.Cancel)
                 {
                     GameBoard.Dispose();

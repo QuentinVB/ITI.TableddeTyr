@@ -292,13 +292,7 @@ namespace ITI.GameCore
             }
             return xElements;
         }
-        public TaflBasic ReadXmlTafl(string name)
-        {
-            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + name + ".xml");
-            TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
-            outTafl = ReadTaflArray(reader, outTafl);
-            return outTafl;
-        }
+
         public TaflBasic ReadXmlTafl(int width, int height)
         {
             string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;
@@ -310,7 +304,7 @@ namespace ITI.GameCore
         //surcharge
         public TaflBasic ReadXmlTafl(string name)
         {
-            XmlTextReader reader = new XmlTextReader("./" + name + ".xml");
+            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + name + ".xml");
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
             return outTafl;

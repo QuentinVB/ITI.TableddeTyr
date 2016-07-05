@@ -46,6 +46,7 @@
             // m_PictureBoxInterfaceBoard
             // 
             this.m_PictureBoxInterfaceBoard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.m_PictureBoxInterfaceBoard.Enabled = false;
             this.m_PictureBoxInterfaceBoard.Location = new System.Drawing.Point(12, 111);
             this.m_PictureBoxInterfaceBoard.Name = "m_PictureBoxInterfaceBoard";
             this.m_PictureBoxInterfaceBoard.Size = new System.Drawing.Size(600, 550);

@@ -40,7 +40,7 @@ namespace ITI.InterfaceUser
         int _AtkCount = 0;
         int _DefCount = 0;
         //
-
+        bool _createBoard;
         // Outil implémenter
         PictureBox _playerTurn;
 
@@ -54,12 +54,21 @@ namespace ITI.InterfaceUser
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public m_GameBoard(InterfaceOptions interfaceOptions, bool iAATK, bool IADef)
+        public m_GameBoard(InterfaceOptions interfaceOptions, bool iAATK, bool IADef, bool createBoard, string taflname)
         {
             InitializeComponent();
-            Game partie = new Game();
-            _partie = partie;
-            _tafl = partie.Tafl;
+            _createBoard = createBoard;
+            if (_createBoard == true)
+            {
+                Game partie = new Game();
+                _partie = partie;
+                _tafl = partie.Tafl;
+            }else
+            {
+                Game partie = new Game();
+                _partie = partie;
+                _tafl = partie.Tafl;
+            }
 
             _interfaceOptions = interfaceOptions;
             _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
@@ -77,12 +86,12 @@ namespace ITI.InterfaceUser
             // Appel et création de l'IA
             if (_IAAtk == true)
             {
-                Freyja = new Freyja_Core(partie, _IAAtk);
+                Freyja = new Freyja_Core(_partie, _IAAtk);
                 IATurn();
             }
             if(_IADef == true)
             {
-                Freyja = new Freyja_Core(partie, !_IADef);
+                Freyja = new Freyja_Core(_partie, _IADef);
             }
 
         }
@@ -170,6 +179,7 @@ namespace ITI.InterfaceUser
                         {
                             _pawnMoveX = i;
                             _pawnMoveY = j;
+
                             if ((_tafl[_pawnMoveX, _pawnMoveY] != 0) &&
                                     ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.Attacker) && (_partie.IsAtkPlaying == true))
                                     || ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.Defender) && (_partie.IsAtkPlaying == false))
@@ -303,10 +313,72 @@ namespace ITI.InterfaceUser
                 finDelaPartie.Image = (Image)endGame;
                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
                 pictureBox1.Hide();
+                _playerTurn.Hide();
                 _nbAtk.Hide();
                 _nbDef.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
+                if(_interfaceOptions.Languages == true)
+                {
+                    if(MessageBox.Show("Recommencez", "Défaite", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == true)
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        finDelaPartie.Hide();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Show();
+                        pictureBox1.Refresh();
+                    }else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }else
+                {
+                    if (MessageBox.Show("You lost! Try Again?", "Loose", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == true)
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        updateInfomations();
+                        finDelaPartie.Hide();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Show();
+                        pictureBox1.Refresh();
+                    }
+                    else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }
             }else
             {
                 PictureBox finDelaPartie = new PictureBox();
@@ -317,10 +389,75 @@ namespace ITI.InterfaceUser
                 finDelaPartie.Image = (Image)endGame;
                 finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
                 pictureBox1.Hide();
+                _playerTurn.Hide();
                 _nbAtk.Hide();
                 _nbDef.Hide();
                 finDelaPartie.BringToFront();
                 this.Controls.Add(finDelaPartie);
+                if (_interfaceOptions.Languages == true)
+                {
+                    if (MessageBox.Show("victoire ! Recommencez ?", "victoire", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == true)
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        updateInfomations();
+                        finDelaPartie.Hide();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Show();
+                        pictureBox1.Refresh();
+                    }
+                    else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show("Victory! Try again?", "Victory", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == true)
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game();
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        updateInfomations();
+                        finDelaPartie.Hide();
+                        pictureBox1.Show();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Refresh();
+                    }
+                    else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }
             }
         }
 
