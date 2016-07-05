@@ -180,6 +180,8 @@ namespace ITI.GameCore
                 || (_tafl[_tafl.Width - 1, 0] == Pawn.King)
                 || (_tafl[_tafl.Width - 1, _tafl.Height - 1] == Pawn.King)
                 || (!_tafl.HasKing)//check if the king is still alive
+                || (_tafl.AttackerCount == 0)
+                || (_tafl.DefenderCount == 0)
                 ) return true;
             return false;
         }
