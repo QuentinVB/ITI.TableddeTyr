@@ -57,7 +57,7 @@ namespace ITI.InterfaceUser
         public m_GameBoard(InterfaceOptions interfaceOptions, bool iAATK, bool IADef)
         {
             InitializeComponent();
-            Game partie = new Game();
+            Game partie = new Game(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
             _partie = partie;
             _tafl = partie.Tafl;
 

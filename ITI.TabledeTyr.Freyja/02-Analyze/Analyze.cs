@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ITI.TabledeTyr.Freyja
 {
-    class Analyze
+    public class Analyze
     {
        
         SimulationNode _father;

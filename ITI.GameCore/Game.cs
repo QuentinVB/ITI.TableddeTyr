@@ -16,13 +16,12 @@ namespace ITI.GameCore
         //if nothing is send : create a default game 11*11, atk start.
         public Game()
             : this(Helper.GetDefaultTafl(), true)
-        {
-        }
+        {}
         //if w,h recieved, try to find a saved xml version with those size, if failed... open a blank game with those size
         public Game(int width, int height)
-            : this(GetWHTafl(width,height), true)
+            : this(GetWHXMLTafl(width,height), true)
         {}
-        static IReadOnlyTafl GetWHTafl(int width, int height)
+        static IReadOnlyTafl GetWHXMLTafl(int width, int height)
         {
             XML_Tafl XmlIO = new XML_Tafl();
             TaflBasic tafl;
@@ -32,31 +31,30 @@ namespace ITI.GameCore
             }
             catch
             {
-                tafl = new TaflBasic(width, height);
+                tafl = new TaflBasic(Helper.GetDefaultTafl());
             }
             
             return tafl;
         }
         //if an xml string is recieved, try to load the game from it
-        /*
         public Game(string xmlPath)
-            : this(GetXMLTafl(xmlPath), true)
+            : this(GetNameXMLTafl(xmlPath), true)
         {
         }
-        static IReadOnlyTafl GetXMLTafl(string path)
+        static IReadOnlyTafl GetNameXMLTafl(string path)
         {
             XML_Tafl XmlIO = new XML_Tafl();
             TaflBasic tafl;
             try
             {
-                tafl = XmlIO.ReadXmlTafl(width, height);
+                tafl = XmlIO.ReadXmlTafl(path);
             }
             catch
             {
-                tafl = new TaflBasic(width, height);
+                tafl = new TaflBasic(Helper.GetDefaultTafl());
             }
             return tafl;
-        }*/
+        }
         //Base, a game need a description of a tafl and wich player start to begin
         public Game(IReadOnlyTafl tafl, bool atkTurn)
         {

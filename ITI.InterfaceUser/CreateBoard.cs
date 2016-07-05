@@ -352,8 +352,7 @@ namespace ITI.InterfaceUser
         private void ConfirmSaveBoard()
         {
 
-            _xml.WriteXmlTafl(_tafl);
-            //_xml.WriteXmlTafl(_tafl,_createTaflName.Text);
+            _xml.WriteXmlTafl(_tafl,_createTaflName.Text);
             if (_interfaceOptions.Languages == true)
             {
                 MessageBox.Show("Votre plateau a été sauvergardé sous le nom de " + _createTaflName.Text,
