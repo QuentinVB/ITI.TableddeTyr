@@ -244,7 +244,7 @@ namespace ITI.GameCore
                 Translate()
                 );
             string title = string.Format("{0}_{1}", Convert.ToString(_TaflRead.Width), Convert.ToString(_TaflRead.Height)); ;
-            taflXml.Save("./" + title + ".xml");
+            taflXml.Save("./TaflBoardCreate/" + title + ".xml");
         }
 
         //surcharge
@@ -266,9 +266,9 @@ namespace ITI.GameCore
         }
         internal List<XElement> Translate()
         {
-            for (int i = 0; i < _TaflRead.Width; i++)
+            for (int j = 0; j < _TaflRead.Width; j++)
             {
-                for (int j = 0; j < _TaflRead.Height; j++)
+                for (int i = 0; i < _TaflRead.Height; i++)
                 {
                     if (_TaflRead[i,j] == Pawn.None)
                     {
@@ -292,16 +292,17 @@ namespace ITI.GameCore
             }
             return xElements;
         }
-        /*
-        public override TaflBasic ReadXmlTafl()
+        public TaflBasic ReadXmlTafl(string name)
         {
-
+            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + name + ".xml");
+            TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
+            outTafl = ReadTaflArray(reader, outTafl);
+            return outTafl;
         }
-        */
         public TaflBasic ReadXmlTafl(int width, int height)
         {
             string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;
-            XmlTextReader reader = new XmlTextReader("./" + title + ".xml");
+            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + title + ".xml");
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
             return outTafl;

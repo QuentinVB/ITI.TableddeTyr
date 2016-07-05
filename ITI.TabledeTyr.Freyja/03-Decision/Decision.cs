@@ -15,22 +15,28 @@ namespace ITI.TabledeTyr.Freyja
             _ctx = freyja_Core;
             _incubator = _ctx.Simulate.Incubator;
         }
-
         internal Move Result
         {
             get
             {
+                //if (_incubator != null) _incubator.RemovebyTeam(_ctx.Sensor.IsFreyjaAtk);
+                if(_incubator.Length == 0 || _incubator == null || _incubator[1] == null)
+                {
+                    return new Move(0, 0, 0, 0);
+                }
+                if (_incubator[0].Score == 0) return _incubator.BestNode.OriginMove;
                 //if the firsts node of the incubator are the same, choose it (by random, by their turn value...)             
                 if (_incubator.BestNode.Score == _incubator[1].Score)
                 {
                     List<SimulationNode> topOfTheList = new List<SimulationNode>();
                     int i=0;
-                    do
+                    while (_incubator.BestNode.Score == _incubator[i].Score)
                     {
-                       topOfTheList.Add(_incubator[i]);
+                        if ( _incubator[i] == null) break;
+                        topOfTheList.Add(_incubator[i]);
                         i++;
-                    } while (_incubator.BestNode.Score == _incubator[i].Score);
-
+                        if (i == _ctx.Monitor.MaxComparaison || i >= _incubator.Length - 1) break;
+                    } 
                     //by random
                     if (_ctx.Monitor.EqualResultMethod == SortBy.Random)
                     {

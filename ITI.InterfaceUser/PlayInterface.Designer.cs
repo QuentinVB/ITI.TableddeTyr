@@ -30,6 +30,7 @@
         {
             this.m_buttonReturn = new System.Windows.Forms.Button();
             this.m_PictureBoxInterfaceBoard = new System.Windows.Forms.PictureBox();
+            this.listboxtest = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxInterfaceBoard)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,13 +54,30 @@
             this.m_PictureBoxInterfaceBoard.TabStop = false;
             this.m_PictureBoxInterfaceBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.m_PictureBoxInterfaceBoard_Paint);
             // 
+            // listboxtest
+            // 
+            this.listboxtest.FormattingEnabled = true;
+            this.listboxtest.ItemHeight = 16;
+            this.listboxtest.Items.AddRange(new object[] {
+            ""});
+            this.listboxtest.Location = new System.Drawing.Point(12, 111);
+            this.listboxtest.Name = "listboxtest";
+            this.listboxtest.Size = new System.Drawing.Size(600, 196);
+            this.listboxtest.TabIndex = 3;
+            this.listboxtest.SelectedIndexChanged += new System.EventHandler(this.plateau_SelectedIndexChanged);
+            // 
             // PlayInterface
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::ITI.InterfaceUser.Properties.Resources.mjolnir;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1006, 673);
+            this.Controls.Add(this.listboxtest);
             this.Controls.Add(this.m_PictureBoxInterfaceBoard);
             this.Controls.Add(this.m_buttonReturn);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "PlayInterface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxInterfaceBoard)).EndInit();
@@ -71,5 +89,6 @@
 
         private System.Windows.Forms.Button m_buttonReturn;
         private System.Windows.Forms.PictureBox m_PictureBoxInterfaceBoard;
+        private System.Windows.Forms.ListBox listboxtest;
     }
 }

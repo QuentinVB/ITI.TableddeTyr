@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace ITI.TabledeTyr.Freyja
 {
+    /// <summary>
+    /// The simulate object will simulate each of pawn 
+    /// </summary>
     class Simulate
     {
         private Freyja_Core _ctx;
@@ -13,9 +16,9 @@ namespace ITI.TabledeTyr.Freyja
         SimulationNode root;
         //collection
         Incubator incubator;
+        Incubator incubatorTemp;
         /// <summary>
-        /// Initializes a new instance of the <see cref="Simulate"/> class. 
-        /// The simulate object will simulate each of pawn
+        /// Initializes a new instance of the <see cref="Simulate"/> class.         
         /// </summary>
         /// <param name="ctx">The contexte.</param>
         public Simulate(Freyja_Core ctx)
@@ -24,14 +27,18 @@ namespace ITI.TabledeTyr.Freyja
             incubator = new Incubator(_ctx.Monitor.maxIncubatedNode);
             _isSimulatedFreyjaAtk = _ctx.Sensor.IsFreyjaAtk;
             _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();//copy the initial game and and a copy of the tafl inside
+            if(_isSimulatedFreyjaAtk == true) root = new SimulationNode(Guid.NewGuid().ToString(), _simulatedGame.Tafl, 0,true);
         }
         /// <summary>
         /// Updates the simulation. aka : CPU and RAM now suffers !!
         /// </summary>
         internal void UpdateSimulation()
         {
-            //i create the root of the tree (getting the current state of the system)
-            root = new SimulationNode(Guid.NewGuid().ToString(),_simulatedGame.Tafl ,0,_simulatedGame.IsAtkPlaying);
+            //depend of the poeple who started : define the root state
+            _simulatedGame = _ctx.Sensor.ActiveGame.DeepCopy();
+            //if(_ctx.Sensor.ActiveGame.IsAtkPlaying == _ctx.Sensor.IsFreyjaAtk)
+            root = new SimulationNode(Guid.NewGuid().ToString(), _simulatedGame.Tafl, 0, _simulatedGame.IsAtkPlaying);
+            //i create the root of the tree (getting the current state of the system)                       
             //turn 0 : initalisation
             //turn 1 : first turn (atk for ex)
             //turn 2 : etc...
@@ -39,15 +46,16 @@ namespace ITI.TabledeTyr.Freyja
             //how many turn should i simulate ?
             for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
+                //i send the incubator for this turn into the temp version, allowing to edit while exploring the collection
+                incubatorTemp = new Incubator(incubator);
                 //i get the nodes from the incubator
                 foreach (SimulationNode node in incubator)
                 {
                     //if the turn stored into the node into the incubator is n+1 from the turn, 
                     //then break (aka :  every pawn simulable are simulated for this turn)
-                    if (node.Turn == turn+1) break;
+                    if (node == null) break;
                     //set up a Game for reference the possible move
                     Game controlGame = new Game(node.TaflStored, node.IsAtkPlay);
-
                     //which pawns should i simulate ?
                     List<StudiedPawn> PawnsToSimulate = new List<StudiedPawn>();
                     //get all the pawn that are on the team i simulate
@@ -55,11 +63,14 @@ namespace ITI.TabledeTyr.Freyja
                     {
                         for (int j = 0; j < node.TaflStored.Height; j++)
                         {
-                            if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
+                            if(node.TaflStored[i, j] != Pawn.None)
+                            { 
+                              if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
+                            }
                         }
                     }
                     //purge the pawn list to 
-                    PawnSimulatedSelector(PawnsToSimulate, controlGame);
+                    PawnsToSimulate = PawnSimulatedSelector(PawnsToSimulate, controlGame);
                     //i simulate each of these pawns
                     foreach (StudiedPawn p in PawnsToSimulate)
                     {
@@ -72,14 +83,18 @@ namespace ITI.TabledeTyr.Freyja
                         //how should i simulate these pawns ?
                         //keep only a few studied pawn into possible simulation
                         //int xRatio = 0;
-
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
-                            incubator.Add(_ctx.Analyze.UpdateAnalyze(node, GenerateNode(p.X,p.Y, d.X, d.Y, node)));
+                            SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
+                            //data = _ctx.Analyze.UpdateAnalyze(node, data);
+                            incubatorTemp.Add(data);
                         }                      
                     }
+                
                 }
+                if (turn == 1) { incubatorTemp.RemovebyId(root.ID); }
+                incubator= new Incubator(incubatorTemp);
             }
         }
         /// <summary>
@@ -87,15 +102,17 @@ namespace ITI.TabledeTyr.Freyja
         /// </summary>
         /// <param name="PawnToSimulate">The pawns to simulate.</param>
         /// <param name="controlGame">The control game.</param>
-        private void PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
+        private List<StudiedPawn> PawnSimulatedSelector(List<StudiedPawn> PawnsToSimulate, Game controlGame)
         {
+            List<StudiedPawn> outPawnsToSimulate =  new List<StudiedPawn>(PawnsToSimulate);
+
             foreach (StudiedPawn p in PawnsToSimulate)
             {
                 //Remove useless pawn, aka : cannot move this turn
-                if (controlGame.CanMove(p.X, p.Y).IsFree == false) PawnsToSimulate.Remove(p);
+                if (controlGame.CanMove(p.X, p.Y).IsFree == false) outPawnsToSimulate.Remove(p);
             }
+            return outPawnsToSimulate;
         }
-
         /// <summary>
         /// Simulate nodes by using data send.
         /// </summary>
@@ -114,7 +131,14 @@ namespace ITI.TabledeTyr.Freyja
             Move thisMove = new Move(x, y, x2, y2);
             _key = Guid.NewGuid().ToString();//generating new key
             //creating new node containing ALL the data
-            return new SimulationNode(_key, _simulatedGame.Tafl, 0, father.OriginMove, !father.IsAtkPlay,father.Turn+1,thisMove );
+            //if the origin move is on, replace to create the root of the tree
+            Move origin;
+            if (father.OriginMove.sourceX == 0
+                && father.OriginMove.sourceY == 0
+                && father.OriginMove.destinationX == 0
+                && father.OriginMove.destinationY == 0) origin = thisMove;
+            else { origin = father.OriginMove; }               
+            return new SimulationNode(_key, _simulatedGame.Tafl, 0, origin, !father.IsAtkPlay,father.Turn+1,thisMove );
         }
         internal Incubator Incubator
         {
