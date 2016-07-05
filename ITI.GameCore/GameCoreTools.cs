@@ -251,17 +251,6 @@ namespace ITI.GameCore
             TaflBasic send = new TaflBasic(TaflRead);
             WriteXmlTafl(send);
         }
-        public void WriteXmlTafl(TaflBasic TaflRead, string name)
-        {
-            _TaflRead = TaflRead;
-            //file = new XmlTextReader(Book.title + ".xml");
-            XElement taflXml = new XElement("Tafl",
-                new XElement("Width", _TaflRead.Width),
-                new XElement("Height", _TaflRead.Height),
-                Translate()
-                );
-            taflXml.Save("./" + name + ".xml");
-        }
         internal List<XElement> Translate()
         {
             for (int j = 0; j < _TaflRead.Width; j++)
@@ -290,9 +279,9 @@ namespace ITI.GameCore
             }
             return xElements;
         }
-        public TaflBasic ReadXmlTafl(string path)
+        public TaflBasic ReadXmlTafl(string name)
         {
-            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + path + ".xml");
+            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + name + ".xml");
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
             return outTafl;

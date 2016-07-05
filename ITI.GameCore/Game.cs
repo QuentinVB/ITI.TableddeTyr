@@ -34,7 +34,7 @@ namespace ITI.GameCore
             {
                 tafl = new TaflBasic(Helper.GetDefaultTafl());
             }
-
+            
             return tafl;
         }
         //if an xml string is recieved, try to load the game from it

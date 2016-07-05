@@ -147,7 +147,7 @@ namespace ITI.TabledeTyr.Freyja
             }
             return false;
         }
-        
+
         /// <summary>
         /// Gets the best node.
         /// </summary>

@@ -64,8 +64,8 @@ namespace ITI.TabledeTyr.Freyja
             _child = child;
             _tafl = father.TaflStored;
             IASimuationAnalyse();
-
-           
+            
+            
             return _child;
         }
 
