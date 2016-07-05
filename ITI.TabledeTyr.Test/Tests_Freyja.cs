@@ -91,6 +91,7 @@ namespace ITI.TabledeTyr.Test
             Freyja_Core aiut = new Freyja_Core(sut, true);
             Move tested = new Move(0, 0, 0, 0);
             //Act
+            aiut.UpdateSensor(sut);
             aiut.UpdateFreyja();
             Move retour = aiut.Monitor.Decision;
             //Assert
@@ -137,10 +138,11 @@ namespace ITI.TabledeTyr.Test
                 sut.MovePawn(retour.sourceX, retour.sourceY, retour.destinationX, retour.destinationY);
                 sut.UpdateTurn();
                 //player
-                sut.MovePawn(1, 2, 1, 4);
+                sut.MovePawn(3, 2, 3, 4);
                 sut.UpdateTurn();
             //Assert
-            Assert.That(sut.Tafl[1, 4], Is.EqualTo(Pawn.Attacker));
+            Assert.That(sut.Tafl[3, 4], Is.EqualTo(Pawn.Defender));
+            Assert.That(sut.Tafl[1, 2], Is.EqualTo(Pawn.None));
         }
     }
 }
