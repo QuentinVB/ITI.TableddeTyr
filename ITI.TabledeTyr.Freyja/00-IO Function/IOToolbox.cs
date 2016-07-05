@@ -118,21 +118,25 @@ namespace ITI.TabledeTyr.Freyja
                 {
                     xml.Read();
                     MaxSimTurn = Convert.ToInt32(xml.Value);
+                    xml.Read();
                 }
-                if (xml.Name == "MaxIncubatedNode")
+                else if (xml.Name == "MaxIncubatedNode")
                 {
                     xml.Read();
                     MaxIncubatedNode = Convert.ToInt32(xml.Value);
+                    xml.Read();
                 }
-                if (xml.Name == "MaxComparison")
+                else if(xml.Name == "MaxComparison")
                 {
                     xml.Read();
                     MaxComparison = Convert.ToInt32(xml.Value);
+                    xml.Read();
                 }
-                if (xml.Name == "EqualResultMethod")
+                else if(xml.Name == "EqualResultMethod")
                 {
                     xml.Read();
                     EqualResultMethod = (SortBy)Convert.ToInt32(xml.Value);
+                    xml.Read();
                 }
             }           
             return new Freyjas_options(MaxSimTurn,MaxIncubatedNode,MaxComparison,EqualResultMethod);

@@ -82,6 +82,7 @@ namespace ITI.TabledeTyr.Freyja
                         List<StudiedPawn> PossibleSimulation = controlGame.CanMove(p.X, p.Y).FreeSquares;
                         //how should i simulate these pawns ?
                         //keep only a few studied pawn into possible simulation
+
                         //int xRatio = 0;
 
                         foreach (StudiedPawn d in PossibleSimulation)

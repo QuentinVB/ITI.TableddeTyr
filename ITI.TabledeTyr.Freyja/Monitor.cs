@@ -35,7 +35,7 @@ namespace ITI.TabledeTyr.Freyja
             }
             catch (Exception)
             {
-
+                
             }
         }
         public int maxIncubatedNode { get { return _maxIncubatedNode; } }
