@@ -64,6 +64,7 @@ namespace ITI.InterfaceUser
             for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
                 int x = _interfaceOptions.RectanglePositionX;
+
                 for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
                     Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
