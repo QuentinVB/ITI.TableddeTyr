@@ -42,13 +42,13 @@
             // 
             // m_ButtonReturn
             // 
+            this.m_ButtonReturn.BackColor = System.Drawing.Color.Transparent;
             this.m_ButtonReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.m_ButtonReturn.Location = new System.Drawing.Point(866, 586);
             this.m_ButtonReturn.Name = "m_ButtonReturn";
             this.m_ButtonReturn.Size = new System.Drawing.Size(128, 75);
             this.m_ButtonReturn.TabIndex = 5;
-            this.m_ButtonReturn.Text = "Return";
-            this.m_ButtonReturn.UseVisualStyleBackColor = true;
+            this.m_ButtonReturn.UseVisualStyleBackColor = false;
             // 
             // HnefataflRules
             // 
@@ -57,6 +57,7 @@
             this.ClientSize = new System.Drawing.Size(1006, 673);
             this.Controls.Add(this.m_ButtonReturn);
             this.Controls.Add(this.m_RichTextBoxRules);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "HnefataflRules";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.ResumeLayout(false);

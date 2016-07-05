@@ -1,6 +1,6 @@
 ﻿namespace ITI.InterfaceUser
 {
-    partial class Menu
+    partial class RessourcesPack
     {
         /// <summary>
         /// Required designer variable.
@@ -28,23 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.m_ButtonRessourcesRetourMenu = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // Menu
+            // m_ButtonRessourcesRetourMenu
+            // 
+            this.m_ButtonRessourcesRetourMenu.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.m_ButtonRessourcesRetourMenu.Location = new System.Drawing.Point(620, 466);
+            this.m_ButtonRessourcesRetourMenu.Name = "m_ButtonRessourcesRetourMenu";
+            this.m_ButtonRessourcesRetourMenu.Size = new System.Drawing.Size(150, 75);
+            this.m_ButtonRessourcesRetourMenu.TabIndex = 0;
+            this.m_ButtonRessourcesRetourMenu.UseVisualStyleBackColor = true;
+            // 
+            // RessourcesPack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::ITI.InterfaceUser.Properties.Resources.unspecified;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1006, 673);
-            this.DoubleBuffered = true;
+            this.ClientSize = new System.Drawing.Size(782, 553);
+            this.Controls.Add(this.m_ButtonRessourcesRetourMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Menu";
+            this.Name = "RessourcesPack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "RessourcesPack";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button m_ButtonRessourcesRetourMenu;
     }
 }

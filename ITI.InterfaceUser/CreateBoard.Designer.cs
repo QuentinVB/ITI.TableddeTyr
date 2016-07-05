@@ -59,6 +59,7 @@
             this.ClientSize = new System.Drawing.Size(1006, 673);
             this.Controls.Add(this.m_PictureBoxCreateBoard);
             this.Controls.Add(this.m_buttonReturn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CreateBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxCreateBoard)).EndInit();

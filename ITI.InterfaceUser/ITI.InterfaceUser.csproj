@@ -84,6 +84,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RessourcesPack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RessourcesPack.Designer.cs">
+      <DependentUpon>RessourcesPack.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tutoriel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +124,9 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="RessourcesPack.resx">
+      <DependentUpon>RessourcesPack.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tutoriel.resx">
       <DependentUpon>Tutoriel.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,11 +135,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -417,6 +426,84 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Image\Bouton\Tutoriel\Help.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\sauvegardeterminé.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\save complete.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\RessourcesPack\Option.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\RessourcesPack\Options.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\paramètres.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\AtackerDamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\AttackerChessPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\ChessPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\DamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\DefenderChessPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\DefenderDamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix de l%27adversaire\JoueurVsIA.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix de l%27adversaire\JoueurVSJoueur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix du rôles à jouer\Attaquant.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix du rôles à jouer\Défenseur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\WhiteForbiddenSquareGameBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\WhiteSquareGameBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\WhiteSquarepossibleGameBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\AttackerDamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\Case en bois effet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\Case en bois.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\CaseInterdite.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\mjolnir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\symbolnordique.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\unspecified.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
