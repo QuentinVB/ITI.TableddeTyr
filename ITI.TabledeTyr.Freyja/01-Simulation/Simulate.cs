@@ -80,15 +80,22 @@ namespace ITI.TabledeTyr.Freyja
                         int left = controlGame.CanMove(p.X,p.Y).Left;
                         int right = controlGame.CanMove(p.X,p.Y).Right;
                         List<StudiedPawn> PossibleSimulation = controlGame.CanMove(p.X, p.Y).FreeSquares;
-                        //how should i simulate these pawns ?
-                        //keep only a few studied pawn into possible simulation
-                        //int xRatio = 0;
+
+
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
-                            //generate the simulated nodes, then send it to the analyze and store it to the Incubator
-                            SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
-                            //data = _ctx.Analyze.UpdateAnalyze(node, data);
-                            incubatorTemp.Add(data);
+                            //how should i simulate these pawns ?
+
+                            //keep only a few studied pawn into possible simulation
+                            int targetDistance = Math.Max(node.TaflStored.Height, node.TaflStored.Width) /( _ctx.Monitor.TargetRatio*2);
+                            int distance = AnalyzeToolbox.Distance(p.X, p.Y, d.X, d.Y);
+                            if(distance < targetDistance)
+                            {
+                                //generate the simulated nodes, then send it to the analyze and store it to the Incubator
+                                SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
+                                data = _ctx.Analyze.UpdateAnalyze(node, data);
+                                incubatorTemp.Add(data);
+                            }        
                         }                      
                     }
                 
@@ -146,6 +153,7 @@ namespace ITI.TabledeTyr.Freyja
             {
                 return incubator;
             }
-        }   
+        }  
+         
     }
 }

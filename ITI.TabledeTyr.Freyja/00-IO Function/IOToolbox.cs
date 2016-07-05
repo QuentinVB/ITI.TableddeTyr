@@ -44,12 +44,14 @@ namespace ITI.TabledeTyr.Freyja
         public readonly int _maxIncubatedNode;
         public readonly int _maxComparaison;
         public readonly SortBy _equalResultMethod;
-        public Freyjas_options(int maxSimTurn,int maxIncubatedNode,int maxComparaison,SortBy equalResultMethod)
+        public readonly int _targetRatio;
+        public Freyjas_options(int maxSimTurn,int maxIncubatedNode,int maxComparaison,SortBy equalResultMethod,int targetRatio)
         {
             _maxSimTurn = maxSimTurn;
             _maxIncubatedNode = maxIncubatedNode;
             _maxComparaison = maxComparaison;
             _equalResultMethod = equalResultMethod;
+            _targetRatio = targetRatio;
          }
     }
     public class XML_IO_Monitor
@@ -58,6 +60,7 @@ namespace ITI.TabledeTyr.Freyja
         int _maxIncubatedNode;
         int _maxComparaison;
         SortBy _equalResultMethod;
+        int _targetRatio;
         List<XElement> xElements = new List<XElement>();
         public XML_IO_Monitor()
         { }
@@ -65,6 +68,7 @@ namespace ITI.TabledeTyr.Freyja
         internal int MaxIncubatedNode { get { return _maxIncubatedNode; } private set { _maxIncubatedNode = value; } }
         internal int MaxComparison { get { return _maxComparaison; } private set { _maxComparaison = value; } }
         internal SortBy EqualResultMethod { get { return _equalResultMethod; } private set { _equalResultMethod = value; } }
+        internal int TargetRatio { get { return _targetRatio; } private set { _targetRatio = value; } }
 
         /*
         public void WriteXmlTafl(IReadOnlyTafl TaflRead)
@@ -134,8 +138,13 @@ namespace ITI.TabledeTyr.Freyja
                     xml.Read();
                     EqualResultMethod = (SortBy)Convert.ToInt32(xml.Value);
                 }
+                if (xml.Name == "TargetRatio")
+                {
+                    xml.Read();
+                    TargetRatio = Convert.ToInt32(xml.Value);
+                }
             }           
-            return new Freyjas_options(MaxSimTurn,MaxIncubatedNode,MaxComparison,EqualResultMethod);
+            return new Freyjas_options(MaxSimTurn,MaxIncubatedNode,MaxComparison,EqualResultMethod,TargetRatio);
         }      
     }
 }
