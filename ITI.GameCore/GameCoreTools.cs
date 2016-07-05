@@ -347,7 +347,8 @@ namespace ITI.GameCore
                 throw new ArgumentException("The XML must not be empty");
             }
             while (xml.Read())
-            {   
+            {
+                if (x == width || y == height) break;
                 if (xml.Name == "Pawn")
                 {
                     xml.Read();
@@ -364,6 +365,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.None;
                             x++;
                         }
+                        xml.Read();
                     }
                     else if (xml.Value == "King")
                     {
@@ -378,6 +380,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.King;
                             x++;
                         }
+                        xml.Read();
                     }
                     else if (xml.Value == "Attacker")
                     {
@@ -392,6 +395,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.Attacker;
                             x++;
                         }
+                        xml.Read();
                     }
                     else if (xml.Value == "Defender")
                     {
@@ -406,6 +410,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.Defender;
                             x++;
                         }
+                        xml.Read();
                     }
                 }                
             }

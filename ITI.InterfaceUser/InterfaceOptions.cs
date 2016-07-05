@@ -83,7 +83,7 @@ namespace ITI.InterfaceUser
         public int _nextRectanglePositionY;
         int _width = 7;
         int _height = 7;
-        string _roadTaflSave = @"C:\Users\ELISABETH Guillaume\Documents\ITI.TabledeTyr\ITI.InterfaceUser\bin\Debug\TaflBoardCreate";
+        string _roadTaflSave = @".\TaflBoardCreate";
         public bool _frenchLanguages = true;
         public string _formTitle;
 
