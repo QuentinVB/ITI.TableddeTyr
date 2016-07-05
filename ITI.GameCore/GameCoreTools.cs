@@ -257,7 +257,7 @@ namespace ITI.GameCore
                 new XElement("Height", _TaflRead.Height),
                 Translate()
                 );
-            taflXml.Save("./" + name + ".xml");
+            taflXml.Save("./TaflBoardCreate/" + name + ".xml");
         }
         public void WriteXmlTafl(IReadOnlyTafl TaflRead)
         {
