@@ -147,7 +147,7 @@ namespace ITI.TabledeTyr.Freyja
             }
             return false;
         }
-
+        
         /// <summary>
         /// Gets the best node.
         /// </summary>
@@ -213,6 +213,23 @@ namespace ITI.TabledeTyr.Freyja
         {
             return GetEnumerator();
         }
+        /*
+        internal void RemovebyTeam(bool isTeamAtk)
+        {
 
+            for (int i = 0; i < _incubatorArray.Length; i++)
+            {
+                if (_incubatorArray[i] == null) break;
+                if (_incubatorArray[i].IsAtkPlay != isTeamAtk)
+                {
+                    _incubatorArray[i] = null;
+                    for (int j = i; (j < _incubatorArray.Length - 2); j++)
+                    {
+                        _incubatorArray[j] = _incubatorArray[j + 1];
+                    }
+                }
+            }
+        }
+        */
     }
 }

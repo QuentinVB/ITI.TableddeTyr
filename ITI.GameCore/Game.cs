@@ -32,13 +32,12 @@ namespace ITI.GameCore
             }
             catch
             {
-                tafl = new TaflBasic(width, height);
+                tafl = new TaflBasic(Helper.GetDefaultTafl());
             }
-            
+
             return tafl;
         }
         //if an xml string is recieved, try to load the game from it
-        /*
         public Game(string xmlPath)
             : this(GetXMLTafl(xmlPath), true)
         {
@@ -49,14 +48,14 @@ namespace ITI.GameCore
             TaflBasic tafl;
             try
             {
-                tafl = XmlIO.ReadXmlTafl(width, height);
+                tafl = XmlIO.ReadXmlTafl(path);
             }
             catch
             {
-                tafl = new TaflBasic(width, height);
+                tafl = new TaflBasic(Helper.GetDefaultTafl());
             }
             return tafl;
-        }*/
+        }
         //Base, a game need a description of a tafl and wich player start to begin
         public Game(IReadOnlyTafl tafl, bool atkTurn)
         {

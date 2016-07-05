@@ -87,7 +87,7 @@ namespace ITI.TabledeTyr.Freyja
                         {
                             //generate the simulated nodes, then send it to the analyze and store it to the Incubator
                             SimulationNode data = GenerateNode(p.X, p.Y, d.X, d.Y, node);
-                            //data = _ctx.Analyze.UpdateAnalyze(node, data);
+                            data = _ctx.Analyze.UpdateAnalyze(node, data);
                             incubatorTemp.Add(data);
                         }                      
                     }
