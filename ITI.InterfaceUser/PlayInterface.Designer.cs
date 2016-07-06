@@ -58,12 +58,13 @@
             // listboxtest
             // 
             this.listboxtest.FormattingEnabled = true;
+            this.listboxtest.HorizontalScrollbar = true;
             this.listboxtest.ItemHeight = 16;
             this.listboxtest.Items.AddRange(new object[] {
             ""});
-            this.listboxtest.Location = new System.Drawing.Point(12, 111);
+            this.listboxtest.Location = new System.Drawing.Point(12, 260);
             this.listboxtest.Name = "listboxtest";
-            this.listboxtest.Size = new System.Drawing.Size(600, 196);
+            this.listboxtest.Size = new System.Drawing.Size(375, 196);
             this.listboxtest.TabIndex = 3;
             this.listboxtest.SelectedIndexChanged += new System.EventHandler(this.plateau_SelectedIndexChanged);
             // 

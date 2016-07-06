@@ -67,12 +67,6 @@ namespace ITI.InterfaceUser
         Image DesignPawn03;
         Image DesignGameBoard01;
         Image DesignGameBoard02;
-        Image DesignPawnAtk01;
-        Image DesignPawnDef01;
-        Image DesignPawnKing01;
-        Image DesignPawnAtk02;
-        Image DesignPawnDef02;
-        Image DesignPawnKing02;
 
 
         public int _rectanglePositionX;
@@ -81,9 +75,9 @@ namespace ITI.InterfaceUser
         public int _rectangleHeight;
         public int _nextRectanglePositionX;
         public int _nextRectanglePositionY;
-        int _width = 7;
-        int _height = 7;
-        string _roadTaflSave = @".\TaflBoardCreate";
+        int _boardWidth = 7;
+        int _boardHeight = 7;
+        string _roadTaflSave = @"./TaflBoardCreate/";
         public bool _frenchLanguages = true;
         public string _formTitle;
 
@@ -105,7 +99,7 @@ namespace ITI.InterfaceUser
             RessourcesPack = ITI.InterfaceUser.Properties.Resources.paramètres;
             DesignPawn01 = ITI.InterfaceUser.Properties.Resources.ChessPawn;
             DesignPawn02 = ITI.InterfaceUser.Properties.Resources.DamePawn;
-            DesignPawn03 = ITI.InterfaceUser.Properties.Resources.WhiteForbiddenSquareGameBoard;    /// //////////////////
+            DesignPawn03 = ITI.InterfaceUser.Properties.Resources.pawn_display;
             DesignGameBoard01 = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
             DesignGameBoard02 = ITI.InterfaceUser.Properties.Resources.WhiteSquareGameBoard;
 
@@ -476,14 +470,14 @@ namespace ITI.InterfaceUser
 
         public int BoardWidth
         {
-            get { return _width; }
-            set { _width = value; }
+            get { return _boardWidth; }
+            set { _boardWidth = value; }
         }
 
         public int BoardHeight
         {
-            get { return _height; }
-            set { _height = value; }
+            get { return _boardHeight; }
+            set { _boardHeight = value; }
         }
 
         public int RectanglePositionX

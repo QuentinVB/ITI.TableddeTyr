@@ -65,9 +65,6 @@ namespace ITI.InterfaceUser
 
         private void setPlateau(int width, int height)
         {
-
-            _tafl = new TaflBasic(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
-
             if (width == 7)
             {
                 _rectanglePositionX = 3;
@@ -224,6 +221,8 @@ namespace ITI.InterfaceUser
                 this.Show();
                 _interfaceOptions.BoardWidth = 7;
                 _interfaceOptions.BoardHeight = 7;
+                listboxtest.Hide();
+                m_PictureBoxInterfaceBoard.Show();
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -272,6 +271,7 @@ namespace ITI.InterfaceUser
                 _button11x11.Hide();
                 m_PictureBoxInterfaceBoard.Hide();
                 _play.Hide();
+                listboxtest.Hide();
                 m_buttonReturn.Hide();
                 createButtonChoixAdversaire();
             };
@@ -350,6 +350,7 @@ namespace ITI.InterfaceUser
                 _button9x9.Show();
                 _button11x11.Show();
                 _button13x13.Show();
+                listboxtest.Hide();
                 m_PictureBoxInterfaceBoard.Show();
                 _CreateBoard.Show();
                 _loadBoard.Show();
@@ -494,45 +495,54 @@ namespace ITI.InterfaceUser
 
         private void plateau_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _nameTaflLoad = listboxtest.SelectedItem.ToString();
-            
 
-            if(_interfaceOptions.Languages == true)
+            if(listboxtest.Text != (""))
             {
-                if (MessageBox.Show("Chargement du plateau !",
-                   "Voulez vous charger ce plateau ?",
-                   MessageBoxButtons.YesNo) == DialogResult.Yes)
+                _nameTaflLoad = listboxtest.SelectedItem.ToString();
+
+                if (_interfaceOptions.Languages == true)
                 {
-                    _tafl = _xml.ReadXmlTafl(7, 7);
-                    //_tafl = _xml.ReadXmlTafl(_nameTaflLoad);
-                    listboxtest.Hide();
-                    m_PictureBoxInterfaceBoard.Show();
-                    m_PictureBoxInterfaceBoard.Refresh();
+                    if (MessageBox.Show("Chargement du plateau !",
+                       "Voulez vous charger ce plateau ?",
+                       MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        _tafl = _xml.ReadXmlTafl(_nameTaflLoad);
+                        listboxtest.Hide();
+                        _interfaceOptions.BoardHeight = _tafl.Height;
+                        _interfaceOptions.BoardWidth = _tafl.Width;
+                        setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                        m_PictureBoxInterfaceBoard.Show();
+                        m_PictureBoxInterfaceBoard.Refresh();
+                    }
+                    else
+                    {
+                        listboxtest.Hide();
+                        m_PictureBoxInterfaceBoard.Show();
+                    }
                 }
                 else
                 {
-                    listboxtest.Hide();
-                    m_PictureBoxInterfaceBoard.Show();
+                    if (MessageBox.Show("Loading Board !",
+                    "Do you want to load this board ?",
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        _tafl = _xml.ReadXmlTafl(_nameTaflLoad);
+                        listboxtest.Hide();
+                        _interfaceOptions.BoardHeight = _tafl.Height;
+                        _interfaceOptions.BoardWidth = _tafl.Width;
+                        setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                        m_PictureBoxInterfaceBoard.Show();
+                        m_PictureBoxInterfaceBoard.Refresh();
+                    }
+                    else
+                    {
+                        listboxtest.Hide();
+                        m_PictureBoxInterfaceBoard.Show();
+                    }
+
                 }
-            }else
-            {
-                if (MessageBox.Show("Loading Board !",
-                "Do you want to load this board ?",
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    _tafl = _xml.ReadXmlTafl(7, 7);
-                    //_tafl = _xml.ReadXmlTafl(_nameTaflLoad);
-                    listboxtest.Hide();
-                    m_PictureBoxInterfaceBoard.Show();
-                    m_PictureBoxInterfaceBoard.Refresh();
-                }
-                else
-                {
-                    listboxtest.Hide();
-                    m_PictureBoxInterfaceBoard.Show();
-                }
-                
             }
+            
             
         }
     }

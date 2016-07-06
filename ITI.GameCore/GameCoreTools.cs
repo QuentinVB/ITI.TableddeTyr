@@ -295,7 +295,7 @@ namespace ITI.GameCore
         public TaflBasic ReadXmlTafl(int width, int height)
         {
             string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;
-            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + title + ".xml");
+            XmlTextReader reader = new XmlTextReader("./TaflOriginal/" + title + ".xml");
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
             return outTafl;
