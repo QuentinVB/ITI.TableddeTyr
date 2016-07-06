@@ -17,5 +17,9 @@ namespace ITI.TabledeTyr.Freyja
             if ((target == Pawn.Defender || target == Pawn.King) && (isAtkTeam == false)) return true;
             return false;
         }
+        static public int Distance(int x, int x2, int y,int y2)
+        {
+            return Convert.ToInt16(Math.Sqrt(Convert.ToDouble((x - x2) * (x - x2) + (y - y2) * (y - y2))));
+        }
     }
 }

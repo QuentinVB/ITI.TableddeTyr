@@ -15,6 +15,7 @@ namespace ITI.TabledeTyr.Freyja
         readonly int _maxIncubatedNode = 5;
         readonly int _maxComparaison = 5;
         readonly SortBy _equalResultMethod = SortBy.Turn;
+        readonly int _targetRatio = 1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Monitor"/> class.       
@@ -32,6 +33,7 @@ namespace ITI.TabledeTyr.Freyja
                 _maxIncubatedNode = options._maxIncubatedNode;
                 _maxComparaison = options._maxComparaison;
                 _equalResultMethod= options._equalResultMethod;
+                _targetRatio = options._targetRatio;
             }
             catch (Exception)
             {
@@ -42,6 +44,7 @@ namespace ITI.TabledeTyr.Freyja
         public int MaxSim { get { return _maxSimTurn; } }
         public SortBy EqualResultMethod { get { return _equalResultMethod; } }
         public int MaxComparaison { get { return _maxComparaison; } }
+        public int TargetRatio { get { return _targetRatio; } }
 
         //exposure of : SENSOR
         public Game Sensor_ActiveGame { get { return ctx.Sensor.ActiveGame; } }
