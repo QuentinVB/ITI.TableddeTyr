@@ -234,6 +234,7 @@ namespace ITI.GameCore
         public XML_Tafl()
         {
         }
+        //WRITE
         public void WriteXmlTafl(TaflBasic TaflRead)
         {
             _TaflRead = TaflRead;
@@ -246,7 +247,6 @@ namespace ITI.GameCore
             string title = string.Format("{0}_{1}", Convert.ToString(_TaflRead.Width), Convert.ToString(_TaflRead.Height)); ;
             taflXml.Save("./TaflBoardCreate/" + title + ".xml");
         }
-
         //surcharge
         public void WriteXmlTafl(TaflBasic TaflRead, string name)
         {
@@ -292,6 +292,7 @@ namespace ITI.GameCore
             }
             return xElements;
         }
+        //READ
         public TaflBasic ReadXmlTafl(int width, int height)
         {
             string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;

@@ -140,6 +140,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.BoardHeight = 7;
                 m_PictureBoxInterfaceBoard.Show();
                 listboxtest.Hide();
+                _BoardChooseLoad = false;
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -160,6 +161,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.BoardHeight = 9;
                 m_PictureBoxInterfaceBoard.Show();
                 listboxtest.Hide();
+                _BoardChooseLoad = false;
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -179,6 +181,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.BoardHeight = 11;
                 m_PictureBoxInterfaceBoard.Show();
                 listboxtest.Hide();
+                _BoardChooseLoad = false;
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -198,6 +201,7 @@ namespace ITI.InterfaceUser
                 _interfaceOptions.BoardHeight = 13;
                 m_PictureBoxInterfaceBoard.Show();
                 listboxtest.Hide();
+                _BoardChooseLoad = false;
                 setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 _tafl = _xml.ReadXmlTafl(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxInterfaceBoard.Refresh();
@@ -510,6 +514,7 @@ namespace ITI.InterfaceUser
                         listboxtest.Hide();
                         _interfaceOptions.BoardHeight = _tafl.Height;
                         _interfaceOptions.BoardWidth = _tafl.Width;
+                        _BoardChooseLoad = true;
                         setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                         m_PictureBoxInterfaceBoard.Show();
                         m_PictureBoxInterfaceBoard.Refresh();
@@ -530,6 +535,7 @@ namespace ITI.InterfaceUser
                         listboxtest.Hide();
                         _interfaceOptions.BoardHeight = _tafl.Height;
                         _interfaceOptions.BoardWidth = _tafl.Width;
+                        _BoardChooseLoad = true;
                         setPlateau(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                         m_PictureBoxInterfaceBoard.Show();
                         m_PictureBoxInterfaceBoard.Refresh();

@@ -58,19 +58,21 @@ namespace ITI.InterfaceUser
         {
             InitializeComponent();
             _createBoard = createBoard;
-            if (_createBoard == true)
+            _interfaceOptions = interfaceOptions;
+
+            if (_createBoard == false)
             {
-                Game partie = new Game();
+                Game partie = new Game(_interfaceOptions.BoardWidth,_interfaceOptions.BoardHeight);
                 _partie = partie;
                 _tafl = partie.Tafl;
-            }else
+            }
+            else
             {
-                Game partie = new Game();
+                Game partie = new Game(taflname);
                 _partie = partie;
                 _tafl = partie.Tafl;
             }
 
-            _interfaceOptions = interfaceOptions;
             _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
 
             _mvtPossible = new int[_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight];
@@ -84,14 +86,14 @@ namespace ITI.InterfaceUser
             setGameBoardTools();
 
             // Appel et création de l'IA
-            if (_IAAtk == true)
+            if (_IAAtk == true && _IADef == false)
             {
-                Freyja = new Freyja_Core(_partie, _IAAtk);
+                Freyja = new Freyja_Core(_partie, true);
                 IATurn();
             }
-            if(_IADef == true)
+            if(_IADef == true && _IAAtk == false)
             {
-                Freyja = new Freyja_Core(_partie, _IADef);
+                Freyja = new Freyja_Core(_partie, false);
             }
 
         }

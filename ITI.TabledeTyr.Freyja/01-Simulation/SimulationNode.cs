@@ -213,23 +213,22 @@ namespace ITI.TabledeTyr.Freyja
         {
             return GetEnumerator();
         }
-        /*
         internal void RemovebyTeam(bool isTeamAtk)
         {
 
             for (int i = 0; i < _incubatorArray.Length; i++)
             {
                 if (_incubatorArray[i] == null) break;
-                if (_incubatorArray[i].IsAtkPlay != isTeamAtk)
+                if (_incubatorArray[i].IsAtkPlay == isTeamAtk)
                 {
                     _incubatorArray[i] = null;
                     for (int j = i; (j < _incubatorArray.Length - 2); j++)
                     {
+                        if (_incubatorArray[j] == null) break;
                         _incubatorArray[j] = _incubatorArray[j + 1];
                     }
                 }
             }
         }
-        */
     }
 }

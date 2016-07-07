@@ -19,7 +19,7 @@ namespace ITI.TabledeTyr.Freyja
         {
             get
             {
-                //if (_incubator != null) _incubator.RemovebyTeam(_ctx.Sensor.IsFreyjaAtk);
+                if (_incubator != null) _incubator.RemovebyTeam(_ctx.Sensor.IsFreyjaAtk);
                 if(_incubator.Length == 0 || _incubator == null || _incubator[1] == null)
                 {
                     return new Move(0, 0, 0, 0);

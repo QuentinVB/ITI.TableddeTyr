@@ -46,7 +46,8 @@ namespace ITI.TabledeTyr.Freyja
             //how many turn should i simulate ?
             for (int turn = 1; turn < _ctx.Monitor.MaxSim; turn++)
             {
-                //i send the incubator for this turn into the temp version, allowing to edit while exploring the collection
+                //i put each of my pawns into the incubator
+                //i send the incubator for this pawn and turn into the temp version, allowing to edit while exploring the collection
                 incubatorTemp = new Incubator(incubator);
                 //i get the nodes from the incubator
                 foreach (SimulationNode node in incubator)
@@ -59,16 +60,7 @@ namespace ITI.TabledeTyr.Freyja
                     //which pawns should i simulate ?
                     List<StudiedPawn> PawnsToSimulate = new List<StudiedPawn>();
                     //get all the pawn that are on the team i simulate
-                    for (int i = 0; i < node.TaflStored.Width; i++)
-                    {
-                        for (int j = 0; j < node.TaflStored.Height; j++)
-                        {
-                            if(node.TaflStored[i, j] != Pawn.None)
-                            { 
-                              if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
-                            }
-                        }
-                    }
+                    PawnsToSimulate = playmyteam(PawnsToSimulate,node);
                     //purge the pawn list to 
                     PawnsToSimulate = PawnSimulatedSelector(PawnsToSimulate, controlGame);
                     //i simulate each of these pawns
@@ -80,8 +72,6 @@ namespace ITI.TabledeTyr.Freyja
                         int left = controlGame.CanMove(p.X,p.Y).Left;
                         int right = controlGame.CanMove(p.X,p.Y).Right;
                         List<StudiedPawn> PossibleSimulation = controlGame.CanMove(p.X, p.Y).FreeSquares;
-
-
                         foreach (StudiedPawn d in PossibleSimulation)
                         {
                             //how should i simulate these pawns ?
@@ -105,6 +95,21 @@ namespace ITI.TabledeTyr.Freyja
                 incubator= new Incubator(incubatorTemp);
             }
         }
+        private List<StudiedPawn> playmyteam(List<StudiedPawn> PawnsToSimulate, SimulationNode node)
+        {
+            for (int i = 0; i < node.TaflStored.Width; i++)
+            {
+                for (int j = 0; j < node.TaflStored.Height; j++)
+                {
+                    if (node.TaflStored[i, j] != Pawn.None)
+                    {
+                        if (AnalyzeToolbox.IsFriendly(node.TaflStored[i, j], node.IsAtkPlay)) PawnsToSimulate.Add(new StudiedPawn(i, j));
+                    }
+                }
+            }
+            return PawnsToSimulate;
+        }
+
         /// <summary>
         /// Select the Pawn to simulate. Remove the useless pawns.
         /// </summary>
