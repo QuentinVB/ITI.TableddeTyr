@@ -7,24 +7,32 @@ namespace ITI.TabledeTyr.Freyja
     class Decision
     {
         private Freyja_Core _ctx;
-        readonly Incubator _incubator;
+        internal List<RootPawnResult> finalList;
         Random rnd = new Random();
 
         public Decision(Freyja_Core freyja_Core)
         {
             _ctx = freyja_Core;
-            _incubator = _ctx.Simulate.Incubator;
+            finalList = _ctx.Simulate.FinalResult;
         }
         internal Move Result
         {
             get
             {
-                if (_incubator != null) _incubator.RemovebyTeam(_ctx.Sensor.IsFreyjaAtk);
-                if(_incubator.Length == 0 || _incubator == null || _incubator[1] == null)
+                /*
+                 * if(finalList.Count == 0 || finalList == null || finalList[1] == null)
                 {
                     return new Move(0, 0, 0, 0);
                 }
-                if (_incubator[0].Score == 0) return _incubator.BestNode.OriginMove;
+                */
+                finalList = _ctx.Simulate.FinalResult;
+                RootPawnResult best = finalList[0];
+                foreach (RootPawnResult r in finalList)
+                {
+                    if (r.Score > best.Score) best = r;
+                }
+                return best.Move;
+                /*if (_incubator[0].Score == 0) return _incubator.BestNode.OriginMove;
                 //if the firsts node of the incubator are the same, choose it (by random, by their turn value...)             
                 if (_incubator.BestNode.Score == _incubator[1].Score)
                 {
@@ -57,7 +65,7 @@ namespace ITI.TabledeTyr.Freyja
                 else
                 {
                     return _incubator.BestNode.OriginMove;
-                }               
+                }   */            
             }
         }
     }

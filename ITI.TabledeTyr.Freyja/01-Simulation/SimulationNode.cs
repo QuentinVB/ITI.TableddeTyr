@@ -27,18 +27,18 @@ namespace ITI.TabledeTyr.Freyja
         /// <param name="tafl">The tafl to store.</param>
         /// <param name="score">The score.</param>
         /// <param name="isAtkPlaying">if set to <c>true</c> the atk is playing.</param>
-        internal SimulationNode(string id, 
-                                IReadOnlyTafl tafl, 
-                                int score, 
+        internal SimulationNode(string id,
+                                IReadOnlyTafl tafl,
+                                int score,
                                 bool isAtkPlaying)//if the node is the first node : no move
-            :this(id, tafl, 0, new Move(), isAtkPlaying, 0, new Move())
-            {}
-        internal SimulationNode(string id, 
-                                IReadOnlyTafl tafl, 
-                                int score, 
-                                Move move, 
-                                bool isAtkPlaying, 
-                                int turn, 
+            : this(id, tafl, 0, new Move(), isAtkPlaying, 0, new Move())
+        { }
+        internal SimulationNode(string id,
+                                IReadOnlyTafl tafl,
+                                int score,
+                                Move move,
+                                bool isAtkPlaying,
+                                int turn,
                                 Move thismove)//constructor
         {
             this.id = id;
@@ -61,7 +61,7 @@ namespace ITI.TabledeTyr.Freyja
         /// <summary>
         /// Gets the original Move made at the root that lead to this node.
         /// </summary>
-        internal Move OriginMove{ get { return _originalMove; } }
+        internal Move OriginMove { get { return _originalMove; } }
         /// <summary>
         /// Gets the Move made that lead from the parent to this node.
         /// </summary>
@@ -76,7 +76,7 @@ namespace ITI.TabledeTyr.Freyja
         /// <value>
         /// <c>true</c> if this instance is atk play; otherwise, <c>false</c>.
         /// </value>
-        public bool IsAtkPlay { get { return _isAtkPlaying; } internal set { _isAtkPlaying=value; }  }
+        public bool IsAtkPlay { get { return _isAtkPlaying; } internal set { _isAtkPlaying = value; } }
         /// <summary>
         /// Gets the turn from root, aka the deep of the simulation.
         /// </summary>
@@ -100,7 +100,7 @@ namespace ITI.TabledeTyr.Freyja
            : this(source.GetMaxIncubatedNode, source._incubatorArray)
         {
             //_incubatorArray 
-         }
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="Incubator"/> class.
         /// </summary>
@@ -137,9 +137,9 @@ namespace ITI.TabledeTyr.Freyja
                 cursor++;
             }
 
-            if(ctrl == true)
+            if (ctrl == true)
             {
-                for (int i = cursor + 1; (i <= Length - 1); i++)
+                for (int i = cursor + 1; (i <= Length - 2); i++)
                 {
                     _incubatorArray[i] = _incubatorArray[i + 1];
                 }
@@ -163,8 +163,8 @@ namespace ITI.TabledeTyr.Freyja
         /// Gets the count of the stored simulation in the incubator.
         /// </summary>
         internal int Length
-        { 
-            get{ return _incubatorArray.Length; }
+        {
+            get { return _incubatorArray.Length; }
         }
         internal SimulationNode this[int i]
         {
@@ -195,10 +195,10 @@ namespace ITI.TabledeTyr.Freyja
                 _incubatorArray[cursor] = node;
             }
             else if (nodePointed.Score <= node.Score)
-            {                                                
+            {
                 for (int i = _incubatorArray.Length - 2; (i >= cursor && i >= 0); i--)
                 {
-                    _incubatorArray[i + 1] = _incubatorArray[i];                       
+                    _incubatorArray[i + 1] = _incubatorArray[i];
                 }
                 _incubatorArray[cursor] = node;
             }
@@ -215,7 +215,6 @@ namespace ITI.TabledeTyr.Freyja
         }
         internal void RemovebyTeam(bool isTeamAtk)
         {
-
             for (int i = 0; i < _incubatorArray.Length; i++)
             {
                 if (_incubatorArray[i] == null) break;
@@ -229,6 +228,21 @@ namespace ITI.TabledeTyr.Freyja
                     }
                 }
             }
+        }
+    }
+    public class RootPawnResult
+    {
+        Move _move;
+        public int _score;
+        public RootPawnResult(int x, int y, int score, int destinationX, int destinationY)
+        {
+            _move = new Move(x, y, destinationX, destinationY);
+            _score = score;
+        }
+        internal Move Move { get { return _move; } }
+        internal int Score
+        {
+            get { return _score; }
         }
     }
 }

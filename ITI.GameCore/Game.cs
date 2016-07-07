@@ -297,7 +297,7 @@ namespace ITI.GameCore
         public bool MovePawn(int x, int y, int x2, int y2)
         {
             //Exceptions and tests goes here
-            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException(string.Format("moved pawn {0} from [{1},{2}] at [{3},{4}] as atk = {5} ", _tafl[x, y], x, y, x2, y2, IsAtkPlaying) );
             if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
             Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
             Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
