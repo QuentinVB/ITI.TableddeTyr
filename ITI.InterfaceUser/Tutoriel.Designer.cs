@@ -40,7 +40,6 @@
             this.m_ButtonRetourTutorielMenu.Name = "m_ButtonRetourTutorielMenu";
             this.m_ButtonRetourTutorielMenu.Size = new System.Drawing.Size(124, 72);
             this.m_ButtonRetourTutorielMenu.TabIndex = 0;
-            this.m_ButtonRetourTutorielMenu.Text = "Retour";
             this.m_ButtonRetourTutorielMenu.UseVisualStyleBackColor = true;
             // 
             // m_PictureBoxTutorielBoard
@@ -65,7 +64,6 @@
             this.Controls.Add(this.m_ButtonRetourTutorielMenu);
             this.Name = "Tutoriel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tutoriel";
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxTutorielBoard)).EndInit();
             this.ResumeLayout(false);
 

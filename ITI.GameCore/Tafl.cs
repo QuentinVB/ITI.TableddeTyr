@@ -35,7 +35,6 @@ namespace ITI.GameCore
             _height = height;
             _tafl = new Pawn[width, height];
         }
-
         public TaflBasic(IReadOnlyTafl source)
             : this(source.Width, source.Height)
         {
@@ -56,16 +55,8 @@ namespace ITI.GameCore
                 }
             }
         }
-
-        public int Width
-        {
-            get { return _width; }
-        }
-
-        public int Height
-        {
-            get { return _height; }
-        }
+        public int Width => _width; 
+        public int Height => _height;
 
         public int AttackerCount
         {
@@ -74,15 +65,11 @@ namespace ITI.GameCore
                 int count = 0;
                 foreach (Pawn studied in _tafl)
                 {
-                    if (studied == Pawn.Attacker)
-                    {
-                        count++;
-                    }
+                    if(studied == Pawn.Attacker) count++;
                 }
                 return count;
             }
         }
-
         public int DefenderCount
         {
             get
@@ -90,10 +77,7 @@ namespace ITI.GameCore
                 int count = 0;
                 foreach (Pawn studied in _tafl)
                 {
-                    if (studied == Pawn.Defender)
-                    {
-                        count++;
-                    }
+                    if (studied == Pawn.Defender) count++;
                 }
                 return count;
             }
@@ -105,10 +89,7 @@ namespace ITI.GameCore
             {
                 foreach (Pawn studied in _tafl)
                 {
-                    if (studied == Pawn.King)
-                    {
-                        return true;
-                    }
+                    if (studied == Pawn.King) return true;
                 }
                 return false;
             }

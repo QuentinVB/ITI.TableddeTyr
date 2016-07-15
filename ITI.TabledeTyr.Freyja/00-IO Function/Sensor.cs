@@ -28,7 +28,6 @@ namespace ITI.TabledeTyr.Freyja
             _isFreyjaAtk = isFreyjaAtk;
             _isAtkplaying = _activeGame.IsAtkPlaying;
             _currentTafl = _activeGame.Tafl;
-
         }
         //properties
         internal Game ActiveGame { get { return _activeGame; } set { _activeGame = value; } }

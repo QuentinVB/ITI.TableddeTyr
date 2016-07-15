@@ -12,14 +12,21 @@ namespace ITI.InterfaceUser
 {
     public partial class Tutoriel : Form
     {
-        
-        Button _nextExplanation;
-        Button _lastExplanation;
+        InterfaceOptions _interfaceOptions;
+
+        Button _continue;
         Button _showGameRules;
         Button _help;
+
         TextBox _showTutorielExplanation;
 
-        
+
+        Image retour;
+        Image help;
+        Image showGameRules;
+        Image Continue;
+
+
         bool _atkTurn = true;
         int _width = 7;
         int _height = 7;
@@ -53,13 +60,39 @@ namespace ITI.InterfaceUser
         /// le tutoriel est scripté entièrement et 
         /// permet uniquement au joueur de faire ce que le programmeur veut qu'il fasse.
         /// </summary>
-        public Tutoriel()
+        public Tutoriel(InterfaceOptions interfaceOptions)
         {
             InitializeComponent();
+            _interfaceOptions = interfaceOptions;
+            setLanguages();
+            
+            this.Text = _interfaceOptions.Title;
+            this.Refresh();
+
             _mvtPossible = new int[_width, _height];
             createTutorielform();
             InitializeBoard();
             tutorielStep();
+        }
+
+        private void setLanguages()
+        {
+            if (_interfaceOptions.Languages == true)
+            {
+                Continue = ITI.InterfaceUser.Properties.Resources.Continuer;
+                help = ITI.InterfaceUser.Properties.Resources.Aide;
+                showGameRules = ITI.InterfaceUser.Properties.Resources.Règles_du_jeu_php;
+                retour = ITI.InterfaceUser.Properties.Resources.Retour;
+                
+            }
+            else
+            {
+                Continue = ITI.InterfaceUser.Properties.Resources.Continue;
+                help = ITI.InterfaceUser.Properties.Resources.Help;
+                showGameRules = ITI.InterfaceUser.Properties.Resources.Rules;
+                retour = ITI.InterfaceUser.Properties.Resources.Return;
+            }
+
         }
 
         private void tutorielStep()
@@ -195,9 +228,10 @@ namespace ITI.InterfaceUser
         {
 
             _help = new Button();
-            _help.Text = "Aide aux joueurs";
             _help.Location = new Point(this.Location.X + 50, this.Location.Y + 465);
             _help.Size = new System.Drawing.Size(150, 75);
+            _help.BackgroundImage = (Image)help;
+            _help.BackgroundImageLayout = ImageLayout.Stretch;
             _help.Click += delegate (object sender, EventArgs e)
             {
 
@@ -206,11 +240,12 @@ namespace ITI.InterfaceUser
             _help.BringToFront();
 
 
-            _lastExplanation = new Button();
-            _lastExplanation.Text = "Continuer";
-            _lastExplanation.Location = new Point(this.Location.X + 250, this.Location.Y + 465);
-            _lastExplanation.Size = new System.Drawing.Size(150, 75);
-            _lastExplanation.Click += delegate (object sender, EventArgs e)
+            _continue = new Button();
+            _continue.Location = new Point(this.Location.X + 250, this.Location.Y + 465);
+            _continue.Size = new System.Drawing.Size(150, 75);
+            _continue.BackgroundImage = (Image)Continue;
+            _continue.BackgroundImageLayout = ImageLayout.Stretch;
+            _continue.Click += delegate (object sender, EventArgs e)
             {
                 if(_count == 14)
                 {
@@ -222,17 +257,18 @@ namespace ITI.InterfaceUser
                 }
                 
             };
-            this.Controls.Add(_lastExplanation);
-            _lastExplanation.BringToFront();
+            this.Controls.Add(_continue);
+            _continue.BringToFront();
 
 
             _showGameRules = new Button();
-            _showGameRules.Text = "Règles du jeu";
             _showGameRules.Location = new Point(this.Location.X + 450, this.Location.Y + 465);
             _showGameRules.Size = new System.Drawing.Size(150, 75);
+            _showGameRules.BackgroundImage = (Image)showGameRules;
+            _showGameRules.BackgroundImageLayout = ImageLayout.Stretch;
             _showGameRules.Click += delegate (object sender, EventArgs e)
             {
-                HnefataflRules Rules = new HnefataflRules();
+                HnefataflRules Rules = new HnefataflRules(_interfaceOptions);
                 if (Rules.ShowDialog() == DialogResult.Cancel)
                 {
                     Rules.Dispose();
@@ -249,17 +285,18 @@ namespace ITI.InterfaceUser
             _showTutorielExplanation.Multiline = true;
             this.Controls.Add(_showTutorielExplanation);
             _showTutorielExplanation.BringToFront();
+
+
+            m_ButtonRetourTutorielMenu.BackgroundImage = (Image)retour;
+            m_ButtonRetourTutorielMenu.BackgroundImageLayout = ImageLayout.Stretch;
+            m_ButtonRetourTutorielMenu.BringToFront();
         }
 
         private void m_PictureBoxTutorielBoard_Paint(object sender, PaintEventArgs e)
         {
-            Image Piece;
-            Image Case;
-            Image caseInterdite;
-            Image mvtPiecePossible;
+            m_PictureBoxTutorielBoard.BackColor = Color.Black;
             Rectangle Rect;
-            Graphics Pawn = e.Graphics;
-            Graphics Board = e.Graphics;
+            Graphics Draw = e.Graphics;
 
 
             //////
@@ -267,14 +304,10 @@ namespace ITI.InterfaceUser
             _valeurYBoard = 3;
             _widthBoard = (m_PictureBoxTutorielBoard.Width - (_valeurXBoard * _width + 1)) / _width;
             _heightBoard = (m_PictureBoxTutorielBoard.Height - (_valeurYBoard * _height + 1)) / _height;
-            _valeurXBoardNextCase = _widthBoard + _valeurXBoard; ;
+            _valeurXBoardNextCase = _widthBoard + _valeurXBoard;
             _valeurYBoardNextCase = _heightBoard + _valeurYBoard;
             ///////
-
-            Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
-            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
-            mvtPiecePossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
-            m_PictureBoxTutorielBoard.BackColor = Color.Black;
+            
 
 
             int x = 0, y = _valeurYBoard;
@@ -284,41 +317,36 @@ namespace ITI.InterfaceUser
                 x = _valeurXBoard;
                 for (int i = 0; i < _width; i++)
                 {
+                    Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
                     if (((i == 0) && (j == 0))
                             || ((i == _width - 1) && (j == _height - 1))
                             || ((i == _width - 1) && (j == 0))
                             || ((i == 0) && (j == _height - 1))
                             || ((i == ((_width - 1) / 2)) && (j == ((_height - 1) / 2))))
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(caseInterdite, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageForbiddenSquare, Rect);
                     }
                     else
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(Case, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageSquare, Rect);
                     }
 
                     if (_mvtPossible[i, j] == 1)
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(mvtPiecePossible, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageSquareMvtPossible, Rect);
                     }       
 
                     if (_plateau[i, j] == 1)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
                     if (_plateau[i, j] == 2)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
                     if (_plateau[i, j] == 3)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageKingPawn, Rect);
                     }
                     x = x + _valeurXBoardNextCase;
                 }

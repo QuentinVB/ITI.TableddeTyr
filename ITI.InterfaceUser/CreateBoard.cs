@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ITI.GameCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,215 +8,151 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 using System.Xml.Linq;
 
 namespace ITI.InterfaceUser
 {
     public partial class CreateBoard : Form
     {
+        InterfaceOptions _interfaceOptions;
+        TaflBasic _tafl;
+        XML_Tafl _xml;
+
         NumericUpDown _choixLongueurPlateau;
         NumericUpDown _choixHauteurPlateau;
 
+        TextBox _createTaflName;
+
         Button _putAtkOnBoard;
         Button _putDefOnBoard;
-        Button _putCase;
+        Button _putEmptyCase;
         Button _confirmSave;
         Button _cancelSave;
         Button _save;
 
-        TextBox _textBoxName;
-
-        int _valeurXBoard;
-        int _valeurYBoard;
-        int _widthBoard;
-        int _heightBoard;
-        int _valeurXBoardNextCase;
-        int _valeurYBoardNextCase;
-
-        int _width = 7;
-        int _height = 7;
-
-        int[,] plateau;
         int _pawn = 0;
 
-        public CreateBoard()
+        public CreateBoard(InterfaceOptions interfaceOptions)
         {
             InitializeComponent();
+            _interfaceOptions = interfaceOptions;
             CreateControlNewBoard();
+            
+            this.Text = _interfaceOptions.Title;
+            this.Refresh();
+            _interfaceOptions.BoardWidth = Longueur;
+            _interfaceOptions.BoardHeight = Hauteur;
+            _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
             _confirmSave.Hide();
             _cancelSave.Hide();
-            plateau = new int[_width, _height];
+            _tafl = new TaflBasic(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+            _xml = new XML_Tafl();
         }
 
         private void m_PictureBoxCreateBoard_Paint(object sender, PaintEventArgs e)
         {
-            int x = 0, y = 0;
-            Rectangle Rect;
-
-            Graphics Board = e.Graphics;
-            Graphics Pawn = e.Graphics;
-
-            Image Case;
-            Image Piece;
-            Image caseInterdite;
-
-            
-
-            #region variable création plateau
-            if(_width == 7)
-            {
-                _valeurXBoard = 3;
-                _widthBoard = 70;
-                _valeurXBoardNextCase = 73;
-            }
-            if(_width == 9)
-            {
-                _valeurXBoard = 6;
-                _widthBoard = 53;
-                _valeurXBoardNextCase = 56;
-            }
-            if (_width == 11)
-            {
-                _valeurXBoard = 5;
-                _widthBoard = 43;
-                _valeurXBoardNextCase = 46;
-            }
-            if (_width == 13)
-            {
-                _valeurXBoard = 5;
-                _widthBoard = 36;
-                _valeurXBoardNextCase = 39;
-            }
-            if (_width == 15)
-            {
-                _valeurXBoard = 4;
-                _widthBoard = 31;
-                _valeurXBoardNextCase = 34;
-            }
-
-            if (_height == 7)
-            {
-                _valeurYBoard = 3;
-                _heightBoard = 70;
-                _valeurYBoardNextCase = 73;
-            }
-            if (_height == 9)
-            {
-                _valeurYBoard = 6;
-                _heightBoard = 53;
-                _valeurYBoardNextCase = 56;
-            }
-            if (_height == 11)
-            {
-                _valeurYBoard = 5;
-                _heightBoard = 43;
-                _valeurYBoardNextCase = 46;
-            }
-            if (_height == 13)
-            {
-                _valeurYBoard = 5;
-                _heightBoard = 36;
-                _valeurYBoardNextCase = 39;
-            }
-            if (_height == 15)
-            {
-                _valeurYBoard = 4;
-                _heightBoard = 31;
-                _valeurYBoardNextCase = 34;
-
-            }
-            #endregion
-
             m_PictureBoxCreateBoard.BackColor = Color.Black;
-            Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
-            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
 
-            plateau[(_width - 1) / 2, (_height - 1) / 2] = 3;
+            Rectangle Rect;
+            Graphics Draw = e.Graphics;
 
-            y = _valeurYBoard;
+            _tafl[(_interfaceOptions.BoardWidth - 1) / 2, (_interfaceOptions.BoardHeight - 1) / 2] = GameCore.Pawn.King; ;
+            
+            int y = _interfaceOptions.RectanglePositionY;
 
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
-                x = _valeurXBoard;
-                for (int i = 0; i < _width; i++)
+                int x = _interfaceOptions.RectanglePositionX;
+
+                for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
+                    Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
+
                     if (((i == 0) && (j == 0))
-                        || ((i == _width - 1) && (j == _height - 1))
-                            || ((i == _width - 1) && (j == 0))
-                            || ((i == 0) && (j == _height - 1))
-                            || ((i == (_width - 1) / 2) && (j == (_height - 1)/2)))
+                        || ((i == _interfaceOptions.BoardWidth - 1) && (j == _interfaceOptions.BoardHeight - 1))
+                            || ((i == _interfaceOptions.BoardWidth - 1) && (j == 0))
+                            || ((i == 0) && (j == _interfaceOptions.BoardHeight - 1))
+                            || ((i == (_interfaceOptions.BoardWidth - 1) / 2) && (j == (_interfaceOptions.BoardHeight - 1)/2)))
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(caseInterdite, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageForbiddenSquare, Rect);
                     }
                     else
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(Case, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageSquare, Rect);
                     }
                     
-                    if (plateau[i, j] == 1) 
+                    if (_tafl[i, j] == GameCore.Pawn.Attacker) 
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
-                    if (plateau[i, j] == 2) 
+                    if (_tafl[i, j] == GameCore.Pawn.Defender) 
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
-                    if (plateau[i, j] == 3)   
+                    if (_tafl[i, j] == GameCore.Pawn.King)   
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageKingPawn, Rect);
                     }
-                    x = x + _valeurXBoardNextCase;
+                    x = x + _interfaceOptions.NextRectanglePositionX;
                 }
-                y = y + _valeurYBoardNextCase;
+                y = y + _interfaceOptions.NextRectanglePositionY;
             }
         }
 
         private void m_PictureBoxCreateBoard_MouseClick(object sender, MouseEventArgs e)
         {
-            int x = 0, y = 0;
+            int y = _interfaceOptions.RectanglePositionY;
 
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
-                x = _valeurXBoard;
+                int x = _interfaceOptions.RectanglePositionX;
 
-                for (int i = 0; i < _width; i++)
+                for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
-                    if (e.X > x && e.X < x + _widthBoard && e.Y > y && e.Y < y + _heightBoard)
+                    if (e.X > x && e.X < x + _interfaceOptions.RectangleWidth && e.Y > y && e.Y < y + _interfaceOptions.RectangleHeight)
                     {
                         if ((i == 0 && j == 0)
-                            || (i == (_width - 1) && j == 0)
-                            || (i == 0 && j == (_height - 1))
-                            || (i == (_width - 1) && j == (_height - 1))
-                            || (i == (_width - 1) / 2 && j == (_height - 1) / 2))
+                            || (i == (_interfaceOptions.BoardWidth - 1) && j == 0)
+                            || (i == 0 && j == (_interfaceOptions.BoardHeight - 1))
+                            || (i == (_interfaceOptions.BoardWidth - 1) && j == (_interfaceOptions.BoardHeight - 1))
+                            || (i == (_interfaceOptions.BoardWidth - 1) / 2 && j == (_interfaceOptions.BoardHeight - 1) / 2))
                         {
                             m_PictureBoxCreateBoard.Refresh();
                         }
                         else
                         {
-                            plateau[i, j] = _pawn;
+                            if(_pawn == 0)
+                            {
+                                _tafl[i, j] = Pawn.None;
+                            }
+                            if(_pawn == 1)
+                            {
+                                _tafl[i, j] = Pawn.Attacker;
+                            }
+                            if(_pawn == 2)
+                            {
+                                _tafl[i, j] = Pawn.Defender;
+                            }
                             m_PictureBoxCreateBoard.Refresh();
                         }
                         
                     }
-                    x = x + _valeurXBoardNextCase;
+                    x = x + _interfaceOptions.NextRectanglePositionX;
                 }
-                y = y + _valeurYBoardNextCase;
+                y = y + _interfaceOptions.NextRectanglePositionY;
             }
         }
 
         private void CreateControlNewBoard()
         {
+
             #region Button put atk on board
             _putAtkOnBoard = new Button();
-            _putAtkOnBoard.Text = "Cliquez pour placer des attaquants sur le plateau";
             _putAtkOnBoard.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
-            _putAtkOnBoard.Size = new System.Drawing.Size(150, 75);
+            _putAtkOnBoard.Size = new System.Drawing.Size(200, 75);
+            _putAtkOnBoard.BackgroundImage = (Image)_interfaceOptions.ImageInsertAtkPawn;
+            _putAtkOnBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _putAtkOnBoard.Click += delegate (object sender, EventArgs e)
             {
                 _pawn = 1;
@@ -226,9 +163,10 @@ namespace ITI.InterfaceUser
 
             #region Button put def on board
             _putDefOnBoard = new Button();
-            _putDefOnBoard.Text = "Cliquez pour placer des défenseurs sur le plateau";
             _putDefOnBoard.Location = new Point(this.Location.X + 550, this.Location.Y + 300);
-            _putDefOnBoard.Size = new System.Drawing.Size(150, 75);
+            _putDefOnBoard.Size = new System.Drawing.Size(200, 75);
+            _putDefOnBoard.BackgroundImage = (Image)_interfaceOptions.ImageInsertDefPawn;
+            _putDefOnBoard.BackgroundImageLayout = ImageLayout.Stretch;
             _putDefOnBoard.Click += delegate (object sender, EventArgs e)
             {
                 _pawn = 2;
@@ -237,17 +175,18 @@ namespace ITI.InterfaceUser
             _putDefOnBoard.BringToFront();
             #endregion
 
-            #region Button générer plateau 
-            _putCase = new Button();
-            _putCase.Text = "Retirer un pion du plateau";
-            _putCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
-            _putCase.Size = new System.Drawing.Size(150, 75);
-            _putCase.Click += delegate (object sender, EventArgs e)
+            #region Button
+            _putEmptyCase = new Button();
+            _putEmptyCase.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
+            _putEmptyCase.Size = new System.Drawing.Size(200, 75);
+            _putEmptyCase.BackgroundImage = (Image)_interfaceOptions.ImageRemovePawn;
+            _putEmptyCase.BackgroundImageLayout = ImageLayout.Stretch;
+            _putEmptyCase.Click += delegate (object sender, EventArgs e)
             {
                 _pawn = 0;
             };
-            this.Controls.Add(_putCase);
-            _putCase.BringToFront();
+            this.Controls.Add(_putEmptyCase);
+            _putEmptyCase.BringToFront();
             #endregion
 
             #region numericUpDown longueur plateau
@@ -260,8 +199,9 @@ namespace ITI.InterfaceUser
             _choixLongueurPlateau.Increment = 2;
             _choixLongueurPlateau.Click += delegate (object sender, EventArgs e)
             {
-                _width = Longueur;
-                plateau = new int[_width, _height];
+                _interfaceOptions.BoardWidth = Longueur;
+                _tafl = new TaflBasic(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixLongueurPlateau);
@@ -278,8 +218,9 @@ namespace ITI.InterfaceUser
             _choixHauteurPlateau.Increment = 2;
             _choixHauteurPlateau.Click += delegate (object sender, EventArgs e)
             {
-                _height = Hauteur;
-                plateau = new int[_width, _height];
+                _interfaceOptions.BoardHeight = Hauteur;
+                _tafl = new TaflBasic(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
                 m_PictureBoxCreateBoard.Refresh();
             };
             this.Controls.Add(_choixHauteurPlateau);
@@ -288,19 +229,27 @@ namespace ITI.InterfaceUser
 
             #region Button save
             _save = new Button();
-            _save.Text = "Sauvegardez le nouveau plateau";
             _save.Location = new Point(this.Location.X + 550, this.Location.Y + 390);
-            _save.Size = new System.Drawing.Size(150, 75);
+            _save.Size = new System.Drawing.Size(200, 75);
+            _save.BackgroundImage = (Image)_interfaceOptions.ImageSave;
+            _save.BackgroundImageLayout = ImageLayout.Stretch;
             _save.Click += delegate (object sender, EventArgs e)
             {
                 _putAtkOnBoard.Hide();
                 _putDefOnBoard.Hide();
                 _choixHauteurPlateau.Hide();
                 _choixLongueurPlateau.Hide();
-                _putCase.Hide();
+                _putEmptyCase.Hide();
                 _save.Hide();
                 _confirmSave.Show();
                 _cancelSave.Show();
+
+                _createTaflName = new TextBox();
+                _createTaflName.Location = new Point(this.Width - 235, this.Location.Y + 50);
+                _createTaflName.Size = new System.Drawing.Size(200, 75);
+                _createTaflName.Text = "";
+                this.Controls.Add(_createTaflName);
+                _createTaflName.BringToFront();
             };
             this.Controls.Add(_save);
             _save.BringToFront();
@@ -308,20 +257,13 @@ namespace ITI.InterfaceUser
 
             #region Button confirm save
             _confirmSave = new Button();
-            _confirmSave.Text = "Confirmer la sauvegarde du plateau";
-            _confirmSave.Location = new Point(this.Location.X + 550, this.Location.Y + 100);
-            _confirmSave.Size = new System.Drawing.Size(150, 75);
+            _confirmSave.Location = new Point(this.Location.X + 550, this.Location.Y + 250);
+            _confirmSave.Size = new System.Drawing.Size(200, 75);
+            _confirmSave.BackgroundImage = (Image)_interfaceOptions.ImageConfirmSave;
+            _confirmSave.BackgroundImageLayout = ImageLayout.Stretch;
             _confirmSave.Click += delegate (object sender, EventArgs e)
             {
-                /*
-                _textBoxName = new TextBox();
-                _textBoxName.Location = new Point(this.Location.X + 500, this.Location.Y + 300);
-                _textBoxName.Text = saveName;
-                _textBoxName.Size = new System.Drawing.Size(150, 75);
-                this.Controls.Add(_textBoxName);
-                _textBoxName.BringToFront();
-                WriteXML();
-                */
+                SaveBoard();
             };
             this.Controls.Add(_confirmSave);
             _confirmSave.BringToFront();
@@ -329,68 +271,35 @@ namespace ITI.InterfaceUser
 
             #region Button Cancel save
             _cancelSave = new Button();
-            _cancelSave.Text = "Annuler la sauvegarde du plateau";
-            _cancelSave.Location = new Point(this.Location.X + 550, this.Location.Y + 200);
-            _cancelSave.Size = new System.Drawing.Size(150, 75);
+            _cancelSave.Location = new Point(this.Location.X + 550, this.Location.Y + 350);
+            _cancelSave.Size = new System.Drawing.Size(200, 75);
+            _cancelSave.BackgroundImage = (Image)_interfaceOptions.ImageCancelSave;
+            _cancelSave.BackgroundImageLayout = ImageLayout.Stretch;
             _cancelSave.Click += delegate (object sender, EventArgs e)
             {
 
                 _confirmSave.Hide();
+                _createTaflName.Hide();
                 _cancelSave.Hide();
                 _choixLongueurPlateau.Show();
                 _choixHauteurPlateau.Show();
                 _putAtkOnBoard.Show();
                 _putDefOnBoard.Show();
-                _putCase.Show();
+                _putEmptyCase.Show();
                 _save.Show();
             };
             this.Controls.Add(_cancelSave);
             _cancelSave.BringToFront();
             #endregion
+
+           
+
+            m_buttonReturn.BackgroundImage = (Image)_interfaceOptions.ImageReturn;
+            m_buttonReturn.BackgroundImageLayout = ImageLayout.Stretch;
+            m_buttonReturn.BringToFront();
         }
-
-
-        /// <summary>
-        /// sauvegarder le nouveau plateau sur un fichier XML dans un dossier externe.
-        /// -----------
-        /// implémentez un objet pour ouvrir le dossier, affichez et ouvrir les fichier XML présent
-        /// ---------------
-        /// testez en sauvegardant un ficher XML contenant des pions et charger ce fichier et comparer.
-        /// </summary>
-        public void WriteXML()
-        {
-            XDocument _saveBoard = new XDocument();
-            new XElement("plateau",
-                new XAttribute("width", _width),
-                new XAttribute("height", _height)
-                );
-
-            for (int i = 0; i < _height; i++)
-            {
-                for (int j = 0; j < _width; j++)
-                {
-                    if (plateau[i, j] != 0)
-                    {
-                        if (plateau[i, j] == 1)
-                        {
-                            new XElement("ATK",
-                                new XAttribute("positionX", i),
-                                new XAttribute("positionY", j)
-                            );
-                        }
-                        if (plateau[i, j] == 2)
-                        {
-                            new XElement("DEF",
-                                new XAttribute("positionX", i),
-                                new XAttribute("positionY", j)
-                            );
-                        }
-                    }
-                }
-            }
-            _saveBoard.Save(_textBoxName.Text);
-        }
-
+        
+        
         public int Longueur
         {
             get
@@ -407,12 +316,128 @@ namespace ITI.InterfaceUser
             }
         }
 
-        public string saveName
+        private void SaveBoard()
         {
-            get
+            if(CheckEmptyName() == true)
             {
-                return _textBoxName.Text;
+                NoSaveBoard();
+            }
+            else if(CheckSameName() == true)
+            {
+                NoSaveBoard();
+            }
+            else
+            {
+                ConfirmSaveBoard();
+            }
+            
+        }
+
+        private void NoSaveBoard()
+        {
+            if (_interfaceOptions.Languages == true)
+            {
+                MessageBox.Show("Votre plateau n'a pas été sauvergardé ! ",
+                "Sauvegarde du plateau échoué",
+                MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Your board has not been saved !",
+                "Save Board failed",
+                MessageBoxButtons.OK);
             }
         }
+
+        private void ConfirmSaveBoard()
+        {
+            string TaflName = _createTaflName.Text; 
+            
+            _xml.WriteXmlTafl(_tafl, TaflName);
+            if (_interfaceOptions.Languages == true)
+            {
+                MessageBox.Show("Votre plateau a été sauvergardé sous le nom de " + _createTaflName.Text,
+                "Sauvegarde du plateau",
+                MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("Your board has been saved !",
+                "Save Board",
+                MessageBoxButtons.OK);
+            }
+        }
+
+        private bool CheckEmptyName()
+        {
+            if(_createTaflName.Text == (""))
+            {
+                if (_interfaceOptions.Languages == true)
+                {
+                    MessageBox.Show("Vous devez choisir un nom de sauvegarde",
+                    "Attention sauvegarde sans nom",
+                    MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("You have to give a name to your save !",
+                    "Warning save without name",
+                    MessageBoxButtons.OK);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckSameName()
+        {
+            int _countSameName = 0;
+
+            ListBox listboxBoardSave = new ListBox();
+            listboxBoardSave.Items.Clear();
+            string[] fileName;
+            string road = _interfaceOptions.RoadTaflSave;
+            fileName = Directory.GetFileSystemEntries(road);
+            string fileBoardName;
+            foreach (string current in fileName)
+            {
+                fileBoardName = Path.GetFileNameWithoutExtension(current);
+                listboxBoardSave.Items.Add(fileBoardName);
+            }
+            foreach (string current in listboxBoardSave.Items)
+            {
+                _countSameName++;
+                if (current == _createTaflName.Text)
+                {
+                    if (_interfaceOptions.Languages == true)
+                    {
+                        if(MessageBox.Show("Voulez vous sauvegarder avec ce nom et supprimez l'ancien plateau",
+                        "Attention deux sauvegardes avec le meme nom",
+                        MessageBoxButtons.YesNo) == DialogResult.No)
+                        {
+                            return true;
+                        }else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if(MessageBox.Show("Do you want to save with this name and delete the last board !",
+                        "Warning two boards with the same name",
+                        MessageBoxButtons.YesNo) == DialogResult.No)
+                        {
+                            return true;
+                        }else
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
     }
 }

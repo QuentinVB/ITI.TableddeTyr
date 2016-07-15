@@ -50,7 +50,7 @@ namespace ITI.TabledeTyr.Freyja
         internal Decision Decision { get { return _Decision; } set { value = _Decision; } }
         //data
         internal Game originGame { get { return _originGame; } set { value = _originGame; } }
-        internal Monitor Monitor { get { return _Monitor; } }
+        public Monitor Monitor { get { return _Monitor; } }
         //methodes
         //3 updates function in public, allowing to the outside world to communicate with Freyja
         public bool UpdateFreyja()

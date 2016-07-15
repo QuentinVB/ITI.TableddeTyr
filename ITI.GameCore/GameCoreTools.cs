@@ -16,7 +16,6 @@ namespace ITI.GameCore
         public readonly int Y;
         public readonly List<StudiedPawn> FreeSquares;
         public readonly Pawn Value;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PossibleMove" /> struct.
         /// </summary>
@@ -33,9 +32,8 @@ namespace ITI.GameCore
         }
         public bool IsFree
         {
-            get { 
-                if (FreeSquares.Count == 0) return false;
-                return true;
+            get {
+                return (FreeSquares.Count == 0)? false:true;
             }
         }
         public int Up
@@ -97,61 +95,84 @@ namespace ITI.GameCore
     }
     static public class Helper
     {
-        static internal void CheckRange(int width, int height, int x, int y)
+        /// <summary>
+        /// Checks if the value are in range of the tafl.
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Can't aim out of the tafl
+        /// </exception>
+        public static void CheckRange(int width, int height, int x, int y)
         {
             if (x < 0 || x > width) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(x));
             if (y < 0 || y > height) throw new ArgumentOutOfRangeException("Can't aim out of the tafl", nameof(y));
-
         }
-
-        #region Checkers for emptyness
         /// <summary>
-        /// Checks if the pawn above/down/left/right is empty, if so, return true.
+        /// Checks if the pawn above is empty, if so, return true.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns></returns>
-        static public bool CheckUp(int x, int y, IReadOnlyTafl _tafl)
+        public static bool CheckUp(int x, int y, IReadOnlyTafl _tafl)
         {
             if (y - 1 < 0 || _tafl[x, y - 1] != Pawn.None) return false;
             if (_tafl[x, y - 1] == Pawn.None) return true;
             return false;
         }
-        static public bool CheckDown(int x, int y, IReadOnlyTafl _tafl)
+        /// <summary>
+        /// Checks if the pawn down is empty, if so, return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        public static bool CheckDown(int x, int y, IReadOnlyTafl _tafl)
         {
             if (y + 1 >= _tafl.Height || _tafl[x, y + 1] != Pawn.None) return false;
             if (_tafl[x, y + 1] == Pawn.None) return true;
             return false;
         }
-        static public bool CheckLeft(int x, int y, IReadOnlyTafl _tafl)
+        /// <summary>
+        /// Checks if the pawn left is empty, if so, return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        public static bool CheckLeft(int x, int y, IReadOnlyTafl _tafl)
         {
             if (x - 1 < 0 || _tafl[x - 1, y] != Pawn.None) return false;
             if (_tafl[x - 1, y] == Pawn.None) return true;
             return false;
         }
-        static public bool CheckRight(int x, int y, IReadOnlyTafl _tafl)
+        /// <summary>
+        /// Checks if the pawn right is empty, if so, return true.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        public static bool CheckRight(int x, int y, IReadOnlyTafl _tafl)
         {
             if (x + 1 >= _tafl.Width || _tafl[x + 1, y] != Pawn.None) return false;
             if (_tafl[x + 1, y] == Pawn.None) return true;
             return false;
         }
-        #endregion
         /// <summary>
         /// Checks the walls pawn, forteress corner and throne If detected return true.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns></returns>
-        static public bool CheckWalls(int x, int y, IReadOnlyTafl _tafl) //temp, send that to toolbox;
+        public static bool CheckWalls(int x, int y, IReadOnlyTafl _tafl) //temp, send that to toolbox;
         {
-            if ((_tafl[x, y] == Pawn.Wall)
+            return ((_tafl[x, y] == Pawn.Wall)
                 || (x == 0 && y == 0)  //Top left corner
                 || (x == 0 && y == _tafl.Height - 1) //Bot left corner
                 || (x == _tafl.Width - 1 && y == 0)  //top right corner
                 || (x == _tafl.Width - 1 && y == _tafl.Height - 1)  //Bot right corner
                 || (x == (_tafl.Width - 1) / 2 && y == (_tafl.Height - 1) / 2 && (_tafl[((_tafl.Width - 1) / 2), ((_tafl.Height - 1) / 2)]) == Pawn.None)//Throne only if empty
-                ) return true;
-            return false;
+                )?true: false;
         }
         /// <summary>
         /// Gets the default tafl.
@@ -176,7 +197,6 @@ namespace ITI.GameCore
             09 -- -- -- -- -- 01 -- -- -- -- --
             10 -- -- -- 01 01 01 01 01 -- -- --
             y
-
             */
 
             //Set the king and defenders
@@ -224,6 +244,9 @@ namespace ITI.GameCore
             return tafl;
         }
     }
+    /// <summary>
+    /// class allowing to R/W tafl in XML format
+    /// </summary>
     public class XML_Tafl
     {
         IReadOnlyTafl _TaflRead;
@@ -232,8 +255,13 @@ namespace ITI.GameCore
         internal IReadOnlyTafl TaflToRead { get { return _TaflRead; } private set { _TaflRead = value; } }
         internal TaflBasic TaflToWrite { get { return _TaflWrite; } private set { _TaflWrite = value; } }
         public XML_Tafl()
-        { }
-        public void WriteXmlTafl(IReadOnlyTafl TaflRead)
+        {}
+        //WRITE
+        /// <summary>
+        /// Writes the XML tafl based on a tafl basic into TaflBoardCreate folder.
+        /// </summary>
+        /// <param name="TaflRead">The tafl read.</param>
+        public void WriteXmlTafl(TaflBasic TaflRead)
         {
             _TaflRead = TaflRead;
             //file = new XmlTextReader(Book.title + ".xml");
@@ -243,13 +271,35 @@ namespace ITI.GameCore
                 Translate()
                 );
             string title = string.Format("{0}_{1}", Convert.ToString(_TaflRead.Width), Convert.ToString(_TaflRead.Height)); ;
-            taflXml.Save("./" + title + ".xml");
+            taflXml.Save("./TaflBoardCreate/" + title + ".xml");
+        }
+        //surcharge
+        /// <summary>
+        /// Writes the XML tafl based on a tafl and save it with the name send into the TaflBoardCreate folder.
+        /// </summary>
+        /// <param name="TaflRead">The tafl read.</param>
+        /// <param name="name">The name.</param>
+        public void WriteXmlTafl(TaflBasic TaflRead, string name)
+        {
+            _TaflRead = TaflRead;
+            //file = new XmlTextReader(Book.title + ".xml");
+            XElement taflXml = new XElement("Tafl",
+                new XElement("Width", _TaflRead.Width),
+                new XElement("Height", _TaflRead.Height),
+                Translate()
+                );
+            taflXml.Save("./TaflBoardCreate/" + name + ".xml");
+        }
+        public void WriteXmlTafl(IReadOnlyTafl TaflRead)
+        {
+            TaflBasic send = new TaflBasic(TaflRead);
+            WriteXmlTafl(send);
         }
         internal List<XElement> Translate()
         {
-            for (int i = 0; i < _TaflRead.Width; i++)
+            for (int j = 0; j < _TaflRead.Width; j++)
             {
-                for (int j = 0; j < _TaflRead.Height; j++)
+                for (int i = 0; i < _TaflRead.Height; i++)
                 {
                     if (_TaflRead[i,j] == Pawn.None)
                     {
@@ -273,20 +323,34 @@ namespace ITI.GameCore
             }
             return xElements;
         }
-        /*
-        public override TaflBasic ReadXmlTafl()
-        {
-
-        }
-        */
+        //READ
+        /// <summary>
+        /// Reads the XML  tafl based on <paramref name="width"/> and <paramref name="height"/> from the tafloriginal folder.
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
+        /// <returns></returns>
         public TaflBasic ReadXmlTafl(int width, int height)
         {
             string title = string.Format("{0}_{1}", Convert.ToString(width), Convert.ToString(height)); ;
-            XmlTextReader reader = new XmlTextReader("./" + title + ".xml");
+            XmlTextReader reader = new XmlTextReader("./TaflOriginal/" + title + ".xml");
             TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
             outTafl = ReadTaflArray(reader, outTafl);
             return outTafl;
-        }       
+        }
+        //surcharge
+        /// <summary>
+        /// Reads the XML tafl based on his name (.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public TaflBasic ReadXmlTafl(string name)
+        {
+            XmlTextReader reader = new XmlTextReader("./TaflBoardCreate/" + name + ".xml");
+            TaflBasic outTafl = new TaflBasic(ArrayWidth(reader), ArrayHeight(reader));
+            outTafl = ReadTaflArray(reader, outTafl);
+            return outTafl;
+        }
         internal int ArrayWidth(XmlTextReader xml)
         {
             int arrayWidth = 0;
@@ -326,7 +390,8 @@ namespace ITI.GameCore
                 throw new ArgumentException("The XML must not be empty");
             }
             while (xml.Read())
-            {   
+            {
+                if (x == width || y == height) break;
                 if (xml.Name == "Pawn")
                 {
                     xml.Read();
@@ -343,6 +408,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.None;
                             x++;
                         }
+                        xml.Read();
                     }
                     else if (xml.Value == "King")
                     {
@@ -357,6 +423,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.King;
                             x++;
                         }
+                        xml.Read();
                     }
                     else if (xml.Value == "Attacker")
                     {
@@ -371,6 +438,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.Attacker;
                             x++;
                         }
+                        xml.Read();
                     }
                     else if (xml.Value == "Defender")
                     {
@@ -385,6 +453,7 @@ namespace ITI.GameCore
                             tafl[x, y] = Pawn.Defender;
                             x++;
                         }
+                        xml.Read();
                     }
                 }                
             }
