@@ -50,8 +50,7 @@ namespace ITI.TabledeTyr.Freyja
                 PawnTree treeresult = new PawnTree(_ctx,_ctx.Monitor.maxIncubatedNode, _isSimulatedFreyjaAtk, _simulatedGame, rootpawn);
                 RootPawnResult output = treeresult.update();               
                 finalResult.Add(output);                
-            }
-            bool test = true;
+            }           
         }
         internal static List<StudiedPawn> playmyteam(List<StudiedPawn> PawnsToSimulate, SimulationNode node)
         {

@@ -68,7 +68,6 @@ namespace ITI.TabledeTyr.Freyja
             //_child.Score++;
             return _child;
         }
-
         private void IASimuationAnalyse()
         {
             //THESE CREATE STACK OVERFLOW  !!
@@ -83,7 +82,7 @@ namespace ITI.TabledeTyr.Freyja
               ) throw new Exception(string.Format("try moved pawn {0} from [{1},{2}] at [{3},{4}] as atk = {5} ", _game.Tafl[_father.OriginMove.sourceX, _father.OriginMove.sourceY], _father.OriginMove.sourceX, _father.OriginMove.sourceY, _father.OriginMove.destinationX, _father.OriginMove.destinationY, _game.IsAtkPlaying));
               */
             //SHITTY LINE HERE !
-            //_game.MovePawn(_father.OriginMove.sourceX, _father.OriginMove.sourceY, _father.OriginMove.destinationX, _father.OriginMove.destinationY);
+            //_game.MovePawn(_father.ThisMove.sourceX, _father.ThisMove.sourceY, _father.ThisMove.destinationX, _father.ThisMove.destinationY);
             setScoreCapturePawn();
 
             if(_iaIsAtk == _father.IsAtkPlay)
@@ -196,8 +195,6 @@ namespace ITI.TabledeTyr.Freyja
                     _studiedPawnPositionDestinationLibertyScore += 2;
                 }
             }
-            
-
             if (_checkIfStudiedPawnCanBeCaptureNextTurn == true)
             {
                 StudiedPawn pawn = new StudiedPawn(PawnDestinationX, PawnDestinationY);
@@ -206,18 +203,15 @@ namespace ITI.TabledeTyr.Freyja
             }
             return false;
         }
-
-
         //Fonctions de score
-
         private void setScoreCapturePawn()
         {
             if(_father.IsAtkPlay == true)
             {
-                _scoreCaptureTurn = (_atkCount - _tafl.AttackerCount) * 2;
+                _scoreCaptureTurn = (_atkCount - _child.TaflStored.AttackerCount) * 2;
             }else
             {
-                _scoreCaptureTurn = (_defCount - _tafl.DefenderCount) * 2;
+                _scoreCaptureTurn = (_defCount - _child.TaflStored.DefenderCount) * 2;
             }
         }
 
