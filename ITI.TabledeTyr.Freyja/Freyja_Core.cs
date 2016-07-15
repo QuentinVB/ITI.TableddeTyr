@@ -30,14 +30,15 @@ namespace ITI.TabledeTyr.Freyja
         {
             _originGame = game;
             //Input
-            _Sensor = new Sensor(this, isFreyjaAtk);          
+            _Sensor = new Sensor(this, isFreyjaAtk);
+            _Monitor = new Monitor(this);
             //Core
             _Simulate = new Simulate(this);
             _Analyze = new Analyze(this);
             _Decision = new Decision(this);
             //output
             _Effector = new Effector(this);
-            _Monitor = new Monitor(this);
+            
         }
         //properties allowing a secured acces to the Freyja's module
         //IO
@@ -49,12 +50,13 @@ namespace ITI.TabledeTyr.Freyja
         internal Decision Decision { get { return _Decision; } set { value = _Decision; } }
         //data
         internal Game originGame { get { return _originGame; } set { value = _originGame; } }
-        internal Monitor Monitor { get { return _Monitor; } }
+        public Monitor Monitor { get { return _Monitor; } }
         //methodes
         //3 updates function in public, allowing to the outside world to communicate with Freyja
-        public void UpdateFreyja()
+        public bool UpdateFreyja()
         {
-            _Simulate.UpdateSimulation();
+            Simulate.UpdateSimulation();
+            return true;
             //insert update link, decision analyze and so.
         }
         public void UpdateSensor(Game newGameTurn)

@@ -64,6 +64,12 @@
     <Compile Include="GameBoard.Designer.cs">
       <DependentUpon>GameBoard.cs</DependentUpon>
     </Compile>
+    <Compile Include="InterfaceOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InterfaceOptions.Designer.cs">
+      <DependentUpon>InterfaceOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RessourcesPack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RessourcesPack.Designer.cs">
+      <DependentUpon>RessourcesPack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tutoriel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tutoriel.Designer.cs">
+      <DependentUpon>Tutoriel.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CreateBoard.resx">
       <DependentUpon>CreateBoard.cs</DependentUpon>
     </EmbeddedResource>
@@ -86,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GameBoard.resx">
       <DependentUpon>GameBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InterfaceOptions.resx">
+      <DependentUpon>InterfaceOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
@@ -98,16 +124,17 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="RessourcesPack.resx">
+      <DependentUpon>RessourcesPack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tutoriel.resx">
+      <DependentUpon>Tutoriel.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -130,6 +157,10 @@
     <ProjectReference Include="..\ITI.GameCore\ITI.GameCore.csproj">
       <Project>{5edee01d-f675-4051-97ca-b0d3d7ebc1c9}</Project>
       <Name>ITI.GameCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ITI.TabledeTyr.Freyja\ITI.TabledeTyr.Freyja.csproj">
+      <Project>{4b88dc40-ed60-4d33-96bd-08fe098c57a3}</Project>
+      <Name>ITI.TabledeTyr.Freyja</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -182,6 +213,309 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Image\Autre\Victoire.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Sans titre.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board11x111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board13x131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\RègleJeu\Board7x71.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Jouer.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Nefataffel_1097.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Quitter.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Règles du jeu.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\Tutoriel.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Jouer.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Leave.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Play.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Quitter.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Règles du jeu.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutorial.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel.php.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Languages\Drapeau Anglais.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Languages\Drapeau Français.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board7x7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board9x9.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board11x11.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board13x13.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau7x7.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau9x9.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau11x11.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau13x13.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board11x111.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board13x131.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Board7x71.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau11x111.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau13x131.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\plateau7x71.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\ChargerPlateau.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Créer un plateau.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Jouer attaquant.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\JouerDefenseur.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\JoueurVSIa.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\JoueurVSJoueur.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\LoadBoard.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayAttacker.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayDefender.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayerVSIA.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\PlayerVSPlayer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Retour.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Return.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Board.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\CapturesPawns.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Conditionsdevictoires.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Leplateau.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Lescaptures.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\LesPions.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\Pawns.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Rules\VictoryCondition.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\annulersauvegarde.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\cancelsave.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\confirmersauvegarde.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\confirmsave.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insererattaquant.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insererdefenseur.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insertattacker.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\insertdefender.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\removepawn.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\retirerpion.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\sauvegarder.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\saveboard.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Aide.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Continue.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Continuer.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\Tutoriel\Help.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\sauvegardeterminé.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\CreateBoard\save complete.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\RessourcesPack\Option.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Bouton\RessourcesPack\Options.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\paramètres.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\AtackerDamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\AttackerChessPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\ChessPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\DamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\DefenderChessPawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\DefenderDamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix de l%27adversaire\JoueurVsIA.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix de l%27adversaire\JoueurVSJoueur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix du rôles à jouer\Attaquant.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Choix du rôles à jouer\Défenseur.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\WhiteForbiddenSquareGameBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\WhiteSquareGameBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\WhiteSquarepossibleGameBoard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\AttackerDamePawn.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\King.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\Case en bois effet.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\Case en bois.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Case du Jeu\CaseInterdite.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\mjolnir.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\symbolnordique.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Autre\unspecified.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\atk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\def.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\Pawnking.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Image\Pion\pawn_display.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

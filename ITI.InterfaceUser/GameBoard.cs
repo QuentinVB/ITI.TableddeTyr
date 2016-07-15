@@ -1,4 +1,5 @@
 ﻿using ITI.GameCore;
+using ITI.TabledeTyr.Freyja;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,30 +14,38 @@ namespace ITI.InterfaceUser
 {
     public partial class m_GameBoard : Form
     {
-        public IReadOnlyTafl _plateau;
+        IReadOnlyTafl _tafl;
+        Freyja_Core Freyja;
+        Game _partie;
+        PossibleMove _possibleMove;
+        InterfaceOptions _interfaceOptions;
+        List<StudiedPawn> _studiedPossibleMove;
+        StudiedPawn _studiedPawn;
+
+        string _taflname;
         bool _firstClick = false;
         bool _endTurn = false;
-        public Game _partie;
-        public PossibleMove _possibleMove;
-        public bool _atkTurn;
         public int _pawnMoveX;
         public int _pawnMoveY;
         public int _pawnDestinationX;
         public int _pawnDestinationY;
-        int _height;
-        int _width;
 
-        //Variable pour création de plateau
-        int _valeurXBoard;
-        int _valeurYBoard;
-        int _widthBoard;
-        int _heightBoard;
-        int _valeurXBoardNextCase;
-        int _valeurYBoardNextCase;
-
-        //// test
-        //int[,] plateau;
+        // Bool pour l'utilisation de l'IA
+        bool _IAAtk = false;
+        bool _IADef = false;
+        
         int[,] _mvtPossible;
+
+        //lié au pseudoCore
+        int _AtkCount = 0;
+        int _DefCount = 0;
+        //
+        bool _createBoard;
+        // Outil implémenter
+        PictureBox _playerTurn;
+
+        TextBox _nbAtk;
+        TextBox _nbDef;
 
 
         /// <summary>
@@ -45,248 +54,49 @@ namespace ITI.InterfaceUser
         /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public m_GameBoard(int width, int height)
+        public m_GameBoard(InterfaceOptions interfaceOptions, bool iAATK, bool IADef, bool createBoard, string taflname)
         {
             InitializeComponent();
-            Game partie = new Game();
-            _partie = partie;
-            _plateau = partie.Tafl;
-            _height = height;
-            _width = width;
-
-            showPlayerTurn();
-
-            // test hardcodage plateau
-            //int atk = 1;
-            //int def = 2;
-            //int roi = 3;
-            //plateau = new int[_width, _height];
-            //
-
-            //
-            _mvtPossible = new int[_width, _height];
-            
-            //
-
-            ////a utilisez lorsque les plateaux 7x7 9x9 11x11 13x13 mis en XML
-            #region variable création plateau
-            
-            if (_width == 7)
+            _createBoard = createBoard;
+            _interfaceOptions = interfaceOptions;
+            _taflname = taflname;
+            if (_createBoard == false)
             {
-                _valeurXBoard = 3;
-                _widthBoard = 70;
-                _valeurXBoardNextCase = 73;
+                Game partie = new Game(_interfaceOptions.BoardWidth,_interfaceOptions.BoardHeight);
+                _partie = partie;
+                _tafl = partie.Tafl;
             }
-            if (_width == 9)
+            else
             {
-                _valeurXBoard = 6;
-                _widthBoard = 53;
-                _valeurXBoardNextCase = 56;
-            }
-            if (_width == 11)
-            {
-                _valeurXBoard = 5;
-                _widthBoard = 43;
-                _valeurXBoardNextCase = 46;
-            }
-            if (_width == 13)
-            {
-                _valeurXBoard = 5;
-                _widthBoard = 36;
-                _valeurXBoardNextCase = 39;
-            }
-            if (_width == 15)
-            {
-                _valeurXBoard = 4;
-                _widthBoard = 31;
-                _valeurXBoardNextCase = 34;
+                Game partie = new Game(_taflname);
+                _partie = partie;
+                _tafl = partie.Tafl;
             }
 
-            if (_height == 7)
+            _interfaceOptions.setPictureBox(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+
+            _mvtPossible = new int[_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight];
+
+            this.Text = _interfaceOptions.Title;
+            this.Refresh();
+
+            _IAAtk = iAATK;
+            _IADef = IADef;
+
+            setGameBoardTools();
+
+            // Appel et création de l'IA
+            if (_IAAtk == true && _IADef == false)
             {
-                _valeurYBoard = 3;
-                _heightBoard = 70;
-                _valeurYBoardNextCase = 73;
+                Freyja = new Freyja_Core(_partie, true);
+                IATurn();
             }
-            if (_height == 9)
+            if(_IADef == true && _IAAtk == false)
             {
-                _valeurYBoard = 6;
-                _heightBoard = 53;
-                _valeurYBoardNextCase = 56;
+                Freyja = new Freyja_Core(_partie, false);
             }
-            if (_height == 11)
-            {
-                _valeurYBoard = 5;
-                _heightBoard = 43;
-                _valeurYBoardNextCase = 46;
-            }
-            if (_height == 13)
-            {
-                _valeurYBoard = 5;
-                _heightBoard = 36;
-                _valeurYBoardNextCase = 39;
-            }
-            if (_height == 15)
-            {
-                _valeurYBoard = 4;
-                _heightBoard = 31;
-                _valeurYBoardNextCase = 34;
-
-            }
-            #endregion
-
-            
-                /*
-                #region hard Code plateau7x7 (test)
-                plateau[2, 0] = atk;
-                plateau[3, 0] = atk;
-                plateau[4, 0] = atk;
-                plateau[3, 1] = atk;
-                plateau[0, 2] = atk;
-                plateau[0, 3] = atk;
-                plateau[0, 4] = atk;
-                plateau[1, 3] = atk;
-                plateau[6, 2] = atk;
-                plateau[6, 3] = atk;
-                plateau[6, 4] = atk;
-                plateau[5, 3] = atk;
-                plateau[2, 6] = atk;
-                plateau[3, 6] = atk;
-                plateau[4, 6] = atk;
-                plateau[3, 5] = atk;
-
-                plateau[2, 2] = def;
-                plateau[2, 3] = def;
-                plateau[2, 4] = def;
-                plateau[3, 2] = def;
-                plateau[3, 4] = def;
-                plateau[4, 2] = def;
-                plateau[4, 3] = def;
-                plateau[4, 4] = def;
-
-                plateau[3, 3] = roi;
-                #endregion
-                */
-                /*
-                #region hard Code plateau9x9 (test)
-                plateau[3, 0] = atk;
-                plateau[4, 0] = atk;
-                plateau[5, 0] = atk;
-                plateau[4, 1] = atk;
-                plateau[0, 3] = atk;
-                plateau[0, 4] = atk;
-                plateau[0, 5] = atk;
-                plateau[1, 4] = atk;
-                plateau[8, 3] = atk;
-                plateau[8, 4] = atk;
-                plateau[8, 5] = atk;
-                plateau[7, 4] = atk;
-                plateau[3, 8] = atk;
-                plateau[4, 8] = atk;
-                plateau[5, 8] = atk;
-                plateau[4, 7] = atk;
-
-                plateau[2, 4] = def;
-                plateau[3, 4] = def;
-                plateau[4, 2] = def;
-                plateau[4, 3] = def;
-                plateau[5, 4] = def;
-                plateau[6, 4] = def;
-                plateau[4, 5] = def;
-                plateau[4, 6] = def;
-
-                plateau[4, 4] = roi;
-                #endregion*/
-                /*
-                #region hard Code plateau11x11 (test)
-                plateau[3, 0] = atk;
-                plateau[4, 0] = atk;
-                plateau[5, 0] = atk;
-                plateau[6, 0] = atk;
-                plateau[7, 0] = atk;
-                plateau[0, 3] = atk;
-                plateau[0, 4] = atk;
-                plateau[0, 5] = atk;
-                plateau[0, 6] = atk;
-                plateau[0, 7] = atk;
-                plateau[10, 3] = atk;
-                plateau[10, 4] = atk;
-                plateau[10, 5] = atk;
-                plateau[10, 6] = atk;
-                plateau[10, 7] = atk;
-                plateau[3, 10] = atk;
-                plateau[4, 10] = atk;
-                plateau[5, 10] = atk;
-                plateau[6, 10] = atk;
-                plateau[7, 10] = atk;
-                plateau[5, 1] = atk;
-                plateau[5, 9] = atk;
-                plateau[1, 5] = atk;
-                plateau[9, 5] = atk;
-
-                plateau[5, 4] = def;
-                plateau[5, 6] = def;
-                plateau[5, 3] = def;
-                plateau[5, 7] = def;
-                plateau[4, 4] = def;
-                plateau[4, 5] = def;
-                plateau[4, 6] = def;
-                plateau[6, 4] = def;
-                plateau[6, 5] = def;
-                plateau[6, 6] = def;
-                plateau[3, 5] = def;
-                plateau[7, 5] = def;
-
-                plateau[5, 5] = roi;
-                #endregion*/
-            
-            
-                /*
-                #region hard Code plateau13x13 (test)
-                plateau[4, 0] = atk;
-                plateau[5, 0] = atk;
-                plateau[6, 0] = atk;
-                plateau[7, 0] = atk;
-                plateau[8, 0] = atk;
-                plateau[0, 4] = atk;
-                plateau[0, 5] = atk;
-                plateau[0, 6] = atk;
-                plateau[0, 7] = atk;
-                plateau[0, 8] = atk;
-                plateau[12, 4] = atk;
-                plateau[12, 5] = atk;
-                plateau[12, 6] = atk;
-                plateau[12, 7] = atk;
-                plateau[12, 8] = atk;
-                plateau[4, 12] = atk;
-                plateau[5, 12] = atk;
-                plateau[6, 12] = atk;
-                plateau[7, 12] = atk;
-                plateau[8, 12] = atk;
-                plateau[6, 1] = atk;
-                plateau[6, 11] = atk;
-                plateau[1, 6] = atk;
-                plateau[11, 6] = atk;
-
-                plateau[6, 3] = def;
-                plateau[6, 4] = def;
-                plateau[6, 5] = def;
-                plateau[6, 7] = def;
-                plateau[6, 8] = def;
-                plateau[6, 9] = def;
-                plateau[3, 6] = def;
-                plateau[4, 6] = def;
-                plateau[5, 6] = def;
-                plateau[7, 6] = def;
-                plateau[8, 6] = def;
-                plateau[9, 6] = def;
-
-                plateau[6, 6] = roi;
-                #endregion*/
-
 
         }
-
 
         /// <summary>
         /// This function look the Itafl states and show the position of the pawn on the board.
@@ -295,71 +105,56 @@ namespace ITI.InterfaceUser
         /// <param name="e"></param>
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            int x = 0, y = 0;
-            
-            Image Piece;
-            Image Case;
-            Image caseInterdite;
-            Image mvtPiecePossible;
-            
-
-            Rectangle Rect;
-
-            Graphics Pawn = e.Graphics;
-            Graphics Board = e.Graphics;
-
-            Case = ITI.InterfaceUser.Properties.Resources.Case_en_bois;
-            caseInterdite = ITI.InterfaceUser.Properties.Resources.CaseInterdite;
-            mvtPiecePossible = ITI.InterfaceUser.Properties.Resources.Case_en_bois_effet;
             pictureBox1.BackColor = Color.Black;
 
-            
-            y = _valeurYBoard;
+            Rectangle Rect;
+            Graphics Draw = e.Graphics;
 
-            for (int j = 0; j < _height; j++)
+            updateInfomations();
+            
+            int y = _interfaceOptions.RectanglePositionY;
+
+            for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
-                x = _valeurXBoard;
-                for (int i = 0; i < _width; i++)
+                int x = _interfaceOptions.RectanglePositionX;
+
+                for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
+                    Rect = new Rectangle(x, y, _interfaceOptions.RectangleWidth, _interfaceOptions.RectangleHeight);
+
                     if (((i == 0) && (j == 0))
-                            || ((i == _width - 1) && (j == _height - 1))
-                            || ((i == _width - 1) && (j == 0))
-                            || ((i == 0) && (j == _height - 1))
-                            || ((i == ((_width - 1) / 2)) && (j == ((_height - 1) / 2))))
+                            || ((i == _interfaceOptions.BoardWidth - 1) && (j == _interfaceOptions.BoardHeight - 1))
+                            || ((i == _interfaceOptions.BoardWidth - 1) && (j == 0))
+                            || ((i == 0) && (j == _interfaceOptions.BoardHeight - 1))
+                            || ((i == ((_interfaceOptions.BoardWidth - 1) / 2)) && (j == ((_interfaceOptions.BoardHeight - 1) / 2))))
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(caseInterdite, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageForbiddenSquare, Rect);
                     }
                     else
                     {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(Case, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageSquare, Rect);
                     }
                     
-                    if(_mvtPossible[i, j] == 1)
-                    {
-                        Rect = new Rectangle(x, y, _widthBoard, _heightBoard);
-                        Board.DrawImage(mvtPiecePossible, Rect);
-                    }
+                    if(_mvtPossible[i, j] == 1)     
+                    {   
+                        Draw.DrawImage(_interfaceOptions.ImageSquareMvtPossible, Rect);   
+                    } 
 
-                    if (_plateau[i, j] == GameCore.Pawn.Attacker)
+                    if (_tafl[i, j] == GameCore.Pawn.Attacker)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionNoir;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageAtkPawnDesignUse, Rect);
                     }
-                    if (_plateau[i, j] == GameCore.Pawn.Defender)
+                    if (_tafl[i, j] == GameCore.Pawn.Defender)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionBlanc;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageDefPawnDesignUse, Rect);
                     }
-                    if (_plateau[i, j] == GameCore.Pawn.King)
+                    if (_tafl[i, j] == GameCore.Pawn.King)
                     {
-                        Piece = ITI.InterfaceUser.Properties.Resources.PionRoi;
-                        Pawn.DrawImage(Piece, Rect);
+                        Draw.DrawImage(_interfaceOptions.ImageKingPawn, Rect);
                     }
-                    x = x + _valeurXBoardNextCase;
+                    x = x + _interfaceOptions.NextRectanglePositionX;
                 }
-                y = y + _valeurYBoardNextCase;
+                y = y + _interfaceOptions.NextRectanglePositionY;
             }
         }
 
@@ -372,35 +167,25 @@ namespace ITI.InterfaceUser
         /// <param name="e"></param>
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            int x = 0, y = 0;
-            int pawnplay;
-            _atkTurn = _partie.IsAtkPlaying;
+            int y = _interfaceOptions.RectanglePositionY;
 
-            if(_atkTurn == true)
+            for (int j = 0; j < _interfaceOptions.BoardHeight; j++)
             {
-                pawnplay = 1;
-            }
-            else
-            {
-                pawnplay = 2;
-            }
+                int x = _interfaceOptions.RectanglePositionX;
 
-            for (int j = 0; j < _height; j++)
-            {
-                x = _valeurXBoard;
-
-                for (int i = 0; i < _width; i++)
+                for (int i = 0; i < _interfaceOptions.BoardWidth; i++)
                 {
-                    if (e.X > x && e.X < x + _widthBoard && e.Y > y && e.Y < y + _heightBoard)
+                    if (e.X > x && e.X < x + _interfaceOptions.RectangleWidth && e.Y > y && e.Y < y + _interfaceOptions.RectangleHeight)
                     {
                         if (_firstClick == false)
                         {
                             _pawnMoveX = i;
                             _pawnMoveY = j;
-                            if ((_plateau[_pawnMoveX, _pawnMoveY] != 0) &&
-                                    ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.Attacker) && (pawnplay == 1))
-                                    || ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.Defender) && (pawnplay == 2))
-                                    || ((_plateau[_pawnMoveX, _pawnMoveY] == Pawn.King) && (pawnplay == 2))
+
+                            if ((_tafl[_pawnMoveX, _pawnMoveY] != 0) &&
+                                    ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.Attacker) && (_partie.IsAtkPlaying == true))
+                                    || ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.Defender) && (_partie.IsAtkPlaying == false))
+                                    || ((_tafl[_pawnMoveX, _pawnMoveY] == Pawn.King) && (_partie.IsAtkPlaying == false))
                                     )
                             {
                                 _firstClick = true;
@@ -416,8 +201,8 @@ namespace ITI.InterfaceUser
                             _pawnDestinationX = i;
                             _pawnDestinationY = j;
 
-                            if ((_plateau[_pawnDestinationX, _pawnDestinationY] != _plateau[_pawnMoveX, _pawnMoveY])
-                                && (_plateau[_pawnDestinationX, _pawnDestinationY] == Pawn.None)
+                            if ((_tafl[_pawnDestinationX, _pawnDestinationY] != _tafl[_pawnMoveX, _pawnMoveY])
+                                && (_tafl[_pawnDestinationX, _pawnDestinationY] == Pawn.None)
                                 && (_mvtPossible[_pawnDestinationX, _pawnDestinationY] == 1))
                             {
                                 if (_partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY) == true)
@@ -427,70 +212,253 @@ namespace ITI.InterfaceUser
                                 else
                                 {
                                     _firstClick = false;
-                                    resetHelpPlayer();
+                                    resethelpplayer();
                                     pictureBox1.Refresh();
+                                    j = _interfaceOptions.BoardHeight - 1;
+                                    break;
                                 }
                             }else
                             {
                                 _firstClick = false;
-                                resetHelpPlayer();
+                                resethelpplayer();
                                 pictureBox1.Refresh();
+                                j = _interfaceOptions.BoardHeight - 1;
+                                break;
                             }
                         }
 
                         if (_endTurn == true)
                         {
-                            _plateau = _partie.Tafl;
-                            
-                            resetHelpPlayer();
-                            if(_partie.UpdateTurn() == false)
+                            _tafl = _partie.Tafl;  
+                            if((_partie.UpdateTurn() == false)
+                                || (_tafl.HasKing == false))
                             {
-                                PictureBox finDelaPartie = new PictureBox();
-                                Image endGame;
-                                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
-                                finDelaPartie.Location = new Point(0, 0);
-                                finDelaPartie.Size = new System.Drawing.Size(750, 400);
-                                finDelaPartie.Image = (Image)endGame;
-                                finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
-                                pictureBox1.Hide();
-                                m_PlayerTurn.Hide();
-                                finDelaPartie.BringToFront();
-                                this.Controls.Add(finDelaPartie);
+                                showVictory();
+
+                            }else
+                            {
+                                _endTurn = false;
+                                _firstClick = false;
+                                resethelpplayer();
+                                pictureBox1.Refresh();
+                                j = _interfaceOptions.BoardHeight - 1;
+                                break;
                             }
-                            _endTurn = false;
-                            _firstClick = false;
-                            showPlayerTurn();
-                            pictureBox1.Refresh();
+                            
                         }
                         
                     }
-                    x = x + _valeurXBoardNextCase;
+                    x = x + _interfaceOptions.NextRectanglePositionX;
                 }
-                y = y + _valeurYBoardNextCase;
+                y = y + _interfaceOptions.NextRectanglePositionY;
+            }
+
+            IATurn();
+        }
+
+        private void IATurn()
+        {
+            if ((_IAAtk == true && _partie.IsAtkPlaying == true) || (_IADef == true && _partie.IsAtkPlaying == false))
+            {
+                // envoyer l'état du tafl à l'IA
+                Freyja.UpdateSensor(_partie);
+                Freyja.UpdateFreyja();
+                // récupérer le mouvement effectuer par L'IA
+                Move iaMove = Freyja.UpdateEffector();
+                // appeler move pawn avec les corrodnnées données par l'iA
+                _pawnMoveX = iaMove.sourceX;
+                _pawnMoveY = iaMove.sourceY;
+                _pawnDestinationX = iaMove.destinationX;
+                _pawnDestinationY = iaMove.destinationY;
+                //vérifiez si la parie est fini.
+                _partie.MovePawn(_pawnMoveX, _pawnMoveY, _pawnDestinationX, _pawnDestinationY);
+                if ((_partie.UpdateTurn() == false)
+                || (_tafl.HasKing == false))
+                {
+                    showVictory();
+
+                }
+            }
+            pictureBox1.Refresh();
+        }
+
+        private void updateInfomations()
+        {
+            // Update number of pawn on the board show to the player
+            _AtkCount = _tafl.AttackerCount;
+            _DefCount = _tafl.DefenderCount;
+            _nbAtk.Text = ("Le nombre d'attaquant est de :  " + _AtkCount);
+            _nbDef.Text = ("Le nombre de défenseur est de : " + _DefCount);
+
+            // Update playerTurn
+            if(_partie.IsAtkPlaying == true)
+            {
+                _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawnDesignUse;
+                _playerTurn.Refresh();
+            }else
+            {
+                _playerTurn.Image = (Image)_interfaceOptions.ImageDefPawnDesignUse;
+                _playerTurn.Refresh();
             }
             
         }
 
-        private void showPlayerTurn()
+        private void showVictory()
         {
-            _atkTurn = _partie.IsAtkPlaying;
-            if (_atkTurn == true)
+            if((_IAAtk == true && _partie.IsAtkPlaying == true) || (_IADef == true && _partie.IsAtkPlaying == false))
             {
-                m_PlayerTurn.Text = "c'est au tour de l'attaquant";
-            }
-            else
-            {
-                m_PlayerTurn.Text = "C'est au tour du défenseur";
-            }
-        }
-
-        private void resetHelpPlayer()
-        {
-            for (int y = 0; y < _height; y++)
-            {
-                for (int x = 0; x < _width; x++)
+                PictureBox finDelaPartie = new PictureBox();
+                Image endGame;
+                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
+                finDelaPartie.Location = new Point(0, 0);
+                finDelaPartie.Size = new System.Drawing.Size(750, 400);
+                finDelaPartie.Image = (Image)endGame;
+                finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox1.Hide();
+                _playerTurn.Hide();
+                _nbAtk.Hide();
+                _nbDef.Hide();
+                finDelaPartie.BringToFront();
+                this.Controls.Add(finDelaPartie);
+                if(_interfaceOptions.Languages == true)
                 {
-                    _mvtPossible[x, y] = 0;
+                    if(MessageBox.Show("Recommencez", "Défaite", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == false)
+                        {
+                            Game partie = new Game(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game(_taflname);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        finDelaPartie.Hide();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Show();
+                        pictureBox1.Refresh();
+                    }else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }else
+                {
+                    if (MessageBox.Show("You lost! Try Again?", "Loose", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == false)
+                        {
+                            Game partie = new Game(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game(_taflname);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        updateInfomations();
+                        finDelaPartie.Hide();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Show();
+                        pictureBox1.Refresh();
+                    }
+                    else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }
+            }else
+            {
+                PictureBox finDelaPartie = new PictureBox();
+                Image endGame;
+                endGame = ITI.InterfaceUser.Properties.Resources.Victoire;
+                finDelaPartie.Location = new Point(0, 0);
+                finDelaPartie.Size = new System.Drawing.Size(750, 400);
+                finDelaPartie.Image = (Image)endGame;
+                finDelaPartie.SizeMode = PictureBoxSizeMode.StretchImage;
+                pictureBox1.Hide();
+                _playerTurn.Hide();
+                _nbAtk.Hide();
+                _nbDef.Hide();
+                finDelaPartie.BringToFront();
+                this.Controls.Add(finDelaPartie);
+                if (_interfaceOptions.Languages == true)
+                {
+                    if (MessageBox.Show("victoire ! Recommencez ?", "victoire", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == false)
+                        {
+                            Game partie = new Game(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game(_taflname);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        updateInfomations();
+                        finDelaPartie.Hide();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Show();
+                        pictureBox1.Refresh();
+                    }
+                    else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
+                }
+                else
+                {
+                    if (MessageBox.Show("Victory! Try again?", "Victory", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        if (_createBoard == false)
+                        {
+                            Game partie = new Game(_interfaceOptions.BoardWidth, _interfaceOptions.BoardHeight);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        else
+                        {
+                            Game partie = new Game(_taflname);
+                            _partie = partie;
+                            _tafl = partie.Tafl;
+                        }
+                        _endTurn = false;
+                        _firstClick = false;
+                        resethelpplayer();
+                        updateInfomations();
+                        finDelaPartie.Hide();
+                        pictureBox1.Show();
+                        _playerTurn.Show();
+                        _nbAtk.Show();
+                        _nbDef.Show();
+                        pictureBox1.Refresh();
+                    }
+                    else
+                    {
+                        m_buttonRetourMenu.DialogResult = DialogResult.Cancel;
+                    }
                 }
             }
         }
@@ -498,63 +466,54 @@ namespace ITI.InterfaceUser
         private void showHelpPlayer(int pawnLocationX, int pawnLocationY)
         {
             int x = 0, y = 0;
+            _studiedPossibleMove = new List<StudiedPawn>();
+            _studiedPawn = new StudiedPawn();
 
-            for(x = pawnLocationX - 1; x >= 0; x--)
+            _studiedPossibleMove = _possibleMove.FreeSquares;
+
+            foreach (StudiedPawn _studiedPawn in _studiedPossibleMove)
             {
-                if((_plateau[x, pawnLocationY] != 0)
-                    || ((x == 0) && (pawnLocationY == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((x == 0) && (pawnLocationY == _height - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }else
-                {
-                    _mvtPossible[x, pawnLocationY] = 1;
-                }
+                x = _studiedPawn.X;
+                y = _studiedPawn.Y;
+                _mvtPossible[x, y] = 1;
             }
-
-            for (x = pawnLocationX + 1; x < _width; x++)
-            {
-                if ((_plateau[x, pawnLocationY] != 0)
-                    || ((x == _width - 1) && (pawnLocationY == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((x == _width - 1) && (pawnLocationY == _height - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[x, pawnLocationY] = 1;
-                }
-            }
-
-            for (y = pawnLocationY - 1; y >= 0; y--)
-            {
-                if ((_plateau[pawnLocationX, y] != 0)
-                    || ((pawnLocationX == 0) && (y == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    || ((pawnLocationX == _width - 1) && (y == 0) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[pawnLocationX, y] = 1;
-                }
-            }
-
-            for (y = pawnLocationY + 1; y < _height; y++)
-            {
-                if ((_plateau[pawnLocationX, y] != 0)
-                    ||((pawnLocationX == 0) && (y == _width - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King))
-                    ||((pawnLocationX == _width - 1) && (y == _width - 1) && (_plateau[pawnLocationX, pawnLocationY] != Pawn.King)))
-                {
-                    break;
-                }
-                else
-                {
-                    _mvtPossible[pawnLocationX, y] = 1;
-                }
-            }
-
-            _mvtPossible[(_width - 1) / 2, (_height - 1) / 2] = 0;
         }
+
+        private void resethelpplayer()
+        {
+            for(int j = 0; j < _interfaceOptions.BoardHeight; j++)
+            {
+                for(int i = 0; i < _interfaceOptions.BoardWidth; i++)
+                {
+                    _mvtPossible[i, j] = 0;
+                }
+            }
+        }
+        
+        private void setGameBoardTools()
+        {
+            _playerTurn = new PictureBox();
+            _playerTurn.Location = new Point(this.Location.X + 550, this.Location.Y + 25);
+            _playerTurn.Image = (Image)_interfaceOptions.ImageAtkPawnDesignUse;
+            _playerTurn.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Controls.Add(_playerTurn);
+
+
+            _nbAtk = new TextBox();
+            _nbAtk.Text = "Nombre d'atk est de " + _AtkCount;
+            _nbAtk.Location = new Point(this.Location.X + 530, this.Location.Y + 200);
+            _nbAtk.Size = new System.Drawing.Size(200, 75);
+            this.Controls.Add(_nbAtk);
+            _nbAtk.BringToFront();
+
+            _nbDef = new TextBox();
+            _nbDef.Text = "Nombre de def est de " + _DefCount;
+            _nbDef.Location = new Point(this.Location.X + 530, this.Location.Y + 100);
+            _nbDef.Size = new System.Drawing.Size(200, 75);
+            this.Controls.Add(_nbDef);
+            _nbDef.BringToFront();
+
+        }
+
     }
 }

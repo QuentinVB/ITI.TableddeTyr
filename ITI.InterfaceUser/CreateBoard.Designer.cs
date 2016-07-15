@@ -28,20 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.m_buttonRetourMenu = new System.Windows.Forms.Button();
+            this.m_buttonReturn = new System.Windows.Forms.Button();
             this.m_PictureBoxCreateBoard = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxCreateBoard)).BeginInit();
             this.SuspendLayout();
             // 
-            // m_buttonRetourMenu
+            // m_buttonReturn
             // 
-            this.m_buttonRetourMenu.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.m_buttonRetourMenu.Location = new System.Drawing.Point(858, 583);
-            this.m_buttonRetourMenu.Name = "m_buttonRetourMenu";
-            this.m_buttonRetourMenu.Size = new System.Drawing.Size(121, 68);
-            this.m_buttonRetourMenu.TabIndex = 0;
-            this.m_buttonRetourMenu.Text = "Retour au menu";
-            this.m_buttonRetourMenu.UseVisualStyleBackColor = true;
+            this.m_buttonReturn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.m_buttonReturn.Location = new System.Drawing.Point(858, 583);
+            this.m_buttonReturn.Name = "m_buttonReturn";
+            this.m_buttonReturn.Size = new System.Drawing.Size(121, 68);
+            this.m_buttonReturn.TabIndex = 0;
+            this.m_buttonReturn.UseVisualStyleBackColor = true;
             // 
             // m_PictureBoxCreateBoard
             // 
@@ -59,10 +58,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 673);
             this.Controls.Add(this.m_PictureBoxCreateBoard);
-            this.Controls.Add(this.m_buttonRetourMenu);
+            this.Controls.Add(this.m_buttonReturn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CreateBoard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CreateBoard";
             ((System.ComponentModel.ISupportInitialize)(this.m_PictureBoxCreateBoard)).EndInit();
             this.ResumeLayout(false);
 
@@ -70,7 +69,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button m_buttonRetourMenu;
+        private System.Windows.Forms.Button m_buttonReturn;
         private System.Windows.Forms.PictureBox m_PictureBoxCreateBoard;
     }
 }
