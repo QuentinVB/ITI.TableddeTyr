@@ -8,20 +8,31 @@ namespace ITI.GameCore
         //ATTRIBUTES        
         bool _atkTurn; //true if it is the turn of attacker, else false if the turn of defender
         //COLLECTION
-        ITafl _tafl;
-        //CONSTRUCTOR(s)        
+        ITafl _tafl; //store the actual tafl played
+        //CONSTRUCTOR(s) 
+        #region constructors       
         /// <summary>
         /// Initializes a new instance of the <see cref="Game" /> class. If nothing recieved, create a default game and initalize the game
         /// </summary>
         //if nothing is send : create a default game 11*11, atk start.
         public Game()
             : this(Helper.GetDefaultTafl(), true)
-        {
-        }
-        //if w,h recieved, try to find a saved xml version with those size, if failed... open a blank game with those size
+        {}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> class.
+        /// If Width,height recieved, try to find a saved xml version with those size, if failed... open a default 11*11 game .
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
         public Game(int width, int height)
             : this(GetWHTafl(width,height), true)
         {}
+        /// <summary>
+        /// Gets the wh tafl.
+        /// </summary>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
+        /// <returns>a tafl</returns>
         static IReadOnlyTafl GetWHTafl(int width, int height)
         {
             XML_Tafl XmlIO = new XML_Tafl();
@@ -37,11 +48,19 @@ namespace ITI.GameCore
             
             return tafl;
         }
-        //if an xml string is recieved, try to load the game from it
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game" /> class.
+        /// If an xml string is recieved, try to load the game named by so. if failed... open a default 11*11 game.
+        /// </summary>
+        /// <param name="xmlPath">The XML path.</param>
         public Game(string xmlPath)
             : this(GetXMLTafl(xmlPath), true)
-        {
-        }
+        { }
+        /// <summary>
+        /// Gets the XML tafl based on his name.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>a tafl</returns>
         static IReadOnlyTafl GetXMLTafl(string path)
         {
             XML_Tafl XmlIO = new XML_Tafl();
@@ -56,16 +75,179 @@ namespace ITI.GameCore
             }
             return tafl;
         }
-        //Base, a game need a description of a tafl and wich player start to begin
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> class.
+        /// Base of the construtors, a game need a description of a tafl and wich player start to begin
+        /// </summary>
+        /// <param name="tafl">The tafl.</param>
+        /// <param name="atkTurn">if set to <c>true</c> [atk turn].</param>
         public Game(IReadOnlyTafl tafl, bool atkTurn)
         {
             _tafl = new TaflBasic(tafl);
             _atkTurn = atkTurn;
         }
+        #endregion
         //PROPERTIES
-        public bool IsAtkPlaying => _atkTurn;//get the current player turn, true if it is the the attacker     
+        #region properties
+        /// <summary>Gets a value indicating whether this instance is atk playing.</summary>
+        /// <value><c>true</c> if this instance is atk playing; otherwise, <c>false</c>.</value>
+        public bool IsAtkPlaying => _atkTurn;    
+        /// <summary>Gets a <see cref="IReadOnlyTafl">.</summary>
+        /// <value>The tafl.</value>
         public IReadOnlyTafl Tafl => _tafl;
-        //METHODS - INTERNAL                
+        #endregion
+        //METHODES - PUBLIC 
+        #region methode - public       
+        /// <summary>
+        /// Determines if the pawn designated by x and y can move and how many step in each direction. 
+        /// Store it inside a Struct <see cref="PossibleMove"/>.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns></returns>
+        public PossibleMove CanMove(int x, int y)
+        {
+            //Exception goes here
+            Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
+            //Creating directions
+            List<StudiedPawn> FreeSquares = new List<StudiedPawn>();
+            int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
+            //Checks above
+            m = y;
+            while (Helper.CheckUp(x, m, _tafl))
+            {
+                if (Helper.CheckWalls(x, m - 1, _tafl) && _tafl[x, y] == Pawn.King)
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m - 1);
+                    FreeSquares.Add(studiedPawn);
+                    m--;
+                }
+                else if (!Helper.CheckWalls(x, m - 1, _tafl))
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m - 1);
+                    FreeSquares.Add(studiedPawn);
+                    m--;
+                }
+                else m--;
+
+            }
+            //Check below
+            m = y;
+            while (Helper.CheckDown(x, m, _tafl))
+            {
+                if (Helper.CheckWalls(x, m + 1, _tafl) && _tafl[x, y] == Pawn.King)
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m + 1);
+                    FreeSquares.Add(studiedPawn);
+                    m++;
+                }
+                else if (!Helper.CheckWalls(x, m + 1, _tafl))
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(x, m + 1);
+                    FreeSquares.Add(studiedPawn);
+                    m++;
+                }
+                else m++;
+
+            }
+            //Check left
+            m = x;
+            while (Helper.CheckLeft(m, y, _tafl))
+            {
+                if (Helper.CheckWalls(m - 1, y, _tafl) && _tafl[x, y] == Pawn.King)
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(m - 1, y);
+                    FreeSquares.Add(studiedPawn);
+                    m--;
+                }
+                else if (!Helper.CheckWalls(m - 1, y, _tafl))
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(m - 1, y);
+                    FreeSquares.Add(studiedPawn);
+                    m--;
+                }
+                else m--;
+
+            }
+            //Check right
+            m = x;
+            while (Helper.CheckRight(m, y, _tafl))
+            {
+                if (Helper.CheckWalls(m + 1, y, _tafl) && _tafl[x, y] == Pawn.King)
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(m + 1, y);
+                    FreeSquares.Add(studiedPawn);
+                    m++;
+                }
+                else if (!Helper.CheckWalls(m + 1, y, _tafl))
+                {
+                    StudiedPawn studiedPawn = new StudiedPawn(m + 1, y);
+                    FreeSquares.Add(studiedPawn);
+                    m++;
+                }
+                else m++;
+
+            }
+            //struct ConstrucTHOR & return
+            PossibleMove _possibleMove = new PossibleMove(x, y, FreeSquares, _tafl[x, y]);
+            return _possibleMove;
+        }
+        /// <summary>
+        /// Allows the designated pieces to move the piece to another coordinate,
+        /// call <see cref="CheckWalls" /> by secure.
+        /// </summary>
+        /// <param name="x">The x position of the piece who move.</param>
+        /// <param name="y">The y position of the piece who move.</param>
+        /// <param name="x2">The x2 targeted position of the piece who move.</param>
+        /// <param name="y2">The y2 targeted position of the piece who move.</param>
+        /// <returns>
+        /// true if the move is good. false something bad happend. FI: god(s) kill(s) a kitten
+        /// </returns>
+        /// <exception cref="System.ArgumentException">Cannot enter the throne you puny pawn !</exception>
+        /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
+        public bool MovePawn(int x, int y, int x2, int y2)
+        {
+            //Exceptions and tests goes here
+            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException(string.Format("moved pawn {0} from [{1},{2}] at [{3},{4}] as atk = {5} ", _tafl[x, y], x, y, x2, y2, IsAtkPlaying));
+            if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
+            Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
+            Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
+            if (x == x2 && y == y2) return false;
+            //Core
+            foreach (StudiedPawn current in CanMove(x, y).FreeSquares)
+            {
+                if (current.X == x2 && current.Y == y2)
+                {
+                    _tafl[x2, y2] = _tafl[x, y];
+                    _tafl[x, y] = Pawn.None;
+                    CheckCapture(x2, y2);
+                    return true;
+                }
+            }
+            return false;
+
+        }
+        /// <summary>
+        /// Called by the player's UI after getting the confirmation of his move in <see cref="MovePawn" />
+        /// Call <see cref="CheckCapture" />, <see cref="CheckVictoryCondition" /> and switch to next player.
+        /// </summary>
+        /// <returns>
+        /// false if the game is over and break before flipping the turn. The current <paramref name="_atkTurn" /> is the winner.
+        /// </returns>
+        public bool UpdateTurn()
+        {
+            CheckVictoryCondition();
+            if (CheckVictoryCondition()) return false;
+            else
+            {
+                _atkTurn = !_atkTurn;
+                return true;
+            }
+        }
+        #endregion
+        //METHODS - INTERNAL   
+        #region methode - internal
         /// <summary>
         /// check the capture around this piece then remove the piece(s).
         /// </summary>
@@ -185,156 +367,9 @@ namespace ITI.GameCore
                 ) return true;
             return false;
         }
-
-        //METHODES - PUBLIC        
-        /// <summary>
-        /// Determines if the pawn designated by x and y can move and how many step in each direction. 
-        /// Store it inside a Struct <see cref="PossibleMove"/>.
-        /// </summary>
-        /// <param name="x">The x.</param>
-        /// <param name="y">The y.</param>
-        /// <returns></returns>
-        public PossibleMove CanMove(int x, int y)
-        {
-            //Exception goes here
-            Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
-            //Creating directions
-            List<StudiedPawn> FreeSquares = new List<StudiedPawn>();
-            int m; //Martyr, gonna be used and abused  in the checkers - replaces the line or collumn where the checkers work
-            //Checks above
-            m = y;
-            while (Helper.CheckUp(x, m, _tafl))
-            {
-                if (Helper.CheckWalls(x, m - 1, _tafl) && _tafl[x, y] == Pawn.King)
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m - 1);
-                    FreeSquares.Add(studiedPawn);
-                    m--;
-                }
-                else if (!Helper.CheckWalls(x, m - 1, _tafl))
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m - 1);
-                    FreeSquares.Add(studiedPawn);
-                    m--;
-                }
-                else m--;
-
-            }
-            //Check below
-            m = y;
-            while (Helper.CheckDown(x, m, _tafl))
-            {
-                if (Helper.CheckWalls(x, m + 1, _tafl) && _tafl[x, y] == Pawn.King)
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m + 1);
-                    FreeSquares.Add(studiedPawn);
-                    m++;
-                }
-                else if (!Helper.CheckWalls(x, m + 1, _tafl))
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(x, m + 1);
-                    FreeSquares.Add(studiedPawn);
-                    m++;
-                }
-                else m++;
-
-            }
-            //Check left
-            m = x;
-            while (Helper.CheckLeft(m, y, _tafl))
-            {
-                if (Helper.CheckWalls(m - 1, y, _tafl) && _tafl[x, y] == Pawn.King)
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(m - 1, y);
-                    FreeSquares.Add(studiedPawn);
-                    m--;
-                }
-                else if (!Helper.CheckWalls(m - 1, y, _tafl))
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(m - 1, y);
-                    FreeSquares.Add(studiedPawn);
-                    m--;
-                }
-                else m--;
-
-            }
-            //Check right
-            m = x;
-            while (Helper.CheckRight(m, y, _tafl))
-            {
-                if (Helper.CheckWalls(m + 1, y, _tafl) && _tafl[x, y] == Pawn.King)
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(m + 1, y);
-                    FreeSquares.Add(studiedPawn);
-                    m++;
-                }
-                else if (!Helper.CheckWalls(m + 1, y, _tafl))
-                {
-                    StudiedPawn studiedPawn = new StudiedPawn(m + 1, y);
-                    FreeSquares.Add(studiedPawn);
-                    m++;
-                }
-                else m++;
-
-            }
-            //struct ConstrucTHOR & return
-            PossibleMove _possibleMove = new PossibleMove(x, y, FreeSquares, _tafl[x, y]);
-            return _possibleMove;
-        }
-        /// <summary>
-        /// Allows the designated pieces to move the piece to another coordinate,
-        /// call <see cref="CheckWalls" /> by secure.
-        /// </summary>
-        /// <param name="x">The x position of the piece who move.</param>
-        /// <param name="y">The y position of the piece who move.</param>
-        /// <param name="x2">The x2 targeted position of the piece who move.</param>
-        /// <param name="y2">The y2 targeted position of the piece who move.</param>
-        /// <returns>
-        /// true if the move is good. false something bad happend. FI: god(s) kill(s) a kitten
-        /// </returns>
-        /// <exception cref="System.ArgumentException">Cannot enter the throne you puny pawn !</exception>
-        /// <exception cref="System.ArgumentException">Cannot move opposite pawn, you bastard cheater !</exception>
-        public bool MovePawn(int x, int y, int x2, int y2)
-        {
-            //Exceptions and tests goes here
-            if (IsAtkPlaying == true && (_tafl[x, y] == Pawn.Defender || _tafl[x, y] == Pawn.King)) throw new ArgumentException(string.Format("moved pawn {0} from [{1},{2}] at [{3},{4}] as atk = {5} ", _tafl[x, y], x, y, x2, y2, IsAtkPlaying) );
-            if (IsAtkPlaying == false && _tafl[x, y] == Pawn.Attacker) throw new ArgumentException("Cannot move opposite pawn, you bastard cheater !");
-            Helper.CheckRange(_tafl.Width, _tafl.Height, x, y);
-            Helper.CheckRange(_tafl.Width, _tafl.Height, x2, y2);
-            if (x == x2 && y == y2) return false;
-            //Core
-            foreach (StudiedPawn current in CanMove(x, y).FreeSquares)
-            {
-                if (current.X == x2 && current.Y == y2)
-                {
-                    _tafl[x2, y2] = _tafl[x, y];
-                    _tafl[x, y] = Pawn.None;
-                    CheckCapture(x2, y2);
-                    return true;
-                }
-            }
-            return false;
-
-        }
-        /// <summary>
-        /// Called by the player's UI after getting the confirmation of his move in <see cref="MovePawn" />
-        /// Call <see cref="CheckCapture" />, <see cref="CheckVictoryCondition" /> and switch to next player.
-        /// </summary>
-        /// <returns>
-        /// false if the game is over and break before flipping the turn. The current <paramref name="_atkTurn" /> is the winner.
-        /// </returns>
-        public bool UpdateTurn()
-        {
-            CheckVictoryCondition();
-            if (CheckVictoryCondition()) return false;
-            else
-            {
-                _atkTurn = !_atkTurn;
-                return true;
-            }
-        }
-
-        //tools for freyja :p
+        #endregion
+        //TOOLS for FREYJA
+        #region ai-tools
         /// <summary>
         /// Copy in deep the game and the tafl.
         /// </summary>
@@ -345,5 +380,6 @@ namespace ITI.GameCore
             copy._tafl = new TaflBasic(_tafl);
             return copy;
         }
+        #endregion
     }
 }

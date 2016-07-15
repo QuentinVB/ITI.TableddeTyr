@@ -10,7 +10,6 @@ namespace ITI.TabledeTyr.Freyja
     class Simulate
     {
         internal Freyja_Core _ctx;
-        internal string _key;
         internal bool _isSimulatedFreyjaAtk;
         internal Game _simulatedGame;
         SimulationNode root;
@@ -126,7 +125,6 @@ namespace ITI.TabledeTyr.Freyja
     internal class PawnTree
     {
         internal Freyja_Core _ctx;
-        string _key;
         bool _isSimulatedFreyjaAtk;
         Game _simulatedGame;
         SimulationNode root;
